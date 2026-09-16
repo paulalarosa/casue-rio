@@ -87,16 +87,16 @@ não pendência esquecida.
 
 ## Vídeo
 
-Cinco peças em `web/public/video/`, todas H.264 sem áudio, em laço fechado por
-cruzamento de 0,5s entre a cauda e a cabeça.
+Seis peças em `web/public/video/`, todas H.264 e sem áudio.
 
 | Arquivo | Onde | Peso |
 |---|---|---|
 | `abertura.mp4` + `abertura-retrato.mp4` | abertura da home | 858 kB · 390 kB |
 | `sala.mp4` | faixa do slogan | 562 kB |
 | `bairros.mp4` | cabeça de `/bairros` | 489 kB |
-| `gradil.mp4` | cabeça de `/juridico` | 305 kB |
-| `calcadao.mp4` | cabeça de `/contato` | 398 kB |
+| `gradil.mp4` | cabeça de `/juridico` | 304 kB |
+| `calcadao.mp4` | cabeça de `/contato` | 456 kB |
+| `carteira.mp4` | cabeça de `/imoveis` | 615 kB |
 
 Regras que valem para qualquer vídeo que entre depois:
 
@@ -104,6 +104,10 @@ Regras que valem para qualquer vídeo que entre depois:
   `basePath` do Next reescreve `<Link>` e `<Image>` importado, mas **não**
   reescreve string que eu escrevi dentro de um atributo. Sem o ajudante o
   vídeo toca em desenvolvimento e dá 404 calado no ar.
+- **O laço fecha de dois jeitos, e a escolha é medida.** Onde a câmera anda
+  devagar, cruzamento de 0,5s entre a cauda e a cabeça. Onde ela anda muito
+  (a aérea de `carteira.mp4`), o cruzamento vira fantasma, e o laço é
+  vai-e-volta.
 - 🔴 **Sem WebM.** Medido neste material: o VP9 saiu **maior** que o H.264
   (930 kB contra 858 kB), porque é plano largo, pouco movimento e muita área
   lisa. Dois formatos onde um ganha em tudo é peso sem ganho.
@@ -137,7 +141,7 @@ web/src/lib/site.ts          nome, sócias, endereço, contato. Sem CPF.
 web/src/lib/imoveis.ts       a carteira. É isto que a manutenção edita.
 web/src/lib/caminho.ts       prefixo de arquivo de `public/`.
 web/src/components/entrada.tsx  a doutrina de animação.
-web/public/video/            as cinco peças de vídeo e seus pôsteres.
+web/public/video/            as seis peças de vídeo e seus pôsteres.
 ```
 
 ---
