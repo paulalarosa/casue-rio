@@ -6,10 +6,10 @@
 
 /* ============================================================ MARCA
 
-   🔴 A fonte de verdade da cor é ESTE arquivo. A pasta `ds/tokens` na raiz
-   do repositório é do protótipo estático anterior e ficou na marca velha:
-   ela não alimenta mais nada aqui, e seguir o que está escrito lá produz
-   azul e ouro.
+   🔴 A fonte de verdade da cor é ESTE arquivo, e agora é o único. A raiz do
+   repositório tinha `ds/tokens`, `site/` e `assets/` do protótipo estático
+   anterior, todos parados na marca velha e todos capazes de devolver azul e
+   ouro a quem fosse ler por ali. Foram apagados, e estão no histórico.
 
    A paleta da Casuê Rio é tinta, chumbo, areia e off-white, com um verde
    que só aparece na ação. Vermelho não entra em lugar nenhum: foi pedido
@@ -370,9 +370,28 @@
   }
 }
 
+/* 🔴 A margem lateral cresce com a tela, e isso e proposital.
+
+   Antes era uma so: `100% - 2.5rem`, ou seja 20px de cada lado em QUALQUER
+   largura. No telefone e apertado; num monitor de 1440 o conteudo encostava
+   nas bordas com 40px, e ela disse isso com todas as letras. Respiro nao e
+   uma medida fixa: e uma proporcao do que a pessoa ve.
+
+   Medido a 1440: eram 40px de cada lado, agora sao 64px. A 1920 a largura
+   maxima (84rem) ja manda, e a sobra vira margem sozinha. */
 @utility trilho {
-  width: min(100% - 2.5rem, 84rem);
+  width: min(100% - 3rem, 84rem);
   margin-inline: auto;
+}
+@media (min-width: 640px) {
+  .trilho {
+    width: min(100% - 5rem, 84rem);
+  }
+}
+@media (min-width: 1024px) {
+  .trilho {
+    width: min(100% - 8rem, 84rem);
+  }
 }
 
 /* Grão de papel por cima de tudo. Vidro sem grão fica plástico. */
@@ -398,24 +417,13 @@
    atributo. Com a transição valendo desde o começo, as dezesseis seções
    apareciam no carregamento e SUMIAM em sete décimos, uma por uma, antes de
    voltar na rolagem. Animação para entrar, corte seco para sair de cena. */
-[data-revela][data-oculto="1"] {
-  opacity: 0;
-  transform: translateY(28px);
-}
-[data-revela][data-anima="1"] {
-  transition:
-    opacity 0.7s var(--ease-saida),
-    transform 0.7s var(--ease-saida);
-}
-@media (prefers-reduced-motion: reduce) {
-  [data-revela][data-oculto="1"] {
-    opacity: 1;
-    transform: none;
-  }
-  [data-revela][data-anima="1"] {
-    transition: none;
-  }
-}
+/* 🔴 Aqui havia o par `data-oculto` / `data-anima` que escondia e revelava a
+   seção em CSS. Quem faz isso agora é o GSAP, em `entrada.tsx`, porque
+   escalonamento e quebra do título em palavras não cabem numa transição de
+   CSS. O que NÃO mudou é a doutrina: esconder só acontece dentro de um
+   quadro já provado vivo, e existe cão de guarda. O estado escondido é
+   estilo em linha, e é por isso que a regra de impressão lá embaixo precisa
+   de `!important` também na `visibility`. */
 
 @layer base {
   * {
@@ -529,10 +537,13 @@
     color: #16181d !important;
     border: 1px solid #c9c6bd !important;
   }
-  /* 🔴 Seção escondida pela revelação sairia em branco. */
-  [data-revela],
-  [data-oculto="1"] {
+  /* 🔴 Seção escondida pela revelação sairia em branco. O GSAP esconde com
+     `autoAlpha`, que escreve `visibility: hidden` EM LINHA, e estilo em
+     linha ganha de folha: sem a linha da visibilidade aqui, a seção some do
+     papel mesmo com a opacidade forçada. */
+  [data-revela] {
     opacity: 1 !important;
+    visibility: visible !important;
     transform: none !important;
   }
   /* Coluna de preço deixa de flutuar: no papel não existe rolagem. */

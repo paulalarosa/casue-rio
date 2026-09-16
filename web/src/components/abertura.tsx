@@ -5,6 +5,7 @@ import Image from "next/image";
 import largo from "../../public/video/abertura.webp";
 import retrato from "../../public/video/abertura-retrato.webp";
 import { MARCA } from "@/lib/site";
+import { arquivo } from "@/lib/caminho";
 
 /* A abertura da home: a rua da Zona Sul no fim da tarde, em vídeo.
 
@@ -65,7 +66,9 @@ export function Abertura({ children }: { children: React.ReactNode }) {
   const corte = useSyncExternalStore(assinar, lerCorte, () => null);
   const [tocando, setTocando] = useState(false);
 
-  const fonte = corte === "retrato" ? "/video/abertura-retrato.mp4" : "/video/abertura.mp4";
+  const fonte = arquivo(
+    corte === "retrato" ? "/video/abertura-retrato.mp4" : "/video/abertura.mp4",
+  );
 
   return (
     <section className="relative">

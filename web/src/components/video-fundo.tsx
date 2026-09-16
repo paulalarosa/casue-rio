@@ -2,6 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image, { type StaticImageData } from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 /* Vídeo de fundo: pôster por baixo, sempre, e o vídeo por cima quando pode.
 
@@ -30,6 +35,9 @@ export function VideoFundo({
   prioridade = false,
   posicao,
   sizes = "100vw",
+  /* Paralaxe: o fundo anda contra a rolagem. Desligado por padrão, porque
+     numa peça que ocupa a tela inteira o efeito enjoa. */
+  paralaxe = false,
 }: {
   fonte: string;
   poster: StaticImageData;
@@ -37,10 +45,57 @@ export function VideoFundo({
   prioridade?: boolean;
   posicao?: string;
   sizes?: string;
+  paralaxe?: boolean;
 }) {
   const caixa = useRef<HTMLDivElement>(null);
+  const trilha = useRef<HTMLDivElement>(null);
   const [ligar, setLigar] = useState(false);
   const [tocando, setTocando] = useState(false);
+
+  /* 🔴 Aqui o ScrollTrigger é seguro, e isso é uma escolha, não descuido: ele
+     só DESLOCA uma peça que já está visível. Se nunca disparar, o fundo fica
+     parado, que é o site de antes. O que ele nunca faz neste projeto é
+     esconder conteúdo para revelar depois, porque foi assim que a home
+     inteira já ficou em opacidade zero uma vez.
+
+     O fundo é 118% da caixa e nasce centrado: a folga de 9% para cada lado é
+     o que garante que o deslocamento de 7% nunca mostre a borda do recorte. */
+  useGSAP(
+    () => {
+      if (!paralaxe) return;
+      const alvo = trilha.current;
+      if (!alvo) return;
+      let vivo = true;
+      let matar = () => {};
+      requestAnimationFrame(() => {
+        if (!vivo) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const t = gsap.fromTo(
+          alvo,
+          { yPercent: -7 },
+          {
+            yPercent: 7,
+            ease: "none",
+            scrollTrigger: {
+              trigger: caixa.current,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.6,
+            },
+          },
+        );
+        matar = () => {
+          t.scrollTrigger?.kill();
+          t.kill();
+        };
+      });
+      return () => {
+        vivo = false;
+        matar();
+      };
+    },
+    { scope: caixa, dependencies: [paralaxe] },
+  );
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -68,33 +123,38 @@ export function VideoFundo({
   }, []);
 
   return (
-    <div ref={caixa} className="absolute inset-0">
-      <Image
-        src={poster}
-        alt={alt}
-        fill
-        sizes={sizes}
-        priority={prioridade}
-        className="object-cover"
-        style={posicao ? { objectPosition: posicao } : undefined}
-      />
-      {ligar && (
-        <video
-          src={fonte}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden
-          onCanPlay={(e) => void e.currentTarget.play().catch(() => undefined)}
-          onPlaying={() => setTocando(true)}
-          className={`absolute inset-0 size-full object-cover transition-opacity duration-700 ease-[var(--ease-saida)] ${
-            tocando ? "opacity-100" : "opacity-0"
-          }`}
+    <div ref={caixa} className="absolute inset-0 overflow-hidden">
+      <div
+        ref={trilha}
+        className={paralaxe ? "absolute inset-x-0 -top-[9%] h-[118%]" : "absolute inset-0"}
+      >
+        <Image
+          src={poster}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={prioridade}
+          className="object-cover"
           style={posicao ? { objectPosition: posicao } : undefined}
         />
-      )}
+        {ligar && (
+          <video
+            src={fonte}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden
+            onCanPlay={(e) => void e.currentTarget.play().catch(() => undefined)}
+            onPlaying={() => setTocando(true)}
+            className={`absolute inset-0 size-full object-cover transition-opacity duration-700 ease-[var(--ease-saida)] ${
+              tocando ? "opacity-100" : "opacity-0"
+            }`}
+            style={posicao ? { objectPosition: posicao } : undefined}
+          />
+        )}
+      </div>
     </div>
   );
 }

@@ -9,8 +9,9 @@ import { Painel } from "@/components/painel";
 import { Cena } from "@/components/cenas";
 import { Midia } from "@/components/midia";
 import { EntradaAbertura, Revela } from "@/components/entrada";
-import { DISPONIVEIS, BAIRROS, REGIOES, IMOVEIS as TODOS, moeda } from "@/lib/imoveis";
+import { DISPONIVEIS, BAIRROS, IMOVEIS as TODOS, moeda } from "@/lib/imoveis";
 import { SOCIAS, SLOGAN } from "@/lib/site";
+import { arquivo } from "@/lib/caminho";
 
 const FATOS = [
   {
@@ -47,42 +48,11 @@ export default function Home() {
             >
               Quem mostra o imóvel é quem lê a matrícula.
             </h1>
-            <p
-              data-entra="linha"
-              className="mt-4 max-w-[46ch] text-base leading-relaxed text-tinta-200 sm:mt-6 sm:text-lg"
-            >
-              Duas sócias <b className="font-semibold text-papel">corretoras e
-              avaliadoras</b>. A mesma pessoa cuida da visita, da papelada e do
-              contrato.
-            </p>
-            {/* Fita de números, como nas referências. 🔴 Só entra número
-                que eu consigo CONTAR: quantidade de imóveis na carteira,
-                regiões atendidas e sócias com registro. "4.500 clientes
-                satisfeitos" é o tipo de número que enche essas telas de
-                portfólio e que aqui seria invenção. */}
-            <dl
-              data-entra="frentes"
-              className="mt-5 grid grid-cols-3 gap-4 border-t border-white/18 pt-4 sm:mt-8 sm:gap-6 sm:pt-6"
-            >
-              {/* Rótulo curto sempre, complemento só a partir de `sm`:
-                  medido, a 390px cada coluna fica com 84px e "sócias, CRECI
-                  e CNAI" quebra em três linhas. */}
-              {[
-                [String(DISPONIVEIS.length), "imóveis", " na carteira"],
-                [String(REGIOES.length), "regiões", " no Rio"],
-                ["2", "sócias", ", CRECI e CNAI"],
-              ].map(([n, rotulo, resto]) => (
-                <div key={rotulo}>
-                  <dt className="num text-2xl font-semibold text-papel sm:text-3xl">
-                    {n}
-                  </dt>
-                  <dd className="rotulo mt-1 text-tinta-200">
-                    {rotulo}
-                    <span className="hidden sm:inline">{resto}</span>
-                  </dd>
-                </div>
-              ))}
-            </dl>
+            {/* 🔴 Saíram daqui a linha das sócias e a fita de três números
+                (imóveis, regiões, sócias), a pedido dela. A frase da marca
+                já diz quem mostra o imóvel, e a contagem repetia o que a
+                seção de números logo abaixo mostra de novo. Abertura com uma
+                afirmação só bate mais forte do que afirmação mais resumo. */}
           </Painel>
 
           <div data-entra="busca" className="mt-4 max-w-3xl sm:mt-6">
@@ -183,7 +153,10 @@ export default function Home() {
       </Revela>
 
       {/* ====================================================== BAIRROS */}
-      <Revela id="destaques" className="trilho secao">
+      {/* 🔴 Esta seção também se chamava `destaques`. Dois elementos com o
+          mesmo `id` na mesma página: `#destaques` no menu levava sempre à
+          primeira, e leitor de tela anuncia duas regiões homônimas. */}
+      <Revela id="bairros" className="trilho secao">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">Onde a gente atua</h2>
@@ -298,7 +271,7 @@ export default function Home() {
           DEPOIS de a página ter mostrado o que promete, que é a ordem certa:
           primeiro a prova, depois a frase. */}
       <FaixaVideo
-        fonte="/video/sala.mp4"
+        fonte={arquivo("/video/sala.mp4")}
         poster={posterSala}
         altura="min-h-[24rem] sm:min-h-[32rem]"
       >

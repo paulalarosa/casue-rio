@@ -5,6 +5,7 @@ import posterBairros from "../../../public/video/bairros.webp";
 import { Cena } from "@/components/cenas";
 import { BAIRROS, DISPONIVEIS } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
+import { arquivo } from "@/lib/caminho";
 
 export const metadata = metaDaPagina({
   titulo: "Onde a gente atua",
@@ -30,7 +31,7 @@ export default function PaginaBairros() {
           navega pela grade. */}
       <div className="trilho mt-10">
         <FaixaVideo
-          fonte="/video/bairros.mp4"
+          fonte={arquivo("/video/bairros.mp4")}
           poster={posterBairros}
           altura="aspect-[21/9] min-h-0"
           className="rounded-[1rem] shadow-[var(--shadow-flutua-3)]"

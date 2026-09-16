@@ -6,6 +6,7 @@ import { Midia } from "@/components/midia";
 import { FormContato } from "@/components/form-contato";
 import { linkZap } from "@/lib/imoveis";
 import { ENDERECO, HORARIO, SOCIAS, TELEFONE, metaDaPagina } from "@/lib/site";
+import { arquivo } from "@/lib/caminho";
 
 export const metadata = metaDaPagina({
   titulo: "Falar com a gente",
@@ -23,7 +24,7 @@ export default function PaginaContato() {
       <CabecaPagina
         titulo="Falar com a gente"
         linha="Você fala direto com uma das duas. Sem atendente e sem fila."
-        video={{ fonte: "/video/calcadao.mp4", poster: calcadao }}
+        video={{ fonte: arquivo("/video/calcadao.mp4"), poster: calcadao }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Contato" }]}
       />
 

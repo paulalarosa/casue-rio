@@ -30,16 +30,26 @@ export function Topo() {
   const [menu, setMenu] = useState(false);
   const sobreCena = caminho === "/" && !rolou;
 
+  /* Trocar de página fecha o menu: gaveta aberta sobre a página nova é o
+     defeito clássico de menu em rota do lado do cliente.
+
+     🔴 Isto era um `useEffect` com `setMenu(false)` dentro, e o lint barra
+     com razão: fechar o menu não é sincronizar com sistema externo, é
+     estado derivado do caminho. Ajustar durante a renderização é o jeito
+     que o React documenta, e ainda economiza uma pintura, porque o menu
+     nunca chega a aparecer aberto na página nova. */
+  const [ondeAbriu, setOndeAbriu] = useState(caminho);
+  if (ondeAbriu !== caminho) {
+    setOndeAbriu(caminho);
+    setMenu(false);
+  }
+
   useEffect(() => {
     const medir = () => setRolou(window.scrollY > 120);
     medir();
     window.addEventListener("scroll", medir, { passive: true });
     return () => window.removeEventListener("scroll", medir);
   }, []);
-
-  // Trocar de página fecha o menu: gaveta aberta sobre a página nova é o
-  // defeito clássico de menu em rota do lado do cliente.
-  useEffect(() => setMenu(false), [caminho]);
 
   return (
     <header className="fixed inset-x-0 top-0 z-60 pt-3 sm:pt-4">

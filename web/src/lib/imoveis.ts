@@ -1,7 +1,7 @@
 import type { NomeCena } from "@/components/cenas";
 import { TELEFONE } from "@/lib/site";
 
-/* Carvalho & Seixas · portfólio de exemplo.
+/* Casuê Rio · portfólio de exemplo.
    Nenhum imóvel aqui é real. Este arquivo é o que a manutenção mensal edita:
    sem banco e sem CRM, a carteira é um módulo TypeScript. A contagem viva
    dos filtros é derivada daqui, e o tipo abaixo é o contrato: faltando campo

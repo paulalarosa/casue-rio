@@ -2,34 +2,138 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-/* Entrada da abertura.
+/* ===========================================================================
+   A DOUTRINA DESTE ARQUIVO, em uma frase: animação nunca pode ser a razão
+   de alguém não ver o site.
 
-   Regra que veio de defeito real: o conteúdo NUNCA parte de opacidade zero.
-   Em aba oculta, pré-render ou painel embutido o quadro não anda, o tween
-   não avança e o texto ficaria invisível para sempre. Aqui só o `y` é
-   animado, então o pior caso é o texto nascer 20px fora do lugar. */
+   Isto já quebrou de dois jeitos diferentes, os dois em produção:
+
+   1. com `ScrollTrigger`, o gatilho não disparou dentro do painel embutido e
+      as dezesseis seções da home ficaram TODAS em opacidade zero;
+   2. com `IntersectionObserver`, existe contexto (miniatura, pré-render) em
+      que o observador nunca entrega entrada, e o efeito é idêntico.
+
+   Daí a regra que divide tudo aqui em duas famílias:
+
+   · 🔴 O que ESCONDE para revelar depois nunca depende do ScrollTrigger. Usa
+     `scroll` + `getBoundingClientRect`, que é evento do navegador com medida
+     síncrona, e ainda leva um cão de guarda: se em 1,6s o elemento continuar
+     escondido e não houver sinal de vida, ele aparece por decreto.
+   · O que só MEXE em coisa já visível (paralaxe, zoom lento, deriva) pode
+     usar ScrollTrigger à vontade, porque o pior caso dele é a peça ficar
+     parada, e peça parada é o site de antes.
+
+   Nada aqui roda com `prefers-reduced-motion: reduce`.
+   ======================================================================== */
+
+/** Só arma animação quando existe janela de verdade e quadro andando. Se o
+ *  `requestAnimationFrame` não dispara, nada disto roda, e o conteúdo fica
+ *  exatamente onde nasceu, visível. Foi a falta desta trava que apagou a
+ *  home inteira uma vez. */
+function comQuadro(armar: () => (() => void) | void) {
+  let cancelado = false;
+  let desfazer: (() => void) | void;
+  requestAnimationFrame(() => {
+    if (cancelado) return;
+    const alt = window.innerHeight;
+    if (!alt || alt < 200) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    desfazer = armar();
+  });
+  return () => {
+    cancelado = true;
+    desfazer?.();
+  };
+}
+
+/** Quebra o texto de um elemento em palavras, cada uma numa máscara própria,
+ *  para a palavra poder subir de dentro da linha em vez de só aparecer.
+ *
+ *  🔴 Só mexe em elemento cujo conteúdo é TEXTO PURO. Título com `<b>`,
+ *  `<Link>` ou qualquer marcação dentro sai inteiro daqui, senão a quebra
+ *  destruiria o link e a ênfase. */
+function emPalavras(el: HTMLElement): HTMLElement[] {
+  if (el.children.length > 0) return [];
+  const texto = el.textContent ?? "";
+  if (!texto.trim()) return [];
+  el.textContent = "";
+  const palavras: HTMLElement[] = [];
+  for (const [i, p] of texto.trim().split(/\s+/).entries()) {
+    const mascara = document.createElement("span");
+    mascara.style.display = "inline-block";
+    mascara.style.overflow = "hidden";
+    mascara.style.verticalAlign = "top";
+    /* 🔴 A máscara corta o que passa da caixa da linha, e a perna do "g", do
+       "q" e a cedilha de "Negócios" passam. Sem esta folga a palavra sobe
+       bonita e chega decapitada por baixo. A margem negativa devolve o
+       espaço para o layout não crescer. */
+    mascara.style.paddingBottom = "0.16em";
+    mascara.style.marginBottom = "-0.16em";
+    const dentro = document.createElement("span");
+    dentro.style.display = "inline-block";
+    dentro.textContent = p;
+    mascara.append(dentro);
+    el.append(mascara);
+    if (i < texto.trim().split(/\s+/).length - 1) el.append(document.createTextNode(" "));
+    palavras.push(dentro);
+  }
+  return palavras;
+}
+
+/* ---------------------------------------------------------------- ABERTURA */
+
+/** Entrada da abertura: o título sobe palavra por palavra de dentro da
+ *  própria linha, a busca vem depois e a ficha do imóvel entra por último,
+ *  vindo da direita, que é o lado de onde ela pertence ao layout.
+ *
+ *  🔴 O `y` é o efeito principal e a opacidade é acessório: mesmo que o
+ *  cronômetro morra no meio, o pior caso é texto 26px fora do lugar, não
+ *  texto invisível. Por isso o `from` sempre parte de `autoAlpha: 0` COM
+ *  `y`, e o cão de guarda abaixo fecha a conta. */
 export function EntradaAbertura({ children }: { children: React.ReactNode }) {
   const raiz = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      /* Só arma DENTRO de um quadro. Se o `requestAnimationFrame` nunca
-         dispara, o `from` nem chega a ser aplicado e o conteúdo fica onde
-         nasceu. Armar fora do quadro é o que deixa página em branco. */
-      requestAnimationFrame(() => {
-        gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
-          gsap
-            .timeline({ defaults: { ease: "power3.out" } })
-            .from("[data-entra='titulo']", { y: 26, duration: 0.65 })
-            .from("[data-entra='linha']", { y: 18, duration: 0.55 }, "-=0.45")
-            .from("[data-entra='frentes']", { y: 14, duration: 0.5 }, "-=0.42")
-            .from("[data-entra='busca']", { y: 24, duration: 0.6 }, "-=0.40")
-            .from("[data-entra='ficha']", { y: 20, duration: 0.55 }, "-=0.38");
-        });
+      const no = raiz.current;
+      if (!no) return;
+      return comQuadro(() => {
+        const titulo = no.querySelector<HTMLElement>("[data-entra='titulo']");
+        const palavras = titulo ? emPalavras(titulo) : [];
+
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+        if (palavras.length) {
+          tl.from(palavras, {
+            yPercent: 115,
+            duration: 0.9,
+            stagger: 0.055,
+          });
+        } else if (titulo) {
+          tl.from(titulo, { y: 26, duration: 0.7 });
+        }
+
+        tl.from("[data-entra='busca']", { y: 26, autoAlpha: 0, duration: 0.6 }, "-=0.45")
+          .from(
+            "[data-entra='ficha']",
+            { x: 44, y: 16, autoAlpha: 0, duration: 0.7 },
+            "-=0.42",
+          );
+
+        /* Cão de guarda: se em 1,6s a linha do tempo não tiver andado, o
+           ambiente não está animando, e aí o estado final entra de uma vez.
+           É isto que garante que nenhum caminho deste arquivo termine com a
+           abertura em branco. */
+        const cao = window.setTimeout(() => {
+          if (tl.progress() < 1) tl.progress(1);
+        }, 1600);
+
+        return () => window.clearTimeout(cao);
       });
     },
     { scope: raiz },
@@ -42,28 +146,21 @@ export function EntradaAbertura({ children }: { children: React.ReactNode }) {
   );
 }
 
-/* Revelação por rolagem, por MEDIÇÃO.
+/* ----------------------------------------------------------------- REVELA */
 
-   🔴 Este bloco já falhou de dois jeitos diferentes, e por isso agora não
-   depende de nada que possa não rodar:
-
-   1. com ScrollTrigger, o gatilho não disparou no painel embutido e as
-      dezesseis seções da home ficaram TODAS em opacidade zero, o que é
-      infinitamente pior do que não ter animação;
-   2. com IntersectionObserver, existe contexto em que o observador nunca
-      entrega entrada (miniatura, pré-render), e o efeito é o mesmo.
-
-   A regra virou: esconder é a EXCEÇÃO, e só acontece depois de o código
-   confirmar que existe viewport de verdade. Quem revela é `scroll` mais
-   `getBoundingClientRect`, que é evento do navegador com medida síncrona,
-   sem quadro, sem observador e sem cache de posição. Se nada disso rodar,
-   o conteúdo simplesmente já está visível. */
+/** Revelação por rolagem, medida.
+ *
+ *  Quem dispara é `scroll` + `getBoundingClientRect`: evento do navegador com
+ *  medida síncrona, sem observador e sem cache de posição, então funciona
+ *  com conteúdo que cresce depois (imagem, fonte). Quem anima é o GSAP, que
+ *  é o que dá o escalonamento e a saída em escala.
+ *
+ *  O `h2` da seção, quando é texto puro, sobe palavra por palavra. É o que
+ *  faz a landing parecer viva sem encher a tela de movimento: o movimento
+ *  fica na hierarquia, no título e nos blocos, não em tudo. */
 export function Revela({
   children,
   className,
-  /* `id` para poder linkar a seção e para o `#ancora` funcionar em teste de
-     rolagem: sem isso não há como fotografar uma faixa específica da página
-     em navegador sem interface. */
   id,
 }: {
   children: React.ReactNode;
@@ -75,73 +172,63 @@ export function Revela({
   useEffect(() => {
     const no = raiz.current;
     if (!no) return;
-    let cancelado = false;
-    let desligar = () => {};
 
-    /* 🔴 Esconder acontece DENTRO de um quadro, e essa é a trava que resolve
-       tudo de uma vez.
+    return comQuadro(() => {
+      const blocos = Array.from(no.querySelectorAll<HTMLElement>("[data-revela]"));
+      const titulo = no.querySelector<HTMLElement>("h2");
+      const palavras = titulo ? emPalavras(titulo) : [];
+      if (!blocos.length && !palavras.length) return;
 
-       Se `requestAnimationFrame` não dispara, o ambiente também não vai
-       rodar transição de CSS (medido: no painel embutido o quadro, o
-       temporizador e a transição estão todos congelados). Nesse caso o
-       callback abaixo nunca roda, nada recebe o estado escondido, e a página
-       aparece inteira. Quando o quadro roda, o compositor está vivo e a
-       revelação anima normalmente.
+      /* Esconder é a EXCEÇÃO e acontece agora, dentro do quadro, com o
+         compositor já provado vivo. */
+      if (palavras.length) gsap.set(palavras, { yPercent: 110 });
+      if (blocos.length) gsap.set(blocos, { y: 34, autoAlpha: 0 });
 
-       Foi por não ter essa trava que as dezesseis seções da home ficaram
-       todas em opacidade zero. */
-    requestAnimationFrame(() => {
-      if (cancelado) return;
-      const alt = window.innerHeight;
-      // Sem viewport não se esconde nada: em altura zero nada voltaria.
-      if (!alt || alt < 200) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-      const alvos = Array.from(no.querySelectorAll<HTMLElement>("[data-revela]"));
-      if (!alvos.length) return;
-
-      /* Esconde primeiro, SEM transição, e só depois liga a animação. A
-         leitura de `offsetHeight` entre as duas coisas força o navegador a
-         aplicar o estado escondido antes de saber que ele é animável: sem
-         isso, o que está na tela aparece e depois desaparece. */
-      alvos.forEach((el) => (el.dataset.oculto = "1"));
-      void no.offsetHeight;
-      alvos.forEach((el) => (el.dataset.anima = "1"));
-
-      let pendentes = alvos.length;
-      const checar = () => {
-        const h = window.innerHeight;
-        for (const el of alvos) {
-          if (el.dataset.oculto !== "1") continue;
-          const r = el.getBoundingClientRect();
-          // Entrou em 92% da tela e ainda não passou por cima: revela.
-          if (r.top < h * 0.92 && r.bottom > 0) {
-            el.dataset.oculto = "0";
-            pendentes--;
-          }
+      let tocou = false;
+      const tocar = () => {
+        if (tocou) return;
+        tocou = true;
+        desligar();
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+        if (palavras.length) {
+          tl.to(palavras, { yPercent: 0, duration: 0.85, stagger: 0.04 });
         }
-        if (pendentes <= 0) desligar();
+        if (blocos.length) {
+          tl.to(
+            blocos,
+            { y: 0, autoAlpha: 1, duration: 0.75, stagger: 0.09 },
+            palavras.length ? "-=0.6" : 0,
+          );
+        }
+        window.setTimeout(() => {
+          if (tl.progress() < 1) tl.progress(1);
+        }, 2400);
       };
 
-      desligar = () => {
+      const checar = () => {
+        const r = no.getBoundingClientRect();
+        // Entrou em 88% da tela e ainda não passou por cima: toca.
+        if (r.top < window.innerHeight * 0.88 && r.bottom > 0) tocar();
+      };
+
+      const desligar = () => {
         window.removeEventListener("scroll", checar);
         window.removeEventListener("resize", checar);
       };
 
-      /* Quem revela é `scroll` mais `getBoundingClientRect`: evento do
-         navegador com medida síncrona, sem observador e sem cache de
-         posição, então funciona com conteúdo que cresce depois (imagem,
-         fonte) e não depende de refresh nenhum. A primeira medição é agora,
-         para o que já está na tela não esperar rolagem. */
+      /* Cão de guarda do bloco: se em 1,6s nada rolou e a seção continua
+         escondida, ela aparece. Cobre aba oculta, pré-render e miniatura. */
+      const cao = window.setTimeout(tocar, 1600);
+
       checar();
       window.addEventListener("scroll", checar, { passive: true });
       window.addEventListener("resize", checar);
-    });
 
-    return () => {
-      cancelado = true;
-      desligar();
-    };
+      return () => {
+        window.clearTimeout(cao);
+        desligar();
+      };
+    });
   }, []);
 
   return (

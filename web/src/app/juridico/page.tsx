@@ -11,6 +11,7 @@ import { CabecaPagina } from "@/components/cabeca-pagina";
 import gradil from "../../../public/video/gradil.webp";
 import { Painel } from "@/components/painel";
 import { metaDaPagina } from "@/lib/site";
+import { arquivo } from "@/lib/caminho";
 
 export const metadata = metaDaPagina({
   titulo: "A compra, do começo ao registro",
@@ -74,7 +75,7 @@ export default function PaginaJuridico() {
       <CabecaPagina
         titulo="A compra, do começo ao registro"
         linha="Entenda o processo antes de precisar dele."
-        video={{ fonte: "/video/gradil.mp4", poster: gradil }}
+        video={{ fonte: arquivo("/video/gradil.mp4"), poster: gradil }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Jurídico" }]}
       />
       {/* O aviso acompanha toda peça de vídeo que mostra fachada, aqui como
