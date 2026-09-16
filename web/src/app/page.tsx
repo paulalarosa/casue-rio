@@ -322,7 +322,7 @@ export default function Home() {
             className="pointer-events-none absolute inset-0 -z-10"
             style={{
               background:
-                "radial-gradient(40% 60% at 15% 10%, rgba(201,162,76,.28), transparent 70%), radial-gradient(45% 65% at 85% 90%, rgba(118,148,189,.3), transparent 72%)",
+                "radial-gradient(40% 60% at 15% 10%, rgba(221,203,170,.24), transparent 70%), radial-gradient(45% 65% at 85% 90%, rgba(154,135,99,.28), transparent 72%)",
             }}
           />
           <figure className="grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-end">
@@ -435,7 +435,7 @@ export default function Home() {
             className="pointer-events-none absolute inset-0 -z-10"
             style={{
               background:
-                "radial-gradient(45% 70% at 80% 20%, rgba(201,162,76,.3), transparent 70%), radial-gradient(50% 70% at 10% 90%, rgba(118,148,189,.28), transparent 72%)",
+                "radial-gradient(45% 70% at 80% 20%, rgba(221,203,170,.26), transparent 70%), radial-gradient(50% 70% at 10% 90%, rgba(154,135,99,.26), transparent 72%)",
             }}
           />
           <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">

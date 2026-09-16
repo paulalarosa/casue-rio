@@ -95,7 +95,7 @@ export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
               className="pointer-events-none absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(to top, rgba(9,22,42,.86) 0%, rgba(9,22,42,.42) 34%, rgba(9,22,42,0) 62%), linear-gradient(to bottom, rgba(9,22,42,.5), transparent 34%)",
+                  "linear-gradient(to top, rgba(10,10,9,.86) 0%, rgba(10,10,9,.42) 34%, rgba(10,10,9,0) 62%), linear-gradient(to bottom, rgba(10,10,9,.5), transparent 34%)",
               }}
             />
             <div className="absolute inset-0 flex flex-col justify-between p-6 text-papel sm:p-9">

@@ -1,5 +1,6 @@
 import { MessageCircle } from "lucide-react";
 import { CabecaPagina } from "@/components/cabeca-pagina";
+import calcadao from "../../../public/video/calcadao.webp";
 import { Painel } from "@/components/painel";
 import { Midia } from "@/components/midia";
 import { FormContato } from "@/components/form-contato";
@@ -16,9 +17,13 @@ export const metadata = metaDaPagina({
 export default function PaginaContato() {
   return (
     <>
+      {/* A onda do calçadão, de cima. É Rio sem ser cartão-postal e sem
+          prometer endereço: a página fala de falar com alguém, não de onde
+          fica, então textura da cidade cabe e fachada não caberia. */}
       <CabecaPagina
         titulo="Falar com a gente"
         linha="Você fala direto com uma das duas. Sem atendente e sem fila."
+        video={{ fonte: "/video/calcadao.mp4", poster: calcadao }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Contato" }]}
       />
 
@@ -117,7 +122,7 @@ export default function PaginaContato() {
               className="pointer-events-none absolute inset-0 -z-10"
               style={{
                 background:
-                  "linear-gradient(to top, rgba(9,22,42,.92) 12%, rgba(9,22,42,.5) 52%, rgba(9,22,42,.1) 100%)",
+                  "linear-gradient(to top, rgba(10,10,9,.92) 12%, rgba(10,10,9,.5) 52%, rgba(10,10,9,.1) 100%)",
               }}
             />
             <span className="rotulo text-areia-300">Onde ficamos</span>

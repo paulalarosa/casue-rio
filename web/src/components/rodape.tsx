@@ -35,7 +35,7 @@ export function Rodape() {
         className="pointer-events-none absolute inset-0 opacity-70"
         style={{
           background:
-            "radial-gradient(50% 60% at 12% 0%, rgba(201,162,76,.16), transparent 70%), radial-gradient(46% 60% at 88% 10%, rgba(118,148,189,.2), transparent 72%)",
+            "radial-gradient(50% 60% at 12% 0%, rgba(221,203,170,.14), transparent 70%), radial-gradient(46% 60% at 88% 10%, rgba(154,135,99,.2), transparent 72%)",
         }}
       />
       <div className="trilho relative grid gap-12 py-20 md:grid-cols-[1.4fr_1fr_1fr_1.1fr]">

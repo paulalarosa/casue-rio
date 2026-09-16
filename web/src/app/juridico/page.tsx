@@ -8,6 +8,7 @@ import {
   Stamp,
 } from "lucide-react";
 import { CabecaPagina } from "@/components/cabeca-pagina";
+import gradil from "../../../public/video/gradil.webp";
 import { Painel } from "@/components/painel";
 import { metaDaPagina } from "@/lib/site";
 
@@ -66,13 +67,22 @@ const ETAPAS = [
 export default function PaginaJuridico() {
   return (
     <>
+      {/* 🔴 Ferro fundido e não papel. Documento em close vira contrato
+          genérico de banco de imagem, e ainda arrisca parecer uma matrícula
+          de verdade numa página que fala de matrícula. O gradil do casario
+          diz solidez, é do Rio e não promete nada. */}
       <CabecaPagina
         titulo="A compra, do começo ao registro"
         linha="Entenda o processo antes de precisar dele."
-        cena="predio"
-        semente="juridico"
+        video={{ fonte: "/video/gradil.mp4", poster: gradil }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Jurídico" }]}
       />
+      {/* O aviso acompanha toda peça de vídeo que mostra fachada, aqui como
+          nos bairros: sem ele, sacada em site de imobiliária vira anúncio de
+          um imóvel que não existe. */}
+      <p className="trilho mt-3 text-sm text-tinta-500">
+        Imagem de ambiente. Não retrata imóvel da carteira.
+      </p>
 
       <div className="secao relative mt-12 bg-tinta-800 text-papel">
         <div className="trilho">
