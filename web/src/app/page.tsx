@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, MessageCircle, Quote } from "lucide-react";
-import { PredioScroll } from "@/components/predio-scroll";
+import { Abertura } from "@/components/abertura";
+import { FaixaVideo } from "@/components/faixa-video";
+import posterSala from "../../public/video/sala.webp";
 import { Busca } from "@/components/busca";
 import { CartaoImovel } from "@/components/cartao-imovel";
 import { Painel } from "@/components/painel";
@@ -8,7 +10,7 @@ import { Cena } from "@/components/cenas";
 import { Midia } from "@/components/midia";
 import { EntradaAbertura, Revela } from "@/components/entrada";
 import { DISPONIVEIS, BAIRROS, REGIOES, IMOVEIS as TODOS, moeda } from "@/lib/imoveis";
-import { SOCIAS } from "@/lib/site";
+import { SOCIAS, SLOGAN } from "@/lib/site";
 
 const FATOS = [
   {
@@ -34,10 +36,9 @@ export default function Home() {
   return (
     <>
       {/* ===================================================== ABERTURA
-          Sequência de rolagem: o prédio de fora, a parede do apartamento
-          girando, e a câmera entrando na sala. O painel de vidro só existe
-          porque tem cidade atrás dele para refratar. */}
-      <PredioScroll>
+          A rua da Zona Sul no fim da tarde, em vídeo. O painel de vidro só
+          existe porque tem cidade atrás dele para refratar. */}
+      <Abertura>
         <EntradaAbertura>
           <Painel variante="escuro" className="max-w-3xl rounded-[1rem] p-8 sm:p-12">
             <h1
@@ -122,7 +123,7 @@ export default function Home() {
             </Link>
           )}
         </EntradaAbertura>
-      </PredioScroll>
+      </Abertura>
 
       {/* ======================================================== FATOS
           Faixa ESCURA de largura total, como o Resido alterna. A home era
@@ -290,6 +291,25 @@ export default function Home() {
           </div>
         </div>
       </Revela>
+
+      {/* ================================================= SLOGAN
+          O slogan da marca, dentro do imóvel. Antes ele fechava a sequência
+          de rolagem, e sumia com ela; aqui ele vira faixa própria e chega
+          DEPOIS de a página ter mostrado o que promete, que é a ordem certa:
+          primeiro a prova, depois a frase. */}
+      <FaixaVideo
+        fonte="/video/sala.mp4"
+        poster={posterSala}
+        altura="min-h-[24rem] sm:min-h-[32rem]"
+      >
+        <p className="font-display text-[clamp(1.8rem,4.4vw,3.2rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-papel">
+          {SLOGAN}
+        </p>
+        <p className="mt-5 max-w-[42ch] text-base text-tinta-200 sm:text-lg">
+          Sem móvel e sem montagem: o imóvel vazio é o que a gente entrega para
+          você imaginar o seu.
+        </p>
+      </FaixaVideo>
 
       {/* =================================================== DEPOIMENTO */}
       <Revela className="trilho secao">

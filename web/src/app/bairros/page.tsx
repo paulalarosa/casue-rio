@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CabecaPagina } from "@/components/cabeca-pagina";
-import { CenaCasa } from "@/components/cena-casa";
+import { FaixaVideo } from "@/components/faixa-video";
+import posterBairros from "../../../public/video/bairros.webp";
 import { Cena } from "@/components/cenas";
 import { BAIRROS, DISPONIVEIS } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
@@ -21,19 +22,29 @@ export default function PaginaBairros() {
         trilha={[{ href: "/", texto: "Início" }, { texto: "Bairros" }]}
       />
 
-      {/* A rua em 3D: um volume por recorte, clicável. O 3D aqui tem função,
-          é o índice da página, e não enfeite de fundo. */}
+      {/* Era uma rua em 3D com um volume clicável por bairro. Saiu, e o que
+          justifica é a própria página: a GRADE de bairros logo abaixo já faz
+          essa navegação, com nome, contagem e descrição. O 3D custava mais de
+          400 kB de pacote para repetir um índice que já existia, e não ligava
+          no celular. O vídeo fica no lugar como ambiente, e quem navega
+          navega pela grade. */}
       <div className="trilho mt-10">
-        <div className="relative isolate aspect-[21/9] overflow-hidden rounded-[1rem] bg-tinta-800 shadow-[var(--shadow-flutua-3)]">
-          <div
-            aria-hidden
-            className="absolute inset-0 -z-10"
-            style={{ background: "linear-gradient(168deg,#14345c,#0a1d38)" }}
-          />
-          <CenaCasa modo="rua" />
-        </div>
+        <FaixaVideo
+          fonte="/video/bairros.mp4"
+          poster={posterBairros}
+          altura="aspect-[21/9] min-h-0"
+          className="rounded-[1rem] shadow-[var(--shadow-flutua-3)]"
+          veu="linear-gradient(to top, rgba(10,10,9,.8), rgba(10,10,9,.46) 55%, rgba(10,10,9,.2))"
+        >
+          <p className="max-w-[26ch] font-display text-[clamp(1.3rem,2.6vw,2rem)] font-semibold leading-tight tracking-[-0.03em] text-papel">
+            Quatro mercados diferentes, quatro contas diferentes.
+          </p>
+        </FaixaVideo>
+        {/* 🔴 O aviso continua, e mudou de texto junto com a peça: a imagem é
+            de ambiente e não retrata imóvel da carteira. Vídeo de fachada num
+            site de imobiliária sem essa linha vira anúncio do que não existe. */}
         <p className="mt-3 text-sm text-tinta-500">
-          Ilustração da marca. Não é imóvel da carteira.
+          Imagem de ambiente. Não retrata imóvel da carteira.
         </p>
       </div>
 
