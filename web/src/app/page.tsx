@@ -372,13 +372,13 @@ export default function Home() {
                 </span>
               </div>
               <div>
-                <span className="rotulo block text-areia-800">
+                <span className="rotulo block text-bronze-500">
                   Sócia · corretora e avaliadora
                 </span>
                 <span className="font-display text-3xl font-bold text-tinta-800">
                   {s.nome}
                 </span>
-                <span className="num mt-2 block text-sm text-tinta-400">
+                <span className="num mt-2 block text-sm text-tinta-500">
                   {s.creci} · {s.cnai}
                 </span>
               </div>
@@ -405,10 +405,10 @@ export default function Home() {
                   className="rounded-[0.75rem] border border-tinta-800/10 bg-tinta-50 px-4 py-3"
                 >
                   <span className="rotulo text-tinta-500">{s.sobrenome}</span>
-                  <span className="num mt-1 block text-sm text-tinta-400">
+                  <span className="num mt-1 block text-sm text-tinta-500">
                     {s.creci}
                   </span>
-                  <span className="num block text-sm text-tinta-400">
+                  <span className="num block text-sm text-tinta-500">
                     {s.cnai}
                   </span>
                 </div>
@@ -450,7 +450,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/contato"
-                className="inline-flex items-center gap-2 rounded-full bg-areia-500 px-7 py-4 font-semibold text-tinta-900 shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5 hover:bg-areia-400"
+                className="inline-flex items-center gap-2 rounded-full bg-terracota-600 px-7 py-4 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5 hover:bg-terracota-700"
               >
                 <MessageCircle className="size-5" aria-hidden />
                 Falar no WhatsApp

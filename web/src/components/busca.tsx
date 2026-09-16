@@ -112,9 +112,9 @@ export function Busca({ variante = "escuro" }: { variante?: "claro" | "escuro" }
             "inline-flex h-full w-full items-center justify-center gap-2 rounded-[0.75rem] px-6 py-4",
             /* Verde, e so aqui: e a acao principal da abertura. Areia e
                plano de fundo, nao botao, e botao cor de fundo nao e botao. */
-            "whitespace-nowrap bg-verde-500 font-semibold text-papel shadow-[var(--shadow-flutua-2)]",
-            "transition-transform duration-300 ease-[var(--ease-saida)] hover:-translate-y-0.5 hover:bg-verde-600",
-            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-verde-300",
+            "whitespace-nowrap bg-terracota-600 font-semibold text-papel shadow-[var(--shadow-flutua-2)]",
+            "transition-transform duration-300 ease-[var(--ease-saida)] hover:-translate-y-0.5 hover:bg-terracota-700",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracota-400",
           )}
         >
           <Search className="size-4" aria-hidden />

@@ -81,7 +81,7 @@ function Item({
       <dt className="rotulo text-tinta-500">{rotulo}</dt>
       <dd
         className={`num ${grande ? "text-2xl font-semibold" : ""} ${
-          vazio ? "text-tinta-400" : "text-tinta-800"
+          vazio ? "text-tinta-500" : "text-tinta-800"
         }`}
       >
         {vazio ? "—" : valor}
@@ -202,12 +202,12 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
           <ul className="mt-7 grid gap-x-10 gap-y-4 sm:grid-cols-2">
             {CONFERIDO.map((linha) => (
               <li key={linha} className="flex gap-3 border-t border-tinta-800/10 pt-4">
-                <Check className="mt-0.5 size-4 shrink-0 text-areia-800" aria-hidden />
+                <Check className="mt-0.5 size-4 shrink-0 text-bronze-500" aria-hidden />
                 <span className="text-tinta-500">{linha}</span>
               </li>
             ))}
           </ul>
-          <p className="mt-6 max-w-[58ch] text-sm text-tinta-400">
+          <p className="mt-6 max-w-[58ch] text-sm text-tinta-500">
             O resultado sai por escrito, antes de qualquer sinal. Se aparecer
             pendência, você fica sabendo antes de decidir.
           </p>
@@ -256,7 +256,7 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
 
           <Compartilhar titulo={`${im.titulo} · ${im.bairro}`} />
 
-          <p className="num mt-6 text-sm text-tinta-400">
+          <p className="num mt-6 text-sm text-tinta-500">
             Código {im.codigo}
             {im.ano ? ` · Ano ${im.ano}` : ""}
           </p>

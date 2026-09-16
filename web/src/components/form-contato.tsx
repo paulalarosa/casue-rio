@@ -133,7 +133,7 @@ export function FormContato() {
       <label className="flex flex-col gap-2">
         <span className="font-semibold text-tinta-800">
           O que você procura{" "}
-          <span className="font-normal text-tinta-400">· opcional</span>
+          <span className="font-normal text-tinta-500">· opcional</span>
         </span>
         <Textarea
           name="mensagem"
@@ -170,7 +170,7 @@ export function FormContato() {
       )}
 
       <Painel className="flex gap-3 border-l-4 border-l-areia-500 p-5 text-sm">
-        <ShieldCheck className="size-5 shrink-0 text-areia-800" aria-hidden />
+        <ShieldCheck className="size-5 shrink-0 text-bronze-500" aria-hidden />
         <span>
           <b className="block text-tinta-800">Não peça documento por aqui.</b>
           Comprovante de renda, RG e certidão a gente recebe em canal próprio, no

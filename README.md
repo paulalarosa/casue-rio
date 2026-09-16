@@ -38,29 +38,43 @@ repo não quebra o site; o que muda é a URL.
 |---|---|
 | Marca | **Casuê Rio** · descritivo **Negócios Imobiliários** |
 | Frase | "Quem mostra o imóvel é quem lê a matrícula." |
-| Display | **Unbounded** (400, 600, 700 · entreletra negativa) |
+| Display | **Unbounded** por enquanto. Em troca: as sócias escolheram uma fina com **A sem travessão**, entre 12 candidatas OFL |
 | Corpo | **Archivo** |
 | Número | **IBM Plex Mono**, tabular |
 | Raio base | `0.5rem` |
 | Símbolo | **ainda não existe.** A marca é só tipográfica, por decisão. |
 
 **Cor** (a fonte de verdade é o bloco `@theme` em `web/src/app/globals.css`;
-nenhum outro arquivo define paleta):
+nenhum outro arquivo define paleta). A paleta virou **terracota** em
+16/09/2026, a pedido das sócias, e o verde Tijuca saiu junto.
 
-- **Tinta**, a rampa neutra e a única — de `#F2F1EE` a `#050504`, com
-  `#111110` de texto e `#45443F` de dado secundário.
-- **Areia** — `#DDCBAA`. Plano, faixa, realce.
-- **Verde Tijuca** — `#1E4D3B`.
-- **Off-white** — `#F6F2E9`, fundo da página.
+| | Hex | Sobre o off-white | Papel sobre ele | Papel |
+|---|---|---|---|---|
+| Areia clara | `#EDE2CB` | 1,2:1 | — | plano claro |
+| **Areia** | `#DDCBAA` | 1,4:1 | — | plano · o par que dá personalidade |
+| Telha | `#C6764E` | 3,1:1 | — | plano quente · texto só em faixa escura (5,4:1) |
+| Argila queimada | `#B85A32` | 4,1:1 | 4,1:1 | plano forte · **reprova nos dois** |
+| **Terracota** | `#A8482A` | **5,2:1** | **5,2:1** | a marca e a ação |
+| Bronze | `#8A5A33` | 5,2:1 | — | rótulo, dado secundário |
+| **Tinta quente** | `#171310` | 16,5:1 | — | texto longo |
+| Off-white | `#F6F2E9` | — | — | fundo da página |
 
-### Três regras que não se negociam
+### Quatro regras que não se negociam
 
-1. 🔴 **Vermelho não entra em lugar nenhum.** Pedido das sócias. Até o estado
-   de erro é tinta escura: o erro fala pelo peso e pelo ícone.
-2. 🔴 **Verde só na ação.** Botão, link, foco, estado ativo. Nunca fundo de
-   seção nem enfeite. Ele só tem força porque aparece pouco.
-3. 🔴 **Areia é plano, nunca texto.** `#DDCBAA` sobre o off-white dá **1,4:1**.
-   Quem pode virar texto pequeno é `#71634A`, medido em **5,24:1**.
+1. 🔴 **Vermelho de sinal não entra em lugar nenhum.** Era pedido das sócias e
+   agora é também impossível: um vermelho de erro ao lado de uma marca
+   terracota seria indistinguível. O estado de erro é tinta escura.
+2. 🔴 **A terracota é a marca E a ação.** O que dá força a ela é não virar
+   fundo de seção: os planos são areia, areia clara e a tinta quente.
+3. 🔴 **`#A8482A` é o único degrau que serve nos dois sentidos.** O de cima,
+   `#B85A32`, dá 4,13:1 de texto sobre o papel **e** 4,13:1 de papel sobre
+   ele, ou seja, reprova como texto e como botão.
+4. 🔴 **Areia é plano, nunca texto**, e **terracota não é texto sobre faixa
+   escura** (3,19:1). Sobre escuro quem fala é a telha (5,37:1) ou a areia.
+   Texto pequeno em claro: bronze `#8A5A33`, medido em 5,23:1.
+
+O estado de repouso de botão sempre **escurece**, nunca clareia: `terracota-500`
+no hover dava 4,13:1 e reprovava justo com o mouse em cima.
 
 ---
 

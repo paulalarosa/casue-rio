@@ -118,7 +118,7 @@ export default function PaginaJuridico() {
             emitir parecer de valor. Serviço à parte da venda, com valor
             combinado antes.
           </p>
-          <p className="mt-4 text-sm text-tinta-400">
+          <p className="mt-4 text-sm text-tinta-500">
             As sócias também são advogadas. É de onde vem a ordem do processo
             aqui: documento antes de proposta, e não o contrário.
           </p>
@@ -158,7 +158,7 @@ export default function PaginaJuridico() {
           </p>
           <Link
             href="/contato"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-areia-500 px-7 py-4 font-semibold text-tinta-900 shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-terracota-600 px-7 py-4 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5 hover:bg-terracota-700"
           >
             <MessageCircle className="size-5" aria-hidden /> Falar com uma sócia
           </Link>

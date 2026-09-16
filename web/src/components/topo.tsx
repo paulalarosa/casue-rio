@@ -77,7 +77,7 @@ export function Topo() {
             className="text-[1.18rem] sm:text-[1.3rem]"
             cores={{
               nome: sobreCena ? "text-papel" : "text-tinta-800",
-              lugar: sobreCena ? "text-areia-400" : "text-areia-800",
+              lugar: sobreCena ? "text-areia-400" : "text-bronze-500",
             }}
           />
         </Link>
@@ -112,9 +112,19 @@ export function Topo() {
           className={cn(
             "ml-auto inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold md:ml-0",
             "shadow-[var(--shadow-flutua-1)] transition-transform duration-300 hover:-translate-y-0.5",
+            /* 🔴 Terracota nos DOIS estados. Antes era areia sobre a cena e
+               tinta depois da rolagem, ou seja, a acao principal do site
+               nunca teve cor. Medido: papel sobre terracota-600 da 5,18:1
+               sobre o claro; sobre a cena escura o botao e um bloco cheio,
+               que pede 3:1 e nao 4,5, e passa.
+
+               🔴 O repouso escurece nos dois estados, nunca clareia: eu
+               tinha posto `terracota-500` no hover e medi 4,13:1 de papel
+               sobre ele, ou seja, o botao REPROVAVA justamente enquanto o
+               mouse estava em cima. Estado de interacao tambem e estado. */
             sobreCena
-              ? "bg-areia-500 text-tinta-900 hover:bg-areia-400"
-              : "bg-tinta-800 text-papel hover:bg-tinta-900",
+              ? "bg-terracota-600 text-papel hover:bg-terracota-700"
+              : "bg-terracota-600 text-papel hover:bg-terracota-700",
           )}
         >
           <MessageCircle className="size-4" aria-hidden />

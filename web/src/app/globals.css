@@ -11,26 +11,40 @@
    anterior, todos parados na marca velha e todos capazes de devolver azul e
    ouro a quem fosse ler por ali. Foram apagados, e estão no histórico.
 
-   A paleta da Casuê Rio é tinta, chumbo, areia e off-white, com um verde
-   que só aparece na ação. Vermelho não entra em lugar nenhum: foi pedido
-   das sócias, e por isso até o estado de erro é tinta escura. */
+   🔴 16/09: a paleta virou TERRACOTA. As sócias pediram "laranja mais para
+   o terracota, argila queimado", com off-white no lugar do branco, e a
+   areia continua sendo o par que dá personalidade. O verde Tijuca saiu:
+   com a terracota assumindo a ação, duas cores de acento brigariam, e a
+   regra que dá força ao acento é ele aparecer pouco.
+
+   A ordem é: areia e areia clara são PLANO, terracota é a MARCA e a AÇÃO,
+   bronze é o rótulo, tinta quente é o texto longo.
+
+   🔴 Vermelho de sinal continua fora, e agora por dois motivos: era pedido
+   das sócias, e um vermelho de erro ao lado de uma marca terracota seria
+   indistinguível. O estado de erro é tinta escura. */
 @theme {
   /* Tinta: a rampa neutra da marca, e a UNICA. Antes havia duas (azul e
      neutro) e a mesma decisao cabia em duas escalas, que e como texto
      apagado acaba com dois cinzas diferentes na mesma pagina.
 
-     Os dois passos que a cliente nomeou moram aqui com o nome dela:
-     `tinta-800` e a tinta (#111110) e `tinta-600` e o chumbo (#45443F). */
-  --color-tinta-50: #f2f1ee;
-  --color-tinta-100: #e3e1dc;
-  --color-tinta-200: #c8c5bd;
-  --color-tinta-300: #a6a29a;
-  --color-tinta-400: #7c7973;
-  --color-tinta-500: #56544f;
-  --color-tinta-600: #45443f;
-  --color-tinta-700: #2a2926;
-  --color-tinta-800: #111110;
-  --color-tinta-900: #050504;
+     🔴 A rampa foi AQUECIDA em 16/09, junto com a virada para terracota:
+     preto neutro ao lado de terracota puxa o cinza para o verde. O desvio
+     de luminancia por degrau ficou abaixo de 0,011, MEDIDO, justamente para
+     nao achatar as ilustracoes de imovel, que separam dia, tarde e noite
+     pela claridade do ceu. Ja aconteceu de um rename achatar as tres.
+
+     `tinta-800` e a tinta quente (#171310), `tinta-600` e o chumbo. */
+  --color-tinta-50: #f4f1eb;
+  --color-tinta-100: #e7e2d9;
+  --color-tinta-200: #cdc6ba;
+  --color-tinta-300: #aba296;
+  --color-tinta-400: #807870;
+  --color-tinta-500: #5a544e;
+  --color-tinta-600: #48423c;
+  --color-tinta-700: #2c2724;
+  --color-tinta-800: #171310;
+  --color-tinta-900: #0a0706;
 
   /* Areia. O passo 500 e a areia da marca (#DDCBAA), que e PLANO, nao
      texto: sobre o off-white ela da 1,4:1. Quem pode virar texto pequeno e
@@ -46,16 +60,33 @@
   --color-areia-800: #71634a;
   --color-areia-900: #4a4132;
 
-  /* Verde Tijuca, e SO NA ACAO: botao, link, foco, estado ativo. Nao e cor
-     de fundo de secao nem de enfeite. E a unica cor do sistema, e ela so
-     tem forca porque aparece pouco. */
-  --color-verde-50: #eaf2ee;
-  --color-verde-100: #d2e3da;
-  --color-verde-300: #7faf9b;
-  --color-verde-400: #3f7c63;
-  --color-verde-500: #1e4d3b;
-  --color-verde-600: #17402f;
-  --color-verde-700: #0f3123;
+  /* TERRACOTA: a marca, e tambem a acao. Os nomes que as socias deram
+     moram nos degraus, para ninguem ter de adivinhar qual e qual:
+       400 telha  ·  500 argila queimada  ·  600 TERRACOTA  ·  700 repouso
+
+     🔴 O 600 (#A8482A) e o unico degrau que serve nos DOIS sentidos sobre o
+     off-white: 5,18:1 de texto sobre ele, e 5,18:1 dele sobre o papel, que
+     e o caso do botao. O 500 da 4,13:1 nos dois e reprova nos dois.
+
+     🔴 Sobre faixa escura a terracota NAO serve para texto: 3,19:1. La quem
+     fala e a telha (5,37:1) ou a areia. */
+  --color-terracota-50: #fdf4f0;
+  --color-terracota-100: #f8e3d9;
+  --color-terracota-200: #efc7b3;
+  --color-terracota-300: #e2a183;
+  --color-terracota-400: #c6764e;
+  --color-terracota-500: #b85a32;
+  --color-terracota-600: #a8482a;
+  --color-terracota-700: #8e3b22;
+  --color-terracota-800: #6e2d1a;
+  --color-terracota-900: #451b10;
+
+  /* BRONZE: o neutro quente que PODE virar texto pequeno, 5,23:1 sobre o
+     off-white. E o lugar do rotulo e do dado secundario, que antes era o
+     `areia-800`. */
+  --color-bronze-400: #a87340;
+  --color-bronze-500: #8a5a33;
+  --color-bronze-600: #6f4828;
 
   /* O papel. Fundo da pagina no claro, e cor do texto sobre banda escura. */
   --color-papel: #f6f2e9;
@@ -146,20 +177,20 @@
   --popover-foreground: #111110;
   /* A acao e VERDE e o texto e a tinta. Botao preto num site inteiro preto
      desaparece: o que separa "leia" de "clique" aqui e a cor, nao o peso. */
-  --primary: #1e4d3b;
+  --primary: #a8482a;
   --primary-foreground: #f6f2e9;
   --secondary: #ede2cb;
   --secondary-foreground: #111110;
   --muted: #f0ece2;
   --muted-foreground: #56544f;
   --accent: #f5efe1;
-  --accent-foreground: #71634a;
+  --accent-foreground: #8a5a33;
   /* Sem vermelho: pedido das socias. O erro fala pelo peso e pelo icone, e
      a cor e a tinta escura, nao um alarme. */
-  --destructive: #2a2926;
+  --destructive: #2c2724;
   --border: #e3ddd0;
   --input: #c8c5bd;
-  --ring: #1e4d3b;
+  --ring: #a8482a;
   --chart-1: #111110;
   --chart-2: #ddcbaa;
   --chart-3: #1e4d3b;
@@ -167,7 +198,7 @@
   --chart-5: #7c7973;
   --sidebar: #f2eee4;
   --sidebar-foreground: #111110;
-  --sidebar-primary: #1e4d3b;
+  --sidebar-primary: #a8482a;
   --sidebar-primary-foreground: #f6f2e9;
   --sidebar-accent: #f5efe1;
   --sidebar-accent-foreground: #71634a;
@@ -333,8 +364,13 @@
     z-index: -1;
     pointer-events: none;
     background:
+      /* 🔴 O segundo foco virou TERRACOTA (terracota-300 a 26%). O campo de
+         luz e a maior superficie colorida do site depois do fundo, e era
+         areia contra areia: dava calor, nao dava marca. Com um foco de cada
+         familia a pagina inteira fica na cor nova sem nenhum bloco chapado,
+         e a areia continua sendo o par, que foi o pedido. */
       radial-gradient(38% 44% at 18% 24%, rgba(221, 203, 170, 0.5), transparent 70%),
-      radial-gradient(42% 50% at 82% 30%, rgba(192, 172, 135, 0.3), transparent 72%),
+      radial-gradient(42% 50% at 82% 30%, rgba(226, 161, 131, 0.26), transparent 72%),
       radial-gradient(50% 40% at 50% 100%, rgba(30, 77, 59, 0.08), transparent 70%);
     filter: blur(6px);
   }

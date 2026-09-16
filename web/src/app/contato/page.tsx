@@ -37,17 +37,17 @@ export default function PaginaContato() {
                   dizia escritório de advocacia, que é o que a cliente pediu
                   para não enfatizar. Monograma diz a pessoa, e não a
                   profissão errada. */}
-              <span className="grid size-14 shrink-0 place-items-center rounded-full bg-tinta-50 font-display text-2xl font-bold text-tinta-800">
+              <span className="grid size-14 shrink-0 place-items-center rounded-full bg-terracota-100 font-display text-2xl font-bold text-terracota-700">
                 {s.inicial}
               </span>
               <span>
-                <span className="rotulo block text-areia-800">
+                <span className="rotulo block text-bronze-500">
                   Sócia · corretora e avaliadora
                 </span>
                 <span className="font-display text-2xl font-bold text-tinta-800">
                   {s.nome}
                 </span>
-                <span className="num mt-1 block text-sm text-tinta-400">
+                <span className="num mt-1 block text-sm text-tinta-500">
                   {s.creci} · {s.cnai}
                 </span>
               </span>

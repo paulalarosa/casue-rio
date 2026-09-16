@@ -95,7 +95,7 @@ export function Vitrine() {
         )}
       >
         {texto}
-        <span className={cn("num text-xs", ativa ? "text-tinta-200" : "text-tinta-400")}>
+        <span className={cn("num text-xs", ativa ? "text-tinta-200" : "text-tinta-500")}>
           {n}
         </span>
       </button>

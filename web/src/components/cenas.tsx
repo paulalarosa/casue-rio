@@ -80,12 +80,19 @@ const HORAS: Hora[] = [
      Aqui as horas voltam a se separar pela claridade do CEU: areia clara de
      dia, areia funda de tarde, tinta de noite. A massa do predio nao muda
      entre as horas, que e o que faz as tres parecerem o mesmo desenho em
-     horarios diferentes, e nao tres desenhos. */
+     horarios diferentes, e nao tres desenhos.
+
+     🔴 16/09: o `topo`, que e a platibanda e a faixa do terreo, virou
+     TERRACOTA. Era `tinta-700` nas tres horas, ou seja, nao separava hora
+     nenhuma: mexer nele nao corre o risco de achatar o dia contra a noite,
+     que e o defeito que ja aconteceu aqui. E telha em predio carioca e
+     terracota de verdade, entao a cor da marca entra como fato e nao como
+     enfeite. A hora escurece o degrau junto com o resto da cena. */
   {
     ceu: cor("areia-200"),
     morro: cor("areia-500"),
     massa: cor("tinta-600"),
-    topo: cor("tinta-700"),
+    topo: cor("terracota-500"),
     parede: cor("tinta-500"),
     vao: cor("tinta-800"),
     luz: cor("areia-300"),
@@ -100,7 +107,7 @@ const HORAS: Hora[] = [
     ceu: cor("areia-400"),
     morro: cor("areia-600"),
     massa: cor("tinta-600"),
-    topo: cor("tinta-700"),
+    topo: cor("terracota-600"),
     parede: cor("tinta-600"),
     vao: cor("tinta-800"),
     luz: cor("areia-200"),
@@ -115,7 +122,7 @@ const HORAS: Hora[] = [
     ceu: cor("tinta-700"),
     morro: cor("tinta-900"),
     massa: cor("tinta-600"),
-    topo: cor("tinta-700"),
+    topo: cor("terracota-800"),
     parede: cor("tinta-700"),
     vao: cor("tinta-900"),
     luz: cor("areia-100"),
@@ -167,7 +174,7 @@ function predio(s: Sorte, h: Hora, L: number) {
   const topo = base - andares * ALTURA_ANDAR;
   const vao = (212 - (colunas - 1) * 14) / colunas;
   const portaX = cx - 60 + s.entre(-54, 54);
-  const toldo = s.um([cor("areia-200"), cor("papel"), cor("areia-300")]);
+  const toldo = s.um([cor("terracota-300"), cor("areia-200"), cor("terracota-200")]);
   const vizE = s.entre(90, 140);
   const vizD = s.entre(100, 150);
 
@@ -296,7 +303,13 @@ function interior(s: Sorte, h: Hora, L: number) {
   const janelao = s.chance(0.5);
   /* O tom da parede também sorteia: duas salas com a mesma parede e a
      mesma janela liam como a mesma sala mesmo com móvel diferente. */
-  const parede = s.um([h.parede, h.massa, h.topo]);
+  /* 🔴 O terceiro sorteio era `h.topo`, e quando o topo virou terracota isso
+     passou a pintar UMA PAREDE INTEIRA de terracota em um a cada tres
+     interiores. Duas coisas erradas de uma vez: contradiz a regra que a
+     terracota entra como telha, que e fato, e nao como enfeite; e cria um
+     ponto fora da curva no meio de uma grade de nove cartoes. Aqui o quente
+     entra fundo, como parede pintada escura, e nao como bloco. */
+  const parede = s.um([h.parede, h.massa, cor("terracota-900")]);
   const jx = cx + (janelao ? s.entre(-30, -4) : s.entre(6, 32));
   const jl = janelao ? s.entre(170, 200) : s.entre(112, 136);
   const jy = janelao ? 38 : s.entre(46, 60);

@@ -154,7 +154,7 @@ export default function PaginaAvaliacao() {
           </p>
           <Link
             href="/contato"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-areia-500 px-7 py-4 font-semibold text-tinta-900 shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-terracota-600 px-7 py-4 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5 hover:bg-terracota-700"
           >
             <MessageCircle className="size-5" aria-hidden /> Pedir uma avaliação
           </Link>

@@ -27,9 +27,13 @@ import { cn } from "@/lib/utils";
 
 type Cores = { nome?: string; lugar?: string; categoria?: string };
 
+/* 🔴 O "Rio" passou a ser TERRACOTA. Antes era areia escura, um neutro que
+   nao dizia nada; agora ele e o unico lugar do lockup que carrega a cor da
+   marca, e e por isso que a assinatura funciona sem simbolo. Medido em
+   5,18:1 sobre o off-white, entao vale como texto de verdade. */
 const PADRAO: Required<Cores> = {
   nome: "text-tinta-800",
-  lugar: "text-areia-800",
+  lugar: "text-terracota-600",
   categoria: "text-tinta-500",
 };
 
