@@ -87,7 +87,7 @@ não pendência esquecida.
 
 ## Vídeo
 
-Seis peças em `web/public/video/`, todas H.264 e sem áudio.
+Dez peças em `web/public/video/`, todas H.264 e sem áudio.
 
 | Arquivo | Onde | Peso |
 |---|---|---|
@@ -97,6 +97,10 @@ Seis peças em `web/public/video/`, todas H.264 e sem áudio.
 | `gradil.mp4` | cabeça de `/juridico` | 304 kB |
 | `calcadao.mp4` | cabeça de `/contato` | 456 kB |
 | `carteira.mp4` | cabeça de `/imoveis` | 615 kB |
+| `avaliacao.mp4` | cabeça de `/avaliacao` | 192 kB |
+| `alameda.mp4` | cabeça de `/bairros/[bairro]` | 595 kB |
+| `parede.mp4` | faixa escura da home | 116 kB |
+| `horizonte.mp4` | chamada final da home | 120 kB |
 
 Regras que valem para qualquer vídeo que entre depois:
 
@@ -104,10 +108,14 @@ Regras que valem para qualquer vídeo que entre depois:
   `basePath` do Next reescreve `<Link>` e `<Image>` importado, mas **não**
   reescreve string que eu escrevi dentro de um atributo. Sem o ajudante o
   vídeo toca em desenvolvimento e dá 404 calado no ar.
-- **O laço fecha de dois jeitos, e a escolha é medida.** Onde a câmera anda
-  devagar, cruzamento de 0,5s entre a cauda e a cabeça. Onde ela anda muito
-  (a aérea de `carteira.mp4`), o cruzamento vira fantasma, e o laço é
-  vai-e-volta.
+- 🔴 **O laço é vai-e-volta por padrão.** Existe um jeito mais bonito, que é
+  cruzar meio segundo da cauda com a cabeça, mas ele só funciona em alguns
+  planos e eu **não consegui construir a régua que diz quais**. Tentei duas:
+  diferença média de luminância (gradil 46,4 e calçadão 49,6 funcionaram, a
+  aérea 47,9 falhou) e diferença de bordas fortes (63,8% / 67,3% contra
+  51,9%). Nenhuma das duas separa os casos. Então: vai-e-volta sempre, que
+  fecha por construção, e cruzamento só onde eu gerei, olhei a emenda e
+  confirmei.
 - 🔴 **Sem WebM.** Medido neste material: o VP9 saiu **maior** que o H.264
   (930 kB contra 858 kB), porque é plano largo, pouco movimento e muita área
   lisa. Dois formatos onde um ganha em tudo é peso sem ganho.

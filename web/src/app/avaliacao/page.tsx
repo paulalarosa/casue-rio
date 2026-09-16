@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ClipboardCheck, MessageCircle, Ruler, ScrollText } from "lucide-react";
 import { CabecaPagina } from "@/components/cabeca-pagina";
+import { arquivo } from "@/lib/caminho";
+import avaliacao from "../../../public/video/avaliacao.webp";
 import { Painel } from "@/components/painel";
 import { SOCIAS, metaDaPagina } from "@/lib/site";
 
@@ -70,10 +72,15 @@ export default function PaginaAvaliacao() {
       <CabecaPagina
         titulo="Avaliação de imóvel"
         linha="Quanto vale, com parecer assinado por quem tem cadastro para assinar."
-        cena="casa"
-        semente="avaliacao"
+        video={{ fonte: arquivo("/video/avaliacao.mp4"), poster: avaliacao }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Avaliação" }]}
       />
+      {/* Cômodo VAZIO, de propósito, como na faixa do slogan. Avaliação é
+          medir o que existe antes de alguém morar ali, e sala mobiliada
+          viraria anúncio de um imóvel que não está à venda. */}
+      <p className="trilho mt-3 text-sm text-tinta-500">
+        Imagem de ambiente. Não retrata imóvel da carteira.
+      </p>
 
       <div className="campo-luz trilho secao relative grid gap-12 lg:grid-cols-[24rem_1fr]">
         <div>

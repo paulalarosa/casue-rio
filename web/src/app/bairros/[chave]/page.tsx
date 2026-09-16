@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CabecaPagina } from "@/components/cabeca-pagina";
+import { arquivo } from "@/lib/caminho";
+import alameda from "../../../../public/video/alameda.webp";
 import { CartaoImovel } from "@/components/cartao-imovel";
 import { BAIRROS, DISPONIVEIS, moeda, retratoDaRegiao } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
@@ -41,11 +43,17 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
 
   return (
     <>
+      {/* 🔴 A alameda de palmeiras imperiais entra no lugar da ilustração
+          POR BAIRRO, e isso tem um custo que vale dizer: as quatro páginas
+          de bairro passam a abrir com o mesmo plano, onde antes cada uma
+          tinha um desenho semeado pela própria chave. Troquei especificidade
+          por presença, porque o desenho semeado nunca retratou o bairro de
+          verdade, e a alameda é vocabulário da cidade inteira. Se elas
+          preferirem o contrário, é uma linha. */}
       <CabecaPagina
         titulo={b.nome}
         linha={b.linha}
-        cena={b.cena}
-        semente={b.chave}
+        video={{ fonte: arquivo("/video/alameda.mp4"), poster: alameda }}
         trilha={[
           { href: "/", texto: "Início" },
           { href: "/bairros", texto: "Bairros" },

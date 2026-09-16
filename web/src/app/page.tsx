@@ -12,6 +12,9 @@ import { EntradaAbertura, Revela } from "@/components/entrada";
 import { DISPONIVEIS, BAIRROS, IMOVEIS as TODOS, moeda } from "@/lib/imoveis";
 import { SOCIAS, SLOGAN } from "@/lib/site";
 import { arquivo } from "@/lib/caminho";
+import { VideoFundo } from "@/components/video-fundo";
+import posterParede from "../../public/video/parede.webp";
+import posterHorizonte from "../../public/video/horizonte.webp";
 
 const FATOS = [
   {
@@ -101,8 +104,26 @@ export default function Home() {
           que dá ritmo sem precisar de mais caixa. Aqui as três linhas são
           numeradas com fio em cima, não cartão: três caixas iguais lado a
           lado é o desenho que mais parece gerado. */}
-      <Revela id="fatos" className="secao-alta relative bg-tinta-800 text-papel">
-        <div className="trilho">
+      {/* A sombra da janela andando na parede: o tempo passando num cômodo
+          vazio, que é literalmente do que esta faixa fala. Abstrato de
+          propósito, porque papel em close viraria contrato de banco de
+          imagem, e ainda arriscaria parecer uma matrícula de verdade. */}
+      <Revela id="fatos" className="secao-alta relative isolate overflow-hidden bg-tinta-800 text-papel">
+        <div aria-hidden className="absolute inset-0 -z-20 opacity-45">
+          <VideoFundo fonte={arquivo("/video/parede.mp4")} poster={posterParede} paralaxe />
+        </div>
+        {/* O véu mantém a faixa legível: 45% de opacidade no vídeo mais este
+            gradiente deixam o texto em papel com a mesma leitura de antes,
+            que era tinta-800 chapado. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{
+            background:
+              "linear-gradient(105deg, rgba(17,17,16,.92) 0%, rgba(17,17,16,.72) 48%, rgba(17,17,16,.58) 100%)",
+          }}
+        />
+        <div className="trilho relative">
           <h2 className="max-w-[22ch] text-[clamp(1.8rem,3.4vw,2.75rem)] text-papel">
             O que acontece antes de você assinar
           </h2>
@@ -398,17 +419,23 @@ export default function Home() {
       </Revela>
 
       {/* ====================================================== CHAMADA */}
+      {/* O horizonte com a silhueta dos Dois Irmãos, no fim do dia e no fim
+          da página. Sai do Cristo e do Pão de Açúcar de propósito: é tão
+          carioca quanto e ninguém do ramo usa. */}
       <Revela className="trilho secao">
         <div
           data-revela
           className="ilha relative isolate overflow-hidden bg-tinta-900 text-papel"
         >
+          <div aria-hidden className="absolute inset-0 -z-20">
+            <VideoFundo fonte={arquivo("/video/horizonte.mp4")} poster={posterHorizonte} paralaxe />
+          </div>
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0 -z-10"
             style={{
               background:
-                "radial-gradient(45% 70% at 80% 20%, rgba(221,203,170,.26), transparent 70%), radial-gradient(50% 70% at 10% 90%, rgba(154,135,99,.26), transparent 72%)",
+                "linear-gradient(100deg, rgba(5,5,4,.93) 0%, rgba(5,5,4,.78) 46%, rgba(5,5,4,.52) 100%)",
             }}
           />
           <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
