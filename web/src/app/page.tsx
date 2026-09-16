@@ -24,7 +24,7 @@ const FATOS = [
   {
     n: "03",
     titulo: "A resposta chega no mesmo dia",
-    texto: "No WhatsApp da Carvalho ou da Seixas. Sem atendente e sem fila.",
+    texto: "No WhatsApp da Débora ou da Alessandra. Sem atendente e sem fila.",
   },
 ];
 
@@ -39,18 +39,18 @@ export default function Home() {
           porque tem cidade atrás dele para refratar. */}
       <PredioScroll>
         <EntradaAbertura>
-          <Painel variante="escuro" className="max-w-3xl rounded-[2.5rem] p-8 sm:p-12">
+          <Painel variante="escuro" className="max-w-3xl rounded-[1rem] p-8 sm:p-12">
             <h1
               data-entra="titulo"
-              className="max-w-[19ch] font-display text-[clamp(1.9rem,min(5.2vw,6.4svh),4.25rem)] leading-[1.03] text-creme"
+              className="max-w-[19ch] font-display text-[clamp(1.9rem,min(5.2vw,6.4svh),4.25rem)] leading-[1.03] text-papel"
             >
               Quem mostra o imóvel é quem lê a matrícula.
             </h1>
             <p
               data-entra="linha"
-              className="mt-4 max-w-[46ch] text-base leading-relaxed text-azul-200 sm:mt-6 sm:text-lg"
+              className="mt-4 max-w-[46ch] text-base leading-relaxed text-tinta-200 sm:mt-6 sm:text-lg"
             >
-              Duas sócias <b className="font-semibold text-creme">corretoras e
+              Duas sócias <b className="font-semibold text-papel">corretoras e
               avaliadoras</b>. A mesma pessoa cuida da visita, da papelada e do
               contrato.
             </p>
@@ -72,10 +72,10 @@ export default function Home() {
                 ["2", "sócias", ", CRECI e CNAI"],
               ].map(([n, rotulo, resto]) => (
                 <div key={rotulo}>
-                  <dt className="num text-2xl font-semibold text-creme sm:text-3xl">
+                  <dt className="num text-2xl font-semibold text-papel sm:text-3xl">
                     {n}
                   </dt>
-                  <dd className="rotulo mt-1 text-azul-200">
+                  <dd className="rotulo mt-1 text-tinta-200">
                     {rotulo}
                     <span className="hidden sm:inline">{resto}</span>
                   </dd>
@@ -96,9 +96,9 @@ export default function Home() {
             <Link
               href={`/imoveis/${destaques[0].codigo}/`}
               data-entra="ficha"
-              className="vidro absolute bottom-24 right-0 hidden w-[19.5rem] items-center gap-4 rounded-3xl p-4 text-creme transition-transform duration-500 ease-[var(--ease-saida)] hover:-translate-y-1 lg:flex"
+              className="vidro absolute bottom-24 right-0 hidden w-[19.5rem] items-center gap-4 rounded-[1rem] p-4 text-papel transition-transform duration-500 ease-[var(--ease-saida)] hover:-translate-y-1 lg:flex"
             >
-              <span className="relative size-20 shrink-0 overflow-hidden rounded-2xl">
+              <span className="relative size-20 shrink-0 overflow-hidden rounded-[0.75rem]">
                 <Midia
                   foto={destaques[0].foto}
                   alt={destaques[0].alt}
@@ -109,13 +109,13 @@ export default function Home() {
                 />
               </span>
               <span className="min-w-0">
-                <span className="rotulo block text-ouro-300">
+                <span className="rotulo block text-areia-300">
                   {destaques[0].bairro} · {destaques[0].codigo}
                 </span>
                 <span className="mt-1 block truncate font-display text-lg font-semibold">
                   {destaques[0].titulo}
                 </span>
-                <span className="num mt-1 block text-sm text-azul-200">
+                <span className="num mt-1 block text-sm text-tinta-200">
                   {moeda(destaques[0].preco)} · {destaques[0].area} m²
                 </span>
               </span>
@@ -130,19 +130,19 @@ export default function Home() {
           que dá ritmo sem precisar de mais caixa. Aqui as três linhas são
           numeradas com fio em cima, não cartão: três caixas iguais lado a
           lado é o desenho que mais parece gerado. */}
-      <Revela id="fatos" className="secao-alta relative bg-azul-800 text-creme">
+      <Revela id="fatos" className="secao-alta relative bg-tinta-800 text-papel">
         <div className="trilho">
-          <h2 className="max-w-[22ch] text-[clamp(1.8rem,3.4vw,2.75rem)] text-creme">
+          <h2 className="max-w-[22ch] text-[clamp(1.8rem,3.4vw,2.75rem)] text-papel">
             O que acontece antes de você assinar
           </h2>
           <div className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
             {FATOS.map((f) => (
               <div key={f.n} data-revela className="border-t border-white/20 pt-6">
-                <span className="num text-sm text-ouro-300">{f.n}</span>
-                <h3 className="mt-3 font-display text-xl leading-tight text-creme">
+                <span className="num text-sm text-areia-300">{f.n}</span>
+                <h3 className="mt-3 font-display text-xl leading-tight text-papel">
                   {f.titulo}
                 </h3>
-                <p className="mt-3 max-w-[34ch] text-azul-200">{f.texto}</p>
+                <p className="mt-3 max-w-[34ch] text-tinta-200">{f.texto}</p>
               </div>
             ))}
           </div>
@@ -154,13 +154,13 @@ export default function Home() {
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">Imóveis em destaque</h2>
-            <p className="mt-3 text-lg text-neutro-600">
+            <p className="mt-3 text-lg text-tinta-500">
               Escolhidos por elas, com documentação conferida.
             </p>
           </div>
           <Link
             href="/imoveis"
-            className="inline-flex items-center gap-2 rounded-full border border-azul-500/15 px-5 py-2.5 text-sm font-semibold text-azul-500 transition-colors hover:bg-azul-500/6"
+            className="inline-flex items-center gap-2 rounded-full border border-tinta-800/15 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
           >
             Ver os {DISPONIVEIS.length} imóveis
             <ArrowRight className="size-4" aria-hidden />
@@ -186,13 +186,13 @@ export default function Home() {
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">Onde a gente atua</h2>
-            <p className="mt-3 text-lg text-neutro-600">
+            <p className="mt-3 text-lg text-tinta-500">
               Três mercados diferentes, três contas diferentes.
             </p>
           </div>
           <Link
             href="/bairros"
-            className="inline-flex items-center gap-2 rounded-full border border-azul-500/15 px-5 py-2.5 text-sm font-semibold text-azul-500 transition-colors hover:bg-azul-500/6"
+            className="inline-flex items-center gap-2 rounded-full border border-tinta-800/15 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
           >
             Ver a rua em 3D
             <ArrowRight className="size-4" aria-hidden />
@@ -207,7 +207,7 @@ export default function Home() {
                 key={b.chave}
                 href={`/bairros/${encodeURIComponent(b.chave)}`}
                 data-revela
-                className="group relative isolate flex min-h-[24rem] flex-col justify-end overflow-hidden rounded-[2rem] p-6 shadow-[var(--shadow-flutua-2)] transition-transform duration-500 ease-[var(--ease-saida)] hover:-translate-y-1.5"
+                className="group relative isolate flex min-h-[24rem] flex-col justify-end overflow-hidden rounded-[0.875rem] p-6 shadow-[var(--shadow-flutua-2)] transition-transform duration-500 ease-[var(--ease-saida)] hover:-translate-y-1.5"
               >
                 <Cena
                   nome={b.cena}
@@ -217,16 +217,16 @@ export default function Home() {
                 />
                 <div
                   aria-hidden
-                  className="absolute inset-0 -z-10 bg-gradient-to-t from-azul-900/85 via-azul-900/25 to-transparent"
+                  className="absolute inset-0 -z-10 bg-gradient-to-t from-tinta-900/85 via-tinta-900/25 to-transparent"
                 />
-                <div className="tinta rounded-[1.5rem] p-5">
-                  <h3 className="font-display text-2xl font-bold text-creme">
+                <div className="tinta rounded-[0.75rem] p-5">
+                  <h3 className="font-display text-2xl font-bold text-papel">
                     {b.nome}
                   </h3>
-                  <span className="num mt-1 block text-sm text-ouro-300">
+                  <span className="num mt-1 block text-sm text-areia-300">
                     {n} {n === 1 ? "imóvel" : "imóveis"}
                   </span>
-                  <p className="mt-3 text-sm text-azul-200">{b.linha}</p>
+                  <p className="mt-3 text-sm text-tinta-200">{b.linha}</p>
                 </div>
               </Link>
             );
@@ -241,7 +241,7 @@ export default function Home() {
             <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">
               O problema quase nunca aparece na visita. Aparece na matrícula.
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-neutro-600">
+            <p className="mt-6 text-lg leading-relaxed text-tinta-500">
               O que trava uma compra não se vê andando pelo apartamento:
               </p>
               <ul className="mt-5 flex flex-wrap gap-2">
@@ -253,26 +253,26 @@ export default function Home() {
                 ].map((r) => (
                   <li
                     key={r}
-                    className="rounded-full border border-azul-500/15 bg-white px-4 py-2 text-sm font-semibold text-azul-500"
+                    className="rounded-full border border-tinta-800/15 bg-white px-4 py-2 text-sm font-semibold text-tinta-800"
                   >
                     {r}
                   </li>
                 ))}
               </ul>
-              <p className="mt-5 text-lg leading-relaxed text-neutro-600">
+              <p className="mt-5 text-lg leading-relaxed text-tinta-500">
                 A gente levanta tudo isso antes da proposta. Quem descobre depois
                 perde o sinal, e às vezes o imóvel.
               </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="/juridico"
-                className="inline-flex items-center gap-2 rounded-full bg-azul-500 px-6 py-3 font-semibold text-creme shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-full bg-tinta-800 px-6 py-3 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
               >
                 Ver as 4 etapas
               </Link>
               <Link
                 href="/contato"
-                className="inline-flex items-center gap-2 rounded-full border border-azul-500/20 px-6 py-3 font-semibold text-azul-500 transition-colors hover:bg-azul-500/6"
+                className="inline-flex items-center gap-2 rounded-full border border-tinta-800/20 px-6 py-3 font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
               >
                 Tirar uma dúvida
               </Link>
@@ -280,7 +280,7 @@ export default function Home() {
           </div>
           <div
             data-revela
-            className="relative aspect-[16/11] overflow-hidden rounded-[2.5rem] shadow-[var(--shadow-flutua-3)]"
+            className="relative aspect-[16/11] overflow-hidden rounded-[1rem] shadow-[var(--shadow-flutua-3)]"
           >
             <Midia
               cena="interior"
@@ -295,7 +295,7 @@ export default function Home() {
       <Revela className="trilho secao">
         <div
           data-revela
-          className="ilha relative isolate overflow-hidden bg-azul-500"
+          className="ilha relative isolate overflow-hidden bg-tinta-800"
         >
           <div
             aria-hidden
@@ -315,14 +315,14 @@ export default function Home() {
                   quem assume: promessa de quem assina o contrato pesa mais
                   que elogio anônimo, e não depende da autorização de
                   ninguém. Depoimento real, quando houver, entra aqui. */}
-              <Quote className="mb-6 size-10 text-ouro-400" aria-hidden />
-              <blockquote className="font-display text-[clamp(1.5rem,2.9vw,2.35rem)] font-semibold leading-tight text-creme">
+              <Quote className="mb-6 size-10 text-areia-400" aria-hidden />
+              <blockquote className="font-display text-[clamp(1.5rem,2.9vw,2.35rem)] font-semibold leading-tight text-papel">
                 Você vai ver a matrícula, as certidões e a dívida do condomínio
                 antes de assinar qualquer coisa. Se aparecer problema, a gente
                 fala antes da proposta.
               </blockquote>
             </div>
-            <figcaption className="border-t border-white/20 pt-5 text-sm text-azul-200">
+            <figcaption className="border-t border-white/20 pt-5 text-sm text-tinta-200">
               Compromisso das sócias, Débora Carvalho e Alessandra Seixas.
             </figcaption>
           </figure>
@@ -332,7 +332,7 @@ export default function Home() {
       {/* ======================================================= SÓCIAS */}
       <Revela className="campo-luz trilho secao relative">
         <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">Quem atende você</h2>
-        <p className="mt-3 text-lg text-neutro-600">
+        <p className="mt-3 text-lg text-tinta-500">
           Você fala direto com uma das duas.
         </p>
 
@@ -346,32 +346,32 @@ export default function Home() {
               {/* Retrato que ainda não existe: painel com a inicial e a
                   especificação da foto que falta. Foto de banco no lugar de
                   uma sócia seria a mentira mais fácil de perceber. */}
-              <div className="relative isolate flex aspect-4/5 items-center justify-center overflow-hidden rounded-[2rem] bg-azul-500 shadow-[var(--shadow-flutua-2)]">
+              <div className="relative isolate flex aspect-4/5 items-center justify-center overflow-hidden rounded-[0.875rem] bg-tinta-800 shadow-[var(--shadow-flutua-2)]">
                 <span
                   aria-hidden
-                  className="font-display text-[9rem] font-bold leading-none text-creme/15"
+                  className="font-display text-[9rem] font-bold leading-none text-papel/15"
                 >
                   {s.inicial}
                 </span>
-                <span className="rotulo absolute inset-x-6 bottom-6 border-t border-white/20 pt-4 text-ouro-300">
+                <span className="rotulo absolute inset-x-6 bottom-6 border-t border-white/20 pt-4 text-areia-300">
                   Retrato da sócia entra aqui · foto vertical 4:5
                 </span>
               </div>
               <div>
-                <span className="rotulo block text-ouro-texto">
+                <span className="rotulo block text-areia-800">
                   Sócia · corretora e avaliadora
                 </span>
-                <span className="font-display text-3xl font-bold text-azul-500">
+                <span className="font-display text-3xl font-bold text-tinta-800">
                   {s.nome}
                 </span>
-                <span className="num mt-2 block text-sm text-neutro-500">
+                <span className="num mt-2 block text-sm text-tinta-400">
                   {s.creci} · {s.cnai}
                 </span>
               </div>
-              <p className="text-neutro-600">{s.linha}</p>
+              <p className="text-tinta-500">{s.linha}</p>
               <Link
                 href="/contato"
-                className="inline-flex w-fit items-center gap-2 rounded-full border border-azul-500/20 px-5 py-2.5 text-sm font-semibold text-azul-500 transition-colors hover:bg-azul-500/6"
+                className="inline-flex w-fit items-center gap-2 rounded-full border border-tinta-800/20 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
               >
                 <MessageCircle className="size-4" aria-hidden />
                 Falar com a {s.sobrenome}
@@ -381,20 +381,20 @@ export default function Home() {
 
           <Painel data-revela className="h-fit p-8">
             <h3 className="font-display text-xl">Registro profissional</h3>
-            <p className="mt-3 text-neutro-600">
+            <p className="mt-3 text-tinta-500">
               Número dá para conferir no conselho. Selo desenhado, não.
             </p>
             <div className="mt-6 space-y-3">
               {SOCIAS.map((s) => (
                 <div
                   key={s.sobrenome}
-                  className="rounded-2xl border border-azul-500/10 bg-neutro-100 px-4 py-3"
+                  className="rounded-[0.75rem] border border-tinta-800/10 bg-tinta-50 px-4 py-3"
                 >
-                  <span className="rotulo text-neutro-600">{s.sobrenome}</span>
-                  <span className="num mt-1 block text-sm text-neutro-500">
+                  <span className="rotulo text-tinta-500">{s.sobrenome}</span>
+                  <span className="num mt-1 block text-sm text-tinta-400">
                     {s.creci}
                   </span>
-                  <span className="num block text-sm text-neutro-500">
+                  <span className="num block text-sm text-tinta-400">
                     {s.cnai}
                   </span>
                 </div>
@@ -408,7 +408,7 @@ export default function Home() {
       <Revela className="trilho secao">
         <div
           data-revela
-          className="ilha relative isolate overflow-hidden bg-azul-700 text-creme"
+          className="ilha relative isolate overflow-hidden bg-tinta-900 text-papel"
         >
           <div
             aria-hidden
@@ -420,24 +420,24 @@ export default function Home() {
           />
           <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
             <div>
-              <h2 className="max-w-[24ch] text-[clamp(1.9rem,4vw,3rem)] text-creme">
+              <h2 className="max-w-[24ch] text-[clamp(1.9rem,4vw,3rem)] text-papel">
                 Diga o bairro, os quartos e o valor.
               </h2>
-              <p className="mt-5 max-w-[46ch] text-azul-200">
+              <p className="mt-5 max-w-[46ch] text-tinta-200">
                 Resposta no mesmo dia, com o que temos e com o que não temos.
               </p>
             </div>
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/contato"
-                className="inline-flex items-center gap-2 rounded-full bg-ouro-500 px-7 py-4 font-semibold text-azul-700 shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5 hover:bg-ouro-400"
+                className="inline-flex items-center gap-2 rounded-full bg-areia-500 px-7 py-4 font-semibold text-tinta-900 shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5 hover:bg-areia-400"
               >
                 <MessageCircle className="size-5" aria-hidden />
                 Falar no WhatsApp
               </Link>
               <Link
                 href="/imoveis"
-                className="vidro inline-flex items-center gap-2 rounded-full px-7 py-4 font-semibold text-creme transition-transform duration-300 hover:-translate-y-0.5"
+                className="vidro inline-flex items-center gap-2 rounded-full px-7 py-4 font-semibold text-papel transition-transform duration-300 hover:-translate-y-0.5"
               >
                 Ver os imóveis
               </Link>

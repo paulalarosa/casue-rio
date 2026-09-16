@@ -74,13 +74,13 @@ export default function PaginaJuridico() {
         trilha={[{ href: "/", texto: "Início" }, { texto: "Jurídico" }]}
       />
 
-      <div className="secao relative mt-12 bg-azul-800 text-creme">
+      <div className="secao relative mt-12 bg-tinta-800 text-papel">
         <div className="trilho">
           <div className="grid gap-6 lg:grid-cols-[1fr_26rem] lg:items-end">
-            <h2 className="text-[clamp(1.8rem,3.4vw,2.8rem)] text-creme">
+            <h2 className="text-[clamp(1.8rem,3.4vw,2.8rem)] text-papel">
               Quatro etapas
             </h2>
-            <p className="max-w-[42ch] text-azul-200">
+            <p className="max-w-[42ch] text-tinta-200">
               A compra só termina no registro. Antes disso o imóvel não é seu, e
               essa é a frase que mais economiza dinheiro.
             </p>
@@ -89,10 +89,10 @@ export default function PaginaJuridico() {
           <ol className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             {ETAPAS.map(({ n, Ic, titulo, texto }) => (
               <li key={n} className="border-t border-white/20 pt-6">
-                <span className="num text-sm text-ouro-300">{n}</span>
-                <Ic className="mt-4 size-6 text-ouro-300" aria-hidden />
-                <h3 className="mt-3 font-display text-xl text-creme">{titulo}</h3>
-                <p className="mt-2 max-w-[34ch] text-azul-200">{texto}</p>
+                <span className="num text-sm text-areia-300">{n}</span>
+                <Ic className="mt-4 size-6 text-areia-300" aria-hidden />
+                <h3 className="mt-3 font-display text-xl text-papel">{titulo}</h3>
+                <p className="mt-2 max-w-[34ch] text-tinta-200">{texto}</p>
               </li>
             ))}
           </ol>
@@ -102,28 +102,28 @@ export default function PaginaJuridico() {
       <div className="campo-luz trilho secao relative grid gap-12 lg:grid-cols-[24rem_1fr]">
         <div>
           <h2 className="text-3xl">Avaliação de imóvel</h2>
-          <p className="mt-4 text-neutro-600">
+          <p className="mt-4 text-tinta-500">
             As duas são avaliadoras cadastradas no CNAI, e é isso que permite
             emitir parecer de valor. Serviço à parte da venda, com valor
             combinado antes.
           </p>
-          <p className="mt-4 text-sm text-neutro-500">
+          <p className="mt-4 text-sm text-tinta-400">
             As sócias também são advogadas. É de onde vem a ordem do processo
             aqui: documento antes de proposta, e não o contrário.
           </p>
           <Link
             href="/avaliacao"
-            className="mt-6 inline-flex items-center gap-2 rounded-full border border-azul-500/20 px-5 py-2.5 text-sm font-semibold text-azul-500 transition-colors hover:bg-azul-500/6"
+            className="mt-6 inline-flex items-center gap-2 rounded-full border border-tinta-800/20 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
           >
             Como funciona a avaliação <ArrowRight className="size-4" aria-hidden />
           </Link>
 
           {/* Prazo não vai para a tela sem regra confirmada. */}
-          <Painel className="mt-8 border-l-4 border-l-ouro-500 p-6">
-            <b className="block font-semibold text-azul-500">
+          <Painel className="mt-8 border-l-4 border-l-areia-500 p-6">
+            <b className="block font-semibold text-tinta-800">
               Prazo depende do caso.
             </b>
-            <span className="mt-1 block text-sm text-neutro-600">
+            <span className="mt-1 block text-sm text-tinta-500">
               Inventário, financiamento e tombamento mudam o prazo. O do seu caso
               a gente diz na primeira conversa.
             </span>
@@ -132,22 +132,22 @@ export default function PaginaJuridico() {
 
         <ul className="grid gap-x-10 gap-y-7 sm:grid-cols-2 lg:self-start">
           {AVALIACAO.map((linha) => (
-            <li key={linha} className="border-t border-azul-500/12 pt-5">
-              <p className="text-[1.05rem] leading-relaxed text-neutro-600">{linha}</p>
+            <li key={linha} className="border-t border-tinta-800/12 pt-5">
+              <p className="text-[1.05rem] leading-relaxed text-tinta-500">{linha}</p>
             </li>
           ))}
         </ul>
       </div>
 
       <div className="trilho pb-8">
-        <div className="ilha relative isolate overflow-hidden bg-azul-500 text-center text-creme">
-          <h2 className="text-3xl text-creme">Dúvida sobre um caso específico?</h2>
-          <p className="mx-auto mt-4 max-w-[46ch] text-azul-200">
+        <div className="ilha relative isolate overflow-hidden bg-tinta-800 text-center text-papel">
+          <h2 className="text-3xl text-papel">Dúvida sobre um caso específico?</h2>
+          <p className="mx-auto mt-4 max-w-[46ch] text-tinta-200">
             Manda a situação no WhatsApp. Resposta rápida é de graça, no mesmo dia.
           </p>
           <Link
             href="/contato"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-ouro-500 px-7 py-4 font-semibold text-azul-700 shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-areia-500 px-7 py-4 font-semibold text-tinta-900 shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
           >
             <MessageCircle className="size-5" aria-hidden /> Falar com uma sócia
           </Link>

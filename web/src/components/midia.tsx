@@ -51,7 +51,7 @@ export function Midia({
         sizes={sizes}
         priority={prioridade}
         loading={prioridade ? undefined : "lazy"}
-        className={`bg-neutro-200 object-cover ${className ?? ""}`}
+        className={`bg-tinta-100 object-cover ${className ?? ""}`}
       />
     );
   }

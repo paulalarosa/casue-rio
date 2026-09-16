@@ -33,7 +33,7 @@ export default function PaginaImoveis() {
       />
       {/* `useSearchParams` precisa de fronteira de suspense: sem ela a página
           inteira vira dinâmica e perde a geração estática. */}
-      <Suspense fallback={<div className="trilho py-24 text-neutro-600">Carregando a carteira…</div>}>
+      <Suspense fallback={<div className="trilho py-24 text-tinta-500">Carregando a carteira…</div>}>
         <Vitrine />
       </Suspense>
     </>

@@ -33,10 +33,10 @@ export function CabecaPagina({
   return (
     <div className="trilho" style={{ paddingTop: "calc(var(--altura-topo) + 1.75rem)" }}>
       <div
-        className={`ilha relative isolate overflow-hidden text-creme ${
+        className={`ilha relative isolate overflow-hidden text-papel ${
           cena
             ? "flex min-h-[22rem] flex-col justify-between shadow-[var(--shadow-flutua-3)] sm:min-h-[26rem]"
-            : "bg-azul-500"
+            : "bg-tinta-800"
         }`}
       >
         {cena && (
@@ -78,13 +78,13 @@ export function CabecaPagina({
         <nav aria-label="Você está aqui" className="mb-7 flex flex-wrap items-center gap-2 text-sm">
           {trilha.map((t, i) => (
             <span key={t.texto} className="flex items-center gap-2">
-              {i > 0 && <ChevronRight className="size-3.5 text-azul-300" aria-hidden />}
+              {i > 0 && <ChevronRight className="size-3.5 text-tinta-300" aria-hidden />}
               {t.href ? (
-                <Link href={t.href} className="text-azul-200 transition-colors hover:text-creme">
+                <Link href={t.href} className="text-tinta-200 transition-colors hover:text-papel">
                   {t.texto}
                 </Link>
               ) : (
-                <span aria-current="page" className="text-creme">
+                <span aria-current="page" className="text-papel">
                   {t.texto}
                 </span>
               )}
@@ -101,17 +101,17 @@ export function CabecaPagina({
               : "grid items-end gap-6 lg:grid-cols-[1fr_26rem]"
           }
         >
-          <h1 className="text-[clamp(2.2rem,4.6vw,3.4rem)] text-creme">{titulo}</h1>
-          <p className={`text-lg text-azul-200 ${cena ? "mt-3" : ""}`}>{linha}</p>
+          <h1 className="text-[clamp(2.2rem,4.6vw,3.4rem)] text-papel">{titulo}</h1>
+          <p className={`text-lg text-tinta-200 ${cena ? "mt-3" : ""}`}>{linha}</p>
         </div>
         {fatos && fatos.length > 0 && (
           <dl className="mt-9 grid max-w-2xl grid-cols-3 gap-5 border-t border-white/18 pt-6">
             {fatos.map((f) => (
               <div key={f.rotulo}>
-                <dt className="num text-2xl font-semibold text-creme sm:text-3xl">
+                <dt className="num text-2xl font-semibold text-papel sm:text-3xl">
                   {f.valor}
                 </dt>
-                <dd className="rotulo mt-1 text-azul-200">{f.rotulo}</dd>
+                <dd className="rotulo mt-1 text-tinta-200">{f.rotulo}</dd>
               </div>
             ))}
           </dl>

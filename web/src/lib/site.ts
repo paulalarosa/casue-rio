@@ -7,12 +7,16 @@
 export const SITE =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000";
 
-/* A marca sem o descritivo. Serve para onde o nome aparece GRANDE, como
-   a marca d'água da abertura: ali "Imóveis" só faria a palavra caber
-   menor. `NOME` continua sendo o nome completo, que é o que vai em título
-   de página, JSON-LD e compartilhamento. */
-export const MARCA = "Carvalho & Seixas";
-export const NOME = `${MARCA} Imóveis`;
+/* A marca sem o descritivo. Serve para onde o nome aparece GRANDE, como a
+   marca d'água da abertura e o título de página: ali o descritivo só faria
+   a palavra caber menor, e "Negócios Imobiliários" em caixa alta espaçada
+   mede mais de dez vezes a altura da letra.
+
+   `NOME` é o nome por extenso, e vale onde a máquina lê: JSON-LD, nome do
+   site no compartilhamento, e o título padrão da home. */
+export const MARCA = "Casuê Rio";
+export const DESCRITIVO = "Negócios Imobiliários";
+export const NOME = `${MARCA} ${DESCRITIVO}`;
 export const DESCRICAO =
   "Imobiliária de duas sócias no Rio, corretoras com CRECI e avaliadoras com CNAI. Compra, venda, temporada e avaliação no Centro, na Tijuca, no Grajaú e na Zona Sul, com a documentação conferida antes da proposta.";
 
@@ -59,7 +63,7 @@ export function metaDaPagina({
     title: titulo,
     description: descricao,
     alternates: { canonical: url },
-    openGraph: { title: `${titulo} · ${NOME}`, description: descricao, url },
+    openGraph: { title: `${titulo} · ${MARCA}`, description: descricao, url },
   };
 }
 

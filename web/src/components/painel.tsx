@@ -17,10 +17,10 @@ export function Painel({
   return (
     <div
       className={cn(
-        "rounded-3xl",
+        "rounded-[1rem]",
         variante === "escuro"
-          ? "vidro text-creme"
-          : "border border-azul-500/10 bg-white/85 shadow-[var(--shadow-flutua-2)]",
+          ? "vidro text-papel"
+          : "border border-tinta-800/10 bg-white/85 shadow-[var(--shadow-flutua-2)]",
         className,
       )}
       {...resto}

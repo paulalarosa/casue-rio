@@ -87,15 +87,15 @@ export function Vitrine() {
         disabled={n === 0 && !ativa}
         className={cn(
           "inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300",
-          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ouro-500",
+          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-areia-500",
           "disabled:cursor-not-allowed disabled:opacity-40",
           ativa
-            ? "bg-azul-500 text-creme shadow-[var(--shadow-flutua-1)]"
-            : "border border-azul-500/15 text-azul-500 hover:bg-azul-500/6",
+            ? "bg-tinta-800 text-papel shadow-[var(--shadow-flutua-1)]"
+            : "border border-tinta-800/15 text-tinta-800 hover:bg-tinta-800/6",
         )}
       >
         {texto}
-        <span className={cn("num text-xs", ativa ? "text-azul-200" : "text-neutro-500")}>
+        <span className={cn("num text-xs", ativa ? "text-tinta-200" : "text-tinta-400")}>
           {n}
         </span>
       </button>
@@ -108,19 +108,19 @@ export function Vitrine() {
           de vista obriga a rolar de volta para trocar de bairro. */}
       <div className="sticky top-20 z-30 mt-10">
         <div className="trilho">
-          <div className="vidro-claro flex flex-wrap items-center gap-x-3 gap-y-3 rounded-[1.75rem] px-5 py-3">
-            <span className="rotulo text-neutro-600">Bairro</span>
+          <div className="vidro-claro flex flex-wrap items-center gap-x-3 gap-y-3 rounded-[0.75rem] px-5 py-3">
+            <span className="rotulo text-tinta-500">Bairro</span>
             {REGIOES.map((r) => pastilha("regiao", r, r))}
-            <span className="rotulo ml-2 text-neutro-600">Finalidade</span>
+            <span className="rotulo ml-2 text-tinta-500">Finalidade</span>
             {FINALIDADES.map(([v, t]) => pastilha("finalidade", v, t))}
 
             <div className="ml-auto flex items-center gap-3">
               <label className="flex items-center gap-2">
-                <span className="rotulo text-neutro-600">Ordem</span>
+                <span className="rotulo text-tinta-500">Ordem</span>
                 <Select value={ordem} onValueChange={(v) => mexer({ ordem: v ?? "selecionados" })}>
                   <SelectTrigger
                     aria-label="Ordenar a lista"
-                    className="h-9 rounded-full border-azul-500/15 bg-transparent px-4 text-sm font-semibold text-azul-500 shadow-none"
+                    className="h-9 rounded-full border-tinta-800/15 bg-transparent px-4 text-sm font-semibold text-tinta-800 shadow-none"
                   >
                     <SelectValue>{(v) => ORDENS[String(v)]?.rotulo}</SelectValue>
                   </SelectTrigger>
@@ -136,8 +136,8 @@ export function Vitrine() {
 
               {/* `aria-live`: quem usa leitor de tela precisa ouvir que a
                   lista mudou, senão o filtro parece não ter feito nada. */}
-              <span aria-live="polite" className="text-sm text-neutro-600">
-                <b className="num text-azul-500">{lista.length}</b>{" "}
+              <span aria-live="polite" className="text-sm text-tinta-500">
+                <b className="num text-tinta-800">{lista.length}</b>{" "}
                 {lista.length === 1 ? "imóvel" : "imóveis"}
               </span>
 
@@ -145,7 +145,7 @@ export function Vitrine() {
                 <button
                   type="button"
                   onClick={() => router.replace("/imoveis", { scroll: false })}
-                  className="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-semibold text-azul-500 transition-colors hover:bg-azul-500/6"
+                  className="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
                 >
                   <X className="size-3.5" aria-hidden /> Limpar
                 </button>
@@ -168,7 +168,7 @@ export function Vitrine() {
              jeito. Carteira curta é o normal aqui, não é erro. */
           <Painel className="mx-auto max-w-xl p-10 text-center">
             <h2 className="text-2xl">Nenhum imóvel com esses filtros</h2>
-            <p className="mt-4 text-neutro-600">
+            <p className="mt-4 text-tinta-500">
               Diga o que você procura. A gente avisa quando entrar, ou procura
               fora da carteira.
             </p>
@@ -176,13 +176,13 @@ export function Vitrine() {
               <button
                 type="button"
                 onClick={() => router.replace("/imoveis", { scroll: false })}
-                className="rounded-full border border-azul-500/20 px-6 py-3 font-semibold text-azul-500 transition-colors hover:bg-azul-500/6"
+                className="rounded-full border border-tinta-800/20 px-6 py-3 font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
               >
                 Limpar filtros
               </button>
               <a
                 href={linkZap()}
-                className="inline-flex items-center gap-2 rounded-full bg-azul-500 px-6 py-3 font-semibold text-creme shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-full bg-tinta-800 px-6 py-3 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
               >
                 <MessageCircle className="size-5" aria-hidden /> Dizer o que procuro
               </a>
@@ -196,13 +196,13 @@ export function Vitrine() {
           da grade, um imóvel que já saiu inflava o número de disponíveis e
           fazia a pessoa clicar num anúncio que não existe mais. */}
       {VENDIDOS.length > 0 && !regiao && !finalidade && (
-        <div className="secao relative bg-azul-800 text-creme">
+        <div className="secao relative bg-tinta-800 text-papel">
           <div className="trilho">
             <div className="grid gap-4 lg:grid-cols-[1fr_26rem] lg:items-end">
-              <h2 className="text-[clamp(1.6rem,3vw,2.4rem)] text-creme">
+              <h2 className="text-[clamp(1.6rem,3vw,2.4rem)] text-papel">
                 Já vendidos
               </h2>
-              <p className="max-w-[42ch] text-azul-200">
+              <p className="max-w-[42ch] text-tinta-200">
                 Saíram da carteira, e ficam aqui porque contam como a gente
                 trabalha. Não entram na contagem de disponíveis.
               </p>

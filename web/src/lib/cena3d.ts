@@ -26,8 +26,11 @@ function aplicarSRGBNoRenderizador(r: THREE.WebGLRenderer) {
   else alvo.encoding = (THREE as unknown as { sRGBEncoding: unknown }).sRGBEncoding;
 }
 
-var CREME = 0xd8d0bb, CREME_ESCURO = 0xc3baa3, GRAFITE = 0x33333a,
-    OURO = 0xc9a24c, LUZ = 0xffb455, FOLHA = 0x123a34, ASFALTO = 0x1b2130;
+/* Nomes de MATERIAL, nao de marca: sao a pedra, o reboco escuro, o ferro,
+   o metal, a luz de poste, a folha e o asfalto da rua. So o metal saiu do
+   ouro velho para a areia da marca, porque aquele era a marca literal. */
+var PEDRA = 0xd8d0bb, PEDRA_ESCURA = 0xc3baa3, FERRO = 0x33333a,
+    METAL = 0xddcbaa, LUZ = 0xffb455, FOLHA = 0x123a34, ASFALTO = 0x1b2130;
 
 export function mat(cor: number, rug?: number, met?: number, chapado?: boolean) {
   return new THREE.MeshStandardMaterial({
@@ -232,8 +235,8 @@ export function fachada(colunas: number, linhas: number, acesas: number) {
 /* ============================================================== CASA */
 function sobrado() {
   var g = new THREE.Group();
-  var mParede = mat(CREME, .95), mDetalhe = mat(CREME_ESCURO, .9),
-      mTelha = mat(GRAFITE, .78, .06, true), mMetal = mat(OURO, .42, .55),
+  var mParede = mat(PEDRA, .95), mDetalhe = mat(PEDRA_ESCURA, .9),
+      mTelha = mat(FERRO, .78, .06, true), mMetal = mat(METAL, .42, .55),
       mSoco = mat(0x2c3038, .9), mPorta = mat(0x243b5c, .6, .1);
   var L = 26, P = 16, H = 13.2, jan: THREE.Group[] = [];
 
@@ -327,8 +330,8 @@ function predio(andares: number, largura: number, fundura: number, acesas: numbe
   g.add(caixa(largura, H, fundura, mFach, 0, H / 2 + 4.4, 0));
   // Térreo de loja, platibanda e caixa d'água: é o que faz prédio carioca.
   g.add(caixa(largura + .6, 4.4, fundura + .6, mat(0x1a2c46, .85), 0, 2.2, 0));
-  g.add(caixa(largura + .9, 1.6, fundura + .9, mat(CREME_ESCURO, .9), 0, H + 5.2, 0));
-  var cx = new THREE.Mesh(new THREE.CylinderGeometry(1.9, 1.9, 3, 14), mat(CREME_ESCURO, .9));
+  g.add(caixa(largura + .9, 1.6, fundura + .9, mat(PEDRA_ESCURA, .9), 0, H + 5.2, 0));
+  var cx = new THREE.Mesh(new THREE.CylinderGeometry(1.9, 1.9, 3, 14), mat(PEDRA_ESCURA, .9));
   cx.position.set(largura / 4, H + 7.5, 0);
   cx.castShadow = true;
   g.add(cx);
@@ -347,8 +350,8 @@ function predio(andares: number, largura: number, fundura: number, acesas: numbe
 function torre(andares: number, largura: number, fundura: number, acesas: number) {
   var g = predio(andares, largura, fundura, acesas), i, gr;
   for (i = 2; i < andares; i += 2) {
-    g.add(caixa(largura + 1.4, .34, 2.4, mat(CREME_ESCURO, .9), 0, 4.4 + i * 3.2, fundura / 2 + .9));
-    gr = grade(largura + 1.2, 1.1, mat(OURO, .45, .5), 1.3);
+    g.add(caixa(largura + 1.4, .34, 2.4, mat(PEDRA_ESCURA, .9), 0, 4.4 + i * 3.2, fundura / 2 + .9));
+    gr = grade(largura + 1.2, 1.1, mat(METAL, .45, .5), 1.3);
     gr.position.set(0, 4.4 + i * 3.2 + .2, fundura / 2 + 2);
     g.add(gr);
   }
@@ -361,11 +364,11 @@ function placa(texto: string) {
   var c = document.createElement('canvas');
   c.width = 512; c.height = 128;
   var x = c.getContext('2d')!;
-  x.font = '600 62px "Josefin Sans", system-ui, sans-serif';
+  x.font = '700 58px Unbounded, "Century Gothic", system-ui, sans-serif';
   x.textAlign = 'center'; x.textBaseline = 'middle';
-  x.fillStyle = '#f3efe4';
+  x.fillStyle = '#f6f2e9';
   x.fillText(texto, 256, 52);
-  x.fillStyle = '#c9a24c';
+  x.fillStyle = '#ddcbaa';
   x.fillRect(196, 98, 120, 5);
   var t = new THREE.CanvasTexture(c);
   aplicarSRGB(t);

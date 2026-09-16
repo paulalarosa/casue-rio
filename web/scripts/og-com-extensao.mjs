@@ -1,7 +1,7 @@
 /* Dá extensão .png às imagens de compartilhamento geradas.
 
    🔴 O Next exporta a rota de imagem como um arquivo SEM EXTENSÃO
-   (`out/imoveis/CS-0142/opengraph-image`). Hospedagem estática decide o
+   (`out/imoveis/CR-0142/opengraph-image`). Hospedagem estática decide o
    tipo do conteúdo pela extensão: no GitHub Pages esse arquivo sai como
    `application/octet-stream`, e WhatsApp, LinkedIn e Facebook descartam
    imagem que não vem como imagem. O cartão do imóvel simplesmente não

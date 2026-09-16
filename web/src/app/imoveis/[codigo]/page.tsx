@@ -75,13 +75,13 @@ function Item({
   return (
     <div
       className={`flex flex-col gap-1 ${
-        fio ? "sm:border-l sm:border-azul-500/10 sm:pl-6" : ""
+        fio ? "sm:border-l sm:border-tinta-800/10 sm:pl-6" : ""
       }`}
     >
-      <dt className="rotulo text-neutro-600">{rotulo}</dt>
+      <dt className="rotulo text-tinta-500">{rotulo}</dt>
       <dd
         className={`num ${grande ? "text-2xl font-semibold" : ""} ${
-          vazio ? "text-neutro-500" : "text-azul-500"
+          vazio ? "text-tinta-400" : "text-tinta-800"
         }`}
       >
         {vazio ? "—" : valor}
@@ -158,14 +158,14 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
               {/* Região só quando ela ACRESCENTA: na Tijuca o bairro e a
                   região têm o mesmo nome, e "Tijuca · Tijuca" lê como
                   defeito de dado. */}
-              <span className="rotulo text-ouro-300">
+              <span className="rotulo text-areia-300">
                 {im.bairro}
                 {im.bairro !== im.regiao ? ` · ${im.regiao}` : ""} · {im.codigo}
               </span>
-              <h1 className="mt-2 font-display text-[clamp(1.7rem,4vw,3.1rem)] leading-[1.05] text-creme">
+              <h1 className="mt-2 font-display text-[clamp(1.7rem,4vw,3.1rem)] leading-[1.05] text-papel">
                 {im.titulo}
               </h1>
-              <span className="num mt-3 block font-display text-2xl font-bold text-creme sm:text-3xl">
+              <span className="num mt-3 block font-display text-2xl font-bold text-papel sm:text-3xl">
                 {moeda(im.preco)}
                 {im.porNoite && <span className="text-lg"> / noite</span>}
               </span>
@@ -177,7 +177,7 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
       {/* Fita de especificação: número grande com fio entre as colunas. É a
           primeira coisa que quem procura imóvel compara, e estava dentro de
           uma lista de definição no meio da página. */}
-      <dl className="trilho mt-10 grid grid-cols-2 gap-y-8 border-y border-azul-500/12 py-8 sm:grid-cols-3 lg:grid-cols-6">
+      <dl className="trilho mt-10 grid grid-cols-2 gap-y-8 border-y border-tinta-800/12 py-8 sm:grid-cols-3 lg:grid-cols-6">
         {(
           [
             ["Área útil", `${im.area} m²`],
@@ -194,20 +194,20 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
 
       <div className="trilho secao grid items-start gap-12 lg:grid-cols-[1.55fr_1fr]">
         <div>
-          <p className="max-w-[62ch] text-[clamp(1.05rem,1.5vw,1.35rem)] leading-relaxed text-neutro-600">
+          <p className="max-w-[62ch] text-[clamp(1.05rem,1.5vw,1.35rem)] leading-relaxed text-tinta-500">
             {im.resumo}
           </p>
 
           <h2 className="mt-14 text-2xl">O que a gente confere antes da proposta</h2>
           <ul className="mt-7 grid gap-x-10 gap-y-4 sm:grid-cols-2">
             {CONFERIDO.map((linha) => (
-              <li key={linha} className="flex gap-3 border-t border-azul-500/10 pt-4">
-                <Check className="mt-0.5 size-4 shrink-0 text-ouro-texto" aria-hidden />
-                <span className="text-neutro-600">{linha}</span>
+              <li key={linha} className="flex gap-3 border-t border-tinta-800/10 pt-4">
+                <Check className="mt-0.5 size-4 shrink-0 text-areia-800" aria-hidden />
+                <span className="text-tinta-500">{linha}</span>
               </li>
             ))}
           </ul>
-          <p className="mt-6 max-w-[58ch] text-sm text-neutro-500">
+          <p className="mt-6 max-w-[58ch] text-sm text-tinta-400">
             O resultado sai por escrito, antes de qualquer sinal. Se aparecer
             pendência, você fica sabendo antes de decidir.
           </p>
@@ -215,10 +215,10 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
           {bairro && (
             <>
               <h2 className="mt-14 text-2xl">Sobre o {bairro.nome}</h2>
-              <p className="mt-5 max-w-[62ch] text-neutro-600">{bairro.texto}</p>
+              <p className="mt-5 max-w-[62ch] text-tinta-500">{bairro.texto}</p>
               <Link
                 href={`/bairros/${encodeURIComponent(bairro.chave)}/`}
-                className="mt-6 inline-flex items-center gap-2 rounded-full border border-azul-500/20 px-5 py-2.5 text-sm font-semibold text-azul-500 transition-colors hover:bg-azul-500/6"
+                className="mt-6 inline-flex items-center gap-2 rounded-full border border-tinta-800/20 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
               >
                 Ver o {bairro.nome} <ArrowRight className="size-4" aria-hidden />
               </Link>
@@ -228,43 +228,43 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
 
         {/* A coluna de preço acompanha a rolagem: é a ação da página. */}
         <Painel className="sticky top-28 p-8">
-          <span className="font-display text-4xl font-bold text-azul-500">
+          <span className="font-display text-4xl font-bold text-tinta-800">
             {moeda(im.preco)}
             {im.porNoite && <span className="text-lg"> / noite</span>}
           </span>
           <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
             <div className="flex items-baseline gap-2">
-              <dt className="text-neutro-600">Condomínio</dt>
-              <dd className="num text-grafite">{moeda(im.condominio || null)}</dd>
+              <dt className="text-tinta-500">Condomínio</dt>
+              <dd className="num text-tinta-600">{moeda(im.condominio || null)}</dd>
             </div>
             <div className="flex items-baseline gap-2">
-              <dt className="text-neutro-600">IPTU</dt>
-              <dd className="num text-grafite">{moeda(im.iptu)}</dd>
+              <dt className="text-tinta-500">IPTU</dt>
+              <dd className="num text-tinta-600">{moeda(im.iptu)}</dd>
             </div>
           </dl>
 
           <a
             href={linkZap(im)}
-            className="mt-7 flex w-full items-center justify-center gap-2 rounded-full bg-azul-500 px-6 py-4 font-semibold text-creme shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
+            className="mt-7 flex w-full items-center justify-center gap-2 rounded-full bg-tinta-800 px-6 py-4 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
           >
             <MessageCircle className="size-5" aria-hidden /> Falar sobre este imóvel
           </a>
-          <p className="mt-3 flex items-center gap-2 text-sm text-neutro-600">
+          <p className="mt-3 flex items-center gap-2 text-sm text-tinta-500">
             <span className="size-2 rounded-full bg-[#1F6B4A]" aria-hidden />
             Resposta em minutos, das 9h às 19h.
           </p>
 
           <Compartilhar titulo={`${im.titulo} · ${im.bairro}`} />
 
-          <p className="num mt-6 text-sm text-neutro-500">
+          <p className="num mt-6 text-sm text-tinta-400">
             Código {im.codigo}
             {im.ano ? ` · Ano ${im.ano}` : ""}
           </p>
 
-          <div className="mt-7 flex gap-3 rounded-2xl border-l-4 border-l-azul-400 bg-azul-50 p-5 text-sm">
-            <ShieldCheck className="size-5 shrink-0 text-azul-500" aria-hidden />
+          <div className="mt-7 flex gap-3 rounded-[0.75rem] border-l-4 border-l-tinta-400 bg-tinta-50 p-5 text-sm">
+            <ShieldCheck className="size-5 shrink-0 text-tinta-800" aria-hidden />
             <span>
-              <b className="block text-azul-500">
+              <b className="block text-tinta-800">
                 Condomínio e IPTU informados pelo proprietário.
               </b>
               A gente confere na documentação antes da proposta.
@@ -279,7 +279,7 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
             <h2 className="text-3xl">Também em {im.regiao}</h2>
             <Link
               href={`/imoveis?regiao=${encodeURIComponent(im.regiao)}`}
-              className="inline-flex items-center gap-2 rounded-full border border-azul-500/15 px-5 py-2.5 text-sm font-semibold text-azul-500 transition-colors hover:bg-azul-500/6"
+              className="inline-flex items-center gap-2 rounded-full border border-tinta-800/15 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
             >
               Ver todos <ArrowRight className="size-4" aria-hidden />
             </Link>

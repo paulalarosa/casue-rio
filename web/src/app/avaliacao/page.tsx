@@ -78,7 +78,7 @@ export default function PaginaAvaliacao() {
       <div className="campo-luz trilho secao relative grid gap-12 lg:grid-cols-[24rem_1fr]">
         <div>
           <h2 className="text-3xl">Quem assina</h2>
-          <p className="mt-4 text-neutro-600">
+          <p className="mt-4 text-tinta-500">
             As duas sócias são avaliadoras cadastradas no CNAI, e é esse cadastro
             que permite emitir parecer de valor. O número dá para conferir.
           </p>
@@ -86,23 +86,23 @@ export default function PaginaAvaliacao() {
             {SOCIAS.map((s) => (
               <div
                 key={s.sobrenome}
-                className="rounded-2xl border border-azul-500/10 bg-neutro-100 px-5 py-4"
+                className="rounded-[0.75rem] border border-tinta-800/10 bg-tinta-50 px-5 py-4"
               >
-                <span className="block font-display text-lg font-semibold text-azul-500">
+                <span className="block font-display text-lg font-semibold text-tinta-800">
                   {s.nome}
                 </span>
-                <span className="num mt-1 block text-sm text-neutro-600">
+                <span className="num mt-1 block text-sm text-tinta-500">
                   {s.cnai} · {s.creci}
                 </span>
               </div>
             ))}
           </div>
           {/* Nem prazo nem valor na tela: os dois dependem do caso. */}
-          <Painel className="mt-8 border-l-4 border-l-ouro-500 p-6">
-            <b className="block font-semibold text-azul-500">
+          <Painel className="mt-8 border-l-4 border-l-areia-500 p-6">
+            <b className="block font-semibold text-tinta-800">
               Prazo e valor, combinados antes.
             </b>
-            <span className="mt-1 block text-sm text-neutro-600">
+            <span className="mt-1 block text-sm text-tinta-500">
               Dependem do tipo do imóvel e da finalidade do parecer. A gente diz
               na primeira conversa, antes de começar.
             </span>
@@ -113,25 +113,25 @@ export default function PaginaAvaliacao() {
           <h2 className="text-3xl">Quando você precisa</h2>
           <ul className="mt-8 grid gap-x-10 gap-y-7 sm:grid-cols-2">
             {QUANDO.map((q) => (
-              <li key={q.titulo} className="border-t border-azul-500/12 pt-5">
+              <li key={q.titulo} className="border-t border-tinta-800/12 pt-5">
                 <h3 className="font-display text-xl leading-tight">{q.titulo}</h3>
-                <p className="mt-2 text-neutro-600">{q.texto}</p>
+                <p className="mt-2 text-tinta-500">{q.texto}</p>
               </li>
             ))}
           </ul>
         </div>
       </div>
 
-      <div className="secao relative bg-azul-800 text-creme">
+      <div className="secao relative bg-tinta-800 text-papel">
         <div className="trilho">
-          <h2 className="text-[clamp(1.7rem,3vw,2.5rem)] text-creme">Como funciona</h2>
+          <h2 className="text-[clamp(1.7rem,3vw,2.5rem)] text-papel">Como funciona</h2>
           <div className="mt-10 grid gap-10 md:grid-cols-3 md:gap-8">
             {COMO.map(({ n, Ic, titulo, texto }) => (
               <div key={n} className="border-t border-white/20 pt-6">
-                <span className="num text-sm text-ouro-300">{n}</span>
-                <Ic className="mt-4 size-6 text-ouro-300" aria-hidden />
-                <h3 className="mt-3 font-display text-xl text-creme">{titulo}</h3>
-                <p className="mt-2 max-w-[34ch] text-azul-200">{texto}</p>
+                <span className="num text-sm text-areia-300">{n}</span>
+                <Ic className="mt-4 size-6 text-areia-300" aria-hidden />
+                <h3 className="mt-3 font-display text-xl text-papel">{titulo}</h3>
+                <p className="mt-2 max-w-[34ch] text-tinta-200">{texto}</p>
               </div>
             ))}
           </div>
@@ -139,15 +139,15 @@ export default function PaginaAvaliacao() {
       </div>
 
       <div className="trilho secao pb-8">
-        <div className="ilha relative isolate overflow-hidden bg-azul-500 text-center text-creme">
-          <h2 className="text-3xl text-creme">Precisa de um valor defensável?</h2>
-          <p className="mx-auto mt-4 max-w-[46ch] text-azul-200">
+        <div className="ilha relative isolate overflow-hidden bg-tinta-800 text-center text-papel">
+          <h2 className="text-3xl text-papel">Precisa de um valor defensável?</h2>
+          <p className="mx-auto mt-4 max-w-[46ch] text-tinta-200">
             Diga o imóvel e para que serve o parecer. A gente responde com prazo e
             valor antes de começar.
           </p>
           <Link
             href="/contato"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-ouro-500 px-7 py-4 font-semibold text-azul-700 shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-areia-500 px-7 py-4 font-semibold text-tinta-900 shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
           >
             <MessageCircle className="size-5" aria-hidden /> Pedir uma avaliação
           </Link>

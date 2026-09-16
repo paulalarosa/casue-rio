@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import { IMOVEIS, moeda } from "@/lib/imoveis";
-import { MARCA, FRASE } from "@/lib/site";
+import { MARCA, NOME, DESCRITIVO, FRASE } from "@/lib/site";
 
 /* Imagem de compartilhamento POR IMÓVEL.
 
@@ -15,7 +15,7 @@ import { MARCA, FRASE } from "@/lib/site";
    cor e do fio dourado. */
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Imóvel na Carvalho & Seixas Imóveis";
+export const alt = `Imóvel na ${NOME}`;
 
 export function generateStaticParams() {
   return IMOVEIS.map((im) => ({ codigo: im.codigo }));
@@ -25,9 +25,9 @@ export default async function Imagem({ params }: PageProps<"/imoveis/[codigo]">)
   const { codigo } = await params;
   const im = IMOVEIS.find((x) => x.codigo === codigo);
 
-  const AZUL = "#163864";
-  const CREME = "#F3EFE4";
-  const OURO = "#C9A24C";
+  const TINTA = "#111110";
+  const PAPEL = "#F6F2E9";
+  const AREIA = "#DDCBAA";
 
   const ficha = im
     ? [
@@ -47,14 +47,14 @@ export default async function Imagem({ params }: PageProps<"/imoveis/[codigo]">)
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: AZUL,
+          background: TINTA,
           padding: 72,
-          color: CREME,
+          color: PAPEL,
           fontSize: 32,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <div style={{ width: 56, height: 8, background: OURO }} />
+          <div style={{ width: 56, height: 8, background: AREIA }} />
           <div style={{ display: "flex", fontSize: 26, letterSpacing: 4, textTransform: "uppercase" }}>
             {im ? `${im.bairro} · ${im.codigo}` : MARCA}
           </div>
@@ -69,7 +69,7 @@ export default async function Imagem({ params }: PageProps<"/imoveis/[codigo]">)
               {/* 🔴 Texto montado ANTES: o Satori exige `display` explícito em
                   div com mais de um filho, e duas expressões seguidas viram
                   dois nós de texto. O build inteiro para por causa disso. */}
-              <div style={{ display: "flex", fontSize: 58, fontWeight: 700, color: OURO }}>
+              <div style={{ display: "flex", fontSize: 58, fontWeight: 700, color: AREIA }}>
                 {`${moeda(im.preco)}${im.porNoite ? " / noite" : ""}`}
               </div>
               <div style={{ display: "flex", fontSize: 30, opacity: 0.82 }}>{ficha.join(" · ")}</div>
@@ -82,11 +82,29 @@ export default async function Imagem({ params }: PageProps<"/imoveis/[codigo]">)
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            borderTop: `2px solid rgba(243,239,228,.24)`,
+            borderTop: `2px solid rgba(246,242,233,.24)`,
             paddingTop: 26,
           }}
         >
-          <div style={{ display: "flex", fontSize: 34, fontWeight: 700 }}>{MARCA} Imóveis</div>
+          {/* Marca e descritivo empilhados, na mesma proporção do lockup do
+              site: nome grande e "Negócios Imobiliários" em caixa alta
+              espaçada, bem menor. */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <div style={{ display: "flex", fontSize: 34, fontWeight: 700, letterSpacing: -1 }}>
+              {MARCA}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 17,
+                letterSpacing: 4,
+                textTransform: "uppercase",
+                color: AREIA,
+              }}
+            >
+              {DESCRITIVO}
+            </div>
+          </div>
           <div style={{ display: "flex", fontSize: 26, opacity: 0.78 }}>
             Documentação conferida antes da proposta
           </div>

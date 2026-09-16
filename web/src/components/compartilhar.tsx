@@ -42,7 +42,7 @@ export function Compartilhar({ titulo }: { titulo: string }) {
   }
 
   const botao =
-    "inline-flex items-center gap-2 rounded-full border border-azul-500/20 px-4 py-2.5 text-sm font-semibold text-azul-500 transition-colors hover:bg-azul-500/6";
+    "inline-flex items-center gap-2 rounded-full border border-tinta-800/20 px-4 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6";
 
   return (
     <div className="mt-6 flex flex-wrap items-center gap-2" data-sem-impressao>
@@ -66,7 +66,7 @@ export function Compartilhar({ titulo }: { titulo: string }) {
         <Printer className="size-4" aria-hidden /> Imprimir ou salvar em PDF
       </button>
       {copiado === "falhou" && (
-        <span role="status" className="text-sm text-neutro-600">
+        <span role="status" className="text-sm text-tinta-500">
           O navegador não deixou copiar. O endereço está na barra de cima.
         </span>
       )}

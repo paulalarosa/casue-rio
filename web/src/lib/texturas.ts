@@ -296,7 +296,7 @@ export function fachadaRica(
   };
 }
 
-/** Toldo de lona listrada: creme e azul da marca, com costura no meio. */
+/** Toldo de lona listrada: papel e azul da marca, com costura no meio. */
 export function lona(nitidez: number): Pele {
   const L = 256;
   const { c, x } = tela(L, 64);
@@ -393,15 +393,15 @@ export function ceuDaTarde(): THREE.Texture {
      na esfera é o fundo, embaixo dos pés: o céu continuou chapado no
      quadro inteiro e eu procurei defeito no material. */
   const g = x.createLinearGradient(0, 0, 0, A);
-  g.addColorStop(0, "#091530");
-  g.addColorStop(0.24, "#102244");
-  g.addColorStop(0.4, "#26365c");
-  g.addColorStop(0.46, "#6b5a73");
+  g.addColorStop(0, "#0b0d14");
+  g.addColorStop(0.24, "#161826");
+  g.addColorStop(0.4, "#2d2a3a");
+  g.addColorStop(0.46, "#6d5660");
   g.addColorStop(0.49, "#c98d5e");
   g.addColorStop(0.505, "#f2c286");
   g.addColorStop(0.53, "#7a5a52");
-  g.addColorStop(0.62, "#1d2a42");
-  g.addColorStop(1, "#0c1526");
+  g.addColorStop(0.62, "#251f2b");
+  g.addColorStop(1, "#100e14");
   x.fillStyle = g;
   x.fillRect(0, 0, L, A);
   // Estrelas só no alto: perto do horizonte a luz do sol ainda apaga.
@@ -552,7 +552,7 @@ export function tecido(cor: string, nitidez: number, r = 3): Pele {
 
 /* ------------------------------------------------------------- JANELA
    Vidro de cor chapada é o que mais denuncia render, e aceso é pior: o
-   mapeamento de tom estoura o retângulo e sobra uma placa creme. Janela
+   mapeamento de tom estoura o retângulo e sobra uma placa papel. Janela
    acesa de verdade tem miolo claro perto da lâmpada, cortina de um lado e
    sombra de móvel na base. Um cartão desenhado de 256x192 resolve, e o
    mesmo desenho serve de mapa de emissão: assim o brilho segue o desenho

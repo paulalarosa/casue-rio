@@ -50,19 +50,19 @@ export function Busca({ variante = "escuro" }: { variante?: "claro" | "escuro" }
   const gatilho = cn(
     "h-auto w-full justify-between border-0 bg-transparent px-0 py-0 font-display text-lg font-semibold shadow-none",
     "focus-visible:ring-0 focus-visible:border-0 dark:bg-transparent",
-    escuro ? "text-creme" : "text-azul-500",
+    escuro ? "text-papel" : "text-tinta-800",
   );
 
   return (
     <form
       onSubmit={enviar}
       className={cn(
-        "grid gap-px overflow-hidden rounded-[1.75rem] sm:grid-cols-[1fr_1fr_auto]",
+        "grid gap-px overflow-hidden rounded-[0.75rem] sm:grid-cols-[1fr_1fr_auto]",
         escuro ? "vidro" : "vidro-claro",
       )}
     >
       <label className="flex flex-col gap-1 px-6 py-4">
-        <span className={cn("rotulo", escuro ? "text-azul-200" : "text-neutro-600")}>
+        <span className={cn("rotulo", escuro ? "text-tinta-200" : "text-tinta-500")}>
           Bairro
         </span>
         <Select value={regiao} onValueChange={(v) => setRegiao(v ?? "todos")}>
@@ -83,10 +83,10 @@ export function Busca({ variante = "escuro" }: { variante?: "claro" | "escuro" }
       <label
         className={cn(
           "flex flex-col gap-1 px-6 py-4",
-          escuro ? "sm:border-l sm:border-white/15" : "sm:border-l sm:border-azul-500/10",
+          escuro ? "sm:border-l sm:border-white/15" : "sm:border-l sm:border-tinta-800/10",
         )}
       >
-        <span className={cn("rotulo", escuro ? "text-azul-200" : "text-neutro-600")}>
+        <span className={cn("rotulo", escuro ? "text-tinta-200" : "text-tinta-500")}>
           Finalidade
         </span>
         <Select value={finalidade} onValueChange={(v) => setFinalidade(v ?? "todas")}>
@@ -109,10 +109,12 @@ export function Busca({ variante = "escuro" }: { variante?: "claro" | "escuro" }
         <button
           type="submit"
           className={cn(
-            "inline-flex h-full w-full items-center justify-center gap-2 rounded-[1.4rem] px-8 py-4",
-            "bg-ouro-500 font-semibold text-azul-700 shadow-[var(--shadow-flutua-2)]",
-            "transition-transform duration-300 ease-[var(--ease-saida)] hover:-translate-y-0.5 hover:bg-ouro-400",
-            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ouro-500",
+            "inline-flex h-full w-full items-center justify-center gap-2 rounded-[0.75rem] px-6 py-4",
+            /* Verde, e so aqui: e a acao principal da abertura. Areia e
+               plano de fundo, nao botao, e botao cor de fundo nao e botao. */
+            "whitespace-nowrap bg-verde-500 font-semibold text-papel shadow-[var(--shadow-flutua-2)]",
+            "transition-transform duration-300 ease-[var(--ease-saida)] hover:-translate-y-0.5 hover:bg-verde-600",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-verde-300",
           )}
         >
           <Search className="size-4" aria-hidden />

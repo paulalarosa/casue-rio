@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
    ficam SOBRE a imagem, que é onde existe profundidade para refratar.
 
    🔴 As etiquetas usam a receita TINGIDA, não a clara: medido no primeiro
-   corte, "EXCLUSIVO" em creme sobre vidro claro em cima da parte clara da
+   corte, "EXCLUSIVO" em papel sobre vidro claro em cima da parte clara da
    ilustração ficava ilegível. Vidro sobre imagem precisa de tinta. */
 export function CartaoImovel({
   im,
@@ -23,7 +23,7 @@ export function CartaoImovel({
   return (
     <article
       className={cn(
-        "group relative overflow-hidden rounded-[2rem] bg-card",
+        "group relative overflow-hidden rounded-[0.875rem] bg-card",
         "shadow-[var(--shadow-flutua-1)] transition-[transform,box-shadow] duration-500 ease-[var(--ease-saida)]",
         "hover:-translate-y-1.5 hover:shadow-[var(--shadow-flutua-3)]",
         "borda-viva focus-within:-translate-y-1.5",
@@ -95,42 +95,42 @@ export function CartaoImovel({
           </Link>
         </h3>
 
-        <dl className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-neutro-600">
+        <dl className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-tinta-500">
           <div className="flex items-baseline gap-1.5">
             <dt className="sr-only">Condomínio</dt>
             <span aria-hidden>Cond.</span>
-            <dd className="num text-grafite">{moeda(im.condominio || null)}</dd>
+            <dd className="num text-tinta-600">{moeda(im.condominio || null)}</dd>
           </div>
           <div className="flex items-baseline gap-1.5">
             <dt className="sr-only">IPTU</dt>
             <span aria-hidden>IPTU</span>
-            <dd className="num text-grafite">{moeda(im.iptu)}</dd>
+            <dd className="num text-tinta-600">{moeda(im.iptu)}</dd>
           </div>
         </dl>
 
-        <ul className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-neutro-600">
+        <ul className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-tinta-500">
           {im.quartos > 0 && (
             <li className="flex items-center gap-2">
-              <BedDouble className="size-4 text-azul-400" aria-hidden />
-              <span className="num text-grafite">{im.quartos}</span>
+              <BedDouble className="size-4 text-tinta-400" aria-hidden />
+              <span className="num text-tinta-600">{im.quartos}</span>
               {im.quartos > 1 ? "quartos" : "quarto"}
             </li>
           )}
           <li className="flex items-center gap-2">
-            <Bath className="size-4 text-azul-400" aria-hidden />
-            <span className="num text-grafite">{im.suites || im.banheiros}</span>
+            <Bath className="size-4 text-tinta-400" aria-hidden />
+            <span className="num text-tinta-600">{im.suites || im.banheiros}</span>
             {im.suites ? (im.suites > 1 ? "suítes" : "suíte") : "banheiro"}
           </li>
           {im.vagas > 0 && (
             <li className="flex items-center gap-2">
-              <Car className="size-4 text-azul-400" aria-hidden />
-              <span className="num text-grafite">{im.vagas}</span>
+              <Car className="size-4 text-tinta-400" aria-hidden />
+              <span className="num text-tinta-600">{im.vagas}</span>
               {im.vagas > 1 ? "vagas" : "vaga"}
             </li>
           )}
           <li className="flex items-center gap-2">
-            <Maximize className="size-4 text-azul-400" aria-hidden />
-            <span className="num text-grafite">{im.area}</span> m²
+            <Maximize className="size-4 text-tinta-400" aria-hidden />
+            <span className="num text-tinta-600">{im.area}</span> m²
           </li>
         </ul>
       </div>

@@ -57,7 +57,7 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
           agora é a própria abertura, e repetir a mesma cena duas vezes na
           mesma tela era a redundância que sobrava aqui. */}
       <div className="trilho secao">
-        <p className="max-w-[62ch] text-[clamp(1.05rem,1.5vw,1.35rem)] leading-relaxed text-neutro-600">
+        <p className="max-w-[62ch] text-[clamp(1.05rem,1.5vw,1.35rem)] leading-relaxed text-tinta-500">
           {b.texto}
         </p>
       </div>
@@ -66,7 +66,7 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
           bairro sem dizer nada mensurável, e é o número que faz a diferença
           entre texto de bairro e texto de corretora. */}
       {retrato && (
-        <dl className="trilho grid grid-cols-2 gap-y-8 border-y border-azul-500/12 py-8 sm:grid-cols-3">
+        <dl className="trilho grid grid-cols-2 gap-y-8 border-y border-tinta-800/12 py-8 sm:grid-cols-3">
           {[
             ["Na carteira", `${retrato.quantos} ${retrato.quantos === 1 ? "imóvel" : "imóveis"}`],
             ["Faixa de preço", `${moeda(retrato.menor)} a ${moeda(retrato.maior)}`],
@@ -75,11 +75,11 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
             <div
               key={rotulo}
               className={`flex flex-col gap-1 ${
-                i > 0 ? "sm:border-l sm:border-azul-500/10 sm:pl-6" : ""
+                i > 0 ? "sm:border-l sm:border-tinta-800/10 sm:pl-6" : ""
               }`}
             >
-              <dt className="rotulo text-neutro-600">{rotulo}</dt>
-              <dd className="num text-xl font-semibold text-azul-500">{valor}</dd>
+              <dt className="rotulo text-tinta-500">{rotulo}</dt>
+              <dd className="num text-xl font-semibold text-tinta-800">{valor}</dd>
             </div>
           ))}
         </dl>
@@ -90,7 +90,7 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
           <h2 className="text-3xl">Imóveis em {b.nome}</h2>
           <Link
             href={`/imoveis?regiao=${encodeURIComponent(b.chave)}`}
-            className="inline-flex items-center gap-2 rounded-full border border-azul-500/15 px-5 py-2.5 text-sm font-semibold text-azul-500 transition-colors hover:bg-azul-500/6"
+            className="inline-flex items-center gap-2 rounded-full border border-tinta-800/15 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
           >
             Ver na carteira <ArrowRight className="size-4" aria-hidden />
           </Link>

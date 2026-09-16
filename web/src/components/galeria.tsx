@@ -63,7 +63,7 @@ export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
   return (
     <div className="trilho" style={{ paddingTop: "calc(var(--altura-topo) + 1.75rem)" }}>
       <div
-        className="relative isolate touch-pan-y overflow-hidden rounded-[2.5rem] shadow-[var(--shadow-flutua-3)]"
+        className="relative isolate touch-pan-y overflow-hidden rounded-[1rem] shadow-[var(--shadow-flutua-3)]"
         role="group"
         aria-roledescription="galeria"
         aria-label={`Imagens de ${im.titulo}`}
@@ -98,7 +98,7 @@ export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
                   "linear-gradient(to top, rgba(9,22,42,.86) 0%, rgba(9,22,42,.42) 34%, rgba(9,22,42,0) 62%), linear-gradient(to bottom, rgba(9,22,42,.5), transparent 34%)",
               }}
             />
-            <div className="absolute inset-0 flex flex-col justify-between p-6 text-creme sm:p-9">
+            <div className="absolute inset-0 flex flex-col justify-between p-6 text-papel sm:p-9">
               {capa}
             </div>
           </>
@@ -140,8 +140,8 @@ export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
             aria-current={k === i}
             onClick={() => setI(k)}
             className={cn(
-              "relative aspect-4/3 w-24 overflow-hidden rounded-2xl border-2 transition-all duration-300",
-              k === i ? "border-ouro-500" : "border-transparent opacity-70 hover:opacity-100",
+              "relative aspect-4/3 w-24 overflow-hidden rounded-[0.75rem] border-2 transition-all duration-300",
+              k === i ? "border-areia-500" : "border-transparent opacity-70 hover:opacity-100",
             )}
           >
             <Midia foto={q.foto} cena={q.cena} semente={im.codigo} rotulo="" sizes="6rem" />

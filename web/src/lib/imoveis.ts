@@ -43,7 +43,7 @@ export type Imovel = {
 
 export const IMOVEIS: Imovel[] = [
   {
-    codigo: "CS-0142",
+    codigo: "CR-0142",
     cena: "predio",
     titulo: "Apartamento na Conde de Bonfim",
     bairro: "Tijuca",
@@ -65,7 +65,7 @@ export const IMOVEIS: Imovel[] = [
       "Sala com dois ambientes, cozinha reformada e varanda voltada para o Maracanã. Prédio com portaria 24 horas, a 400 metros do metrô Uruguai.",
   },
   {
-    codigo: "CS-0207",
+    codigo: "CR-0207",
     cena: "predio",
     titulo: "Studio a duas quadras do metrô",
     bairro: "Botafogo",
@@ -88,7 +88,7 @@ export const IMOVEIS: Imovel[] = [
       "Planta inteligente, mobiliado, com academia e lavanderia no prédio. Diária mínima de cinco noites, enxoval incluso.",
   },
   {
-    codigo: "CS-0088",
+    codigo: "CR-0088",
     cena: "comercial",
     titulo: "Sala comercial reformada",
     bairro: "Centro",
@@ -111,7 +111,7 @@ export const IMOVEIS: Imovel[] = [
       "Andar alto na Avenida Rio Branco, com vista para a baía. Documentação conferida e condomínio em dia.",
   },
   {
-    codigo: "CS-0311",
+    codigo: "CR-0311",
     cena: "casa",
     titulo: "Casa de vila na Muda",
     bairro: "Tijuca",
@@ -133,7 +133,7 @@ export const IMOVEIS: Imovel[] = [
       "Três quartos, quintal com árvore frutífera e garagem para dois carros. Vila fechada com oito casas e portão eletrônico.",
   },
   {
-    codigo: "CS-0356",
+    codigo: "CR-0356",
     cena: "vista",
     titulo: "Cobertura duplex no Flamengo",
     bairro: "Flamengo",
@@ -155,7 +155,7 @@ export const IMOVEIS: Imovel[] = [
       "Terraço com churrasqueira e vista para o aterro. Reformada em 2024, com esquadrias novas e ar-condicionado em todos os quartos.",
   },
   {
-    codigo: "CS-0402",
+    codigo: "CR-0402",
     cena: "interior",
     titulo: "Conjugado no Largo do Machado",
     bairro: "Catete",
@@ -177,7 +177,7 @@ export const IMOVEIS: Imovel[] = [
       "Reformado, com armários planejados. Prédio em frente à praça, com metrô e feira na esquina.",
   },
   {
-    codigo: "CS-0455",
+    codigo: "CR-0455",
     cena: "comercial",
     titulo: "Loja de rua na Haddock Lobo",
     bairro: "Tijuca",
@@ -199,7 +199,7 @@ export const IMOVEIS: Imovel[] = [
       "Ponto com fluxo alto, vitrine de seis metros e mezanino. Escritura e matrícula conferidas, sem pendência de IPTU.",
   },
   {
-    codigo: "CS-0490",
+    codigo: "CR-0490",
     cena: "interior",
     titulo: "Apartamento de época na Glória",
     bairro: "Glória",
@@ -221,7 +221,7 @@ export const IMOVEIS: Imovel[] = [
       "Pé-direito alto, tacos originais e janelas de guilhotina. Prédio tombado, com obra de fachada já quitada.",
   },
   {
-    codigo: "CS-0512",
+    codigo: "CR-0512",
     cena: "predio",
     titulo: "Dois quartos no Grajaú",
     bairro: "Grajaú",
@@ -243,7 +243,7 @@ export const IMOVEIS: Imovel[] = [
       "Sala ampla, dependência reversível e vaga escriturada. Rua tranquila, a cinco minutos da praça.",
   },
   {
-    codigo: "CS-0533",
+    codigo: "CR-0533",
     cena: "vista",
     titulo: "Frente para a praia em Copacabana",
     bairro: "Copacabana",

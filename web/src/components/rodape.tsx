@@ -2,9 +2,8 @@ import Link from "next/link";
 /* O lucide tirou as marcas do pacote, entao o Instagram entra pelo
    arroba: e sinal de perfil e nao finge ser o logo de terceiro. */
 import { MessageCircle, Mail, MapPin } from "lucide-react";
-import { Simbolo } from "@/components/marca";
 import { Assinatura } from "@/components/assinatura";
-import { ENDERECO, SOCIAS, SLOGAN } from "@/lib/site";
+import { ENDERECO, SOCIAS, SLOGAN, NOME } from "@/lib/site";
 
 /* Registro profissional em painel próprio. Selo de confiança desenhado não
    prova nada; número de registro prova, porque qualquer pessoa confere no
@@ -20,17 +19,17 @@ function Registro({
   cnai: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/12 bg-white/6 px-4 py-3">
-      <span className="rotulo block text-azul-200">{quem}</span>
-      <span className="num block text-sm text-creme/80">{creci}</span>
-      <span className="num block text-sm text-creme/60">{cnai}</span>
+    <div className="rounded-[0.75rem] border border-white/12 bg-white/6 px-4 py-3">
+      <span className="rotulo block text-tinta-200">{quem}</span>
+      <span className="num block text-sm text-papel/80">{creci}</span>
+      <span className="num block text-sm text-papel/60">{cnai}</span>
     </div>
   );
 }
 
 export function Rodape() {
   return (
-    <footer className="relative mt-24 overflow-hidden bg-azul-800 text-creme">
+    <footer className="relative mt-24 overflow-hidden bg-tinta-800 text-papel">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-70"
@@ -41,24 +40,25 @@ export function Rodape() {
       />
       <div className="trilho relative grid gap-12 py-20 md:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
         <div>
-          {/* Lockup principal: símbolo à esquerda e o nome em três linhas,
-              com o espaço lateral de meia largura do símbolo, que é a regra
-              de respiro medida no arquivo da marca. */}
-          <div className="flex items-center gap-[0.5em] text-[1.4rem]">
-            <Simbolo className="h-[4.2em] w-auto" azul="var(--color-creme)" />
-            <Assinatura cores={{ nome: "text-creme", categoria: "text-ouro-300" }} />
-          </div>
-          <p className="mt-6 font-display text-2xl font-semibold text-creme">
+          {/* Lockup principal, empilhado e com o descritivo. É o único
+              lugar do site onde "Negócios Imobiliários" aparece por extenso
+              junto do nome, e é de propósito: no rodapé há largura para a
+              caixa alta espaçada, que é o que a barra do topo não tem. */}
+          <Assinatura
+            className="text-[2.6rem]"
+            cores={{ nome: "text-papel", lugar: "text-areia-400", categoria: "text-tinta-200" }}
+          />
+          <p className="mt-6 font-display text-2xl font-semibold text-papel">
             {SLOGAN}
           </p>
-          <p className="mt-4 max-w-[30ch] text-azul-200">
+          <p className="mt-4 max-w-[30ch] text-tinta-200">
             Centro, Tijuca, Grajaú e Zona Sul. Das 9h às 19h, de segunda a sexta.
           </p>
         </div>
 
         <nav aria-label="Navegar">
-          <h3 className="rotulo mb-5 text-ouro-300">Navegar</h3>
-          <ul className="space-y-2 text-azul-200">
+          <h3 className="rotulo mb-5 text-areia-300">Navegar</h3>
+          <ul className="space-y-2 text-tinta-200">
             {[
               ["/imoveis", "Imóveis"],
               ["/bairros", "Bairros"],
@@ -66,7 +66,7 @@ export function Rodape() {
               ["/contato", "Contato"],
             ].map(([href, texto]) => (
               <li key={href}>
-                <Link href={href} className="transition-colors hover:text-creme">
+                <Link href={href} className="transition-colors hover:text-papel">
                   {texto}
                 </Link>
               </li>
@@ -75,15 +75,15 @@ export function Rodape() {
         </nav>
 
         <div>
-          <h3 className="rotulo mb-5 text-ouro-300">Falar</h3>
-          <ul className="space-y-2 text-azul-200">
+          <h3 className="rotulo mb-5 text-areia-300">Falar</h3>
+          <ul className="space-y-2 text-tinta-200">
             <li>
-              <Link href="/contato" className="flex items-center gap-2 transition-colors hover:text-creme">
+              <Link href="/contato" className="flex items-center gap-2 transition-colors hover:text-papel">
                 <MessageCircle className="size-4" aria-hidden /> WhatsApp
               </Link>
             </li>
             <li>
-              <Link href="/contato" className="flex items-center gap-2 transition-colors hover:text-creme">
+              <Link href="/contato" className="flex items-center gap-2 transition-colors hover:text-papel">
                 <Mail className="size-4" aria-hidden /> E-mail
               </Link>
             </li>
@@ -101,7 +101,7 @@ export function Rodape() {
         </div>
 
         <div>
-          <h3 className="rotulo mb-5 text-ouro-300">Registro</h3>
+          <h3 className="rotulo mb-5 text-areia-300">Registro</h3>
           <div className="space-y-3">
             {SOCIAS.map((s) => (
               <Registro
@@ -115,8 +115,8 @@ export function Rodape() {
         </div>
       </div>
 
-      <div className="trilho relative flex flex-wrap gap-x-8 gap-y-3 border-t border-white/12 py-7 text-sm text-azul-200">
-        <span>Carvalho &amp; Seixas Imóveis · Rio de Janeiro</span>
+      <div className="trilho relative flex flex-wrap gap-x-8 gap-y-3 border-t border-white/12 py-7 text-sm text-tinta-200">
+        <span>{NOME} · Rio de Janeiro</span>
         <span>
           Protótipo de layout. Imóveis, preços, depoimentos e imagens são exemplos.
         </span>

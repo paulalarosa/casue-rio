@@ -111,8 +111,8 @@ export function PredioScroll({ children }: { children: React.ReactNode }) {
       <div
         className={
           sequencia
-            ? "sticky top-0 h-svh overflow-hidden bg-azul-800"
-            : "relative min-h-[min(44rem,86svh)] overflow-hidden bg-azul-800"
+            ? "sticky top-0 h-svh overflow-hidden bg-tinta-800"
+            : "relative min-h-[min(44rem,86svh)] overflow-hidden bg-tinta-800"
         }
       >
         {/* Reserva: é ela que aparece no primeiro quadro e é ela o LCP.
@@ -159,7 +159,7 @@ export function PredioScroll({ children }: { children: React.ReactNode }) {
              então 10,5vw enche a tela sem passar. Na primeira tentativa eu
              usei 14,5vw e sobrava "& Sei" no céu, que lê como defeito e não
              como marca d'água. */
-          className="pointer-events-none absolute inset-x-0 whitespace-nowrap px-4 text-center font-display text-[clamp(2rem,10.5vw,9.5rem)] font-bold leading-[0.8] text-creme/[0.09]"
+          className="pointer-events-none absolute inset-x-0 whitespace-nowrap px-4 text-center font-display text-[clamp(2rem,10.5vw,9.5rem)] font-bold leading-[0.8] text-papel/[0.09]"
           style={{ top: "calc(var(--altura-topo) - 0.75rem)" }}
         >
           {MARCA}
@@ -195,7 +195,7 @@ export function PredioScroll({ children }: { children: React.ReactNode }) {
           {sequencia && (
             <span
               data-cena="texto-rolar"
-              className="rotulo pointer-events-none absolute bottom-6 right-0 flex items-center gap-2 text-azul-200"
+              className="rotulo pointer-events-none absolute bottom-6 right-0 flex items-center gap-2 text-tinta-200"
             >
               Role para entrar
               <ChevronDown className="size-4 animate-bounce" aria-hidden />
@@ -207,7 +207,7 @@ export function PredioScroll({ children }: { children: React.ReactNode }) {
               depois de a página ter mostrado o que promete. */}
           <p
             data-cena="dentro"
-            className="vidro pointer-events-none absolute bottom-14 left-1/2 max-w-lg -translate-x-1/2 translate-y-4 rounded-3xl px-8 py-6 text-center font-display text-2xl font-semibold text-creme opacity-0 sm:text-3xl"
+            className="vidro pointer-events-none absolute bottom-14 left-1/2 max-w-lg -translate-x-1/2 translate-y-4 rounded-[1rem] px-8 py-6 text-center font-display text-2xl font-semibold text-papel opacity-0 sm:text-3xl"
           >
             {SLOGAN}
           </p>

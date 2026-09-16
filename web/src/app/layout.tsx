@@ -1,25 +1,30 @@
 import type { Metadata } from "next";
-import { Josefin_Sans, Source_Sans_3, IBM_Plex_Mono } from "next/font/google";
+import { Unbounded, Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Topo } from "@/components/topo";
 import { Rodape } from "@/components/rodape";
-import { SITE, NOME, DESCRICAO, FRASE, SLOGAN, ENDERECO, SOCIAS } from "@/lib/site";
+import { SITE, MARCA, NOME, DESCRICAO, FRASE, SLOGAN, ENDERECO, SOCIAS } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
 
-/* Josefin Sans é a fonte do logo, medida no arquivo `.ai`: o nome está em
-   700 e a palavra "Imóveis" em 600, com entreletra zero. Source Sans 3 é o
-   corpo, e o IBM Plex Mono só aparece em número. */
-const josefin = Josefin_Sans({
-  variable: "--font-josefin",
+/* Unbounded é a fonte da marca, escolhida pelas sócias numa folha de nove
+   opções. É display: título, marca e número grande, e nada mais. A Archivo
+   é o corpo, e o par funciona porque as duas são grotescas geométricas com
+   larguras muito diferentes, que é o contraste que segura a hierarquia sem
+   precisar de uma serifada no meio. O IBM Plex Mono só aparece em número.
+
+   🔴 Peso 800 e 900 da Unbounded NÃO entram: a contraforma fecha e o nome
+   vira mancha no tamanho da barra do topo. */
+const unbounded = Unbounded({
+  variable: "--font-unbounded",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
   display: "swap",
 });
 
-const source = Source_Sans_3({
-  variable: "--font-source",
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  weight: ["400", "600"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -37,7 +42,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   title: {
     default: `${NOME} · Rio de Janeiro`,
-    template: `%s · ${NOME}`,
+    template: `%s · ${MARCA}`,
   },
   description: DESCRICAO,
   /* 🔴 Canônico NÃO mora aqui. Metadado de layout desce para todas as
@@ -99,7 +104,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="pt-BR"
-      className={`${josefin.variable} ${source.variable} ${plex.variable} h-full antialiased grao`}
+      className={`${unbounded.variable} ${archivo.variable} ${plex.variable} h-full antialiased grao`}
     >
       <body className="min-h-full flex flex-col">
         <script

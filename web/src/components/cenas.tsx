@@ -13,9 +13,9 @@
    o servidor e o navegador precisam desenhar igual (senão a hidratação
    acusa diferença e o React descarta a página inteira).
 
-   🔴 As cores saem SÓ da paleta. A variação de hora escolhe entre tons que
-   já existem no tema; girar matiz daria variedade e tiraria o desenho da
-   marca.
+   🔴 As cores saem SÓ da paleta, e a paleta da Casuê Rio tem um matiz só:
+   a variação de hora é de CLARIDADE, não de cor. Girar matiz daria mais
+   variedade e tiraria o desenho da marca.
 
    Quando a foto real chegar, `foto` no arquivo de dados vence e a `<Cena>`
    nem chega a ser chamada. */
@@ -71,46 +71,56 @@ type Hora = {
 };
 
 const HORAS: Hora[] = [
+  /* 🔴 A troca de paleta quase matou esta parte sem avisar. Renomear token
+     por token deixou as tres horas com a mesma cor de fundo, porque no tema
+     antigo elas se separavam por CLARIDADE DO AZUL e no tema novo o azul
+     virou cinza escuro em todos os passos. Dia e noite sairam igualmente
+     pretos, e a carteira inteira ficou uma fileira de retangulos escuros.
+
+     Aqui as horas voltam a se separar pela claridade do CEU: areia clara de
+     dia, areia funda de tarde, tinta de noite. A massa do predio nao muda
+     entre as horas, que e o que faz as tres parecerem o mesmo desenho em
+     horarios diferentes, e nao tres desenhos. */
   {
-    ceu: cor("azul-100"),
-    morro: cor("azul-300"),
-    massa: cor("azul-600"),
-    topo: cor("azul-700"),
-    parede: cor("azul-500"),
-    vao: cor("azul-800"),
-    luz: cor("ouro-300"),
-    rua: cor("azul-700"),
-    vizinho: cor("azul-400"),
+    ceu: cor("areia-200"),
+    morro: cor("areia-500"),
+    massa: cor("tinta-600"),
+    topo: cor("tinta-700"),
+    parede: cor("tinta-500"),
+    vao: cor("tinta-800"),
+    luz: cor("areia-300"),
+    rua: cor("tinta-700"),
+    vizinho: cor("tinta-400"),
     acesa: 0.14,
     sol: true,
     noite: false,
     peso: 42,
   },
   {
-    ceu: cor("azul-200"),
-    morro: cor("azul-300"),
-    massa: cor("azul-600"),
-    topo: cor("azul-700"),
-    parede: cor("azul-600"),
-    vao: cor("azul-800"),
-    luz: cor("ouro-300"),
-    rua: cor("azul-800"),
-    vizinho: cor("azul-400"),
+    ceu: cor("areia-400"),
+    morro: cor("areia-600"),
+    massa: cor("tinta-600"),
+    topo: cor("tinta-700"),
+    parede: cor("tinta-600"),
+    vao: cor("tinta-800"),
+    luz: cor("areia-200"),
+    rua: cor("tinta-800"),
+    vizinho: cor("tinta-400"),
     acesa: 0.36,
     sol: true,
     noite: false,
     peso: 40,
   },
   {
-    ceu: cor("azul-800"),
-    morro: cor("azul-900"),
-    massa: cor("azul-600"),
-    topo: cor("azul-700"),
-    parede: cor("azul-700"),
-    vao: cor("azul-900"),
-    luz: cor("ouro-200"),
-    rua: cor("azul-900"),
-    vizinho: cor("azul-500"),
+    ceu: cor("tinta-700"),
+    morro: cor("tinta-900"),
+    massa: cor("tinta-600"),
+    topo: cor("tinta-700"),
+    parede: cor("tinta-700"),
+    vao: cor("tinta-900"),
+    luz: cor("areia-100"),
+    rua: cor("tinta-900"),
+    vizinho: cor("tinta-500"),
     acesa: 0.66,
     sol: false,
     noite: true,
@@ -157,7 +167,7 @@ function predio(s: Sorte, h: Hora, L: number) {
   const topo = base - andares * ALTURA_ANDAR;
   const vao = (212 - (colunas - 1) * 14) / colunas;
   const portaX = cx - 60 + s.entre(-54, 54);
-  const toldo = s.um([cor("ouro-200"), cor("creme"), cor("ouro-300")]);
+  const toldo = s.um([cor("areia-200"), cor("papel"), cor("areia-300")]);
   const vizE = s.entre(90, 140);
   const vizD = s.entre(100, 150);
 
@@ -228,7 +238,7 @@ function casa(s: Sorte, h: Hora, L: number) {
       <rect width={L} height="275" fill={h.ceu} />
       {morros(s, h, 152, L)}
       <rect y="150" width={L} height="125" fill={h.rua} />
-      <rect x={x0} y="118" width={largura} height="112" fill={cor("neutro-100")} />
+      <rect x={x0} y="118" width={largura} height="112" fill={cor("tinta-50")} />
       <path d={`M${x0 - 12} 120 L${cx} ${cume} L${x0 + largura + 12} 120 Z`} fill={h.massa} />
       <rect x={x0 - 16} y="116" width={largura + 32} height="8" fill={h.topo} />
       <rect x={cx - 14} y="168" width="30" height="62" fill={h.massa} />
@@ -237,14 +247,14 @@ function casa(s: Sorte, h: Hora, L: number) {
         y={janelaY}
         width="38"
         height="32"
-        fill={acesaEsquerda ? h.luz : cor("azul-500")}
+        fill={acesaEsquerda ? h.luz : cor("tinta-800")}
       />
       <rect
         x={x0 + largura - 58}
         y={janelaY}
         width="38"
         height="32"
-        fill={acesaEsquerda ? cor("azul-500") : h.luz}
+        fill={acesaEsquerda ? cor("tinta-800") : h.luz}
       />
       <g stroke={h.topo} strokeWidth="3">
         <path
@@ -252,7 +262,7 @@ function casa(s: Sorte, h: Hora, L: number) {
         />
       </g>
       <rect x={x0} y="222" width={largura} height="8" fill={h.massa} />
-      <g stroke={cor("ouro-500")} strokeWidth="3">
+      <g stroke={cor("areia-500")} strokeWidth="3">
         {Array.from({ length: Math.ceil(L / 14) }, (_, i) => (
           <path key={`poste-${i}`} d={`M${8 + i * 14} 232v26`} />
         ))}
@@ -262,7 +272,7 @@ function casa(s: Sorte, h: Hora, L: number) {
         const x = i === 0 ? cx - s.entre(120, 152) : cx + s.entre(100, 150);
         const r = s.entre(18, 34);
         return (
-          /* 🔴 A copa era `azul-800` sobre um chão `azul-700`: a árvore
+          /* 🔴 A copa era `tinta-800` sobre um chão `tinta-900`: a árvore
              estava desenhada e simplesmente não aparecia. Silhueta pede o
              tom da massa, que é mais claro que o chão em qualquer hora. */
           <g key={`arv-${i}`}>
@@ -272,7 +282,7 @@ function casa(s: Sorte, h: Hora, L: number) {
           </g>
         );
       })}
-      <rect y="258" width={L} height="17" fill={cor("azul-800")} />
+      <rect y="258" width={L} height="17" fill={cor("tinta-800")} />
     </>
   );
 }
@@ -298,10 +308,10 @@ function interior(s: Sorte, h: Hora, L: number) {
   return (
     <>
       <rect width={L} height="275" fill={parede} />
-      <path d={`M0 232 L${L} 208 L${L} 275 L0 275 Z`} fill={cor("azul-800")} />
-      <rect x={jx} y={jy} width={jl} height={jh + 16} fill={cor("azul-500")} />
+      <path d={`M0 232 L${L} 208 L${L} 275 L0 275 Z`} fill={cor("tinta-800")} />
+      <rect x={jx} y={jy} width={jl} height={jh + 16} fill={cor("tinta-800")} />
       <rect x={jx + 8} y={jy + 8} width={jl - 16} height={jh} fill={h.luz} />
-      <g stroke={cor("azul-500")} strokeWidth="6">
+      <g stroke={cor("tinta-800")} strokeWidth="6">
         {Array.from({ length: colunas - 1 }, (_, i) => (
           <path
             key={`cv-${i}`}
@@ -319,7 +329,7 @@ function interior(s: Sorte, h: Hora, L: number) {
           está: janela deslocada com luz parada lê como erro de desenho. */}
       <path
         d={`M${jx + 8} ${jy + jh} L${jx + jl - 8} ${jy + jh} L${jx + jl - 74} 262 L${jx - 118} 262 Z`}
-        fill={cor("ouro-100")}
+        fill={cor("areia-100")}
         opacity=".16"
       />
       <rect x={jx - 16} y={jy + jh + 8} width={jl + 16} height="9" fill={h.topo} />
@@ -330,19 +340,19 @@ function interior(s: Sorte, h: Hora, L: number) {
           width="200"
           height="18"
           rx="9"
-          fill={cor("azul-700")}
+          fill={cor("tinta-900")}
           opacity=".7"
         />
       )}
       <rect x={cx - 160} y="176" width={sofa} height="52" rx="4" fill={h.topo} />
-      <rect x={cx - 166} y="150" width={sofa + 12} height="34" rx="6" fill={cor("azul-500")} />
+      <rect x={cx - 166} y="150" width={sofa + 12} height="34" rx="6" fill={cor("tinta-800")} />
       <rect
         x={cx - 148}
         y="156"
         width="50"
         height="24"
         rx="3"
-        fill={cor("azul-400")}
+        fill={cor("tinta-400")}
         opacity=".55"
       />
       <rect
@@ -351,11 +361,11 @@ function interior(s: Sorte, h: Hora, L: number) {
         width="50"
         height="24"
         rx="3"
-        fill={cor("azul-400")}
+        fill={cor("tinta-400")}
         opacity=".35"
       />
-      <rect x={cx - 156} y="228" width="10" height="16" fill={cor("azul-800")} />
-      <rect x={cx - 174 + sofa} y="228" width="10" height="16" fill={cor("azul-800")} />
+      <rect x={cx - 156} y="228" width="10" height="16" fill={cor("tinta-800")} />
+      <rect x={cx - 174 + sofa} y="228" width="10" height="16" fill={cor("tinta-800")} />
       {pendente && (
         <>
           <path d={`M${cx - 12} 0v58`} stroke={h.topo} strokeWidth="4" />
@@ -363,7 +373,7 @@ function interior(s: Sorte, h: Hora, L: number) {
           <circle cx={cx - 12} cy="86" r="9" fill={h.luz} />
         </>
       )}
-      <rect x={cx + 166} y="196" width="8" height="42" fill={cor("azul-800")} />
+      <rect x={cx + 166} y="196" width="8" height="42" fill={cor("tinta-800")} />
       <circle cx={cx + 170} cy="188" r={s.entre(16, 26)} fill={h.topo} />
     </>
   );
@@ -383,7 +393,7 @@ function vista(s: Sorte, h: Hora, L: number) {
       <path
         key={`pao-${i}`}
         d={`M${meio - larg} 156 C${meio - larg * 0.5} ${156 - alt * 1.3} ${meio + larg * 0.5} ${156 - alt * 1.3} ${meio + larg} 156 Z`}
-        fill={i % 2 === 0 ? cor("azul-600") : cor("azul-500")}
+        fill={i % 2 === 0 ? cor("tinta-900") : cor("tinta-800")}
       />,
     );
   }
@@ -393,7 +403,7 @@ function vista(s: Sorte, h: Hora, L: number) {
       <rect width={L} height="275" fill={h.ceu} />
       <circle cx={astroX} cy={s.entre(48, 80)} r={astroR} fill={h.luz} />
       {morrosDoMar}
-      <rect y="156" width={L} height="119" fill={h.noite ? cor("azul-700") : cor("azul-500")} />
+      <rect y="156" width={L} height="119" fill={h.noite ? cor("tinta-900") : cor("tinta-800")} />
       <g stroke={h.morro} strokeWidth="3" fill="none" opacity=".7">
         {Array.from({ length: Math.round((L / 400) * 9) }, (_, i) => {
           const y = 176 + (i % 3) * 18;
@@ -401,9 +411,9 @@ function vista(s: Sorte, h: Hora, L: number) {
           return <path key={`onda-${i}`} d={`M${x} ${y}h${s.entre(44, 74)}`} />;
         })}
       </g>
-      <rect y="234" width={L} height="41" fill={cor("azul-800")} />
-      <rect y="228" width={L} height="8" fill={cor("ouro-500")} />
-      <g stroke={cor("ouro-500")} strokeWidth="4">
+      <rect y="234" width={L} height="41" fill={cor("tinta-800")} />
+      <rect y="228" width={L} height="8" fill={cor("areia-500")} />
+      <g stroke={cor("areia-500")} strokeWidth="4">
         {Array.from({ length: Math.ceil(L / passo) }, (_, i) => (
           <path key={`calc-${i}`} d={`M${14 + i * passo} 236v39`} />
         ))}
@@ -439,7 +449,7 @@ function comercial(s: Sorte, h: Hora, L: number) {
       ))}
       <path
         d={`M${e - 12} 116 L${e + 344} 116 L${e + 326} 152 L${e + 6} 152 Z`}
-        fill={cor("creme")}
+        fill={cor("papel")}
       />
       <g fill={h.massa}>
         {Array.from({ length: listras }, (_, i) => {
@@ -468,10 +478,10 @@ function comercial(s: Sorte, h: Hora, L: number) {
         y="178"
         width={332 - vitrine - 56}
         height="64"
-        fill={cor("azul-500")}
+        fill={cor("tinta-800")}
       />
-      <rect y="242" width={L} height="33" fill={h.noite ? cor("azul-800") : cor("azul-300")} />
-      <g stroke={cor("azul-500")} strokeWidth="4" fill="none" opacity=".8">
+      <rect y="242" width={L} height="33" fill={h.noite ? cor("tinta-800") : cor("tinta-300")} />
+      <g stroke={cor("tinta-800")} strokeWidth="4" fill="none" opacity=".8">
         <path d={`M-4 258q24-16 48 0${"t48 0".repeat(Math.ceil(L / 48))}`} />
       </g>
     </>

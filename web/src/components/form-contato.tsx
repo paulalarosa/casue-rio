@@ -84,7 +84,7 @@ export function FormContato() {
   return (
     <form onSubmit={enviar} className="flex max-w-2xl flex-col gap-6" noValidate>
       <label className="flex flex-col gap-2">
-        <span className="font-semibold text-azul-500">Nome</span>
+        <span className="font-semibold text-tinta-800">Nome</span>
         <Input
           name="nome"
           autoComplete="name"
@@ -95,7 +95,7 @@ export function FormContato() {
           }}
           aria-invalid={!!erros.nome}
           aria-describedby={erros.nome ? "erro-nome" : undefined}
-          className="rounded-2xl"
+          className="rounded-[0.75rem]"
         />
         {erros.nome && (
           <span id="erro-nome" className="flex items-center gap-2 text-sm text-destructive">
@@ -105,7 +105,7 @@ export function FormContato() {
       </label>
 
       <label className="flex flex-col gap-2">
-        <span className="font-semibold text-azul-500">WhatsApp ou e-mail</span>
+        <span className="font-semibold text-tinta-800">WhatsApp ou e-mail</span>
         <Input
           name="contato"
           inputMode="text"
@@ -117,35 +117,35 @@ export function FormContato() {
           }}
           aria-invalid={!!erros.contato}
           aria-describedby={erros.contato ? "erro-contato" : "dica-contato"}
-          className="rounded-2xl"
+          className="rounded-[0.75rem]"
         />
         {erros.contato ? (
           <span id="erro-contato" className="flex items-center gap-2 text-sm text-destructive">
             <AlertTriangle className="size-4" aria-hidden /> {erros.contato}
           </span>
         ) : (
-          <span id="dica-contato" className="text-sm text-neutro-600">
+          <span id="dica-contato" className="text-sm text-tinta-500">
             É por aqui que a gente responde.
           </span>
         )}
       </label>
 
       <label className="flex flex-col gap-2">
-        <span className="font-semibold text-azul-500">
+        <span className="font-semibold text-tinta-800">
           O que você procura{" "}
-          <span className="font-normal text-neutro-500">· opcional</span>
+          <span className="font-normal text-tinta-400">· opcional</span>
         </span>
         <Textarea
           name="mensagem"
           rows={4}
-          className="rounded-2xl"
+          className="rounded-[0.75rem]"
           placeholder="Bairro, número de quartos, faixa de valor, prazo."
           value={mensagem}
           onChange={(e) => setMensagem(e.target.value)}
         />
       </label>
 
-      <label className="flex cursor-pointer items-start gap-3 text-sm text-neutro-600">
+      <label className="flex cursor-pointer items-start gap-3 text-sm text-tinta-500">
         <Checkbox
           checked={ok}
           onCheckedChange={(v) => {
@@ -169,10 +169,10 @@ export function FormContato() {
         </p>
       )}
 
-      <Painel className="flex gap-3 border-l-4 border-l-ouro-500 p-5 text-sm">
-        <ShieldCheck className="size-5 shrink-0 text-ouro-texto" aria-hidden />
+      <Painel className="flex gap-3 border-l-4 border-l-areia-500 p-5 text-sm">
+        <ShieldCheck className="size-5 shrink-0 text-areia-800" aria-hidden />
         <span>
-          <b className="block text-azul-500">Não peça documento por aqui.</b>
+          <b className="block text-tinta-800">Não peça documento por aqui.</b>
           Comprovante de renda, RG e certidão a gente recebe em canal próprio, no
           momento certo do processo.
         </span>
@@ -181,7 +181,7 @@ export function FormContato() {
       <div className="flex justify-end">
         <button
           type="submit"
-          className="rounded-full bg-azul-500 px-7 py-3.5 font-semibold text-creme shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
+          className="rounded-full bg-tinta-800 px-7 py-3.5 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
         >
           Enviar recado
         </button>
@@ -189,11 +189,11 @@ export function FormContato() {
 
       {enviado && (
         <p
-          className="flex items-center gap-3 rounded-2xl bg-azul-500 px-5 py-4 text-creme"
+          className="flex items-center gap-3 rounded-[0.75rem] bg-tinta-800 px-5 py-4 text-papel"
           role="status"
           aria-live="polite"
         >
-          <Check className="size-5 text-ouro-300" aria-hidden />
+          <Check className="size-5 text-areia-300" aria-hidden />
           {TELEFONE
             ? "Recado pronto no WhatsApp. Confirme o envio na conversa que abriu."
             : "Recado montado. Falta o número único da empresa entrar no ar para ele ser entregue."}

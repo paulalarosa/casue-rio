@@ -90,7 +90,7 @@ export function montarPredio(alvo: HTMLElement): CenaPredio | null {
   /* Alcance grande: com 460 o morro do outro lado da baía nascia apagado.
      A cor é a do HORIZONTE, não um azul qualquer: neblina de cor diferente
      do céu vira uma mancha visível onde a cidade some. */
-  cena.fog = new THREE.Fog(0x2b3a58, 220, 1100);
+  cena.fog = new THREE.Fog(0x2f2a33, 220, 1100);
   /* 🔴 O plano distante era 600, e por isso a cúpula do céu (raio 1200) e
      o morro do outro lado da baía simplesmente não desenhavam: ficavam
      inteiros atrás do corte da câmera, sem erro nenhum no console. */
@@ -197,7 +197,7 @@ export function montarPredio(alvo: HTMLElement): CenaPredio | null {
     0.06,
   );
   const mSoco = p.mat(0x2c3038, 0.9);
-  const mMetal = p.mat(0xc9a24c, 0.42, 0.55);
+  const mMetal = p.mat(0xddcbaa, 0.42, 0.55);
   const mFerro = p.mat(0x2b3038, 0.6, 0.35);
   const mPiso = tex.vestir(p.mat(0xffffff, 0.62), guardar(tex.tabua(nitidez)), 0.18);
   const mTapete = tex.vestir(
@@ -326,7 +326,7 @@ export function montarPredio(alvo: HTMLElement): CenaPredio | null {
   grupo.add(p.caixa(0.6, H, P, mParede, -L / 2, H / 2, 0));
   grupo.add(p.caixa(0.6, H, P, mParede, L / 2, H / 2, 0));
   grupo.add(p.caixa(L, 0.6, P, mDetalhe, 0, H, 0));
-  grupo.add(p.caixa(L + 0.6, TERREO, P + 0.6, p.mat(0x1a2c46, 0.85), 0, TERREO / 2, 0));
+  grupo.add(p.caixa(L + 0.6, TERREO, P + 0.6, p.mat(0x201d24, 0.85), 0, TERREO / 2, 0));
   grupo.add(p.caixa(L + 1, 1.8, P + 1, mDetalhe, 0, H + 0.9, 0));
 
   /* Cobertura. 🔴 Caixa d'água aparente, antena de TV e prumada no
@@ -407,7 +407,7 @@ export function montarPredio(alvo: HTMLElement): CenaPredio | null {
   /* O vidro usa o cartão desenhado como cor E como emissão: o brilho
      segue o desenho, então a luz sai de onde está a lâmpada em vez de
      acender o retângulo todo. Emissão baixa de propósito, porque acima de
-     ~0,8 o mapeamento de tom estoura tudo para o mesmo creme. */
+     ~0,8 o mapeamento de tom estoura tudo para o mesmo papel. */
   const peleApagada = tex.janelaApagada();
   descartaveis.push(peleApagada);
   const mVidroApagado = new THREE.MeshStandardMaterial({

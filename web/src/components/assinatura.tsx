@@ -1,30 +1,39 @@
 import { cn } from "@/lib/utils";
 
-/* A assinatura, medida no arquivo `.ai` da marca.
+/* A assinatura da Casuê Rio.
 
-   O arquivo traz DOIS lockups oficiais, e os dois valem:
+   🔴 A marca hoje é SÓ TIPOGRÁFICA. O símbolo ainda está em escolha com as
+   sócias, e marca boa não fica esperando desenho: a palavra já é a marca, e
+   o símbolo, quando entrar, entra à esquerda deste bloco sem mexer nele.
 
-   EMPILHADO (principal, o que a Paula escolheu)
-     "Carvalho" / "& Seixas" / "Imóveis", alinhados à esquerda ao lado do
-     símbolo. Medidas do `.ai`, em múltiplos do tamanho de "Carvalho":
-       · "Seixas" é 1,081 maior que "Carvalho" (36,0 sobre 33,3, e 41,14
-         sobre 38,05 na outra instância: a proporção se repete);
-       · "Imóveis" é 0,72;
-       · a linha 2 desce 1,297 e "Imóveis" desce mais 1,171.
+   Três decisões que estão medidas, não chutadas:
 
-   EM LINHA (reduzido, para barra estreita)
-     "Carvalho & Seixas" seguido de "Imóveis" com 0,325em de espaço.
+   · O nome vai em Unbounded, que elas escolheram numa folha de nove opções.
+     É display de verdade: geométrica, larga, com contraforma grande. Em
+     display grande ela precisa de entreletra NEGATIVA, senão a palavra
+     parece solta; em corpo de texto ela não serve, e por isso o descritivo
+     desce para a Archivo.
 
-   🔴 O 0,325em é ESPAÇO ENTRE AS PALAVRAS, não entreletra. Eu tinha aplicado
-   como `letter-spacing` e em caixa alta, e nenhuma das duas coisas está no
-   arquivo: no original "Imóveis" é caixa baixa e tem entreletra zero.
+   · "Rio" sai na areia, e não na tinta. É o único ponto de cor do lockup, e
+     é o que separa o nome do lugar sem precisar de segunda linha.
 
-   O ouro aqui é o ouro da marca, não o `ouro-texto`: isto é a marca, não
-   texto corrido. A regra de contraste de texto pequeno continua valendo
-   para todo o resto da página. */
+   · "Negócios Imobiliários" é caixa alta espaçada, na sans. Em Unbounded o
+     descritivo competiria com o nome, porque as duas têm a mesma voz. O
+     contraste entre display larga e sans espaçada é o que faz o lockup ter
+     hierarquia com duas palavras só.
 
-type Cores = { nome?: string; categoria?: string };
+   O tamanho é todo em `em`: quem define a escala é o pai, e as proporções
+   internas ficam travadas em qualquer lugar onde o lockup apareça. */
 
+type Cores = { nome?: string; lugar?: string; categoria?: string };
+
+const PADRAO: Required<Cores> = {
+  nome: "text-tinta-800",
+  lugar: "text-areia-800",
+  categoria: "text-tinta-500",
+};
+
+/** Lockup empilhado: o principal. Nome em duas linhas e o descritivo embaixo. */
 export function Assinatura({
   className,
   cores,
@@ -32,25 +41,27 @@ export function Assinatura({
   className?: string;
   cores?: Cores;
 }) {
-  const nome = cores?.nome ?? "text-azul-500";
-  const categoria = cores?.categoria ?? "text-ouro-500";
+  const c = { ...PADRAO, ...cores };
   return (
-    <span className={cn("inline-flex flex-col font-display leading-none", className)}>
-      <span className={cn("font-bold tracking-[-0.01em]", nome)}>Carvalho</span>
-      <span className={cn("font-bold tracking-[-0.01em] mt-[0.297em]", nome)}>
-        &amp; <span style={{ fontSize: "1.081em" }}>Seixas</span>
-      </span>
+    <span className={cn("inline-flex flex-col font-display leading-[0.94]", className)}>
+      <span className={cn("font-bold tracking-[-0.035em]", c.nome)}>Casuê</span>
+      <span className={cn("font-bold tracking-[-0.035em]", c.lugar)}>Rio</span>
       <span
-        className={cn("mt-[0.24em] font-semibold", categoria)}
-        style={{ fontSize: "0.72em" }}
+        className={cn("mt-[0.5em] font-sans font-semibold uppercase leading-none", c.categoria)}
+        style={{ fontSize: "0.3em", letterSpacing: "0.2em" }}
       >
-        Imóveis
+        Negócios Imobiliários
       </span>
     </span>
   );
 }
 
-/** Versão em linha, para a barra do topo e outros lugares de pouca altura. */
+/** Versão em linha, para a barra do topo e outros lugares de pouca altura.
+
+    Sem o descritivo de propósito: "NEGÓCIOS IMOBILIÁRIOS" em caixa alta
+    espaçada mede mais de dez vezes a altura da letra, e numa barra de 8rem
+    de altura ele empurraria o menu ou sairia ilegível de tão pequeno. Barra
+    estreita é lugar de marca, não de descrição. */
 export function AssinaturaLinha({
   className,
   cores,
@@ -58,17 +69,11 @@ export function AssinaturaLinha({
   className?: string;
   cores?: Cores;
 }) {
-  const nome = cores?.nome ?? "text-azul-500";
-  const categoria = cores?.categoria ?? "text-ouro-500";
+  const c = { ...PADRAO, ...cores };
   return (
     <span className={cn("inline-flex items-baseline font-display leading-none", className)}>
-      <span className={cn("font-bold tracking-[-0.01em]", nome)}>Carvalho &amp; Seixas</span>
-      <span
-        className={cn("ml-[0.325em] font-semibold", categoria)}
-        style={{ fontSize: "0.72em" }}
-      >
-        Imóveis
-      </span>
+      <span className={cn("font-bold tracking-[-0.035em]", c.nome)}>Casuê</span>
+      <span className={cn("ml-[0.22em] font-bold tracking-[-0.035em]", c.lugar)}>Rio</span>
     </span>
   );
 }

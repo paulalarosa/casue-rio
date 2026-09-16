@@ -24,7 +24,7 @@ export default function PaginaBairros() {
       {/* A rua em 3D: um volume por recorte, clicável. O 3D aqui tem função,
           é o índice da página, e não enfeite de fundo. */}
       <div className="trilho mt-10">
-        <div className="relative isolate aspect-[21/9] overflow-hidden rounded-[2.5rem] bg-azul-800 shadow-[var(--shadow-flutua-3)]">
+        <div className="relative isolate aspect-[21/9] overflow-hidden rounded-[1rem] bg-tinta-800 shadow-[var(--shadow-flutua-3)]">
           <div
             aria-hidden
             className="absolute inset-0 -z-10"
@@ -32,7 +32,7 @@ export default function PaginaBairros() {
           />
           <CenaCasa modo="rua" />
         </div>
-        <p className="mt-3 text-sm text-neutro-600">
+        <p className="mt-3 text-sm text-tinta-500">
           Ilustração da marca. Não é imóvel da carteira.
         </p>
       </div>
@@ -44,7 +44,7 @@ export default function PaginaBairros() {
             <Link
               key={b.chave}
               href={`/bairros/${encodeURIComponent(b.chave)}`}
-              className="group relative isolate flex min-h-[24rem] flex-col justify-end overflow-hidden rounded-[2rem] p-6 shadow-[var(--shadow-flutua-2)] transition-transform duration-500 ease-[var(--ease-saida)] hover:-translate-y-1.5"
+              className="group relative isolate flex min-h-[24rem] flex-col justify-end overflow-hidden rounded-[0.875rem] p-6 shadow-[var(--shadow-flutua-2)] transition-transform duration-500 ease-[var(--ease-saida)] hover:-translate-y-1.5"
             >
               <Cena
                 nome={b.cena}
@@ -54,14 +54,14 @@ export default function PaginaBairros() {
               />
               <div
                 aria-hidden
-                className="absolute inset-0 -z-10 bg-gradient-to-t from-azul-900/85 via-azul-900/25 to-transparent"
+                className="absolute inset-0 -z-10 bg-gradient-to-t from-tinta-900/85 via-tinta-900/25 to-transparent"
               />
-              <div className="tinta rounded-[1.5rem] p-5">
-                <h2 className="font-display text-2xl font-bold text-creme">{b.nome}</h2>
-                <span className="num mt-1 block text-sm text-ouro-300">
+              <div className="tinta rounded-[0.75rem] p-5">
+                <h2 className="font-display text-2xl font-bold text-papel">{b.nome}</h2>
+                <span className="num mt-1 block text-sm text-areia-300">
                   {n} {n === 1 ? "imóvel" : "imóveis"}
                 </span>
-                <p className="mt-3 text-sm text-azul-200">{b.linha}</p>
+                <p className="mt-3 text-sm text-tinta-200">{b.linha}</p>
               </div>
             </Link>
           );

@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MessageCircle, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Simbolo } from "@/components/marca";
 import { Assinatura, AssinaturaLinha } from "@/components/assinatura";
 import { cn } from "@/lib/utils";
 
@@ -48,7 +47,7 @@ export function Topo() {
           menu inteiro em toda página antes de chegar ao conteúdo. */}
       <a
         href="#conteudo"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-6 focus:top-6 focus:z-70 focus:rounded-full focus:bg-azul-500 focus:px-5 focus:py-3 focus:font-semibold focus:text-creme"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-6 focus:top-6 focus:z-70 focus:rounded-full focus:bg-tinta-800 focus:px-5 focus:py-3 focus:font-semibold focus:text-papel"
       >
         Pular para o conteúdo
       </a>
@@ -61,15 +60,14 @@ export function Topo() {
         )}
       >
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          <Simbolo
-            className="h-8 w-auto"
-            azul={sobreCena ? "var(--color-creme)" : "var(--color-azul-500)"}
-          />
+          {/* Sem símbolo: a marca é a palavra. Por isso a assinatura deixa
+              de ser opcional em tela estreita, que é onde ela era escondida
+              quando havia um símbolo para segurar o lugar sozinho. */}
           <AssinaturaLinha
-            className="hidden text-[1.06rem] sm:inline-flex"
+            className="text-[1.18rem] sm:text-[1.3rem]"
             cores={{
-              nome: sobreCena ? "text-creme" : "text-azul-500",
-              categoria: sobreCena ? "text-ouro-300" : "text-ouro-500",
+              nome: sobreCena ? "text-papel" : "text-tinta-800",
+              lugar: sobreCena ? "text-areia-400" : "text-areia-800",
             }}
           />
         </Link>
@@ -85,12 +83,12 @@ export function Topo() {
                 className={cn(
                   "rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300",
                   sobreCena
-                    ? "text-creme/85 hover:bg-white/14 hover:text-creme"
-                    : "text-neutro-600 hover:bg-azul-500/6 hover:text-azul-500",
+                    ? "text-papel/85 hover:bg-white/14 hover:text-papel"
+                    : "text-tinta-500 hover:bg-tinta-800/6 hover:text-tinta-800",
                   atual &&
                     (sobreCena
-                      ? "bg-white/16 text-creme"
-                      : "bg-azul-500/8 text-azul-500"),
+                      ? "bg-white/16 text-papel"
+                      : "bg-tinta-800/8 text-tinta-800"),
                 )}
               >
                 {l.texto}
@@ -105,8 +103,8 @@ export function Topo() {
             "ml-auto inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold md:ml-0",
             "shadow-[var(--shadow-flutua-1)] transition-transform duration-300 hover:-translate-y-0.5",
             sobreCena
-              ? "bg-ouro-500 text-azul-700 hover:bg-ouro-400"
-              : "bg-azul-500 text-creme hover:bg-azul-600",
+              ? "bg-areia-500 text-tinta-900 hover:bg-areia-400"
+              : "bg-tinta-800 text-papel hover:bg-tinta-900",
           )}
         >
           <MessageCircle className="size-4" aria-hidden />
@@ -121,17 +119,16 @@ export function Topo() {
             className={cn(
               "grid size-11 shrink-0 place-items-center rounded-full transition-colors md:hidden",
               sobreCena
-                ? "text-creme hover:bg-white/10"
-                : "text-azul-500 hover:bg-azul-500/8",
+                ? "text-papel hover:bg-white/10"
+                : "text-tinta-800 hover:bg-tinta-800/8",
             )}
           >
             <Menu className="size-5" aria-hidden />
           </SheetTrigger>
           <SheetContent side="right" className="w-[min(20rem,86vw)] p-8">
             <SheetTitle className="sr-only">Navegação</SheetTitle>
-            <div className="mt-6 flex items-center gap-3.5">
-              <Simbolo className="h-14 w-auto" />
-              <Assinatura className="text-[1.15rem]" />
+            <div className="mt-6">
+              <Assinatura className="text-[1.6rem]" />
             </div>
             <nav aria-label="Principal" className="mt-10 flex flex-col gap-1">
               {/* Fechar no clique, e não só na troca de rota: tocar no link
@@ -144,17 +141,17 @@ export function Topo() {
                   onClick={() => setMenu(false)}
                   aria-current={caminho.startsWith(l.href) ? "page" : undefined}
                   className={cn(
-                    "rounded-2xl px-5 py-4 font-display text-2xl font-semibold transition-colors",
+                    "rounded-[0.75rem] px-5 py-4 font-display text-2xl font-semibold transition-colors",
                     caminho.startsWith(l.href)
-                      ? "bg-azul-500/8 text-azul-500"
-                      : "text-neutro-700 hover:bg-azul-500/6",
+                      ? "bg-tinta-800/8 text-tinta-800"
+                      : "text-tinta-600 hover:bg-tinta-800/6",
                   )}
                 >
                   {l.texto}
                 </Link>
               ))}
             </nav>
-            <p className="mt-10 border-t border-azul-500/10 pt-6 text-sm text-neutro-600">
+            <p className="mt-10 border-t border-tinta-800/10 pt-6 text-sm text-tinta-500">
               Atendimento das sócias, das 9h às 19h, de segunda a sexta.
             </p>
           </SheetContent>
