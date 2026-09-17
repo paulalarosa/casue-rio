@@ -25,17 +25,38 @@ import { cn } from "@/lib/utils";
    O tamanho é todo em `em`: quem define a escala é o pai, e as proporções
    internas ficam travadas em qualquer lugar onde o lockup apareça. */
 
-type Cores = { nome?: string; lugar?: string; categoria?: string };
+type Cores = { nome?: string; lugar?: string; acento?: string; categoria?: string };
 
-/* 🔴 O "Rio" passou a ser TERRACOTA. Antes era areia escura, um neutro que
-   nao dizia nada; agora ele e o unico lugar do lockup que carrega a cor da
-   marca, e e por isso que a assinatura funciona sem simbolo. Medido em
-   5,18:1 sobre o off-white, entao vale como texto de verdade. */
+/* 🔴 Quem carrega a cor da marca é o Ê, não o "Rio".
+
+   Eu tinha pintado o "Rio" de terracota em 16/09, por falta de símbolo. A
+   folha de montagens da marca, montagem 05 "Sem placa", diz outra coisa com
+   todas as letras: "Só o nome, com o ê em terracota". O "Rio" fica num
+   neutro quente, e o acento é o único ponto de cor.
+   
+   Faz mais sentido do que o que eu tinha feito: o ê é a letra que vira a
+   placa esmaltada do símbolo, então pintá-lo aqui é a mesma marca em dois
+   pesos, e não duas ideias diferentes.
+   
+   Medido: terracota sobre o off-white dá 5,18:1, então o acento vale como
+   texto de verdade mesmo sendo um pedaço de palavra. */
 const PADRAO: Required<Cores> = {
   nome: "text-tinta-800",
-  lugar: "text-terracota-600",
+  lugar: "text-tinta-600",
+  acento: "text-terracota-600",
   categoria: "text-tinta-500",
 };
+
+/** "Casuê" com o ê destacado. Parte a palavra em duas peças para o acento
+ *  poder ter cor própria, e mantém a entreletra negativa nas duas, senão a
+ *  emenda abre um vão no meio do nome. */
+function Casue({ nome, acento }: { nome: string; acento: string }) {
+  return (
+    <span className={cn("font-bold tracking-[-0.035em]", nome)}>
+      Casu<span className={acento}>ê</span>
+    </span>
+  );
+}
 
 /** Lockup empilhado: o principal. Nome em duas linhas e o descritivo embaixo. */
 export function Assinatura({
@@ -48,7 +69,7 @@ export function Assinatura({
   const c = { ...PADRAO, ...cores };
   return (
     <span className={cn("inline-flex flex-col font-display leading-[0.94]", className)}>
-      <span className={cn("font-bold tracking-[-0.035em]", c.nome)}>Casuê</span>
+      <Casue nome={c.nome} acento={c.acento} />
       <span className={cn("font-bold tracking-[-0.035em]", c.lugar)}>Rio</span>
       <span
         className={cn("mt-[0.5em] font-sans font-semibold uppercase leading-none", c.categoria)}
@@ -76,7 +97,7 @@ export function AssinaturaLinha({
   const c = { ...PADRAO, ...cores };
   return (
     <span className={cn("inline-flex items-baseline font-display leading-none", className)}>
-      <span className={cn("font-bold tracking-[-0.035em]", c.nome)}>Casuê</span>
+      <Casue nome={c.nome} acento={c.acento} />
       <span className={cn("ml-[0.22em] font-bold tracking-[-0.035em]", c.lugar)}>Rio</span>
     </span>
   );

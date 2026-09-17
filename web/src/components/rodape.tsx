@@ -55,7 +55,12 @@ export function Rodape() {
               caixa alta espaçada, que é o que a barra do topo não tem. */}
           <Assinatura
             className="text-[2.6rem]"
-            cores={{ nome: "text-papel", lugar: "text-areia-400", categoria: "text-tinta-200" }}
+            cores={{
+              nome: "text-papel",
+              lugar: "text-areia-400",
+              acento: "text-terracota-400",
+              categoria: "text-tinta-200",
+            }}
           />
           <p className="mt-6 font-display text-2xl font-semibold text-papel">
             {SLOGAN}

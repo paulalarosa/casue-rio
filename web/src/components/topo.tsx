@@ -77,7 +77,10 @@ export function Topo() {
             className="text-[1.18rem] sm:text-[1.3rem]"
             cores={{
               nome: sobreCena ? "text-papel" : "text-tinta-800",
-              lugar: sobreCena ? "text-areia-400" : "text-bronze-500",
+              lugar: sobreCena ? "text-areia-400" : "text-tinta-600",
+              /* 🔴 Sobre a cena escura o acento NÃO pode ser terracota:
+                 3,19:1. Lá quem fala é a telha, medida em 5,37:1. */
+              acento: sobreCena ? "text-terracota-400" : "text-terracota-600",
             }}
           />
         </Link>
