@@ -14,7 +14,7 @@ import { SOCIAS, SLOGAN } from "@/lib/site";
 import { arquivo } from "@/lib/caminho";
 import { VideoFundo } from "@/components/video-fundo";
 import posterParede from "../../public/video/parede.webp";
-import posterHorizonte from "../../public/video/horizonte.webp";
+import posterNoite from "../../public/video/noite.webp";
 
 const FATOS = [
   {
@@ -419,16 +419,18 @@ export default function Home() {
       </Revela>
 
       {/* ====================================================== CHAMADA */}
-      {/* O horizonte com a silhueta dos Dois Irmãos, no fim do dia e no fim
-          da página. Sai do Cristo e do Pão de Açúcar de propósito: é tão
-          carioca quanto e ninguém do ramo usa. */}
+      {/* 🔴 Aqui estava o horizonte, e ele desceu para o rodapé. A rua de
+          noite, com as janelas acesas, diz "tem gente em casa" bem melhor
+          do que uma silhueta distante, e essa é a última coisa que a página
+          pede antes de alguém mandar mensagem. Skyline é encerramento de
+          site; janela acesa é convite. */}
       <Revela className="trilho secao">
         <div
           data-revela
           className="ilha relative isolate overflow-hidden bg-tinta-900 text-papel"
         >
           <div aria-hidden className="absolute inset-0 -z-20">
-            <VideoFundo fonte={arquivo("/video/horizonte.mp4")} poster={posterHorizonte} paralaxe />
+            <VideoFundo fonte={arquivo("/video/noite.mp4")} poster={posterNoite} paralaxe />
           </div>
           <div
             aria-hidden

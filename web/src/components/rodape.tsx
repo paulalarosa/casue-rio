@@ -27,6 +27,15 @@ function Registro({
   );
 }
 
+/* 🔴 O rodapé NÃO tem vídeo, e isso é decisão medida, não esquecimento.
+   Eu cheguei a pôr o horizonte aqui a 40% de opacidade. Depois desenhei o
+   quadro do vídeo num canvas e medi o composto: na média o papel dava
+   5,62:1, mas na FAIXA CLARA do céu, que é por onde o texto passa, caía
+   para 2,86:1, e o rótulo em areia para 2,23:1. Para o pior caso passar em
+   4,5:1 o véu teria de cobrir 65% do vídeo, e aí não sobra vídeo.
+
+   A raiz é simples: rodapé é onde mora texto pequeno em quantidade, e
+   texto pequeno sobre imagem com faixa clara não tem conserto barato. */
 export function Rodape() {
   return (
     <footer className="relative mt-24 overflow-hidden bg-tinta-800 text-papel">

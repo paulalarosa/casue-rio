@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CabecaPagina } from "@/components/cabeca-pagina";
 import { FaixaVideo } from "@/components/faixa-video";
-import posterBairros from "../../../public/video/bairros.webp";
+import posterHorizonte from "../../../public/video/horizonte.webp";
 import { Cena } from "@/components/cenas";
 import { BAIRROS, DISPONIVEIS } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
@@ -31,8 +31,8 @@ export default function PaginaBairros() {
           navega pela grade. */}
       <div className="trilho mt-10">
         <FaixaVideo
-          fonte={arquivo("/video/bairros.mp4")}
-          poster={posterBairros}
+          fonte={arquivo("/video/horizonte.mp4")}
+          poster={posterHorizonte}
           altura="aspect-[21/9] min-h-0"
           className="rounded-[1rem] shadow-[var(--shadow-flutua-3)]"
           veu="linear-gradient(to top, rgba(10,10,9,.8), rgba(10,10,9,.46) 55%, rgba(10,10,9,.2))"

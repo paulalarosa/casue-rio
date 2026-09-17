@@ -101,20 +101,20 @@ não pendência esquecida.
 
 ## Vídeo
 
-Dez peças em `web/public/video/`, todas H.264 e sem áudio.
+Onze peças em `web/public/video/`, todas H.264 e sem áudio.
 
 | Arquivo | Onde | Peso |
 |---|---|---|
 | `abertura.mp4` + `abertura-retrato.mp4` | abertura da home | 858 kB · 390 kB |
 | `sala.mp4` | faixa do slogan | 562 kB |
-| `bairros.mp4` | cabeça de `/bairros` | 489 kB |
 | `gradil.mp4` | cabeça de `/juridico` | 304 kB |
 | `calcadao.mp4` | cabeça de `/contato` | 456 kB |
 | `carteira.mp4` | cabeça de `/imoveis` | 615 kB |
 | `avaliacao.mp4` | cabeça de `/avaliacao` | 192 kB |
 | `alameda.mp4` | cabeça de `/bairros/[bairro]` | 595 kB |
 | `parede.mp4` | faixa escura da home | 116 kB |
-| `horizonte.mp4` | chamada final da home | 120 kB |
+| `horizonte.mp4` | cabeça de `/bairros` | 120 kB |
+| `noite.mp4` | chamada final da home | 238 kB |
 
 Regras que valem para qualquer vídeo que entre depois:
 
@@ -135,6 +135,12 @@ Regras que valem para qualquer vídeo que entre depois:
   lisa. Dois formatos onde um ganha em tudo é peso sem ganho.
 - 🔴 **Marca d'água de gerador sai por CORTE, não por filtro.** O `delogo`
   deixa borrão visível sobre grade e gradil.
+- 🔴 **O rodapé não leva vídeo.** Medi: com o horizonte a 40% de opacidade, o
+  papel dava 5,62:1 na média e **2,86:1 na faixa clara do céu**, que é por
+  onde o texto passa; o rótulo em areia caía para 2,23:1. Para o pior caso
+  passar seria preciso cobrir 65% do vídeo com véu, e aí não sobra vídeo.
+  Rodapé é onde mora texto pequeno em quantidade, e isso não tem conserto
+  barato.
 - **Nada preso à rolagem.** MP4 comum tem quadro-chave a cada 8–12 quadros:
   arrastar trava. Laço simples com texto por cima entrega o mesmo e funciona
   no telefone.
@@ -163,7 +169,7 @@ web/src/lib/site.ts          nome, sócias, endereço, contato. Sem CPF.
 web/src/lib/imoveis.ts       a carteira. É isto que a manutenção edita.
 web/src/lib/caminho.ts       prefixo de arquivo de `public/`.
 web/src/components/entrada.tsx  a doutrina de animação.
-web/public/video/            as seis peças de vídeo e seus pôsteres.
+web/public/video/            as onze peças de vídeo e seus pôsteres.
 ```
 
 ---
