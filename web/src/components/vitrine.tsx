@@ -15,6 +15,7 @@ import {
   DISPONIVEIS,
   VENDIDOS,
   REGIOES,
+  buscar,
   linkZap,
   type Finalidade,
   type Imovel,
@@ -24,7 +25,7 @@ import { cn } from "@/lib/utils";
 
 const FINALIDADES: [Finalidade, string][] = [
   ["comprar", "Comprar"],
-  ["temporada", "Temporada"],
+  ["alugar", "Alugar"],
 ];
 
 /* Ordem fica na URL junto com o filtro: assim o link que a sócia manda no
@@ -44,13 +45,19 @@ export function Vitrine() {
   const router = useRouter();
   const regiao = params.get("regiao") as Regiao | null;
   const finalidade = params.get("finalidade") as Finalidade | null;
+  /* O texto da busca chega pela URL, igual aos outros dois filtros, e por
+     isso o link que a sócia manda no WhatsApp reabre a mesma lista. */
+  const termo = params.get("q") ?? "";
   const ordem = params.get("ordem") && ORDENS[params.get("ordem")!] ? params.get("ordem")! : "selecionados";
 
-  const lista = DISPONIVEIS.filter(
-    (im) =>
-      (!regiao || im.regiao === regiao) &&
-      (!finalidade || im.finalidade === finalidade),
-  ).sort(ORDENS[ordem].cmp);
+  const base = termo ? buscar(termo) : DISPONIVEIS;
+  const lista = base
+    .filter(
+      (im) =>
+        (!regiao || im.regiao === regiao) &&
+        (!finalidade || im.finalidade === finalidade),
+    )
+    .sort(ORDENS[ordem].cmp);
 
   /* Contagem VIVA: cada pastilha mostra quantos sobram se ela for ligada,
      considerando o outro filtro já ligado. Pastilha que levaria a zero nasce
@@ -58,7 +65,10 @@ export function Vitrine() {
   function contarCom(chave: "regiao" | "finalidade", valor: string) {
     const alt = { regiao: regiao as string | null, finalidade: finalidade as string | null };
     alt[chave] = valor;
-    return DISPONIVEIS.filter(
+    /* 🔴 A contagem conta dentro do que o TEXTO já filtrou. Contar sobre a
+       carteira inteira faria a pastilha prometer seis imóveis e entregar
+       um, que é pior do que não ter número nenhum. */
+    return base.filter(
       (im) =>
         (!alt.regiao || im.regiao === alt.regiao) &&
         (!alt.finalidade || im.finalidade === alt.finalidade),
@@ -141,7 +151,7 @@ export function Vitrine() {
                 {lista.length === 1 ? "imóvel" : "imóveis"}
               </span>
 
-              {(regiao || finalidade || ordem !== "selecionados") && (
+              {(termo || regiao || finalidade || ordem !== "selecionados") && (
                 <button
                   type="button"
                   onClick={() => router.replace("/imoveis", { scroll: false })}
@@ -156,6 +166,21 @@ export function Vitrine() {
       </div>
 
       <div className="trilho py-12">
+        {/* Busca por texto tem de aparecer COMO texto na tela: pastilha de
+            bairro a pessoa vê ligada, mas um "?q=" vindo de link abriria uma
+            lista curta sem nenhuma explicação do porquê. */}
+        {termo && (
+          <p className="mb-8 flex flex-wrap items-center gap-2 text-tinta-500">
+            Busca por <b className="font-display text-tinta-800">{termo}</b>
+            <button
+              type="button"
+              onClick={() => mexer({ q: null })}
+              className="inline-flex items-center gap-1 rounded-full border border-tinta-800/15 px-3 py-1 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
+            >
+              <X className="size-3.5" aria-hidden /> Tirar
+            </button>
+          </p>
+        )}
         {lista.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {lista.map((im) => (
@@ -164,7 +189,7 @@ export function Vitrine() {
           </div>
         ) : (
           /* Beco sem saída não existe: quando o filtro não acha nada, a saída
-             é falar com as sócias, que é o que a pessoa faria de qualquer
+             é falar com a gente, que é o que a pessoa faria de qualquer
              jeito. Carteira curta é o normal aqui, não é erro. */
           <Painel className="mx-auto max-w-xl p-10 text-center">
             <h2 className="text-2xl">Nenhum imóvel com esses filtros</h2>
@@ -195,7 +220,7 @@ export function Vitrine() {
           DEPOIS da lista, em faixa própria e fora de toda contagem: dentro
           da grade, um imóvel que já saiu inflava o número de disponíveis e
           fazia a pessoa clicar num anúncio que não existe mais. */}
-      {VENDIDOS.length > 0 && !regiao && !finalidade && (
+      {VENDIDOS.length > 0 && !termo && !regiao && !finalidade && (
         <div className="secao relative bg-tinta-800 text-papel">
           <div className="trilho">
             <div className="grid gap-4 lg:grid-cols-[1fr_26rem] lg:items-end">

@@ -167,7 +167,7 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
               </h1>
               <span className="num mt-3 block font-display text-2xl font-bold text-papel sm:text-3xl">
                 {moeda(im.preco)}
-                {im.porNoite && <span className="text-lg"> / noite</span>}
+                {im.porMes && <span className="text-lg"> / mês</span>}
               </span>
             </div>
           </>
@@ -230,7 +230,7 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
         <Painel className="sticky top-28 p-8">
           <span className="font-display text-4xl font-bold text-tinta-800">
             {moeda(im.preco)}
-            {im.porNoite && <span className="text-lg"> / noite</span>}
+            {im.porMes && <span className="text-lg"> / mês</span>}
           </span>
           <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
             <div className="flex items-baseline gap-2">

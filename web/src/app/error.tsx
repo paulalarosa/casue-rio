@@ -28,7 +28,7 @@ export default function Erro({ reset }: { error: Error; reset: () => void }) {
             href="/contato"
             className="rounded-full border border-tinta-800/20 px-6 py-3 font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
           >
-            Falar com uma sócia
+            Falar com a gente
           </Link>
         </div>
       </Painel>

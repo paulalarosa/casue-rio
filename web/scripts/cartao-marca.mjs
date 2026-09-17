@@ -75,14 +75,29 @@ const REGIOES = await regioesAtendidas();
 /* A paleta, nos mesmos valores de `globals.css`. */
 const TINTA = "#111110";
 const PAPEL = "#F6F2E9";
-const AREIA = "#DDCBAA";
 const AREIA_CLARA = "#E5D6B9";
 const CINZA_CLARO = "#C8C5BD";
 
-/* "Rio" sai na areia: e o unico ponto de cor do lockup, e e o que separa o
-   nome do lugar sem precisar de segunda linha. */
 const [primeiro, ...resto] = MARCA.split(" ");
 const lugar = resto.join(" ");
+
+/* A PLACA, montagem 16 (reverso sobre tinta), com os numeros do LEIA-ME do
+   pacote de vetores: raio externo 0,173 do lado, filete a 0,1065 de recuo
+   com 0,02 de espessura e raio 0,107, e o e-circunflexo em curva.
+
+   🔴 Sobre a tinta a placa NAO inverte: a montagem 16 mantem o esmalte
+   terracota e muda so o nome ao lado, que vai para areia clara com o "Rio"
+   a 80%. E por isso que aqui o acento do e NAO e terracota como no site
+   claro: quem ja carrega a cor da marca nesta arte e a propria placa. */
+const TERRACOTA = "#A8482A";
+const E_CIRCUNFLEXO =
+  "M50.97 63.46Q46.69 63.46 43.32 61.89Q39.96 60.32 38.01 57.49Q36.07 54.66 36.07 50.91Q36.07 47.20 37.94 44.42Q39.80 41.63 43.05 40.07Q46.29 38.51 50.39 38.51Q54.61 38.51 57.62 40.34Q60.62 42.17 62.24 45.51Q63.86 48.85 63.86 53.40H42.91V48.32H59.12L56.36 50.09Q56.21 48.30 55.46 47.04Q54.72 45.79 53.49 45.12Q52.27 44.46 50.59 44.46Q48.73 44.46 47.39 45.20Q46.06 45.94 45.33 47.24Q44.60 48.55 44.60 50.26Q44.60 52.49 45.60 54.05Q46.61 55.62 48.56 56.44Q50.52 57.27 53.37 57.27Q55.98 57.27 58.57 56.58Q61.15 55.90 63.25 54.64V60.01Q60.80 61.66 57.70 62.56Q54.60 63.46 50.97 63.46ZM46.01 29.09H54.67L60.57 36.89H53.91L48.39 31.16H52.29L46.79 36.89H40.10Z";
+const PLACA = `<svg class="placa" viewBox="0 0 100 100" width="138" height="138">
+  <rect x="0" y="0" width="100" height="100" rx="17.3" fill="${TERRACOTA}"/>
+  <rect x="10.65" y="10.65" width="78.7" height="78.7" rx="10.7" fill="none"
+        stroke="${PAPEL}" stroke-width="2"/>
+  <path d="${E_CIRCUNFLEXO}" fill="${PAPEL}"/>
+</svg>`;
 
 /* --- A montagem -------------------------------------------------------- */
 
@@ -100,11 +115,15 @@ const html = `<!doctype html><meta charset="utf-8">
     display:flex;flex-direction:column;justify-content:space-between;padding:72px 80px}
   /* Mesmas proporcoes de assinatura.tsx: o descritivo e 0,3 do nome, com
      0,2em de entreletra. Mudou la, muda aqui. */
+  /* Montagem 01: a placa e 2,22 vezes o corpo do nome e a folga entre as
+     duas e 0,689 desse corpo. Mudou em assinatura.tsx, muda aqui. */
+  .marca{display:flex;align-items:center;gap:43px}
+  .placa{display:block;flex:none}
   .nome{font-family:"Unbounded";font-weight:700;font-size:62px;line-height:.94;
-    letter-spacing:-.035em}
-  .nome .lugar{color:${AREIA}}
+    letter-spacing:-.035em;color:${AREIA_CLARA}}
+  .nome .lugar{opacity:.8}
   .cat{font-family:"Archivo";font-weight:600;font-size:18.6px;letter-spacing:.2em;
-    text-transform:uppercase;color:${CINZA_CLARO};margin-top:20px}
+    text-transform:uppercase;color:${CINZA_CLARO};margin-top:22px;margin-left:181px}
   h1{font-family:"Unbounded";font-weight:600;font-size:60px;line-height:1.16;
     letter-spacing:-.035em;max-width:18ch}
   .pe{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;
@@ -115,7 +134,10 @@ const html = `<!doctype html><meta charset="utf-8">
     text-transform:none;letter-spacing:-.02em}
 </style>
 <div>
-  <div class="nome">${primeiro} <span class="lugar">${lugar}</span></div>
+  <div class="marca">
+    ${PLACA}
+    <div class="nome">${primeiro} <span class="lugar">${lugar}</span></div>
+  </div>
   <div class="cat">${DESCRITIVO}</div>
 </div>
 <h1>${FRASE}</h1>

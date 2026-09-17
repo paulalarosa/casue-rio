@@ -75,7 +75,7 @@ export function CartaoImovel({
         <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-3">
           <span className="tinta rounded-full px-4 py-2 font-display text-lg font-bold">
             {moeda(im.preco)}
-            {im.porNoite && <span className="text-sm font-semibold"> / noite</span>}
+            {im.porMes && <span className="text-sm font-semibold"> / mês</span>}
           </span>
           {/* Na fila o encaixe tem 15rem: preço e bairro juntos não cabem,
               e o bairro já aparece na ficha. Fica só o preço. */}

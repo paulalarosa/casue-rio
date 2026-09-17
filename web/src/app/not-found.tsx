@@ -30,7 +30,7 @@ export default function NaoEncontrada() {
             href="/contato"
             className="inline-flex items-center gap-2 rounded-full border border-tinta-800/20 px-6 py-3 font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
           >
-            <MessageCircle className="size-5" aria-hidden /> Falar com uma sócia
+            <MessageCircle className="size-5" aria-hidden /> Falar com a gente
           </Link>
         </div>
       </Painel>

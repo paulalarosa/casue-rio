@@ -18,13 +18,24 @@ export const MARCA = "Casuê Rio";
 export const DESCRITIVO = "Negócios Imobiliários";
 export const NOME = `${MARCA} ${DESCRITIVO}`;
 export const DESCRICAO =
-  "Imobiliária de duas sócias no Rio, corretoras com CRECI e avaliadoras com CNAI. Compra, venda, temporada e avaliação no Centro, na Tijuca, no Grajaú e na Zona Sul, com a documentação conferida antes da proposta.";
+  "Imobiliária de duas sócias no Rio, corretoras com CRECI e avaliadoras com CNAI. Compra, venda, aluguel e avaliação no Centro, na Tijuca e na Zona Sul, com a documentação conferida antes da proposta.";
 
 /* As duas frases da marca ficam aqui porque aparecem em lugares que não se
    olham: a abertura, o rodapé, o cartão de compartilhamento da home e o
    cartão de cada imóvel. Espalhadas, uma correção sempre esquecia uma. */
 export const FRASE = "Quem mostra o imóvel é quem lê a matrícula.";
+
+/* 🔴 O slogan é a frase que ELAS pediram para aparecer mais, e por isso ele
+   saiu de um lugar só. Hoje ele abre a faixa de vídeo da home, fecha o
+   rodapé, assina a página de quem somos e encerra a carteira.
+
+   Uma segunda frase vem delas e ainda não chegou. O lugar dela já existe
+   aqui embaixo, VAZIO: quem consome `SEGUNDA_FRASE` some com o bloco
+   enquanto ela for string vazia, do mesmo jeito que o botão de WhatsApp
+   some sem número. Frase de marca inventada por mim é pior do que espaço
+   em branco, porque parece decidida. */
 export const SLOGAN = "Aqui seu sonho vira patrimônio.";
+export const SEGUNDA_FRASE: string = "";
 
 /* Canal único da empresa, e não um por sócia: foi decisão delas. Enquanto
    o número não existe a constante fica VAZIA, e quem monta botão de
@@ -36,14 +47,19 @@ export const SLOGAN = "Aqui seu sonho vira patrimônio.";
    inalcançável, o que faz o próprio código que vai usá-lo parar de
    compilar. */
 export const TELEFONE: string = "";
-export const EMAIL: string = "";
+
+/* E-mail e Instagram chegaram em 17/09/2026 e são REAIS, ao contrário do
+   telefone. O e-mail vira `mailto:` de verdade e o perfil vira link. */
+export const EMAIL: string = "rio.casue@gmail.com";
+export const INSTAGRAM: string = "casuerio";
+export const INSTAGRAM_URL = INSTAGRAM ? `https://instagram.com/${INSTAGRAM}` : "";
 export const HORARIO = "Das 9h às 19h, de segunda a sexta.";
 
 /* Metadado de página, num lugar só.
 
    🔴 Existe porque metadado declarado no layout DESCE para todas as
    páginas: o `canonical: "/"` que estava lá fazia /contato, /imoveis,
-   /juridico e os quatro bairros dizerem ao buscador que são cópia da home.
+   /avaliacao e os bairros dizerem ao buscador que são cópia da home.
    Com o ajudante, cada página declara o SEU endereço, e o Open Graph sai
    junto sem ninguém precisar lembrar.
 
@@ -83,8 +99,11 @@ export const SOCIAS = [
     cnai: "CNAI 53.073",
     /* 🔴 As duas cuidam de TUDO. A divisão por bairro e por assunto que
        estava aqui era suposição minha, e elas desfizeram: quem atender
-       resolve compra, venda, temporada e avaliação em todas as regiões. */
-    linha: "Compra, venda, temporada e avaliação nas quatro regiões.",
+       resolve compra, venda, aluguel e avaliação em todas as regiões.
+
+       🔴 TEMPORADA SAIU em 17/09/2026: elas não trabalham com temporada.
+       O que existe é venda e aluguel. */
+    linha: "Compra, venda, aluguel e avaliação nas três regiões.",
   },
   {
     inicial: "S",
@@ -92,7 +111,7 @@ export const SOCIAS = [
     nome: "Alessandra Soverchi de Seixas",
     creci: "CRECI/RJ 92.989",
     cnai: "CNAI 53.072",
-    linha: "Compra, venda, temporada e avaliação nas quatro regiões.",
+    linha: "Compra, venda, aluguel e avaliação nas três regiões.",
   },
 ] as const;
 

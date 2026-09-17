@@ -3,17 +3,31 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { MessageCircle, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Assinatura, AssinaturaLinha } from "@/components/assinatura";
+import { AssinaturaFaixa, AssinaturaNome } from "@/components/assinatura";
 import { cn } from "@/lib/utils";
 
+/* 🔴 O menu perdeu duas entradas em 17/09/2026, e as duas por REDUNDÂNCIA,
+   não por falta de conteúdo:
+
+   · "Bairros" saiu porque ela e "Imóveis" mandavam para a mesma coisa vista
+     de dois jeitos, e quem chega não sabe qual das duas abrir. Os bairros
+     agora moram DENTRO de /imoveis, numa faixa própria, e as páginas de cada
+     bairro continuam existindo e continuam indexadas.
+   · "Contato" saiu porque o botão ao lado já é o contato. Duas portas para a
+     mesma conversa, uma escrita e uma pintada, é o tipo de repetição que faz
+     a pessoa procurar a diferença entre elas.
+
+   "Jurídico" saiu por decisão dela, e a página junto.
+
+   O que sobrou são quatro assuntos que não se confundem: o que tem à venda,
+   quanto vale, quem são elas, e o que escrevem. */
 const LINKS = [
   { href: "/imoveis", texto: "Imóveis" },
-  { href: "/bairros", texto: "Bairros" },
   { href: "/avaliacao", texto: "Avaliação" },
-  { href: "/juridico", texto: "Jurídico" },
-  { href: "/contato", texto: "Contato" },
+  { href: "/quem-somos", texto: "Quem somos" },
+  { href: "/revista", texto: "Revista" },
 ];
 
 /* Barra que flutua destacada do topo, em vez de colar na borda da tela.
@@ -69,18 +83,28 @@ export function Topo() {
           sobreCena ? "vidro-tinta" : "vidro-claro",
         )}
       >
-        <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          {/* Sem símbolo: a marca é a palavra. Por isso a assinatura deixa
-              de ser opcional em tela estreita, que é onde ela era escondida
-              quando havia um símbolo para segurar o lugar sozinho. */}
-          <AssinaturaLinha
-            className="text-[1.18rem] sm:text-[1.3rem]"
+        <Link href="/" className="flex shrink-0 items-center" aria-label="Casuê Rio, início">
+          {/* Montagem 04 · faixa. A folha de marca é explícita: "04 em barras
+              e testeiras", e esta é a barra. Placa, nome, fio e descritivo em
+              uma linha só, com o descritivo saindo abaixo de `lg`, onde a
+              barra deixa de ter largura para ele.
+
+              🔴 A placa NÃO inverte sobre a cena escura. A montagem 16 mantém
+              o esmalte terracota sobre a tinta e muda só o nome: a placa é um
+              bloco cheio, que pede 3:1 e mede 3,19:1 ali. Quem precisa mudar
+              é a palavra ao lado.
+
+              🔴 E o ê NÃO é colorido aqui. Nas montagens com placa o nome sai
+              numa cor só: o ê em terracota é a versão SEM placa, a 05, e é
+              ela que existe justamente para substituir a placa quando esta
+              não cabe. Com a placa ao lado, o acento seria a mesma cor a dois
+              centímetros de si mesma. */}
+          <AssinaturaFaixa
+            className="text-[1.05rem] sm:text-[1.15rem]"
             cores={{
               nome: sobreCena ? "text-papel" : "text-tinta-800",
               lugar: sobreCena ? "text-areia-400" : "text-tinta-600",
-              /* 🔴 Sobre a cena escura o acento NÃO pode ser terracota:
-                 3,19:1. Lá quem fala é a telha, medida em 5,37:1. */
-              acento: sobreCena ? "text-terracota-400" : "text-terracota-600",
+              categoria: sobreCena ? "text-areia-300" : "text-bronze-500",
             }}
           />
         </Link>
@@ -113,7 +137,7 @@ export function Topo() {
         <Link
           href="/contato"
           className={cn(
-            "ml-auto inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold md:ml-0",
+            "ml-auto inline-flex shrink-0 items-center rounded-full px-4 py-2.5 text-sm font-semibold md:ml-0",
             "shadow-[var(--shadow-flutua-1)] transition-transform duration-300 hover:-translate-y-0.5",
             /* 🔴 Terracota nos DOIS estados. Antes era areia sobre a cena e
                tinta depois da rolagem, ou seja, a acao principal do site
@@ -130,8 +154,25 @@ export function Topo() {
               : "bg-terracota-600 text-papel hover:bg-terracota-700",
           )}
         >
-          <MessageCircle className="size-4" aria-hidden />
-          Falar
+          {/* 🔴 "Falar" sozinho não diz com quem nem convida; "Falar com a
+              gente" convida e é o mesmo título da página de destino, então o
+              botão e a página deixam de ter dois nomes para a mesma coisa.
+
+              🔴 E não diz "sócia": o contato passou a ser um canal único da
+              empresa, não um por pessoa, e rótulo que promete falar com uma
+              pessoa específica promete o que o canal não entrega.
+
+              🔴 SEM ícone, e foi medido: com o balãozinho o botão dava 177px
+              numa barra de 1297, e a 1024 de tela ele virava o elemento mais
+              pesado da barra depois do menu inteiro. O ícone dizia
+              "mensagem", que é exatamente o que as três palavras ao lado já
+              dizem — ilustrar o rótulo com o próprio rótulo. Pílula cheia em
+              terracota já é o botão mais visível da tela, não precisa de
+              desenho para ser reconhecida.
+
+              O rótulo curto fica no celular, onde a barra não tem largura. */}
+          <span className="hidden sm:inline">Falar com a gente</span>
+          <span className="sm:hidden">Falar</span>
         </Link>
 
         {/* No celular o menu inteiro ficava de fora: só existia o botão de
@@ -150,8 +191,15 @@ export function Topo() {
           </SheetTrigger>
           <SheetContent side="right" className="w-[min(20rem,86vw)] p-8">
             <SheetTitle className="sr-only">Navegação</SheetTitle>
+            {/* Montagem 05 · sem placa, que é a que a folha manda usar
+                "onde a placa já aparece na mesma página". É o caso exato: a
+                gaveta abre a três dedos da barra, e a barra tem a placa. Duas
+                placas na mesma tela gastariam o símbolo em vez de firmá-lo.
+
+                E é a ÚNICA montagem em que o ê sai colorido: sem a placa ao
+                lado, é ele que carrega a cor da marca. */}
             <div className="mt-6">
-              <Assinatura className="text-[1.6rem]" />
+              <AssinaturaNome className="text-[2rem]" empilhado />
             </div>
             <nav aria-label="Principal" className="mt-10 flex flex-col gap-1">
               {/* Fechar no clique, e não só na troca de rota: tocar no link
@@ -175,7 +223,7 @@ export function Topo() {
               ))}
             </nav>
             <p className="mt-10 border-t border-tinta-800/10 pt-6 text-sm text-tinta-500">
-              Atendimento das sócias, das 9h às 19h, de segunda a sexta.
+              Atendimento das 9h às 19h, de segunda a sexta.
             </p>
           </SheetContent>
         </Sheet>

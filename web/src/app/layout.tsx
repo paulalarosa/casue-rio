@@ -52,8 +52,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     title: NOME,
-    /* Montada das regiões atendidas, e não escrita à mão: a lista aqui
-       ficou três regiões atrasada depois que o Grajaú entrou. */
+    /* Montada das regiões atendidas, e não escrita à mão: a lista aqui já
+       ficou atrasada duas vezes, uma quando entrou região e outra quando
+       saiu. Derivada, ela acompanha. */
     description: `${FRASE} ${REGIOES.join(", ").replace(/, ([^,]+)$/, " e $1")}.`,
     url: "/",
     siteName: NOME,
@@ -75,12 +76,13 @@ const DADOS = {
   name: NOME,
   description: DESCRICAO,
   url: SITE,
-  areaServed: [
-    { "@type": "Place", name: "Centro, Rio de Janeiro" },
-    { "@type": "Place", name: "Tijuca, Rio de Janeiro" },
-    { "@type": "Place", name: "Grajaú, Rio de Janeiro" },
-    { "@type": "Place", name: "Zona Sul, Rio de Janeiro" },
-  ],
+  /* 🔴 Também DERIVADO das regiões, pelo mesmo motivo: esta lista estava
+     escrita à mão e continuou anunciando o Grajaú à busca depois de o
+     bairro sair do site. Dado estruturado errado é pior que ausente. */
+  areaServed: REGIOES.map((r) => ({
+    "@type": "Place",
+    name: `${r}, Rio de Janeiro`,
+  })),
   address: {
     "@type": "PostalAddress",
     streetAddress: `${ENDERECO.rua}, ${ENDERECO.complemento}`,

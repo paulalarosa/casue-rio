@@ -1,56 +1,59 @@
 import { cn } from "@/lib/utils";
+import { Placa, type RoupaDaPlaca } from "@/components/placa";
 
 /* A assinatura da Casuê Rio.
 
-   🔴 A marca hoje é SÓ TIPOGRÁFICA. O símbolo ainda está em escolha com as
-   sócias, e marca boa não fica esperando desenho: a palavra já é a marca, e
-   o símbolo, quando entrar, entra à esquerda deste bloco sem mexer nele.
+   🔴 A marca DEIXOU de ser só tipográfica em 17/09/2026: chegou o pacote de
+   vetores, com a placa esmaltada do ê e treze montagens. O que está aqui são
+   quatro delas, as que o site usa, com as proporções tiradas dos SVGs e não
+   do olho:
 
-   Três decisões que estão medidas, não chutadas:
+     01 · horizontal ............ placa + nome numa linha. O padrão.
+     03 · com descritivo ........ placa + nome + fio + NEGÓCIOS IMOBILIÁRIOS.
+     04 · faixa ................. tudo em uma linha só. A folha manda usar
+                                  esta em "barra de topo de site, rodapé e
+                                  testeira de fachada", e é o que a barra usa.
+     05 · sem placa ............. só o nome, com o ê em terracota. Para onde
+                                  a placa já apareceu na mesma página.
 
-   · O nome vai em Unbounded, que elas escolheram numa folha de nove opções.
-     É display de verdade: geométrica, larga, com contraforma grande. Em
-     display grande ela precisa de entreletra NEGATIVA, senão a palavra
-     parece solta; em corpo de texto ela não serve, e por isso o descritivo
-     desce para a Archivo.
+   As proporções são todas em `em` do NOME, tiradas por divisão dos números
+   do SVG. Exemplo, montagem 03: placa 100, nome 38, folga 31 — logo a placa
+   é 2,63em do nome e a folga é 0,816em. Quem define a escala é o pai, e as
+   relações internas ficam travadas em qualquer tamanho.
 
-   · "Rio" sai na areia, e não na tinta. É o único ponto de cor do lockup, e
-     é o que separa o nome do lugar sem precisar de segunda linha.
+   🔴 A entreletra do nome é NEGATIVA (-0,035em) e continua sendo: a Unbounded
+   é larga, e em display sem esse aperto a palavra parece solta.
 
-   · "Negócios Imobiliários" é caixa alta espaçada, na sans. Em Unbounded o
-     descritivo competiria com o nome, porque as duas têm a mesma voz. O
-     contraste entre display larga e sans espaçada é o que faz o lockup ter
-     hierarquia com duas palavras só.
+   🔴 O ê SÓ é colorido quando NÃO há placa, e isto está nos arquivos: nas
+   montagens 01, 03 e 04 o "Casuê" sai inteiro numa cor só, e o ê em
+   terracota aparece apenas na 05, que é a versão sem placa. Faz sentido —
+   o ê colorido é o que SUBSTITUI a placa quando ela não cabe. Ter os dois
+   na mesma peça é dizer a mesma coisa duas vezes, e ainda põe um ponto de
+   cor a dois centímetros de outro ponto da mesma cor.
 
-   O tamanho é todo em `em`: quem define a escala é o pai, e as proporções
-   internas ficam travadas em qualquer lugar onde o lockup apareça. */
+   Por isso `acento` não tem mais valor padrão: sem ele, o ê simplesmente
+   herda a cor do nome. Quem pinta o acento é a `AssinaturaNome`, que é a
+   montagem 05, e mais ninguém.
+
+   🔴 Naquela, sobre fundo escuro, o acento vira TELHA (terracota-400,
+   5,37:1), porque a terracota sobre escuro dá 3,19:1 e reprova. */
 
 type Cores = { nome?: string; lugar?: string; acento?: string; categoria?: string };
 
-/* 🔴 Quem carrega a cor da marca é o Ê, não o "Rio".
-
-   Eu tinha pintado o "Rio" de terracota em 16/09, por falta de símbolo. A
-   folha de montagens da marca, montagem 05 "Sem placa", diz outra coisa com
-   todas as letras: "Só o nome, com o ê em terracota". O "Rio" fica num
-   neutro quente, e o acento é o único ponto de cor.
-   
-   Faz mais sentido do que o que eu tinha feito: o ê é a letra que vira a
-   placa esmaltada do símbolo, então pintá-lo aqui é a mesma marca em dois
-   pesos, e não duas ideias diferentes.
-   
-   Medido: terracota sobre o off-white dá 5,18:1, então o acento vale como
-   texto de verdade mesmo sendo um pedaço de palavra. */
-const PADRAO: Required<Cores> = {
+const PADRAO: Required<Omit<Cores, "acento">> = {
   nome: "text-tinta-800",
   lugar: "text-tinta-600",
-  acento: "text-terracota-600",
-  categoria: "text-tinta-500",
+  /* 🔴 O descritivo da folha é `#7A6A55`, que mede 4,68:1 sobre o papel.
+     Passa, mas por pouco, e é o texto MENOR do lockup. O site já tem um
+     token para exatamente este papel, o `bronze-500`, medido em 5,23:1.
+     Fica o do site: mesma família de quente, mais folga. */
+  categoria: "text-bronze-500",
 };
 
 /** "Casuê" com o ê destacado. Parte a palavra em duas peças para o acento
  *  poder ter cor própria, e mantém a entreletra negativa nas duas, senão a
  *  emenda abre um vão no meio do nome. */
-function Casue({ nome, acento }: { nome: string; acento: string }) {
+function Casue({ nome, acento }: { nome: string; acento?: string }) {
   return (
     <span className={cn("font-bold tracking-[-0.035em]", nome)}>
       Casu<span className={acento}>ê</span>
@@ -58,47 +61,145 @@ function Casue({ nome, acento }: { nome: string; acento: string }) {
   );
 }
 
-/** Lockup empilhado: o principal. Nome em duas linhas e o descritivo embaixo. */
-export function Assinatura({
+function Rio({ lugar, className }: { lugar: string; className?: string }) {
+  return (
+    <span className={cn("font-bold tracking-[-0.035em]", lugar, className)}>Rio</span>
+  );
+}
+
+function Descritivo({ cor, className }: { cor: string; className?: string }) {
+  return (
+    <span
+      className={cn("font-sans font-semibold uppercase leading-none", cor, className)}
+      style={{ fontSize: "0.289em", letterSpacing: "0.2em" }}
+    >
+      Negócios Imobiliários
+    </span>
+  );
+}
+
+/** 01 · horizontal, uma linha. Placa + nome, e nada mais.
+ *
+ *  Proporções do SVG: placa 100, nome 45, folga 31 entre as duas. */
+export function AssinaturaLinha({
   className,
   cores,
+  roupa,
 }: {
   className?: string;
   cores?: Cores;
+  roupa?: RoupaDaPlaca;
 }) {
   const c = { ...PADRAO, ...cores };
   return (
-    <span className={cn("inline-flex flex-col font-display leading-[0.94]", className)}>
-      <Casue nome={c.nome} acento={c.acento} />
-      <span className={cn("font-bold tracking-[-0.035em]", c.lugar)}>Rio</span>
-      <span
-        className={cn("mt-[0.5em] font-sans font-semibold uppercase leading-none", c.categoria)}
-        style={{ fontSize: "0.3em", letterSpacing: "0.2em" }}
-      >
-        Negócios Imobiliários
+    <span className={cn("inline-flex items-center font-display leading-none", className)}>
+      <Placa roupa={roupa} className="text-[2.22em]" />
+      <span className="ml-[0.689em] inline-flex items-baseline">
+        <Casue nome={c.nome} />
+        <Rio lugar={c.lugar} className="ml-[0.22em]" />
       </span>
     </span>
   );
 }
 
-/** Versão em linha, para a barra do topo e outros lugares de pouca altura.
-
-    Sem o descritivo de propósito: "NEGÓCIOS IMOBILIÁRIOS" em caixa alta
-    espaçada mede mais de dez vezes a altura da letra, e numa barra de 8rem
-    de altura ele empurraria o menu ou sairia ilegível de tão pequeno. Barra
-    estreita é lugar de marca, não de descrição. */
-export function AssinaturaLinha({
+/** 04 · faixa. Placa, nome, fio e descritivo em uma linha só.
+ *
+ *  É a montagem que a folha manda usar em barra de topo, rodapé e testeira.
+ *  Proporções do SVG: placa 56, nome 26, folga 24, fio de 1,2 × 35,84 a 28
+ *  do nome, descritivo 9,5 a 21,8 do fio.
+ *
+ *  🔴 O fio vai em `currentColor` com opacidade, e não no `#E0CDB4` do
+ *  arquivo: sobre o papel aquele bege mede 1,39:1 e some, e sobre a barra
+ *  escura ele viraria o elemento mais claro da peça, acima do próprio nome.
+ *  Divisória tem de acompanhar o texto que ela divide. */
+export function AssinaturaFaixa({
   className,
   cores,
+  roupa,
 }: {
   className?: string;
   cores?: Cores;
+  roupa?: RoupaDaPlaca;
 }) {
   const c = { ...PADRAO, ...cores };
   return (
-    <span className={cn("inline-flex items-baseline font-display leading-none", className)}>
+    <span className={cn("inline-flex items-center font-display leading-none", className)}>
+      <Placa roupa={roupa} className="text-[2.154em]" />
+      <span className="ml-[0.923em] inline-flex items-baseline">
+        <Casue nome={c.nome} />
+        <Rio lugar={c.lugar} className="ml-[0.22em]" />
+      </span>
+      {/* O descritivo só existe onde cabe: abaixo de `sm` a barra tem largura
+          para a marca e para o botão, e mais nada. Esconder aqui é a
+          montagem 01 assumindo o lugar da 04, que é o que a ordem de
+          preferência da folha manda fazer quando o espaço aperta. */}
+      <span aria-hidden className="ml-[1.077em] hidden h-[1.378em] w-px bg-current opacity-25 lg:block" />
+      <Descritivo cor={c.categoria} className="ml-[0.838em] hidden lg:inline" />
+    </span>
+  );
+}
+
+/** 03 · horizontal com descritivo. Placa à esquerda, nome em cima, fio e
+ *  descritivo embaixo. É a montagem de cabeçalho de documento, e é a do
+ *  rodapé, onde há largura para a caixa alta espaçada.
+ *
+ *  Proporções do SVG: placa 100, nome 38, folga 31; fio de 26 × 2,2 e
+ *  descritivo 11, a 34 abaixo do centro do nome. */
+export function Assinatura({
+  className,
+  cores,
+  roupa,
+}: {
+  className?: string;
+  cores?: Cores;
+  roupa?: RoupaDaPlaca;
+}) {
+  const c = { ...PADRAO, ...cores };
+  return (
+    <span className={cn("inline-flex items-center font-display leading-none", className)}>
+      <Placa roupa={roupa} className="text-[2.63em]" />
+      <span className="ml-[0.816em] inline-flex flex-col gap-[0.42em]">
+        <span className="inline-flex items-baseline">
+          <Casue nome={c.nome} />
+          <Rio lugar={c.lugar} className="ml-[0.22em]" />
+        </span>
+        <span className="inline-flex items-center">
+          {/* O fio curto é TERRACOTA no arquivo, e aqui continua: é um bloco
+              cheio de 0,058em, não texto, e é o que amarra o descritivo à
+              marca sem repetir a cor no texto. */}
+          <span aria-hidden className="h-[0.058em] w-[0.684em] bg-terracota-600" />
+          <Descritivo cor={c.categoria} className="ml-[0.316em]" />
+        </span>
+      </span>
+    </span>
+  );
+}
+
+/** 05 · sem placa. Só o nome, com o ê em terracota.
+ *
+ *  A folha é específica sobre onde ela vale: "corpo de documento, marca
+ *  d'água e situações onde a placa já aparece na mesma página". Repetir a
+ *  placa duas vezes na mesma tela é o que gasta um símbolo. */
+export function AssinaturaNome({
+  className,
+  cores,
+  empilhado = false,
+}: {
+  className?: string;
+  cores?: Cores;
+  empilhado?: boolean;
+}) {
+  const c = { acento: "text-terracota-600", ...PADRAO, ...cores };
+  return (
+    <span
+      className={cn(
+        "font-display",
+        empilhado ? "inline-flex flex-col leading-[0.94]" : "inline-flex items-baseline leading-none",
+        className,
+      )}
+    >
       <Casue nome={c.nome} acento={c.acento} />
-      <span className={cn("ml-[0.22em] font-bold tracking-[-0.035em]", c.lugar)}>Rio</span>
+      <Rio lugar={c.lugar} className={empilhado ? undefined : "ml-[0.22em]"} />
     </span>
   );
 }

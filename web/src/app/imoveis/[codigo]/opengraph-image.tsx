@@ -70,7 +70,7 @@ export default async function Imagem({ params }: PageProps<"/imoveis/[codigo]">)
                   div com mais de um filho, e duas expressões seguidas viram
                   dois nós de texto. O build inteiro para por causa disso. */}
               <div style={{ display: "flex", fontSize: 58, fontWeight: 700, color: AREIA }}>
-                {`${moeda(im.preco)}${im.porNoite ? " / noite" : ""}`}
+                {`${moeda(im.preco)}${im.porMes ? " / mês" : ""}`}
               </div>
               <div style={{ display: "flex", fontSize: 30, opacity: 0.82 }}>{ficha.join(" · ")}</div>
             </div>

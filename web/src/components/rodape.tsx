@@ -1,31 +1,17 @@
 import Link from "next/link";
 /* O lucide tirou as marcas do pacote, entao o Instagram entra pelo
    arroba: e sinal de perfil e nao finge ser o logo de terceiro. */
-import { MessageCircle, Mail, MapPin } from "lucide-react";
+import { MessageCircle, Mail, MapPin, AtSign } from "lucide-react";
 import { Assinatura } from "@/components/assinatura";
-import { ENDERECO, SOCIAS, SLOGAN, NOME } from "@/lib/site";
-
-/* Registro profissional em painel próprio. Selo de confiança desenhado não
-   prova nada; número de registro prova, porque qualquer pessoa confere no
-   conselho. Ficou vazio enquanto os números não chegavam, e agora tem os
-   dois de cada sócia. */
-function Registro({
-  quem,
-  creci,
-  cnai,
-}: {
-  quem: string;
-  creci: string;
-  cnai: string;
-}) {
-  return (
-    <div className="rounded-[0.75rem] border border-white/12 bg-white/6 px-4 py-3">
-      <span className="rotulo block text-tinta-200">{quem}</span>
-      <span className="num block text-sm text-papel/80">{creci}</span>
-      <span className="num block text-sm text-papel/60">{cnai}</span>
-    </div>
-  );
-}
+import {
+  ENDERECO,
+  SOCIAS,
+  SLOGAN,
+  NOME,
+  EMAIL,
+  INSTAGRAM,
+  INSTAGRAM_URL,
+} from "@/lib/site";
 
 /* 🔴 O rodapé NÃO tem vídeo, e isso é decisão medida, não esquecimento.
    Eu cheguei a pôr o horizonte aqui a 40% de opacidade. Depois desenhei o
@@ -47,37 +33,41 @@ export function Rodape() {
             "radial-gradient(50% 60% at 12% 0%, rgba(221,203,170,.14), transparent 70%), radial-gradient(46% 60% at 88% 10%, rgba(154,135,99,.2), transparent 72%)",
         }}
       />
-      <div className="trilho relative grid gap-12 py-20 md:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
+      <div className="trilho relative grid gap-12 py-20 md:grid-cols-[1.5fr_1fr_1.2fr]">
         <div>
-          {/* Lockup principal, empilhado e com o descritivo. É o único
-              lugar do site onde "Negócios Imobiliários" aparece por extenso
-              junto do nome, e é de propósito: no rodapé há largura para a
-              caixa alta espaçada, que é o que a barra do topo não tem. */}
+          {/* Montagem 03 · horizontal com descritivo. É o único lugar do site
+              onde "Negócios Imobiliários" aparece por extenso e sempre, e é
+              de propósito: aqui há largura para a caixa alta espaçada, que é
+              o que a barra do topo só tem acima de `lg`. */}
           <Assinatura
-            className="text-[2.6rem]"
+            className="text-[2.1rem]"
             cores={{
               nome: "text-papel",
               lugar: "text-areia-400",
-              acento: "text-terracota-400",
-              categoria: "text-tinta-200",
+              /* Sem acento: a placa ao lado já é a cor da marca. */
+              categoria: "text-areia-300",
             }}
           />
-          <p className="mt-6 font-display text-2xl font-semibold text-papel">
+          <p className="mt-8 font-display text-2xl font-semibold text-papel">
             {SLOGAN}
           </p>
-          <p className="mt-4 max-w-[30ch] text-tinta-200">
-            Centro, Tijuca, Grajaú e Zona Sul. Das 9h às 19h, de segunda a sexta.
+          <p className="mt-4 max-w-[32ch] text-tinta-200">
+            Centro, Tijuca e Zona Sul. Das 9h às 19h, de segunda a sexta.
           </p>
         </div>
 
         <nav aria-label="Navegar">
           <h3 className="rotulo mb-5 text-areia-300">Navegar</h3>
           <ul className="space-y-2 text-tinta-200">
+            {/* Os bairros saíram do menu do topo por redundância com
+                "Imóveis", e caíram AQUI, que é o lugar de quem já sabe o que
+                procura. As páginas continuam existindo e indexadas. */}
             {[
               ["/imoveis", "Imóveis"],
               ["/bairros", "Bairros"],
-              ["/juridico", "Área jurídica"],
-              ["/contato", "Contato"],
+              ["/avaliacao", "Avaliação"],
+              ["/quem-somos", "Quem somos"],
+              ["/revista", "Revista"],
             ].map(([href, texto]) => (
               <li key={href}>
                 <Link href={href} className="transition-colors hover:text-papel">
@@ -90,17 +80,40 @@ export function Rodape() {
 
         <div>
           <h3 className="rotulo mb-5 text-areia-300">Falar</h3>
+          {/* 🔴 Canal ÚNICO da empresa, e não um por sócia: foi decisão
+              delas. Por isso aqui não há duas colunas de contato, e nenhum
+              botão do site chama uma sócia pelo nome. */}
           <ul className="space-y-2 text-tinta-200">
             <li>
               <Link href="/contato" className="flex items-center gap-2 transition-colors hover:text-papel">
                 <MessageCircle className="size-4" aria-hidden /> WhatsApp
               </Link>
             </li>
-            <li>
-              <Link href="/contato" className="flex items-center gap-2 transition-colors hover:text-papel">
-                <Mail className="size-4" aria-hidden /> E-mail
-              </Link>
-            </li>
+            {EMAIL && (
+              <li>
+                {/* E-mail REAL vira `mailto:` de verdade. Enquanto ele não
+                    existia, este item mandava para a página de contato, que
+                    é o mesmo cuidado que o botão de WhatsApp ainda tem. */}
+                <a
+                  href={`mailto:${EMAIL}`}
+                  className="flex items-center gap-2 transition-colors hover:text-papel"
+                >
+                  <Mail className="size-4 shrink-0" aria-hidden /> {EMAIL}
+                </a>
+              </li>
+            )}
+            {INSTAGRAM && (
+              <li>
+                <a
+                  href={INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 transition-colors hover:text-papel"
+                >
+                  <AtSign className="size-4 shrink-0" aria-hidden /> {INSTAGRAM}
+                </a>
+              </li>
+            )}
             <li className="flex gap-2 pt-2 text-sm leading-relaxed">
               <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden />
               <address className="not-italic">
@@ -113,26 +126,21 @@ export function Rodape() {
             </li>
           </ul>
         </div>
-
-        <div>
-          <h3 className="rotulo mb-5 text-areia-300">Registro</h3>
-          <div className="space-y-3">
-            {SOCIAS.map((s) => (
-              <Registro
-                key={s.sobrenome}
-                quem={s.sobrenome}
-                creci={s.creci}
-                cnai={s.cnai}
-              />
-            ))}
-          </div>
-        </div>
       </div>
 
       <div className="trilho relative flex flex-wrap gap-x-8 gap-y-3 border-t border-white/12 py-7 text-sm text-tinta-200">
         <span>{NOME} · Rio de Janeiro</span>
+        {/* 🔴 O registro profissional virou UMA LINHA, aqui, e some do resto
+            do site. Ele estava em quatro pastilhas no rodapé, mais na home,
+            mais na página das sócias: o mesmo número repetido em todo canto
+            deixa de ser credencial e vira ruído. O lugar de explicar o que
+            é CRECI e o que é CNAI é /quem-somos, e é lá que eles aparecem
+            com nome e função ao lado. Aqui fica só a prova, curta. */}
+        <span className="num">
+          {SOCIAS.map((s) => s.creci).join(" · ")}
+        </span>
         <span>
-          Protótipo de layout. Imóveis, preços, depoimentos e imagens são exemplos.
+          Protótipo de layout. Imóveis, preços e imagens são exemplos.
         </span>
       </div>
     </footer>

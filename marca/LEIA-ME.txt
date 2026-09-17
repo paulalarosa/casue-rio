@@ -1,0 +1,52 @@
+CASUÊ RIO — ARQUIVOS DE MARCA (SVG)
+==============================================
+
+CORES
+  Terracota (esmalte) #A8482A
+  Argila              #7A3320
+  Ocre                #C87A54
+  Areia               #EFDCC4
+  Off-white           #FBF4EA
+  Tinta               #231A14
+
+ARQUIVOS
+  01  horizontal, uma linha ......... assinatura principal
+  02  horizontal, nome montado ...... Rio alinhado à direita, sob o ê
+  03  horizontal com descritivo ..... proposta, laudo, e-mail
+  04  faixa ......................... barra de topo, rodapé, testeira
+  05  sem placa ..................... corpo de documento, marca d'água
+  06  vertical, uma linha ........... selo, etiqueta
+  07  vertical, nome montado ........ vertical padrão
+  08  vertical com descritivo ....... capa, banner, placa de visitação
+  10  símbolo, placa ................ símbolo oficial
+  12  símbolo, reduzido ............. abaixo de 30 px / favicon
+  13  símbolo, monocromático ........ relevo seco, bordado, laser
+  16  reverso sobre tinta
+  17  sobre terracota
+
+TIPOGRAFIA
+  Unbounded 700 (nome) e Archivo 600 (descritivo).
+  Os SVGs trazem @import das duas fontes do Google Fonts: em página
+  web com a fonte carregada, renderizam corretos.
+
+  IMPORTANTE — para gráfica, fornecedor de placa, bordado ou qualquer
+  uso fora do navegador, abra o SVG no Illustrator/Figma e converta o
+  texto em curvas (Type > Create Outlines). Sem isso o texto cai para
+  a fonte substituta na máquina de quem abrir.
+
+USO NO SITE
+  <img src="01-logo-horizontal.svg" alt="Casuê Rio">
+  ou cole o conteúdo do SVG inline no HTML e remova o bloco <style>
+  — a fonte já vem carregada pela página.
+
+CONSTRUÇÃO DA PLACA (lado = 1)
+  raio externo 0,173 · filete a 0,1065 de recuo, espessura 0,02,
+  raio interno 0,107 · ê com 0,413 de corpo, centrado, correção
+  óptica de 0,027 para cima.
+
+ÁREA DE RESERVA
+  meio lado da placa, em qualquer direção.
+
+MÍNIMOS
+  com nome: placa 24 px em tela, 8 mm em impresso
+  só símbolo: 16 px (usar 12-simbolo-reduzido)

@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { ClipboardCheck, MessageCircle, Ruler, ScrollText } from "lucide-react";
+import { ArrowRight, ClipboardCheck, MessageCircle, Ruler, ScrollText } from "lucide-react";
 import { CabecaPagina } from "@/components/cabeca-pagina";
 import { arquivo } from "@/lib/caminho";
 import avaliacao from "../../../public/video/avaliacao.webp";
-import { Painel } from "@/components/painel";
-import { SOCIAS, metaDaPagina } from "@/lib/site";
+import { Revela } from "@/components/entrada";
+import { SLOGAN, metaDaPagina } from "@/lib/site";
 
 export const metadata = metaDaPagina({
   titulo: "Avaliação de imóvel",
@@ -19,23 +19,39 @@ export const metadata = metaDaPagina({
 
    🔴 Sem prazo e sem preço: os dois dependem do caso e de confirmação
    delas, e número inventado aqui é o tipo de coisa que vira problema
-   depois de contratada. */
+   depois de contratada.
+
+   🔴 O LAYOUT foi refeito em 17/09/2026, e o defeito era estrutural, não de
+   acabamento: a página tinha uma grade de `24rem_1fr` com DUAS colunas que
+   começavam cada uma com um `h2` do mesmo tamanho, uma com dois cartões de
+   registro e um painel, a outra com quatro itens. Dois títulos irmãos na
+   mesma altura fazem o olho não saber qual ler primeiro, e a coluna curta
+   deixava um rio de vazio ao lado da longa.
+
+   Agora cada assunto ocupa a largura inteira e vem um de cada vez: o que é,
+   quando serve, como funciona, quem assina, e o pedido. Uma ideia por faixa
+   é o que dá ritmo sem precisar de mais caixa. */
+
 const QUANDO = [
   {
+    n: "01",
     titulo: "Definir o preço de venda",
     texto:
       "Anúncio caro encalha e anúncio barato deixa dinheiro na mesa. O valor sai de imóvel comparável de verdade, não de estimativa de portaria.",
   },
   {
+    n: "02",
     titulo: "Inventário e partilha",
     texto:
       "Divisão entre herdeiros e divórcio precisam de um valor defensável, porque é ele que decide quanto cada um leva.",
   },
   {
+    n: "03",
     titulo: "Garantia e financiamento",
     texto: "Quando o banco ou a outra parte exige parecer técnico assinado.",
   },
   {
+    n: "04",
     titulo: "Decisão de comprar",
     texto:
       "Antes da proposta, saber se o preço pedido está dentro do que a região pratica.",
@@ -82,59 +98,57 @@ export default function PaginaAvaliacao() {
         Imagem de ambiente. Não retrata imóvel da carteira.
       </p>
 
-      <div className="campo-luz trilho secao relative grid gap-12 lg:grid-cols-[24rem_1fr]">
-        <div>
-          <h2 className="text-3xl">Quem assina</h2>
-          <p className="mt-4 text-tinta-500">
-            As duas sócias são avaliadoras cadastradas no CNAI, e é esse cadastro
-            que permite emitir parecer de valor. O número dá para conferir.
+      {/* ========================================================= O QUE É
+          Uma afirmação, larga, com o slogan encostado nela. É aqui que a
+          frase da marca cabe melhor em todo o site: avaliação é exatamente
+          o momento em que a casa deixa de ser sonho e vira número. */}
+      <Revela className="trilho secao">
+        <div className="grid gap-10 lg:grid-cols-[1.35fr_1fr] lg:items-end">
+          <p
+            data-revela
+            className="max-w-[26ch] font-display text-[clamp(1.7rem,3.6vw,2.9rem)] font-semibold leading-[1.12] tracking-[-0.03em] text-tinta-800"
+          >
+            Preço é o que alguém pede. Valor é o que se sustenta num papel
+            assinado.
           </p>
-          <div className="mt-7 space-y-3">
-            {SOCIAS.map((s) => (
-              <div
-                key={s.sobrenome}
-                className="rounded-[0.75rem] border border-tinta-800/10 bg-tinta-50 px-5 py-4"
-              >
-                <span className="block font-display text-lg font-semibold text-tinta-800">
-                  {s.nome}
-                </span>
-                <span className="num mt-1 block text-sm text-tinta-500">
-                  {s.cnai} · {s.creci}
-                </span>
-              </div>
-            ))}
-          </div>
-          {/* Nem prazo nem valor na tela: os dois dependem do caso. */}
-          <Painel className="mt-8 border-l-4 border-l-areia-500 p-6">
-            <b className="block font-semibold text-tinta-800">
-              Prazo e valor, combinados antes.
-            </b>
-            <span className="mt-1 block text-sm text-tinta-500">
-              Dependem do tipo do imóvel e da finalidade do parecer. A gente diz
-              na primeira conversa, antes de começar.
+          <p data-revela className="border-t border-terracota-600/30 pt-6 text-lg text-tinta-500">
+            <span className="mb-3 block font-display text-xl font-semibold text-terracota-600">
+              {SLOGAN}
             </span>
-          </Painel>
+            Patrimônio se mede. O parecer é o documento que transforma o que
+            você tem num número que o banco, o juiz e a outra parte aceitam.
+          </p>
         </div>
+      </Revela>
 
-        <div>
-          <h2 className="text-3xl">Quando você precisa</h2>
-          <ul className="mt-8 grid gap-x-10 gap-y-7 sm:grid-cols-2">
-            {QUANDO.map((q) => (
-              <li key={q.titulo} className="border-t border-tinta-800/12 pt-5">
-                <h3 className="font-display text-xl leading-tight">{q.titulo}</h3>
-                <p className="mt-2 text-tinta-500">{q.texto}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      {/* ================================================ QUANDO VOCÊ PRECISA
+          Quatro casos, numerados, em faixa de largura inteira. Eram quatro
+          itens espremidos ao lado de uma barra lateral. */}
+      <Revela className="trilho secao">
+        <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">Quando você precisa</h2>
+        <p className="mt-3 max-w-[52ch] text-lg text-tinta-500">
+          Quatro situações em que a conta de cabeça sai cara.
+        </p>
+        <ul className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          {QUANDO.map((q) => (
+            <li key={q.n} data-revela className="border-t border-tinta-800/15 pt-6">
+              <span className="num text-sm text-bronze-500">{q.n}</span>
+              <h3 className="mt-3 font-display text-xl leading-tight">{q.titulo}</h3>
+              <p className="mt-3 text-tinta-500">{q.texto}</p>
+            </li>
+          ))}
+        </ul>
+      </Revela>
 
-      <div className="secao relative bg-tinta-800 text-papel">
+      {/* ==================================================== COMO FUNCIONA
+          A faixa escura, que é o que dá alternância à página. Três passos,
+          na ordem em que acontecem. */}
+      <Revela className="secao relative bg-tinta-800 text-papel">
         <div className="trilho">
           <h2 className="text-[clamp(1.7rem,3vw,2.5rem)] text-papel">Como funciona</h2>
           <div className="mt-10 grid gap-10 md:grid-cols-3 md:gap-8">
             {COMO.map(({ n, Ic, titulo, texto }) => (
-              <div key={n} className="border-t border-white/20 pt-6">
+              <div key={n} data-revela className="border-t border-white/20 pt-6">
                 <span className="num text-sm text-areia-300">{n}</span>
                 <Ic className="mt-4 size-6 text-areia-300" aria-hidden />
                 <h3 className="mt-3 font-display text-xl text-papel">{titulo}</h3>
@@ -143,10 +157,44 @@ export default function PaginaAvaliacao() {
             ))}
           </div>
         </div>
-      </div>
+      </Revela>
 
-      <div className="trilho secao pb-8">
-        <div className="ilha relative isolate overflow-hidden bg-tinta-800 text-center text-papel">
+      {/* ====================================================== QUEM ASSINA
+          🔴 Encolheu de propósito. Aqui havia dois cartões repetindo CRECI e
+          CNAI das duas sócias, que também estavam no rodapé e na home: o
+          mesmo número em todo canto deixa de ser credencial e vira ruído.
+          O que esta página precisa dizer é UMA coisa, que é o cadastro que
+          autoriza a assinatura. O resto mora em /quem-somos. */}
+      <Revela className="trilho secao">
+        <div className="ilha relative isolate overflow-hidden border border-tinta-800/10 bg-areia-100">
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div data-revela>
+              <h2 className="text-2xl">Quem assina o parecer</h2>
+              <p className="mt-4 max-w-[58ch] text-lg text-tinta-500">
+                As duas são avaliadoras cadastradas no CNAI, e é esse
+                cadastro que permite emitir parecer de valor. Prazo e preço
+                dependem do imóvel e da finalidade, e são combinados na primeira
+                conversa, antes de começar.
+              </p>
+            </div>
+            <Link
+              data-revela
+              href="/quem-somos"
+              className="inline-flex w-fit items-center gap-2 rounded-full border border-tinta-800/20 px-6 py-3 font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
+            >
+              Ver os registros
+              <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </div>
+        </div>
+      </Revela>
+
+      {/* ============================================================ PEDIDO */}
+      <Revela className="trilho secao pb-8">
+        <div
+          data-revela
+          className="ilha relative isolate overflow-hidden bg-tinta-800 text-center text-papel"
+        >
           <h2 className="text-3xl text-papel">Precisa de um valor defensável?</h2>
           <p className="mx-auto mt-4 max-w-[46ch] text-tinta-200">
             Diga o imóvel e para que serve o parecer. A gente responde com prazo e
@@ -159,7 +207,7 @@ export default function PaginaAvaliacao() {
             <MessageCircle className="size-5" aria-hidden /> Pedir uma avaliação
           </Link>
         </div>
-      </div>
+      </Revela>
     </>
   );
 }

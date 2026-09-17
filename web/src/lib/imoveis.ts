@@ -7,11 +7,17 @@ import { TELEFONE } from "@/lib/site";
    dos filtros é derivada daqui, e o tipo abaixo é o contrato: faltando campo
    obrigatório, a página nem compila, que é melhor do que publicar torto. */
 
-/* 🔴 LOCAÇÃO NÃO EXISTE nesta imobiliária: elas trabalham compra, venda,
-   temporada e avaliação. O tipo é o que segura isso: com "alugar" fora da
-   união, qualquer imóvel ou filtro que tente usar aluguel não compila. */
-export type Finalidade = "comprar" | "temporada";
-export type Regiao = "Centro" | "Tijuca" | "Grajaú" | "Zona Sul";
+/* 🔴 TEMPORADA NÃO EXISTE nesta imobiliária, e isto mudou em 17/09/2026:
+   antes era o contrário, temporada existia e aluguel não. Elas trabalham
+   VENDA e ALUGUEL, mais avaliação. O tipo é o que segura isso: com
+   "temporada" fora da união, qualquer imóvel, filtro ou rótulo que tente
+   usar temporada não compila, e foi assim que os dois anúncios de diária e
+   os quatro seletores foram encontrados de uma vez.
+
+   🔴 GRAJAÚ SAIU na mesma data, pelo mesmo mecanismo: fora da união de
+   regiões, e o compilador aponta cada lugar que ainda o citava. */
+export type Finalidade = "comprar" | "alugar";
+export type Regiao = "Centro" | "Tijuca" | "Zona Sul";
 
 export type Imovel = {
   codigo: string;
@@ -34,7 +40,10 @@ export type Imovel = {
   destaque: boolean;
   resumo: string;
   fechado?: boolean;
-  porNoite?: boolean;
+  /** Aluguel: o preço é MENSAL, e a ficha precisa dizer isso ao lado do
+   *  número. Sem esta marca um aluguel de R$ 2.800 fica parecendo o preço
+   *  do imóvel, que é o erro mais caro que uma vitrine pode cometer. */
+  porMes?: boolean;
   /** Quando a foto da cliente chegar, é só preencher: a cena sai e a foto entra. */
   foto?: string;
   fotos?: string[];
@@ -70,9 +79,9 @@ export const IMOVEIS: Imovel[] = [
     titulo: "Studio a duas quadras do metrô",
     bairro: "Botafogo",
     regiao: "Zona Sul",
-    finalidade: "temporada",
-    preco: 320,
-    porNoite: true,
+    finalidade: "alugar",
+    preco: 2800,
+    porMes: true,
     condominio: 640,
     iptu: null,
     quartos: 1,
@@ -82,10 +91,10 @@ export const IMOVEIS: Imovel[] = [
     area: 32,
     andar: "11º",
     ano: 2019,
-    selos: ["Novo", "Temporada"],
+    selos: ["Novo", "Aluguel"],
     destaque: true,
     resumo:
-      "Planta inteligente, mobiliado, com academia e lavanderia no prédio. Diária mínima de cinco noites, enxoval incluso.",
+      "Planta inteligente, mobiliado, com academia e lavanderia no prédio. Contrato de trinta meses, com condomínio e IPTU por fora.",
   },
   {
     codigo: "CR-0088",
@@ -221,37 +230,15 @@ export const IMOVEIS: Imovel[] = [
       "Pé-direito alto, tacos originais e janelas de guilhotina. Prédio tombado, com obra de fachada já quitada.",
   },
   {
-    codigo: "CR-0512",
-    cena: "predio",
-    titulo: "Dois quartos no Grajaú",
-    bairro: "Grajaú",
-    regiao: "Grajaú",
-    finalidade: "comprar",
-    preco: 530000,
-    condominio: 610,
-    iptu: 180,
-    quartos: 2,
-    suites: 0,
-    banheiros: 1,
-    vagas: 1,
-    area: 68,
-    andar: "2º",
-    ano: 1985,
-    selos: [],
-    destaque: false,
-    resumo:
-      "Sala ampla, dependência reversível e vaga escriturada. Rua tranquila, a cinco minutos da praça.",
-  },
-  {
     codigo: "CR-0533",
     cena: "vista",
     titulo: "Frente para a praia em Copacabana",
     bairro: "Copacabana",
     regiao: "Zona Sul",
-    finalidade: "temporada",
-    preco: 890,
-    condominio: 0,
-    iptu: null,
+    finalidade: "alugar",
+    preco: 6400,
+    condominio: 1480,
+    iptu: 390,
     quartos: 2,
     suites: 1,
     banheiros: 2,
@@ -259,11 +246,11 @@ export const IMOVEIS: Imovel[] = [
     area: 86,
     andar: "9º",
     ano: 1971,
-    selos: ["Temporada"],
+    selos: ["Aluguel"],
     destaque: true,
-    porNoite: true,
+    porMes: true,
     resumo:
-      "Vista frontal para o mar, dois quartos e diária mínima de três noites. Enxoval e limpeza inclusos.",
+      "Vista frontal para o mar e dois quartos, sendo um com suíte. Aceita fiador ou seguro-fiança, e o prédio tem portaria 24 horas.",
   },
 ];
 
@@ -293,27 +280,19 @@ export const BAIRROS: Bairro[] = [
       "Casa de vila, prédio dos anos 60 e lançamento na mesma rua. Entre a Conde de Bonfim e a Muda o preço muda muito, e essa diferença é metade da negociação.",
   },
   {
-    nome: "Grajaú",
-    chave: "Grajaú",
-    cena: "casa",
-    linha: "Vizinho da Tijuca, com rua arborizada e casa de vila.",
-    texto:
-      "Quem procura espaço pelo mesmo dinheiro da Tijuca acaba aqui. Prédio de poucos andares e casa de vila convivem na mesma quadra, e a diferença entre elas está na documentação, não no anúncio.",
-  },
-  {
     nome: "Zona Sul",
     chave: "Zona Sul",
     cena: "vista",
-    linha: "Do Flamengo a Copacabana, incluindo temporada.",
+    linha: "Do Flamengo a Copacabana, venda e aluguel.",
     texto:
-      "O investidor entra pela temporada, o morador entra pelo metrô. São duas contas, e a gente faz as duas antes de indicar.",
+      "O investidor entra pelo aluguel, o morador entra pelo metrô. São duas contas, e a gente faz as duas antes de indicar.",
   },
 ];
 
 /* 🔴 As regiões dos filtros saem DAQUI, e não de uma lista escrita à mão em
-   cada componente. Era assim antes, e quando o Grajaú entrou os dois
-   seletores continuaram oferecendo três regiões: o imóvel do Grajaú existia
-   na carteira e não aparecia em filtro nenhum. */
+   cada componente. Era assim antes, e quando uma região entrou os dois
+   seletores continuaram oferecendo a lista velha: o imóvel existia na
+   carteira e não aparecia em filtro nenhum. */
 export const REGIOES: Regiao[] = BAIRROS.map((b) => b.chave);
 
 /* 🔴 Imóvel VENDIDO não é imóvel disponível, e estava entrando na conta:
@@ -360,7 +339,7 @@ export function linkZap(im?: Imovel) {
    Mediana, não média: uma cobertura de 300 m² no meio de conjugados puxa a
    média para um número que não descreve nada. */
 export function retratoDaRegiao(regiao: Regiao) {
-  const lista = DISPONIVEIS.filter((im) => im.regiao === regiao && !im.porNoite);
+  const lista = DISPONIVEIS.filter((im) => im.regiao === regiao && !im.porMes);
   if (!lista.length) return null;
   const precos = lista.map((im) => im.preco).sort((a, b) => a - b);
   const areas = lista.map((im) => im.area).sort((a, b) => a - b);
@@ -370,6 +349,52 @@ export function retratoDaRegiao(regiao: Regiao) {
     maior: precos[precos.length - 1],
     areaMediana: areas[Math.floor(areas.length / 2)],
   };
+}
+
+/* Busca por TEXTO, e o caso que importa é o código.
+
+   🔴 Quem chega com um código na mão veio de outro lugar: da placa na
+   janela, do anúncio, do print que a sócia mandou no WhatsApp. Essa pessoa
+   não quer filtrar uma lista, quer abrir UM imóvel. Por isso a função
+   devolve o imóvel inteiro quando o texto é um código, e quem chama decide
+   ir direto para a ficha em vez de mostrar uma lista de um item só.
+
+   A comparação joga fora tudo que não é letra ou número, dos dois lados:
+   "cr 0142", "CR-0142", "cr0142" e "0142" abrem o mesmo imóvel. Hífen
+   digitado errado é o jeito mais comum de uma busca por código não achar
+   nada que existe.
+
+   Sem código, cai para texto solto sobre título, bairro e resumo, que é o
+   que a pessoa faz quando não tem o código: escreve "cobertura" ou
+   "Tijuca". */
+function cru(t: string) {
+  return t
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[^a-z0-9]/g, "");
+}
+
+export function acharPorCodigo(termo: string) {
+  const alvo = cru(termo);
+  if (!alvo) return null;
+  return (
+    IMOVEIS.find((im) => cru(im.codigo) === alvo) ??
+    /* Só os dígitos: a pessoa lê "0142" na placa e não copia o prefixo. */
+    (/^\d{3,}$/.test(alvo)
+      ? IMOVEIS.find((im) => cru(im.codigo).endsWith(alvo)) ?? null
+      : null)
+  );
+}
+
+export function buscar(termo: string) {
+  const alvo = cru(termo);
+  if (!alvo) return DISPONIVEIS;
+  const porCodigo = acharPorCodigo(termo);
+  if (porCodigo) return [porCodigo];
+  return DISPONIVEIS.filter((im) =>
+    cru(`${im.codigo} ${im.titulo} ${im.bairro} ${im.regiao} ${im.resumo}`).includes(alvo),
+  );
 }
 
 export function contar(regiao?: Regiao | null, finalidade?: Finalidade | null) {

@@ -1,23 +1,26 @@
 import { Suspense } from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { CabecaPagina } from "@/components/cabeca-pagina";
 import { arquivo } from "@/lib/caminho";
 import carteira from "../../../public/video/carteira.webp";
 import { Vitrine } from "@/components/vitrine";
-import { DISPONIVEIS, REGIOES, moeda } from "@/lib/imoveis";
+import { Cena } from "@/components/cenas";
+import { BAIRROS, DISPONIVEIS, REGIOES, moeda } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
 
 export const metadata = metaDaPagina({
   titulo: "A carteira",
   descricao:
-    "Imóveis para comprar e por temporada no Centro, na Tijuca, no Grajaú e na Zona Sul do Rio, com documentação conferida antes da proposta.",
+    "Imóveis para comprar e alugar no Centro, na Tijuca e na Zona Sul do Rio, com documentação conferida antes da proposta.",
   caminho: "/imoveis",
 });
 
 export default function PaginaImoveis() {
   /* Os três números da abertura saem da carteira, e não da mão: tirar um
      imóvel do arquivo de dados muda a manchete junto. A entrada começa em
-     compra, porque diária de temporada ao lado de preço de venda faria a
-     carteira parecer dez vezes mais barata. */
+     compra, porque aluguel mensal ao lado de preço de venda faria a
+     carteira parecer cem vezes mais barata. */
   const compra = DISPONIVEIS.filter((im) => im.finalidade === "comprar");
   const menor = Math.min(...compra.map((im) => im.preco));
 
@@ -46,6 +49,64 @@ export default function PaginaImoveis() {
       <Suspense fallback={<div className="trilho py-24 text-tinta-500">Carregando a carteira…</div>}>
         <Vitrine />
       </Suspense>
+
+      {/* ======================================================== BAIRROS
+          🔴 Esta faixa é a fusão que ela pediu. "Imóveis" e "Bairros" eram
+          duas entradas de menu para a mesma coisa vista de dois ângulos, e
+          quem chega não sabe qual abrir. Agora existe uma entrada só, e os
+          bairros aparecem DENTRO dela, depois da lista: quem já procurou e
+          não achou pelo filtro é exatamente quem quer navegar por região.
+
+          As páginas de cada bairro continuam existindo, continuam indexadas
+          e continuam linkadas de cada ficha de imóvel. O que saiu foi a
+          segunda porta no topo, não o conteúdo. */}
+      <section className="trilho secao">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 className="text-[clamp(1.7rem,3vw,2.4rem)]">Procurar por bairro</h2>
+            <p className="mt-3 text-lg text-tinta-500">
+              Cada região tem uma conta diferente, e a gente faz as três.
+            </p>
+          </div>
+          <Link
+            href="/bairros"
+            className="inline-flex items-center gap-2 rounded-full border border-tinta-800/15 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
+          >
+            Ver os bairros
+            <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {BAIRROS.map((b) => {
+            const n = DISPONIVEIS.filter((im) => im.regiao === b.chave).length;
+            return (
+              <Link
+                key={b.chave}
+                href={`/bairros/${encodeURIComponent(b.chave)}`}
+                className="group relative isolate flex min-h-[18rem] flex-col justify-end overflow-hidden rounded-[0.875rem] p-5 shadow-[var(--shadow-flutua-2)] transition-transform duration-500 ease-[var(--ease-saida)] hover:-translate-y-1.5"
+              >
+                <Cena
+                  nome={b.cena}
+                  semente={b.chave}
+                  rotulo={`Ilustração da marca: ${b.nome}`}
+                  className="absolute inset-0 -z-20 size-full object-cover transition-transform duration-700 ease-[var(--ease-saida)] group-hover:scale-105"
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 -z-10 bg-gradient-to-t from-tinta-900/85 via-tinta-900/25 to-transparent"
+                />
+                <div className="tinta rounded-[0.75rem] p-4">
+                  <h3 className="font-display text-xl font-bold text-papel">{b.nome}</h3>
+                  <span className="num mt-1 block text-sm text-areia-300">
+                    {n} {n === 1 ? "imóvel" : "imóveis"}
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
     </>
   );
 }
