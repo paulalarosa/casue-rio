@@ -15,9 +15,10 @@ no Rio de Janeiro.
 ## O que é
 
 Site estático, exportado e publicado no GitHub Pages a cada empurrão na `main`.
-Sem servidor, sem banco e sem CMS: a carteira de imóveis é um módulo
-TypeScript (`web/src/lib/imoveis.ts`), que é o arquivo que a manutenção mensal
-edita.
+**Sem servidor seu no ar**: o conteúdo vem de um painel hospedado por terceiro
+(veja [O painel](#o-painel)) e o que sobe é arquivo puro. A carteira de imóveis
+ainda mora num módulo TypeScript (`web/src/lib/imoveis.ts`), e é o arquivo que
+a manutenção mensal edita até a migração para o painel.
 
 ```bash
 cd web
@@ -167,10 +168,10 @@ não pendência esquecida.
 - **Nenhuma segunda frase de marca.** `SEGUNDA_FRASE` existe vazia, esperando
   a que elas vão mandar. Frase inventada por mim é pior que espaço em branco,
   porque parece decidida.
-- **Nenhum texto na revista.** A página existe montada e a lista `MATERIAS`
-  está vazia: quando o primeiro texto delas chegar, a grade nasce pronta.
-  Escrever três matérias de exemplo assinadas por corretora com CRECI é a
-  mesma coisa que o depoimento inventado que já saiu deste site.
+- **Nenhum texto na revista.** A página existe montada e a consulta ao painel
+  volta vazia: quando o primeiro texto delas for publicado, a grade nasce
+  pronta. Escrever três matérias de exemplo assinadas por corretora com CRECI
+  é a mesma coisa que o depoimento inventado que já saiu deste site.
 - **Nenhuma foto de imóvel real.** Ainda não chegaram. O lugar delas é ocupado
   por ilustração da marca, que não finge ser foto, e por vídeo de ambiente,
   que sempre carrega a linha *"Imagem de ambiente. Não retrata imóvel da
@@ -265,10 +266,79 @@ existe porque a home já ficou inteira em opacidade zero, em produção:
 
 ---
 
+## O painel
+
+As duas escrevem em [`estudio/`](estudio/), que é um Sanity Studio. Elas
+entram num endereço próprio, com o e-mail delas, e não precisam de conta no
+GitHub nem na AWS.
+
+```bash
+cd estudio
+cp .env.example .env     # e preencha com o projectId
+npm install
+npm run dev              # painel local, http://localhost:3333
+npm run deploy           # publica o painel em <nome>.sanity.studio
+```
+
+🔴 **Por que Sanity e não Strapi ou Directus.** Os três são de licença
+gratuita, mas o Strapi e o Directus são servidores Node: para o painel
+existir, uma máquina precisa estar ligada 24 horas por dia, e essa máquina é
+custo fixo mensal. A Sanity hospeda o painel, então não há nada seu no ar
+para pagar nem para manter de pé. O site continua sendo só arquivos.
+
+Três tipos de conteúdo: **Imóveis**, **Revista** e **Bairros**. Os campos do
+imóvel têm os mesmos nomes de `web/src/lib/imoveis.ts`, de propósito, para a
+troca de fonte ser só a troca de fonte.
+
+🔴 **O que o painel NÃO deixa escolher: cor e tamanho de letra.** O corpo do
+artigo guarda só o papel de cada trecho — parágrafo, subtítulo, citação — e
+quem desenha é `web/src/components/corpo-artigo.tsx`. É o que impede um
+texto colado do Word de trazer Calibri para dentro de um site em Unbounded.
+
+### Publicar republica o site
+
+O site é estático, então o texto novo só aparece quando o HTML é gerado de
+novo. O painel dispara isso por um webhook, em `sanity.io/manage` > API >
+Webhooks:
+
+| | |
+|---|---|
+| URL | `POST https://api.github.com/repos/<dono>/<repo>/dispatches` |
+| Cabeçalhos | `Accept: application/vnd.github+json` e `Authorization: Bearer <token>` |
+| Corpo | `{"event_type":"conteudo"}` |
+
+Leva dois ou três minutos, e é de propósito: página de imóvel precisa existir
+pronta no HTML para o buscador indexar, e num site de imobiliária é o
+buscador que traz gente.
+
+### O que falta ligar
+
+1. Criar o projeto em `sanity.io` e anotar o `projectId`.
+2. No GitHub, em Settings > Secrets and variables > Actions > **Variables**,
+   criar `SANITY_PROJECT_ID` e `SANITY_DATASET`. Não são segredos: a chave
+   pública da Sanity só lê, e só o que está publicado.
+3. `cd estudio && npm run deploy`, e convidar as duas por e-mail.
+4. 🔴 Quando o primeiro artigo for publicado, ligar a página do artigo:
+
+   ```bash
+   mv web/src/app/revista/_artigo web/src/app/revista/"[slug]"
+   ```
+
+   Ela está pronta e parada numa pasta com underscore, que o Next não trata
+   como rota. O motivo é uma regra que eu descobri quebrando o build: com
+   `output: export`, uma rota dinâmica que não gera nenhuma página é **erro
+   duro**, não caso previsto. Com zero artigos, o arquivo em `[slug]/`
+   derrubaria toda publicação do site.
+
+---
+
 ## Onde ficam as coisas
 
 ```
 marca/                       os SVGs da marca e a construção da placa.
+estudio/                     o painel onde elas escrevem. Sanity Studio.
+web/src/lib/sanity.ts        a ligação com o painel. Tudo opcional.
+web/src/lib/revista.ts       a única porta entre o site e os artigos.
 web/src/app/globals.css      cor, tipo, forma. A fonte de verdade.
 web/src/lib/site.ts          nome, sócias, endereço, contato. Sem CPF.
 web/src/lib/imoveis.ts       a carteira. É isto que a manutenção edita.
@@ -290,4 +360,4 @@ web/scripts/cartao-marca.mjs o cartão de compartilhamento, gerado do código.
   patrimônio".
 - O **domínio**, para `NEXT_PUBLIC_SITE_URL`.
 - As **fotos reais** dos imóveis e os **retratos** das duas, verticais 4:5.
-- O **primeiro texto** da revista.
+- O **primeiro texto** da revista, e o `projectId` do painel.

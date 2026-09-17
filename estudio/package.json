@@ -1,0 +1,23 @@
+{
+  "name": "estudio",
+  "version": "1.0.0",
+  "description": "Painel da Casue Rio, hospedado pela Sanity.",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "start": "sanity start"
+  },
+  "type": "module",
+  "dependencies": {
+    "@sanity/vision": "^6.15.0",
+    "sanity": "^6.15.0",
+    "styled-components": "^6.5.3"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^26.6.1",
+    "@types/react": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,10 +1,13 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, AtSign } from "lucide-react";
 import { CabecaPagina } from "@/components/cabeca-pagina";
 import { Revela } from "@/components/entrada";
 import { Painel } from "@/components/painel";
 import { arquivo } from "@/lib/caminho";
 import posterParede from "../../../public/video/parede.webp";
+import { listarArtigos, dataPorExtenso } from "@/lib/revista";
+import { imagem } from "@/lib/sanity";
 import { INSTAGRAM, INSTAGRAM_URL, metaDaPagina } from "@/lib/site";
 
 export const metadata = metaDaPagina({
@@ -14,33 +17,20 @@ export const metadata = metaDaPagina({
   caminho: "/revista",
 });
 
-/* A revista, antes de ter o primeiro texto.
+/* A revista.
 
-   🔴 Esta página está VAZIA de propósito e a lista abaixo é o motivo de ela
-   já existir: no dia em que o primeiro texto for escrito, ele entra em
-   `MATERIAS` e a página inteira nasce montada, com grade, data e chamada.
-   Página de blog que se improvisa no dia da primeira publicação é a que sai
-   com cara de improviso.
+   🔴 Os textos vêm do painel da Sanity, e a lista chega VAZIA enquanto o
+   projeto não existir ou nenhum artigo estiver publicado. Os dois casos
+   caem no mesmo estado de tela, que é o de baixo: a página diz que o
+   primeiro texto não saiu e manda para o Instagram, onde elas já publicam.
 
-   🔴 O que NÃO fiz: escrever três matérias de exemplo para a grade não
-   ficar vazia. Texto assinado por uma corretora com CRECI, escrito por mim,
-   é exatamente o tipo de conteúdo que não pode existir aqui — vale a mesma
-   regra do depoimento inventado que já saiu deste site. Enquanto não houver
-   texto delas, a página diz que não há, e manda para onde elas de fato
-   publicam hoje, que é o Instagram.
+   🔴 O que eu NÃO fiz foi escrever matérias de exemplo para a grade não
+   ficar vazia. Texto assinado por corretora com CRECI, escrito por mim, é o
+   mesmo erro do depoimento inventado que já saiu deste site.
 
    O vídeo é o `parede.mp4`, que ficou sem casa quando a faixa escura saiu
    da home. Sombra de janela andando devagar numa parede vazia: tempo
    passando, que é do que uma revista trata. */
-
-type Materia = {
-  slug: string;
-  titulo: string;
-  linha: string;
-  data: string;
-};
-
-const MATERIAS: Materia[] = [];
 
 const ASSUNTOS = [
   {
@@ -60,7 +50,9 @@ const ASSUNTOS = [
   },
 ];
 
-export default function PaginaRevista() {
+export default async function PaginaRevista() {
+  const materias = await listarArtigos();
+
   return (
     <>
       <CabecaPagina
@@ -73,23 +65,45 @@ export default function PaginaRevista() {
         Imagem de ambiente. Não retrata imóvel da carteira.
       </p>
 
-      {MATERIAS.length > 0 ? (
+      {materias.length > 0 ? (
         <Revela className="trilho secao">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {MATERIAS.map((m) => (
-              <Link
-                key={m.slug}
-                href={`/revista/${m.slug}/`}
-                data-revela
-                className="group flex flex-col border-t border-tinta-800/15 pt-6 transition-colors hover:border-terracota-600"
-              >
-                <span className="num text-sm text-bronze-500">{m.data}</span>
-                <h2 className="mt-3 font-display text-2xl leading-tight text-tinta-800">
-                  {m.titulo}
-                </h2>
-                <p className="mt-3 text-tinta-500">{m.linha}</p>
-              </Link>
-            ))}
+          <div className="grid gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+            {materias.map((m) => {
+              const capa = m.capa ? imagem(m.capa, 800, 500) : null;
+              return (
+                <Link
+                  key={m.slug}
+                  href={`/revista/${m.slug}/`}
+                  data-revela
+                  className="group flex flex-col"
+                >
+                  {capa && (
+                    <div className="relative mb-5 aspect-16/10 overflow-hidden rounded-[0.875rem] shadow-[var(--shadow-flutua-1)]">
+                      <Image
+                        src={capa}
+                        alt={m.capa?.alt ?? ""}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-700 ease-[var(--ease-saida)] group-hover:scale-105"
+                      />
+                    </div>
+                  )}
+                  <div className="border-t border-tinta-800/15 pt-5 transition-colors group-hover:border-terracota-600">
+                    <span className="rotulo flex flex-wrap items-center gap-x-2 text-bronze-500">
+                      <time dateTime={m.data} className="num">
+                        {dataPorExtenso(m.data)}
+                      </time>
+                      <span aria-hidden className="text-tinta-300">·</span>
+                      <span>{m.autora}</span>
+                    </span>
+                    <h2 className="mt-3 font-display text-2xl leading-tight text-tinta-800">
+                      {m.titulo}
+                    </h2>
+                    <p className="mt-3 text-tinta-500">{m.linha}</p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </Revela>
       ) : (

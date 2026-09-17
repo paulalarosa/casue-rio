@@ -1,0 +1,75 @@
+import { createClient } from "next-sanity";
+import criarUrl from "@sanity/image-url";
+import type { Image } from "sanity";
+
+/* A ligação com o painel.
+
+   🔴 TUDO aqui é opcional, e é o ponto do arquivo. Enquanto o projeto do
+   Sanity não existir, `PROJETO` é indefinido, o cliente é `null` e toda
+   consulta devolve lista vazia. O site continua compilando, continua
+   publicando e a revista continua dizendo que o primeiro texto não saiu.
+
+   Isso importa porque a alternativa é o padrão: um `projectId` inventado
+   como reserva. Ele faz o build passar, o site subir, e as consultas
+   falharem em produção contra um projeto que não é de ninguém. Vazio falha
+   no lugar certo, que é aqui, e falha em silêncio de propósito, porque a
+   ausência de artigo já é um estado previsto da página.
+
+   🔴 A chave pública NÃO é segredo. Ela só lê, e só o que estiver publicado.
+   Por isso ela pode viver numa variável `NEXT_PUBLIC_`, que vai parar dentro
+   do JavaScript que o navegador baixa. O que nunca entra aqui é o token de
+   escrita: quem escreve é o painel, e o painel é da Sanity. */
+const PROJETO = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+const CONJUNTO = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
+
+/* Data fixa, e não a de hoje. A API do Sanity tem versões por data: fixar a
+   data é o que garante que o site não muda de comportamento sozinho no dia
+   em que eles publicarem uma versão nova. */
+const VERSAO = "2026-09-01";
+
+export const cliente = PROJETO
+  ? createClient({
+      projectId: PROJETO,
+      dataset: CONJUNTO,
+      apiVersion: VERSAO,
+      /* `useCdn` ligado: o site é estático e lê na hora do build, então o
+         conteúdo em cache é exatamente o que se quer. Publicar dispara uma
+         republicação, e é ela que traz o texto novo. */
+      useCdn: true,
+    })
+  : null;
+
+export const temPainel = cliente !== null;
+
+/* Consulta com rede de proteção. Se o projeto não existe, devolve o padrão
+   sem tentar a rede; se a rede falhar durante o build, devolve o padrão e
+   avisa no registro em vez de derrubar a publicação inteira.
+
+   🔴 Falhar o build por causa de uma consulta é o pior dos mundos num site
+   estático: a Sanity fora do ar por cinco minutos deixaria o site sem
+   publicar uma correção urgente de preço. */
+export async function consultar<T>(
+  query: string,
+  params: Record<string, unknown> = {},
+  padrao: T,
+): Promise<T> {
+  if (!cliente) return padrao;
+  try {
+    return (await cliente.fetch<T>(query, params)) ?? padrao;
+  } catch (erro) {
+    console.warn("[sanity] consulta falhou, seguindo com o padrão:", erro);
+    return padrao;
+  }
+}
+
+/* Endereço de imagem, com corte respeitando o ponto focal que elas marcaram
+   no painel. Sem o construtor, a foto sairia no centro geométrico, e o
+   centro de uma foto de sala costuma ser o chão. */
+const construtor = PROJETO ? criarUrl({ projectId: PROJETO, dataset: CONJUNTO }) : null;
+
+export function imagem(fonte: Image, largura: number, altura?: number) {
+  if (!construtor) return null;
+  let u = construtor.image(fonte).width(largura).auto("format").fit("crop");
+  if (altura) u = u.height(altura);
+  return u.url();
+}

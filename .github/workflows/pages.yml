@@ -14,6 +14,22 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Publicar conteúdo no painel também republica o site.
+  #
+  # O site é estático: o artigo e o imóvel que elas publicam na Sanity só
+  # aparecem quando o HTML é gerado de novo. O painel dispara isto por um
+  # webhook, e é o que fecha o ciclo sem ninguém precisar abrir o GitHub.
+  #
+  # Como ligar, uma vez, em sanity.io/manage > API > Webhooks:
+  #   URL     POST https://api.github.com/repos/<dono>/<repo>/dispatches
+  #   Headers Accept: application/vnd.github+json
+  #           Authorization: Bearer <token com permissão de Contents: write>
+  #   Body    {"event_type":"conteudo"}
+  #
+  # 🔴 O token vai no cabeçalho do WEBHOOK, do lado da Sanity, e não neste
+  # arquivo: qualquer segredo escrito aqui fica público junto com o repo.
+  repository_dispatch:
+    types: [conteudo]
 
 permissions:
   contents: read
@@ -45,6 +61,15 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
           NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+          # 🔴 O identificador do projeto e o conjunto NÃO são segredo: a
+          # chave pública da Sanity só lê, e só o que está publicado. Por isso
+          # eles são variáveis do repositório, e não segredos — segredo que
+          # não precisa ser segredo é segredo que ninguém sabe rodar.
+          #
+          # Enquanto estiverem vazios, o site compila igual e a revista mostra
+          # que o primeiro texto não saiu. Não há estado quebrado no meio.
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ vars.SANITY_DATASET }}
         run: npm run build
 
       - uses: actions/configure-pages@v5
