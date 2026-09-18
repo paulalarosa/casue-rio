@@ -1,13 +1,19 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { DocumentTextIcon } from "@sanity/icons/DocumentText";
 
-/* Hoje no fuso do Rio, em "AAAA-MM-DD".
+/* Daqui a uma hora, arredondado, para o campo já nascer com algo plausível.
 
-   🔴 `toISOString()` daria a data em UTC, que depois das 21h no Rio ja e o
-   dia seguinte: um texto marcado para amanha apareceria como "no ar" tres
-   horas antes. Aqui a conta e feita no fuso de quem escreve. */
-const hojeNoRio = () =>
-  new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo" }).format(new Date());
+   🔴 O valor gravado é sempre ISO em UTC, e a tela sempre mostra o fuso do
+   Rio. Essa separação é o que evita o erro clássico: guardar "18/09 09:00"
+   sem fuso e o build, que roda em servidor americano, ler isso como 09:00
+   UTC, ou seja, 6h da manhã no Rio. Data e hora sem fuso não são data e
+   hora, são um texto que parece uma. */
+const daquiUmaHora = () => {
+  const d = new Date();
+  d.setMinutes(0, 0, 0);
+  d.setHours(d.getHours() + 1);
+  return d.toISOString();
+};
 
 /* O artigo da revista.
 
@@ -56,9 +62,13 @@ export const artigo = defineType({
     defineField({
       name: "data",
       title: "Publicar em",
-      type: "date",
-      options: { dateFormat: "DD/MM/YYYY" },
-      initialValue: hojeNoRio,
+      type: "datetime",
+      options: {
+        dateFormat: "DD/MM/YYYY",
+        timeFormat: "HH:mm",
+        timeStep: 15,
+      },
+      initialValue: daquiUmaHora,
       /* 🔴 ESTE CAMPO AGENDA, e um campo só, de propósito.
 
          Data futura significa duas coisas ao mesmo tempo, e elas são a
@@ -67,11 +77,11 @@ export const artigo = defineType({
          campos, "data do texto" e "data de publicação", e ela sempre acaba
          com os dois diferentes por engano e ninguém sabendo qual manda.
 
-         O site filtra por `data <= hoje` na hora de montar as páginas, e uma
-         tarefa diária no GitHub remonta o site de manhã. Quem estiver
-         marcado para hoje entra sozinho. */
+         O site filtra por `data <= agora` na hora de montar as páginas, e
+         uma tarefa no GitHub confere de quinze em quinze minutos se chegou
+         a hora de alguém. Quem venceu entra sozinho. */
       description:
-        "Hoje publica agora. Uma data à frente agenda: o texto entra no site naquele dia, de manhã, e é essa a data que sai assinada nele.",
+        "Data e hora passadas publicam na próxima conferência. À frente, agenda: o texto entra no site na hora marcada, com uma folga de uns quinze minutos, e é essa data que sai assinada nele.",
       validation: (r) => r.required(),
     }),
     defineField({
@@ -180,13 +190,20 @@ export const artigo = defineType({
     select: { titulo: "titulo", data: "data", autora: "autora", media: "capa" },
     prepare({ titulo, data, autora, media }) {
       const quando = data
-        ? new Date(`${data}T12:00:00`).toLocaleDateString("pt-BR")
+        ? new Date(data).toLocaleString("pt-BR", {
+            timeZone: "America/Sao_Paulo",
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          })
         : "sem data";
       /* 🔴 O agendamento aparece NA LISTA, e não só dentro do documento.
          Um texto publicado com data à frente não está no site, e a única
          tela em que isso é visível sem abrir nada é esta. Sem o aviso aqui,
          a lista mostraria um artigo com cara de no ar que não está. */
-      const agendado = Boolean(data) && data > hojeNoRio();
+      const agendado = Boolean(data) && new Date(data) > new Date();
       return {
         title: titulo ?? "Sem título",
         subtitle: agendado

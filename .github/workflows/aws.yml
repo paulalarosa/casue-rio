@@ -12,25 +12,33 @@ on:
   # Publicar no painel republica o site.
   repository_dispatch:
     types: [conteudo]
-  # 🔴 A remontagem diária É O AGENDAMENTO DA REVISTA.
+  # 🔴 A CONFERÊNCIA DE QUINZE EM QUINZE MINUTOS É O AGENDAMENTO DA REVISTA.
   #
-  # O site filtra os artigos por `data <= hoje`. Um texto publicado no painel
-  # com data à frente fica pronto e fora do ar; quando esta tarefa roda no dia
-  # marcado, a condição passa a valer e ele entra sozinho. A Sanity vende isso
-  # pronto no plano Growth, a 15 dólares por pessoa por mês. Aqui sai de graça,
-  # com o que já existe.
+  # O site filtra os artigos por `data <= agora`. Um texto publicado no painel
+  # com data e hora à frente fica pronto e fora do ar; quando esta tarefa roda
+  # depois da hora marcada, a condição passa a valer e ele entra sozinho. A
+  # Sanity vende isso pronto no plano Growth, a 15 dólares por pessoa por mês.
+  # Aqui sai de graça, com o que já existe.
   #
-  # 12:00 UTC é 9h no Rio, que não tem horário de verão desde 2019. O GitHub
-  # pode atrasar uma tarefa agendada em bons minutos quando está cheio, e para
-  # um texto que entra "de manhã" isso é irrelevante.
+  # 🔴 Os minutos são 7, 22, 37 e 52, e não 0, 15, 30, 45, DE PROPÓSITO. O
+  # GitHub enfileira tarefa agendada quando está cheio, e a hora cheia é o
+  # instante mais disputado do mundo em CI, porque é onde todo mundo agenda.
+  # Fugir do minuto redondo tira a tarefa da fila mais longa de graça.
   #
-  # 🔴 A armadilha é outra: o GitHub DESLIGA tarefas agendadas depois de 60
+  # 🔴 E ela NÃO republica o site quatro vezes por hora. O trabalho `decidir`
+  # confere primeiro se venceu a hora de alguém, e na esmagadora maioria das
+  # vezes o fluxo acaba ali, em quinze segundos. Sem isso seriam 96 builds por
+  # dia, 96 invalidações de CloudFront (as mil primeiras do mês são grátis, o
+  # resto é cobrado) e um histórico de publicação ilegível, onde o build que
+  # falhou de verdade some no meio do ruído.
+  #
+  # 🔴 A armadilha que sobra: o GitHub DESLIGA tarefas agendadas depois de 60
   # dias sem atividade no repositório, sem avisar. A rede de proteção é que
   # qualquer publicação no painel remonta o site na hora, e a remontagem
-  # carrega junto todo artigo cuja data já chegou. O pior caso não é o texto
-  # não sair: é sair no dia em que qualquer outra coisa for publicada.
+  # carrega junto todo artigo cuja hora já passou. O pior caso não é o texto
+  # não sair: é sair quando qualquer outra coisa for publicada.
   schedule:
-    - cron: "0 12 * * *"
+    - cron: "7,22,37,52 * * * *"
 
 permissions:
   contents: read
@@ -39,13 +47,53 @@ permissions:
   # segredo do repositório é chave que ninguém lembra de girar.
   id-token: write
 
+# 🔴 `cancel-in-progress` é FALSO para a tarefa agendada, e verdadeiro para
+# todo o resto. Sem essa distinção existe um jeito de o site simplesmente não
+# publicar: a conferência das 14h07 entra no mesmo grupo, cancela uma
+# publicação que estava no meio, descobre que não tem nada vencido e termina
+# sem fazer nada. O texto que alguém acabou de publicar fica pelo caminho, e o
+# fluxo aparece verde. Publicação de verdade pode atropelar conferência;
+# conferência não atropela ninguém.
 concurrency:
   group: aws
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name != 'schedule' }}
 
 jobs:
+  # Vale a pena publicar agora? Para tudo que não é a tarefa agendada, sim,
+  # sempre: alguém empurrou código ou alguém publicou no painel.
+  #
+  # Para a tarefa agendada, a pergunta é uma só: o painel tem mais artigos
+  # com a hora vencida do que o site tem no ar? O sitemap do site é a
+  # resposta, e ele serve bem porque é gerado da MESMA consulta que monta as
+  # páginas. Comparar as duas pontas é exato e não precisa guardar estado
+  # nenhum entre uma execução e outra.
+  # Vale a pena publicar agora? Para tudo que não é a tarefa agendada, sim,
+  # sempre: alguém empurrou código ou alguém publicou no painel. Para a
+  # tarefa agendada, quem responde é `.github/scripts/venceu.sh`, que mora
+  # fora deste arquivo porque script dentro de YAML não tem como ser testado
+  # sem publicar.
+  decidir:
+    runs-on: ubuntu-latest
+    outputs:
+      precisa: ${{ steps.conferir.outputs.precisa }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: conferir
+        env:
+          PROJETO: ${{ vars.SANITY_PROJECT_ID }}
+          CONJUNTO: ${{ vars.SANITY_DATASET }}
+          SITE: ${{ vars.SITE_URL }}
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "Evento ${{ github.event_name }}: publica sem conferir."
+            echo "precisa=true" >> "$GITHUB_OUTPUT"
+          else
+            bash .github/scripts/venceu.sh
+          fi
+
   publicar:
-    if: vars.AWS_ROLE_ARN != ''
+    needs: decidir
+    if: vars.AWS_ROLE_ARN != '' && needs.decidir.outputs.precisa == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

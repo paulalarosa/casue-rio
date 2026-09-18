@@ -83,17 +83,11 @@ if (!projeto) {
    devolveria lista vazia. Lista vazia com `output: export` é ERRO DURO, e
    a publicação inteira do site cai por causa de um texto que nem era para
    estar no ar ainda. Mudou lá, muda aqui, na mesma hora. */
-function hojeNoRio() {
-  return new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Sao_Paulo",
-  }).format(new Date());
-}
-
 async function quantosArtigos() {
   if (!projeto) return 0;
   const consulta =
     `count(*[_type == "artigo" && defined(slug.current)` +
-    ` && data <= "${hojeNoRio()}"])`;
+    ` && data <= "${new Date().toISOString()}"])`;
   const url =
     `https://${projeto}.api.sanity.io/v2026-09-01/data/query/${conjunto}` +
     `?query=${encodeURIComponent(consulta)}`;
