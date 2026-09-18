@@ -82,7 +82,10 @@ export function FormContato() {
           className="rounded-[0.75rem]"
         />
         {erros.nome && (
-          <span id="erro-nome" className="flex items-center gap-2 text-sm text-destructive">
+          <span
+            id="erro-nome"
+            className="flex items-center gap-2 text-sm text-destructive"
+          >
             <AlertTriangle className="size-4" aria-hidden /> {erros.nome}
           </span>
         )}
@@ -104,7 +107,10 @@ export function FormContato() {
           className="rounded-[0.75rem]"
         />
         {erros.contato ? (
-          <span id="erro-contato" className="flex items-center gap-2 text-sm text-destructive">
+          <span
+            id="erro-contato"
+            className="flex items-center gap-2 text-sm text-destructive"
+          >
             <AlertTriangle className="size-4" aria-hidden /> {erros.contato}
           </span>
         ) : (
@@ -140,9 +146,8 @@ export function FormContato() {
           className="mt-0.5"
         />
         <span>
-          Autorizo o contato sobre este pedido. Os dados são usados só para
-          responder, não vão para lista de disparo e podem ser apagados quando eu
-          pedir.
+          Autorizo o contato sobre este pedido. Os dados são usados só para responder, não
+          vão para lista de disparo e podem ser apagados quando eu pedir.
         </span>
       </label>
 
@@ -157,8 +162,8 @@ export function FormContato() {
         <ShieldCheck className="size-5 shrink-0 text-bronze-500" aria-hidden />
         <span>
           <b className="block text-tinta-800">Não peça documento por aqui.</b>
-          Comprovante de renda, RG e certidão a gente recebe em canal próprio, no
-          momento certo do processo.
+          Comprovante de renda, RG e certidão a gente recebe em canal próprio, no momento
+          certo do processo.
         </span>
       </Painel>
 

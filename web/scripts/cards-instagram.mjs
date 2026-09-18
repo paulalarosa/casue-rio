@@ -53,7 +53,9 @@ for (const entrada of await readdir(REVISTA, { withFileTypes: true })) {
   if (!entrada.isDirectory()) continue;
   for (const rota of Object.keys(PECAS)) {
     if (await existe(join(REVISTA, entrada.name, rota))) {
-      throw new Error(`[cards] ${entrada.name}/${rota} continua em out/. Não subo assim.`);
+      throw new Error(
+        `[cards] ${entrada.name}/${rota} continua em out/. Não subo assim.`,
+      );
     }
   }
 }

@@ -5,7 +5,8 @@ import { CabecaPagina } from "@/components/cabeca-pagina";
 import { arquivo } from "@/lib/caminho";
 import alameda from "../../../../public/video/alameda.webp";
 import { CartaoImovel } from "@/components/cartao-imovel";
-import { BAIRROS, DISPONIVEIS, moeda, retratoDaRegiao } from "@/lib/imoveis";
+import { BAIRROS } from "@/lib/carteira";
+import { DISPONIVEIS, moeda, retratoDaRegiao } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -56,7 +57,10 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
       {retrato && (
         <dl className="trilho grid grid-cols-2 gap-y-8 border-y border-tinta-800/12 py-8 sm:grid-cols-3">
           {[
-            ["Na carteira", `${retrato.quantos} ${retrato.quantos === 1 ? "imóvel" : "imóveis"}`],
+            [
+              "Na carteira",
+              `${retrato.quantos} ${retrato.quantos === 1 ? "imóvel" : "imóveis"}`,
+            ],
             ["Faixa de preço", `${moeda(retrato.menor)} a ${moeda(retrato.maior)}`],
             ["Área mediana", `${retrato.areaMediana} m²`],
           ].map(([rotulo, valor], i) => (

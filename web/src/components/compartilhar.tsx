@@ -22,8 +22,7 @@ export function Compartilhar({ titulo }: { titulo: string }) {
   async function compartilhar() {
     try {
       await navigator.share({ title: titulo, url: window.location.href });
-    } catch {
-    }
+    } catch {}
   }
 
   const botao =

@@ -10,7 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { REGIOES, contar, acharPorCodigo, type Finalidade } from "@/lib/imoveis";
+import type { Finalidade } from "@/lib/carteira";
+import { REGIOES, contar, acharPorCodigo } from "@/lib/imoveis";
 import { cn } from "@/lib/utils";
 
 const ROTULOS: Record<string, string> = {
@@ -58,7 +59,10 @@ export function Busca({ variante = "escuro" }: { variante?: "claro" | "escuro" }
   return (
     <form
       onSubmit={enviar}
-      className={cn("overflow-hidden rounded-[0.75rem]", escuro ? "vidro" : "vidro-claro")}
+      className={cn(
+        "overflow-hidden rounded-[0.75rem]",
+        escuro ? "vidro" : "vidro-claro",
+      )}
     >
       <label className="flex flex-col gap-1 px-6 pb-4 pt-4">
         <span className={rotulo}>Código do imóvel ou palavra</span>
@@ -96,7 +100,12 @@ export function Busca({ variante = "escuro" }: { variante?: "claro" | "escuro" }
           </Select>
         </label>
 
-        <label className={cn("flex min-w-0 flex-col gap-1 border-t px-6 py-4 sm:border-l sm:border-t-0", risco)}>
+        <label
+          className={cn(
+            "flex min-w-0 flex-col gap-1 border-t px-6 py-4 sm:border-l sm:border-t-0",
+            risco,
+          )}
+        >
           <span className={rotulo}>Finalidade</span>
           <Select value={finalidade} onValueChange={(v) => setFinalidade(v ?? "todas")}>
             <SelectTrigger className={gatilho} aria-label="Finalidade">

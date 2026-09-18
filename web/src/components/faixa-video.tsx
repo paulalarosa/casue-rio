@@ -22,7 +22,11 @@ export function FaixaVideo({
   return (
     <section className={cn("relative overflow-hidden bg-tinta-900", altura, className)}>
       <VideoFundo fonte={fonte} poster={poster} paralaxe={paralaxe} />
-      <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: veu }} />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{ background: veu }}
+      />
       <div className="trilho relative flex h-full min-h-[inherit] flex-col items-center justify-center py-20 text-center">
         {children}
       </div>

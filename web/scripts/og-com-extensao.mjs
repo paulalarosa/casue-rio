@@ -4,9 +4,7 @@ import { regioesAtendidas } from "./regioes.mjs";
 
 async function conferirCartao() {
   const esperado = (await regioesAtendidas()).join(" · ");
-  const carimbo = await readFile("scripts/cartao-marca.carimbo", "utf8").catch(
-    () => "",
-  );
+  const carimbo = await readFile("scripts/cartao-marca.carimbo", "utf8").catch(() => "");
   if (carimbo.trim() !== esperado) {
     throw new Error(
       `O cartão da marca está desatualizado.\n` +

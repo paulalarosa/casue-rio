@@ -116,7 +116,11 @@ export default function Home() {
           className="ilha relative isolate overflow-hidden bg-tinta-900 text-papel"
         >
           <div aria-hidden className="absolute inset-0 -z-20">
-            <VideoFundo fonte={arquivo("/video/noite.mp4")} poster={posterNoite} paralaxe />
+            <VideoFundo
+              fonte={arquivo("/video/noite.mp4")}
+              poster={posterNoite}
+              paralaxe
+            />
           </div>
           <div
             aria-hidden

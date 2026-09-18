@@ -12,8 +12,7 @@ const semAcento = (t: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
-const idDaPessoa = (nome: string) =>
-  `${SITE}/quem-somos/#${semAcento(nome)}`;
+const idDaPessoa = (nome: string) => `${SITE}/quem-somos/#${semAcento(nome)}`;
 
 export function pessoas() {
   return SOCIAS.map((s) => ({

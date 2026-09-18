@@ -7,7 +7,6 @@ import retrato from "../../public/video/abertura-retrato.webp";
 import { MARCA } from "@/lib/site";
 import { arquivo } from "@/lib/caminho";
 
-
 const LARGURA_RETRATO = 768;
 
 const CONSULTA = `(max-width: ${LARGURA_RETRATO - 1}px)`;
@@ -20,9 +19,8 @@ function assinar(avisar: () => void) {
 
 function lerCorte(): "largo" | "retrato" | null {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return null;
-  const poupando = (
-    navigator as Navigator & { connection?: { saveData?: boolean } }
-  ).connection?.saveData;
+  const poupando = (navigator as Navigator & { connection?: { saveData?: boolean } })
+    .connection?.saveData;
   if (poupando) return null;
   return window.matchMedia(CONSULTA).matches ? "retrato" : "largo";
 }

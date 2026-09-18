@@ -70,6 +70,9 @@ export function frasePara(corpo: PortableTextBlock[] | undefined, reserva: strin
   );
   if (!citacao) return reserva;
   const filhos = (citacao as { children?: { text?: string }[] }).children ?? [];
-  const texto = filhos.map((c) => c.text ?? "").join("").trim();
+  const texto = filhos
+    .map((c) => c.text ?? "")
+    .join("")
+    .trim();
   return texto || reserva;
 }

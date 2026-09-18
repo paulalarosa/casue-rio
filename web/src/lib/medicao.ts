@@ -56,15 +56,13 @@ function apagarCookiesDoGoogle() {
           (d ? `; domain=${d}` : "");
       }
     }
-  } catch {
-  }
+  } catch {}
 }
 
 export function gravarEscolha(v: "sim" | "nao") {
   if (v === "nao") apagarCookiesDoGoogle();
   try {
     window.localStorage.setItem(CHAVE, v);
-  } catch {
-  }
+  } catch {}
   avisar();
 }

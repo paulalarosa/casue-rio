@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/site";
-import { BAIRROS, IMOVEIS } from "@/lib/imoveis";
+import { BAIRROS, IMOVEIS } from "@/lib/carteira";
 import { listarArtigos } from "@/lib/revista";
 
 export const dynamic = "force-static";

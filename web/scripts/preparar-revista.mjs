@@ -1,4 +1,3 @@
-
 import { cp, rm, stat, readFile } from "node:fs/promises";
 
 async function lerEnvLocal() {

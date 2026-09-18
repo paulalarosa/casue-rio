@@ -37,9 +37,8 @@ export default function PaginaQuemSomos() {
           </h2>
           <div data-revela className="border-t border-terracota-600/30 pt-6">
             <p className="text-lg leading-relaxed text-tinta-500">
-              Você não é passado para outro setor. Quem abre a porta do imóvel é
-              a mesma que levanta a papelada, conversa com o condomínio e senta
-              na assinatura.
+              Você não é passado para outro setor. Quem abre a porta do imóvel é a mesma
+              que levanta a papelada, conversa com o condomínio e senta na assinatura.
             </p>
           </div>
         </div>
@@ -88,18 +87,18 @@ export default function PaginaQuemSomos() {
             <span className="rotulo text-bronze-500">CRECI</span>
             <h3 className="mt-2 font-display text-xl">Autoriza a intermediar</h3>
             <p className="mt-3 text-tinta-500">
-              É o registro no Conselho Regional de Corretores de Imóveis. Sem
-              ele, ninguém pode anunciar, mostrar nem fechar negócio com imóvel
-              de terceiro. Qualquer pessoa confere o número no site do conselho.
+              É o registro no Conselho Regional de Corretores de Imóveis. Sem ele, ninguém
+              pode anunciar, mostrar nem fechar negócio com imóvel de terceiro. Qualquer
+              pessoa confere o número no site do conselho.
             </p>
           </Painel>
           <Painel data-revela className="p-8">
             <span className="rotulo text-bronze-500">CNAI</span>
             <h3 className="mt-2 font-display text-xl">Autoriza a avaliar</h3>
             <p className="mt-3 text-tinta-500">
-              É o Cadastro Nacional de Avaliadores Imobiliários. É ele que
-              permite emitir parecer técnico de valor, que é o documento aceito
-              em inventário, partilha e garantia bancária.
+              É o Cadastro Nacional de Avaliadores Imobiliários. É ele que permite emitir
+              parecer técnico de valor, que é o documento aceito em inventário, partilha e
+              garantia bancária.
             </p>
             <Link
               href="/avaliacao"
@@ -118,8 +117,8 @@ export default function PaginaQuemSomos() {
         >
           <h2 className="text-3xl text-papel">Fale com uma das duas.</h2>
           <p className="mx-auto mt-4 max-w-[46ch] text-tinta-200">
-            Um canal só, da empresa, e as duas atendem por ele. A resposta
-            chega no mesmo dia.
+            Um canal só, da empresa, e as duas atendem por ele. A resposta chega no mesmo
+            dia.
           </p>
           <Link
             href="/contato"

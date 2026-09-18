@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { TELEFONE, enderecoEmail } from "@/lib/site";
-import type { Imovel } from "@/lib/imoveis";
+import type { Imovel } from "@/lib/carteira";
 
 type Props = {
   children: React.ReactNode;
@@ -10,7 +10,12 @@ type Props = {
   recuo?: string;
 };
 
-function Envoltorio({ children, className, recuo, aoAgir }: Props & { aoAgir: () => void }) {
+function Envoltorio({
+  children,
+  className,
+  recuo,
+  aoAgir,
+}: Props & { aoAgir: () => void }) {
   if (recuo) {
     return (
       <Link

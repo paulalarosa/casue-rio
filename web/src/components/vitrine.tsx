@@ -12,15 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  DISPONIVEIS,
-  VENDIDOS,
-  REGIOES,
-  buscar,
-  type Finalidade,
-  type Imovel,
-  type Regiao,
-} from "@/lib/imoveis";
+import type { Finalidade, Imovel, Regiao } from "@/lib/carteira";
+import { DISPONIVEIS, VENDIDOS, REGIOES, buscar } from "@/lib/imoveis";
 import { cn } from "@/lib/utils";
 
 const FINALIDADES: [Finalidade, string][] = [
@@ -28,15 +21,16 @@ const FINALIDADES: [Finalidade, string][] = [
   ["alugar", "Alugar"],
 ];
 
-const ORDENS: Record<string, { rotulo: string; cmp: (a: Imovel, b: Imovel) => number }> = {
-  selecionados: {
-    rotulo: "Selecionados",
-    cmp: (a, b) => Number(b.destaque) - Number(a.destaque),
-  },
-  "preco-asc": { rotulo: "Menor preço", cmp: (a, b) => a.preco - b.preco },
-  "preco-desc": { rotulo: "Maior preço", cmp: (a, b) => b.preco - a.preco },
-  "area-desc": { rotulo: "Maior área", cmp: (a, b) => b.area - a.area },
-};
+const ORDENS: Record<string, { rotulo: string; cmp: (a: Imovel, b: Imovel) => number }> =
+  {
+    selecionados: {
+      rotulo: "Selecionados",
+      cmp: (a, b) => Number(b.destaque) - Number(a.destaque),
+    },
+    "preco-asc": { rotulo: "Menor preço", cmp: (a, b) => a.preco - b.preco },
+    "preco-desc": { rotulo: "Maior preço", cmp: (a, b) => b.preco - a.preco },
+    "area-desc": { rotulo: "Maior área", cmp: (a, b) => b.area - a.area },
+  };
 
 export function Vitrine() {
   const params = useSearchParams();
@@ -44,7 +38,10 @@ export function Vitrine() {
   const regiao = params.get("regiao") as Regiao | null;
   const finalidade = params.get("finalidade") as Finalidade | null;
   const termo = params.get("q") ?? "";
-  const ordem = params.get("ordem") && ORDENS[params.get("ordem")!] ? params.get("ordem")! : "selecionados";
+  const ordem =
+    params.get("ordem") && ORDENS[params.get("ordem")!]
+      ? params.get("ordem")!
+      : "selecionados";
 
   const base = termo ? buscar(termo) : DISPONIVEIS;
   const lista = base
@@ -56,7 +53,10 @@ export function Vitrine() {
     .sort(ORDENS[ordem].cmp);
 
   function contarCom(chave: "regiao" | "finalidade", valor: string) {
-    const alt = { regiao: regiao as string | null, finalidade: finalidade as string | null };
+    const alt = {
+      regiao: regiao as string | null,
+      finalidade: finalidade as string | null,
+    };
     alt[chave] = valor;
     return base.filter(
       (im) =>
@@ -115,7 +115,10 @@ export function Vitrine() {
             <div className="ml-auto flex items-center gap-3">
               <label className="flex items-center gap-2">
                 <span className="rotulo text-tinta-500">Ordem</span>
-                <Select value={ordem} onValueChange={(v) => mexer({ ordem: v ?? "selecionados" })}>
+                <Select
+                  value={ordem}
+                  onValueChange={(v) => mexer({ ordem: v ?? "selecionados" })}
+                >
                   <SelectTrigger
                     aria-label="Ordenar a lista"
                     className="h-9 rounded-full border-tinta-800/15 bg-transparent px-4 text-sm font-semibold text-tinta-800 shadow-none"
@@ -174,8 +177,8 @@ export function Vitrine() {
           <Painel className="mx-auto max-w-xl p-10 text-center">
             <h2 className="text-2xl">Nenhum imóvel com esses filtros</h2>
             <p className="mt-4 text-tinta-500">
-              Diga o que você procura. A gente avisa quando entrar, ou procura
-              fora da carteira.
+              Diga o que você procura. A gente avisa quando entrar, ou procura fora da
+              carteira.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <button
@@ -200,12 +203,10 @@ export function Vitrine() {
         <div className="secao relative bg-tinta-800 text-papel">
           <div className="trilho">
             <div className="grid gap-4 lg:grid-cols-[1fr_26rem] lg:items-end">
-              <h2 className="text-[clamp(1.6rem,3vw,2.4rem)] text-papel">
-                Já vendidos
-              </h2>
+              <h2 className="text-[clamp(1.6rem,3vw,2.4rem)] text-papel">Já vendidos</h2>
               <p className="max-w-[42ch] text-tinta-200">
-                Saíram da carteira, e ficam aqui porque contam como a gente
-                trabalha. Não entram na contagem de disponíveis.
+                Saíram da carteira, e ficam aqui porque contam como a gente trabalha. Não
+                entram na contagem de disponíveis.
               </p>
             </div>
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

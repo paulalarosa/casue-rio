@@ -50,7 +50,11 @@ export function Topo() {
           sobreCena ? "vidro-tinta" : "vidro-claro",
         )}
       >
-        <Link href="/" className="flex shrink-0 items-center" aria-label="Casuê Rio, início">
+        <Link
+          href="/"
+          className="flex shrink-0 items-center"
+          aria-label="Casuê Rio, início"
+        >
           <AssinaturaFaixa
             className="text-[1.05rem] sm:text-[1.15rem]"
             cores={{

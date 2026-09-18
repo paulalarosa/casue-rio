@@ -78,12 +78,18 @@ export function CabecaPagina({
             }}
           />
         )}
-        <nav aria-label="Você está aqui" className="mb-7 flex flex-wrap items-center gap-2 text-sm">
+        <nav
+          aria-label="Você está aqui"
+          className="mb-7 flex flex-wrap items-center gap-2 text-sm"
+        >
           {trilha.map((t, i) => (
             <span key={t.texto} className="flex items-center gap-2">
               {i > 0 && <ChevronRight className="size-3.5 text-tinta-300" aria-hidden />}
               {t.href ? (
-                <Link href={t.href} className="text-tinta-200 transition-colors hover:text-papel">
+                <Link
+                  href={t.href}
+                  className="text-tinta-200 transition-colors hover:text-papel"
+                >
                   {t.texto}
                 </Link>
               ) : (
@@ -102,7 +108,9 @@ export function CabecaPagina({
           }
         >
           <h1 className="text-[clamp(2.2rem,4.6vw,3.4rem)] text-papel">{titulo}</h1>
-          <p className={`text-lg text-tinta-200 ${cena || video ? "mt-3" : ""}`}>{linha}</p>
+          <p className={`text-lg text-tinta-200 ${cena || video ? "mt-3" : ""}`}>
+            {linha}
+          </p>
         </div>
         {fatos && fatos.length > 0 && (
           <dl className="mt-9 grid max-w-2xl grid-cols-3 gap-5 border-t border-white/18 pt-6">

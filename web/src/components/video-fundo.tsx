@@ -69,9 +69,8 @@ export function VideoFundo({
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const poupando = (
-      navigator as Navigator & { connection?: { saveData?: boolean } }
-    ).connection?.saveData;
+    const poupando = (navigator as Navigator & { connection?: { saveData?: boolean } })
+      .connection?.saveData;
     if (poupando) return;
 
     const alvo = caixa.current;
@@ -94,7 +93,9 @@ export function VideoFundo({
     <div ref={caixa} className="absolute inset-0 overflow-hidden">
       <div
         ref={trilha}
-        className={paralaxe ? "absolute inset-x-0 -top-[9%] h-[118%]" : "absolute inset-0"}
+        className={
+          paralaxe ? "absolute inset-x-0 -top-[9%] h-[118%]" : "absolute inset-0"
+        }
       >
         <Image
           src={poster}

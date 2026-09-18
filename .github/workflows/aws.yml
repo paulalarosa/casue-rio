@@ -59,6 +59,23 @@ concurrency:
   cancel-in-progress: ${{ github.event_name != 'schedule' }}
 
 jobs:
+  painel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: estudio/package-lock.json
+      - working-directory: estudio
+        env:
+          SANITY_STUDIO_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
+          SANITY_STUDIO_DATASET: ${{ vars.SANITY_DATASET }}
+        run: |
+          npm ci
+          npm run typecheck
+
   # Vale a pena publicar agora? Para tudo que não é a tarefa agendada, sim,
   # sempre: alguém empurrou código ou alguém publicou no painel.
   #
@@ -111,6 +128,7 @@ jobs:
       - name: Conferir
         working-directory: web
         run: |
+          npm run format:check
           npm run lint
           npm run typecheck
           npm run test

@@ -25,9 +25,9 @@ function Faixa({ responder }: { responder: (v: "sim" | "nao") => void }) {
     >
       <div className="trilho flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-[62ch] text-sm leading-relaxed text-tinta-600">
-          A gente gostaria de medir quantas pessoas visitam o site e quais
-          páginas elas leem, usando o Google Analytics. Isso cria cookie no seu
-          navegador. Sem o seu aceite, nada disso carrega.{" "}
+          A gente gostaria de medir quantas pessoas visitam o site e quais páginas elas
+          leem, usando o Google Analytics. Isso cria cookie no seu navegador. Sem o seu
+          aceite, nada disso carrega.{" "}
           <Link
             href="/privacidade"
             className="font-semibold text-terracota-600 underline underline-offset-4 transition-colors hover:text-terracota-700"

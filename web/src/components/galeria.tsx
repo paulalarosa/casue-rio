@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { type NomeCena } from "@/components/cenas";
 import { Midia } from "@/components/midia";
-import type { Imovel } from "@/lib/imoveis";
+import type { Imovel } from "@/lib/carteira";
 import { cn } from "@/lib/utils";
 
 type Quadro = { foto?: string; cena: NomeCena };
@@ -118,10 +118,18 @@ export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
             onClick={() => setI(k)}
             className={cn(
               "relative aspect-4/3 w-24 overflow-hidden rounded-[0.75rem] border-2 transition-all duration-300",
-              k === i ? "border-areia-500" : "border-transparent opacity-70 hover:opacity-100",
+              k === i
+                ? "border-areia-500"
+                : "border-transparent opacity-70 hover:opacity-100",
             )}
           >
-            <Midia foto={q.foto} cena={q.cena} semente={im.codigo} rotulo="" sizes="6rem" />
+            <Midia
+              foto={q.foto}
+              cena={q.cena}
+              semente={im.codigo}
+              rotulo=""
+              sizes="6rem"
+            />
           </button>
         ))}
       </div>

@@ -11,7 +11,9 @@ const COMPONENTES = {
       <h2 className="mt-14 text-[clamp(1.5rem,2.6vw,2rem)] leading-tight">{children}</h2>
     ),
     h3: ({ children }: { children?: React.ReactNode }) => (
-      <h3 className="mt-10 font-display text-xl font-semibold text-tinta-800">{children}</h3>
+      <h3 className="mt-10 font-display text-xl font-semibold text-tinta-800">
+        {children}
+      </h3>
     ),
     blockquote: ({ children }: { children?: React.ReactNode }) => (
       <blockquote className="mt-10 border-l-4 border-terracota-600 pl-6 font-display text-xl leading-relaxed font-semibold text-tinta-800">
@@ -56,11 +58,7 @@ const COMPONENTES = {
     },
   },
   types: {
-    image: ({
-      value,
-    }: {
-      value: { alt?: string; legenda?: string };
-    }) => {
+    image: ({ value }: { value: { alt?: string; legenda?: string } }) => {
       const url = imagem(value as never, 1600, 1000);
       if (!url) return null;
       return (
@@ -75,7 +73,9 @@ const COMPONENTES = {
             />
           </div>
           {value.legenda && (
-            <figcaption className="mt-3 text-sm text-tinta-500">{value.legenda}</figcaption>
+            <figcaption className="mt-3 text-sm text-tinta-500">
+              {value.legenda}
+            </figcaption>
           )}
         </figure>
       );

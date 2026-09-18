@@ -104,9 +104,12 @@
   /* Sombra tingida de TINTA, que e quente. Preto puro sobre areia acinzenta.
      Duas camadas: contato curto e queda longa. É a queda longa que faz o
      componente flutuar em vez de parecer colado. */
-  --shadow-flutua-1: 0 1px 2px rgba(17, 17, 16, 0.05), 0 6px 16px -6px rgba(17, 17, 16, 0.12);
-  --shadow-flutua-2: 0 2px 6px rgba(17, 17, 16, 0.06), 0 18px 40px -14px rgba(17, 17, 16, 0.18);
-  --shadow-flutua-3: 0 4px 10px rgba(17, 17, 16, 0.07), 0 36px 70px -24px rgba(17, 17, 16, 0.24);
+  --shadow-flutua-1:
+    0 1px 2px rgba(17, 17, 16, 0.05), 0 6px 16px -6px rgba(17, 17, 16, 0.12);
+  --shadow-flutua-2:
+    0 2px 6px rgba(17, 17, 16, 0.06), 0 18px 40px -14px rgba(17, 17, 16, 0.18);
+  --shadow-flutua-3:
+    0 4px 10px rgba(17, 17, 16, 0.07), 0 36px 70px -24px rgba(17, 17, 16, 0.24);
   --shadow-vidro: 0 24px 60px -20px rgba(5, 5, 4, 0.5);
 
   --ease-saida: cubic-bezier(0.22, 1, 0.36, 1);

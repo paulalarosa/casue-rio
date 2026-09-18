@@ -52,8 +52,8 @@ export default function PaginaContato() {
               </>
             ) : (
               <p className="mt-3 max-w-[52ch] text-tinta-500">
-                O número único da empresa está sendo definido. Até ele entrar no
-                ar, o e-mail ao lado e o formulário abaixo chegam às duas.
+                O número único da empresa está sendo definido. Até ele entrar no ar, o
+                e-mail ao lado e o formulário abaixo chegam às duas.
               </p>
             )}
             <p className="mt-6 flex items-center gap-2 text-sm text-tinta-500">
@@ -87,7 +87,9 @@ export default function PaginaContato() {
                   <AtSign className="size-4 shrink-0 text-bronze-500" aria-hidden />
                   <span>
                     <span className="rotulo block text-tinta-500">Instagram</span>
-                    <span className="block font-semibold text-tinta-800">{INSTAGRAM}</span>
+                    <span className="block font-semibold text-tinta-800">
+                      {INSTAGRAM}
+                    </span>
                   </span>
                 </a>
               </li>

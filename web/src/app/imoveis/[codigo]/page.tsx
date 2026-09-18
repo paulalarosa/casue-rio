@@ -6,7 +6,8 @@ import { Galeria } from "@/components/galeria";
 import { Compartilhar } from "@/components/compartilhar";
 import { CartaoImovel } from "@/components/cartao-imovel";
 import { Painel } from "@/components/painel";
-import { IMOVEIS, DISPONIVEIS, BAIRROS, moeda } from "@/lib/imoveis";
+import { IMOVEIS, BAIRROS } from "@/lib/carteira";
+import { DISPONIVEIS, moeda } from "@/lib/imoveis";
 import { AcaoZap } from "@/components/acao";
 import { SITE, NOME, metaDaPagina } from "@/lib/site";
 
@@ -177,8 +178,8 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
             ))}
           </ul>
           <p className="mt-6 max-w-[58ch] text-sm text-tinta-500">
-            O resultado sai por escrito, antes de qualquer sinal. Se aparecer
-            pendência, você fica sabendo antes de decidir.
+            O resultado sai por escrito, antes de qualquer sinal. Se aparecer pendência,
+            você fica sabendo antes de decidir.
           </p>
 
           {bairro && (

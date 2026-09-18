@@ -72,7 +72,10 @@ export function AssinaturaFaixa({
         <Casue nome={c.nome} />
         <Rio lugar={c.lugar} className="ml-[0.22em]" />
       </span>
-      <span aria-hidden className="ml-[1.077em] hidden h-[1.378em] w-px bg-current opacity-25 lg:block" />
+      <span
+        aria-hidden
+        className="ml-[1.077em] hidden h-[1.378em] w-px bg-current opacity-25 lg:block"
+      />
       <Descritivo cor={c.categoria} className="ml-[0.838em] hidden lg:inline" />
     </span>
   );
@@ -119,7 +122,9 @@ export function AssinaturaNome({
     <span
       className={cn(
         "font-display",
-        empilhado ? "inline-flex flex-col leading-[0.94]" : "inline-flex items-baseline leading-none",
+        empilhado
+          ? "inline-flex flex-col leading-[0.94]"
+          : "inline-flex items-baseline leading-none",
         className,
       )}
     >

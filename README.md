@@ -4,417 +4,105 @@ Site da imobiliária de **Débora de Almeida Carvalho** (CRECI/RJ 92.984 · CNAI
 53.073) e **Alessandra Soverchi de Seixas** (CRECI/RJ 92.989 · CNAI 53.072),
 no Rio de Janeiro.
 
-**No ar:** https://casuerio.com.br
+- Site: <https://casuerio.com.br>
+- Painel de conteúdo: <https://casue-rio.sanity.studio>
 
-> A marca era **Carvalho & Seixas** e passou a ser **Casuê Rio** em 15/09/2026.
-> O repositório mudou de nome junto. Se algum lugar ainda disser o nome antigo,
-> é resto de migração e pode ser trocado.
+## Pastas
 
----
+| pasta      | o que é                                                         |
+| ---------- | --------------------------------------------------------------- |
+| `web/`     | o site. Next.js 16 em exportação estática, React 19, Tailwind 4 |
+| `estudio/` | o painel Sanity onde as corretoras escrevem a revista            |
+| `infra/`   | políticas de IAM e de balde, e a função do CloudFront            |
+| `scripts/` | ferramentas do repositório                                       |
 
-## O que é
-
-Site estático, exportado e publicado na AWS a cada empurrão na `main`.
-**Sem servidor seu no ar**: o conteúdo vem de um painel hospedado por terceiro
-(veja [O painel](#o-painel)) e o que sobe é arquivo puro. A carteira de imóveis
-ainda mora num módulo TypeScript (`web/src/lib/imoveis.ts`), e é o arquivo que
-a manutenção mensal edita até a migração para o painel.
+## Rodar
 
 ```bash
 cd web
 npm install
-npm run dev     # http://localhost:3000
-npm run build   # exporta para web/out
+npm run dev
 ```
-
-A publicação é automática (`.github/workflows/aws.yml`): constrói, sincroniza
-com o S3 e limpa o cache da borda. As credenciais vêm por **OIDC**, então não
-há chave de acesso guardada no GitHub.
-
-### A infraestrutura
-
-| | |
-|---|---|
-| Domínio | `casuerio.com.br`, registrado no Registro.br, DNS na Route 53 |
-| Zona | `Z080692022E1MA4NRS7TX` |
-| Balde | `casuerio-site-prod` · privado, versionado, cifrado |
-| CloudFront | `EXP9HRVUWH2GF` |
-| Papel de CI | `casue-rio-deploy`, por OIDC |
-
-Os arquivos de infraestrutura estão em [`infra/`](infra/).
-
-🔴 **A função de reescrita não é opcional.** O site sai com `trailingSlash`,
-então cada rota é uma pasta com `index.html` dentro. O GitHub Pages resolvia
-índice de diretório em qualquer profundidade; o **S3 com acesso de origem
-NÃO**, porque o `DefaultRootObject` vale só para a raiz. Sem a função, a home
-abre e todas as outras páginas dão **403** — o site parece no ar e não está.
-Ela também canoniza: `/imoveis` vira `/imoveis/`, e `www` vira o domínio sem
-`www`, os dois com 301.
-
-🔴 **`PriceClass_All`, nunca `_100`.** O `_100` cobre EUA, Canadá, Europa e
-Israel: não tem América do Sul. O público é carioca.
-
-🔴 **`NEXT_PUBLIC_BASE_PATH` vazio.** No Pages o site morava em
-`usuario.github.io/REPO` e todo caminho absoluto precisava do prefixo; aqui
-ele mora na raiz de um domínio. É a mesma armadilha de `basePath` que já
-custou 404 calado neste projeto.
-
-🔴 **A confiança do OIDC usa identificador NUMÉRICO.** Todo tutorial ensina
-`repo:dono/repo:ref:refs/heads/main`. O que o GitHub emite de verdade é
-`repo:paulalarosa@127963502/casue-rio@1364478444:ref:refs/heads/main`. A AWS
-responde só `Not authorized to perform sts:AssumeRoleWithWebIdentity`, sem
-dizer qual condição falhou; quem conta é o CloudTrail.
-
----
-
-## As páginas
-
-| | |
-|---|---|
-| `/` | abertura, destaques, slogan e a chamada. Quatro blocos. |
-| `/imoveis` | a carteira, com filtro, busca por código e a faixa de bairros |
-| `/imoveis/[codigo]` | a ficha |
-| `/bairros` e `/bairros/[chave]` | Centro, Tijuca e Zona Sul |
-| `/avaliacao` | o parecer de valor, que é o que o CNAI habilita |
-| `/quem-somos` | as duas, os registros e o que cada um autoriza |
-| `/revista` | o blog, ainda sem o primeiro texto |
-| `/contato` | a única porta de contato do site |
-
-O **menu do topo** tem quatro entradas: Imóveis, Avaliação, Quem somos,
-Revista. Saíram três, todas em 17/09/2026:
-
-- **Jurídico**, e a página junto, por decisão das sócias;
-- **Bairros**, por redundância com "Imóveis" — as duas mandavam para a mesma
-  coisa vista de dois ângulos. Os bairros agora aparecem numa faixa dentro de
-  `/imoveis`, e as páginas continuam existindo, indexadas e linkadas;
-- **Contato**, porque o botão ao lado dele já era a página de contato. Duas
-  portas para a mesma conversa fazem a pessoa procurar a diferença entre elas.
-
----
-
-## A marca
-
-🟢 **O símbolo existe desde 17/09/2026.** Chegou como pacote de vetores e está
-em [`marca/`](marca/), com o `LEIA-ME.txt` que traz a construção. É uma placa
-esmaltada com o **ê**, e treze montagens ao redor dela.
-
-O site usa quatro:
-
-| | onde |
-|---|---|
-| **01** horizontal | erro e página não encontrada |
-| **03** com descritivo | rodapé |
-| **04** faixa | barra do topo, que é o que a folha manda: "04 em barras e testeiras" |
-| **05** sem placa | gaveta do celular, e o cartão de compartilhamento usa a **16** |
-| **12** reduzida | favicon |
-
-Três coisas medidas que valem mais que qualquer descrição:
-
-- 🔴 **A placa é exatamente `#A8482A`**, o mesmo valor que o site já tinha.
-- 🔴 **O ê só é colorido quando NÃO há placa.** Nas montagens 01, 03 e 04 o
-  "Casuê" sai numa cor só; o ê em terracota é a **05**, que existe justamente
-  para substituir a placa quando ela não cabe. Ter os dois é dizer a mesma
-  coisa duas vezes, com um ponto de cor a dois centímetros de outro igual.
-- 🔴 **Sobre fundo escuro a placa não inverte.** A montagem 16 mantém o esmalte
-  e muda só o nome ao lado: a placa é bloco cheio, pede 3:1 e mede 3,19:1 ali.
-
-Construção, com o lado da placa valendo 1: raio externo `0,173`; filete a
-`0,1065` de recuo, `0,02` de espessura e raio `0,107`; ê com `0,413` de corpo,
-centrado, com `0,027` de correção óptica para cima. É isso que
-`web/src/components/placa.tsx` desenha, vezes cem.
-
-🔴 **O ê do site é CURVA, não `<text>`.** Duas razões: a fonte carrega com
-`display: swap`, então um `<text>` mostraria o ê em Century Gothic dentro da
-placa até a Unbounded chegar, e logo que pisca de fonte não é logo; e o
-favicon, que não carrega fonte nenhuma, usa a mesma curva. Ela saiu da
-Unbounded 700 com `fontTools`, no lugar exato em que o SVG do pacote a
-desenha — não no centro da mancha da letra, que é um por cento mais baixo,
-porque o arquivo usa `text-anchor: middle` e `dominant-baseline: central`, e
-os dois medem outra coisa.
-
-🔴 **A fonte É a Unbounded.** Eu tinha dito o contrário em 16/09, comparando a
-imagem da folha com a Unbounded renderizada: o `LEIA-ME.txt` do pacote diz
-"Unbounded 700 (nome) e Archivo 600 (descritivo)". O que eu comparei foi um
-PNG em que a fonte não tinha carregado.
-
-**Reserva:** meio lado da placa, em qualquer direção.
-**Mínimos:** com nome ao lado, 24 px em tela e 8 mm em impresso; a placa
-sozinha vai a 16 px, na variante reduzida.
-**Não pode:** distorcer, trocar o esmalte, girar, aplicar sobre cor próxima.
-
-### Tipo e cor
-
-| | |
-|---|---|
-| Display | **Unbounded**, pesos 400/600/700. 800 e 900 não entram: a contraforma fecha |
-| Corpo | **Archivo** |
-| Número | **IBM Plex Mono**, tabular |
-| Raio base | `0.5rem` |
-
-A fonte de verdade da cor é o bloco `@theme` em `web/src/app/globals.css`;
-nenhum outro arquivo define paleta.
-
-| | Hex | Sobre o off-white | Papel sobre ele | Papel |
-|---|---|---|---|---|
-| Areia clara | `#EDE2CB` | 1,2:1 | — | plano claro |
-| **Areia** | `#DDCBAA` | 1,4:1 | — | plano · o par que dá personalidade |
-| Telha | `#C6764E` | 3,1:1 | — | plano quente · texto só em faixa escura (5,4:1) |
-| Argila queimada | `#B85A32` | 4,1:1 | 4,1:1 | plano forte · **reprova nos dois** |
-| **Terracota** | `#A8482A` | **5,2:1** | **5,2:1** | a marca e a ação |
-| Bronze | `#8A5A33` | 5,2:1 | — | rótulo, dado secundário |
-| **Tinta quente** | `#171310` | 16,5:1 | — | texto longo |
-| Off-white | `#F6F2E9` | — | — | fundo da página |
-
-### Quatro regras que não se negociam
-
-1. 🔴 **Vermelho de sinal não entra em lugar nenhum.** Era pedido das sócias e
-   agora é também impossível: um vermelho de erro ao lado de uma marca
-   terracota seria indistinguível. O estado de erro é tinta escura.
-2. 🔴 **A terracota é a marca E a ação.** O que dá força a ela é não virar
-   fundo de seção: os planos são areia, areia clara e a tinta quente.
-3. 🔴 **`#A8482A` é o único degrau que serve nos dois sentidos.** O de cima,
-   `#B85A32`, dá 4,13:1 de texto sobre o papel **e** 4,13:1 de papel sobre
-   ele, ou seja, reprova como texto e como botão.
-4. 🔴 **Areia é plano, nunca texto**, e **terracota não é texto sobre faixa
-   escura** (3,19:1). Sobre escuro quem fala é a telha (5,37:1) ou a areia.
-   Texto pequeno em claro: bronze `#8A5A33`, medido em 5,23:1.
-
-O estado de repouso de botão sempre **escurece**, nunca clareia: `terracota-500`
-no hover dava 4,13:1 e reprovava justo com o mouse em cima.
-
----
-
-## O que este site não faz, de propósito
-
-Vale a pena ler antes de "completar" alguma coisa: o vazio abaixo é decisão,
-não pendência esquecida.
-
-- **Nenhum número inventado.** Não há contagem de vendas, prazo médio, taxa de
-  sucesso nem depoimento. O que aparece é derivado da carteira e se atualiza
-  sozinho quando ela muda.
-- **Nenhum CPF.** Registro profissional é público e entra; CPF vai em contrato,
-  nunca em página indexada.
-- **Nenhum telefone inventado.** `TELEFONE` em `web/src/lib/site.ts` está
-  vazio de propósito e o botão de WhatsApp some sozinho enquanto estiver.
-  Botão que não leva a ninguém é pior que botão nenhum, porque a pessoa acha
-  que falou com alguém. O e-mail e o Instagram são reais e viram `mailto:` e
-  link de verdade.
-- **Nenhuma segunda frase de marca.** `SEGUNDA_FRASE` existe vazia, esperando
-  a que elas vão mandar. Frase inventada por mim é pior que espaço em branco,
-  porque parece decidida.
-- **Nenhum texto na revista.** A página existe montada e a consulta ao painel
-  volta vazia: quando o primeiro texto delas for publicado, a grade nasce
-  pronta. Escrever três matérias de exemplo assinadas por corretora com CRECI
-  é a mesma coisa que o depoimento inventado que já saiu deste site.
-- **Nenhuma foto de imóvel real.** Ainda não chegaram. O lugar delas é ocupado
-  por ilustração da marca, que não finge ser foto, e por vídeo de ambiente,
-  que sempre carrega a linha *"Imagem de ambiente. Não retrata imóvel da
-  carteira."*
-
-### E o que este site não vende
-
-🔴 **Temporada não existe aqui**, desde 17/09/2026. Elas trabalham **venda** e
-**aluguel**, mais avaliação. O tipo `Finalidade` é o que segura isso: com
-"temporada" fora da união, qualquer imóvel, filtro ou rótulo que tente usar a
-palavra não compila. **Grajaú** saiu na mesma data, pelo mesmo mecanismo.
-
----
-
-## Busca
-
-A busca da abertura tem três campos, e o primeiro ocupa uma linha só.
-
-🔴 **Código tem atalho.** Quem digita `CR-0142` não quer uma lista com um item:
-viu o código na placa da janela ou num print, e quer abrir aquele imóvel. Então
-o envio vai direto para a ficha, e os dois seletores são ignorados de propósito
-— filtrar por bairro um imóvel já identificado só poderia esconder o que a
-pessoa pediu. A comparação joga fora tudo que não é letra ou número dos dois
-lados, então `cr 0142`, `CR-0142`, `cr0142` e `0142` abrem o mesmo imóvel.
-
-🔴 **O código está em linha própria porque foi medido.** Na mesma fila dos dois
-seletores a grade dava 114px para ele e 256 e 281 para os outros: `fr` tem piso
-de conteúdo mínimo, e "Todos os bairros" comia o espaço antes de a proporção
-valer. O rótulo quebrava em três linhas e o botão saía cortado.
-
----
-
-## Vídeo
-
-Onze peças em `web/public/video/`, todas H.264 e sem áudio.
-
-| Arquivo | Onde | Peso |
-|---|---|---|
-| `abertura.mp4` + `abertura-retrato.mp4` | abertura da home | 858 kB · 390 kB |
-| `sala.mp4` | faixa do slogan | 562 kB |
-| `gradil.mp4` | cabeça de `/quem-somos` | 304 kB |
-| `calcadao.mp4` | cabeça de `/contato` | 456 kB |
-| `carteira.mp4` | cabeça de `/imoveis` | 615 kB |
-| `avaliacao.mp4` | cabeça de `/avaliacao` | 192 kB |
-| `alameda.mp4` | cabeça de `/bairros/[bairro]` | 595 kB |
-| `parede.mp4` | cabeça de `/revista` | 116 kB |
-| `horizonte.mp4` | cabeça de `/bairros` | 120 kB |
-| `noite.mp4` | chamada final da home | 238 kB |
-
-🔴 O `gradil` e o `parede` **mudaram de casa** quando a página jurídica e a
-faixa escura da home saíram. Cada um foi para uma página nova que não tinha
-vídeo nenhum, e não para um canto de página que já tinha: reaproveitar peça em
-dois lugares é o que faz o site parecer que tem um filme só.
-
-Regras que valem para qualquer vídeo que entre depois:
-
-- 🔴 **Caminho de vídeo passa por `arquivo()`** (`web/src/lib/caminho.ts`). O
-  `basePath` do Next reescreve `<Link>` e `<Image>` importado, mas **não**
-  reescreve string que eu escrevi dentro de um atributo. Sem o ajudante o
-  vídeo toca em desenvolvimento e dá 404 calado no ar.
-- 🔴 **O laço é vai-e-volta por padrão.** Existe um jeito mais bonito, que é
-  cruzar meio segundo da cauda com a cabeça, mas ele só funciona em alguns
-  planos e eu **não consegui construir a régua que diz quais**. Tentei duas:
-  diferença média de luminância (gradil 46,4 e calçadão 49,6 funcionaram, a
-  aérea 47,9 falhou) e diferença de bordas fortes (63,8% / 67,3% contra
-  51,9%). Nenhuma das duas separa os casos.
-- 🔴 **Sem WebM.** Medido neste material: o VP9 saiu **maior** que o H.264
-  (930 kB contra 858 kB), porque é plano largo, pouco movimento e muita área
-  lisa.
-- 🔴 **Marca d'água de gerador sai por CORTE, não por filtro.** O `delogo`
-  deixa borrão visível sobre grade e gradil.
-- 🔴 **O rodapé não leva vídeo.** Medi: com o horizonte a 40% de opacidade, o
-  papel dava 5,62:1 na média e **2,86:1 na faixa clara do céu**, que é por
-  onde o texto passa; o rótulo em areia caía para 2,23:1. Rodapé é onde mora
-  texto pequeno em quantidade, e isso não tem conserto barato.
-- **Nada preso à rolagem.** MP4 comum tem quadro-chave a cada 8–12 quadros:
-  arrastar trava.
-
----
-
-## Movimento
-
-GSAP, com uma doutrina escrita em `web/src/components/entrada.tsx` e que
-existe porque a home já ficou inteira em opacidade zero, em produção:
-
-- O que **esconde para revelar depois** nunca depende do `ScrollTrigger`. Usa
-  `scroll` + `getBoundingClientRect`, e leva cão de guarda: se em 1,6s nada
-  deu sinal de vida, o conteúdo aparece por decreto.
-- O que só **mexe em coisa já visível** (paralaxe) pode usar `ScrollTrigger`,
-  porque o pior caso dele é a peça ficar parada.
-- Nada roda com `prefers-reduced-motion: reduce`.
-
----
-
-## O painel
-
-🟢 **No ar em https://casue-rio.sanity.studio** desde 18/09/2026. O endereço
-redireciona para o painel dentro da conta Sanity, e é ele que as duas abrem
-para escrever. Elas entram com o e-mail delas e não precisam de conta no
-GitHub nem na AWS.
-
-O código do painel é [`estudio/`](estudio/), um Sanity Studio.
 
 ```bash
 cd estudio
-cp .env.example .env     # e preencha com o projectId
 npm install
-npm run dev              # painel local, http://localhost:3333
-npm run deploy           # republica em casue-rio.sanity.studio
+npm run dev
 ```
 
-🔴 O endereço e o `appId` estão gravados em `sanity.cli.ts`. Sem eles, o
-próximo `deploy` pergunta o nome, quem responder responde no escuro, e o
-resultado é um SEGUNDO painel com outro endereço enquanto as duas continuam
-abrindo o primeiro.
+Cada pasta tem um `.env.example`. Copie para `.env.local` (site) ou `.env`
+(painel) e preencha.
 
-🔴 **Por que Sanity e não Strapi ou Directus.** Os três são de licença
-gratuita, mas o Strapi e o Directus são servidores Node: para o painel
-existir, uma máquina precisa estar ligada 24 horas por dia, e essa máquina é
-custo fixo mensal. A Sanity hospeda o painel, então não há nada seu no ar
-para pagar nem para manter de pé. O site continua sendo só arquivos.
+## Conferir
 
-Três tipos de conteúdo: **Imóveis**, **Revista** e **Bairros**. Os campos do
-imóvel têm os mesmos nomes de `web/src/lib/imoveis.ts`, de propósito, para a
-troca de fonte ser só a troca de fonte.
-
-🔴 **O que o painel NÃO deixa escolher: cor e tamanho de letra.** O corpo do
-artigo guarda só o papel de cada trecho — parágrafo, subtítulo, citação — e
-quem desenha é `web/src/components/corpo-artigo.tsx`. É o que impede um
-texto colado do Word de trazer Calibri para dentro de um site em Unbounded.
-
-### Publicar republica o site
-
-O site é estático, então o texto novo só aparece quando o HTML é gerado de
-novo. O painel dispara isso por um webhook, em `sanity.io/manage` > API >
-Webhooks:
-
-| | |
-|---|---|
-| URL | `POST https://api.github.com/repos/<dono>/<repo>/dispatches` |
-| Cabeçalhos | `Accept: application/vnd.github+json` e `Authorization: Bearer <token>` |
-| Corpo | `{"event_type":"conteudo"}` |
-
-Leva dois ou três minutos, e é de propósito: página de imóvel precisa existir
-pronta no HTML para o buscador indexar, e num site de imobiliária é o
-buscador que traz gente.
-
-### A página do artigo liga sozinha
-
-🔴 Com `output: export`, uma rota dinâmica que não gera nenhuma página é
-**erro duro**, não caso previsto: o build inteiro cai. Ou seja, a página do
-artigo não pode existir em `[slug]/` enquanto não houver texto publicado.
-
-Quem resolve é `web/scripts/preparar-revista.mjs`, que roda antes de todo
-build: pergunta ao painel quantos artigos estão publicados e copia
-`_artigo/` para `[slug]/` se houver, ou apaga `[slug]/` se não houver. A
-fonte versionada é `_artigo/`; a cópia está no `.gitignore`.
-
-A primeira versão disto era um `mv` na mão, escrito aqui. Estava errado:
-significava que no dia da primeira publicação o site republicaria sem o texto,
-porque alguém esqueceu um comando que ninguém leu. Automação que depende de
-memória humana é o mesmo que não ter automação.
-
-🔴 O script lê `.env.local` por conta própria, e isso também foi defeito
-antes: ele roda FORA do Next, e quem carrega `.env.local` é o Next. Sem isso
-a rota era desligada em silêncio na máquina de quem trabalha no site, e
-funcionava na publicação — o pior tipo de defeito, o que só aparece para quem
-desenvolve.
-
-### O que falta ligar
-
-1. 🟢 Projeto criado: `hpmn0ser`, conjunto `production`.
-2. 🟢 `SANITY_PROJECT_ID` e `SANITY_DATASET` já estão em Settings > Secrets
-   and variables > Actions > **Variables**. Não são segredos: a chave pública
-   da Sanity só lê, e só o que está publicado.
-3. 🟢 Os nove imóveis e os três bairros já estão no painel, pelo
-   `estudio/migrar.mjs`.
-4. 🟢 Painel publicado em https://casue-rio.sanity.studio.
-5. Convidar as duas por e-mail, em `sanity.io/manage` > Members.
-6. Criar o webhook de republicação, na tabela acima.
-
----
-
-## Onde ficam as coisas
-
-```
-marca/                       os SVGs da marca e a construção da placa.
-estudio/                     o painel onde elas escrevem. Sanity Studio.
-web/src/lib/sanity.ts        a ligação com o painel. Tudo opcional.
-web/src/lib/revista.ts       a única porta entre o site e os artigos.
-web/src/app/globals.css      cor, tipo, forma. A fonte de verdade.
-web/src/lib/site.ts          nome, sócias, endereço, contato. Sem CPF.
-web/src/lib/imoveis.ts       a carteira. É isto que a manutenção edita.
-web/src/lib/caminho.ts       prefixo de arquivo de `public/`.
-web/src/components/placa.tsx      o símbolo.
-web/src/components/assinatura.tsx as montagens da marca.
-web/src/components/entrada.tsx    a doutrina de animação.
-web/public/video/            as onze peças de vídeo e seus pôsteres.
-web/scripts/cartao-marca.mjs o cartão de compartilhamento, gerado do código.
+```bash
+cd web
+npm run lint
+npm run typecheck
+npm run test
 ```
 
----
+Os três rodam no CI antes de qualquer publicação.
+
+## Onde mora o conteúdo
+
+| conteúdo               | onde                      | quem edita                 |
+| ---------------------- | ------------------------- | -------------------------- |
+| Artigos da revista     | Sanity                    | as corretoras, pelo painel |
+| Carteira de imóveis    | `web/src/lib/carteira.ts` | manutenção, em código      |
+| Textos das páginas     | os próprios componentes   | manutenção, em código      |
+| Marca, endereço, CRECI | `web/src/lib/site.ts`     | manutenção, em código      |
+
+O painel tem uma porta só, Revista, mais uma página de ajuda. Imóvel e bairro
+saíram de lá de propósito: alteração de site passa pela manutenção.
+
+## Publicar
+
+Empurrar na `main` publica. `.github/workflows/aws.yml` confere, constrói,
+sincroniza com o S3 em duas passadas de cache e invalida o CloudFront.
+
+O fluxo também dispara por:
+
+- **webhook do Sanity**, via `repository_dispatch`, quando alguém publica um
+  texto;
+- **tarefa agendada**, a cada quinze minutos, que só republica quando um
+  artigo marcado para o futuro vence a hora. Quem decide é
+  `.github/scripts/venceu.sh`, comparando o painel com o sitemap do site.
+
+### Variáveis do repositório
+
+| variável                              | para quê                                                           |
+| ------------------------------------- | ------------------------------------------------------------------ |
+| `AWS_ROLE_ARN`                        | papel assumido por OIDC na publicação. Vazia desliga o fluxo        |
+| `CLOUDFRONT_ID`                       | distribuição a invalidar                                            |
+| `SITE_URL`                            | endereço canônico                                                   |
+| `SANITY_PROJECT_ID`, `SANITY_DATASET` | leitura do painel                                                   |
+| `GA_ID`                               | medição. Vazia: sem script, sem cookie e sem faixa de consentimento |
+
+## Peças de Instagram
+
+Cada artigo publicado gera duas imagens na tipografia da marca, 1080×1350 para
+o feed e 1080×1080 com a citação. Elas não vão para o site: saem como artefato
+do fluxo do GitHub, em **Actions → última publicação → cards-instagram**.
+
+## Padrão de código
+
+Sem comentários. Explicação de decisão vive fora do arquivo. O varredor
+`scripts/sem-comentarios.mjs` usa o TypeScript do próprio repositório e
+preserva o que é funcional (`eslint-disable`, `@ts-`, `@license`, shebang).
+
+```bash
+node scripts/sem-comentarios.mjs
+node scripts/sem-comentarios.mjs --gravar
+```
+
+Formatação por Prettier em `web/`, verificada no CI com `npm run format:check`.
 
 ## Pendente, do lado do cliente
 
-- O **número único de WhatsApp** da empresa. É um só, da empresa, e não um
-  por sócia: enquanto não chega, o botão vai para a página de contato.
-- A **segunda frase** da marca, que vai ao lado de "Aqui seu sonho vira
-  patrimônio".
-- O **domínio**, para `NEXT_PUBLIC_SITE_URL`.
+- O **número único de WhatsApp** da empresa. Enquanto não chega, os botões
+  levam à página de contato.
+- A **segunda frase** da marca, ao lado de "Aqui seu sonho vira patrimônio".
 - As **fotos reais** dos imóveis e os **retratos** das duas, verticais 4:5.
-- O **primeiro texto** da revista, e o `projectId` do painel.
+- Os **prazos de guarda** de dado pessoal, confirmados pelas duas, na página de
+  privacidade.

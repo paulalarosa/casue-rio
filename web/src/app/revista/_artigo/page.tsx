@@ -41,7 +41,10 @@ export default async function PaginaArtigo({
   const capa = artigo.capa ? imagem(artigo.capa, 1800, 1000) : null;
 
   return (
-    <article className="trilho" style={{ paddingTop: "calc(var(--altura-topo) + 1.75rem)" }}>
+    <article
+      className="trilho"
+      style={{ paddingTop: "calc(var(--altura-topo) + 1.75rem)" }}
+    >
       <Dados>
         {grafo(
           dadosDoArtigo(artigo, capa),
@@ -53,21 +56,28 @@ export default async function PaginaArtigo({
         )}
       </Dados>
       <nav aria-label="Trilha" className="text-sm text-tinta-500">
-        <Link href="/revista" className="inline-flex items-center gap-2 transition-colors hover:text-tinta-800">
+        <Link
+          href="/revista"
+          className="inline-flex items-center gap-2 transition-colors hover:text-tinta-800"
+        >
           <ArrowLeft className="size-4" aria-hidden />
           Revista
         </Link>
       </nav>
 
       <header className="mt-8 max-w-[22ch] sm:max-w-[26ch]">
-        <h1 className="text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.05]">{artigo.titulo}</h1>
+        <h1 className="text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.05]">
+          {artigo.titulo}
+        </h1>
       </header>
       <p className="mt-6 max-w-[55ch] text-xl leading-relaxed text-tinta-500">
         {artigo.linha}
       </p>
       <p className="rotulo mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-bronze-500">
         <span>{artigo.autora}</span>
-        <span aria-hidden className="text-tinta-300">·</span>
+        <span aria-hidden className="text-tinta-300">
+          ·
+        </span>
         <time dateTime={artigo.data} className="num">
           {dataPorExtenso(artigo.data)}
         </time>
@@ -97,8 +107,8 @@ export default async function PaginaArtigo({
               Tem um caso parecido com esse?
             </h2>
             <p className="mt-4 max-w-[46ch] text-tinta-200">
-              Conte o seu. A resposta chega no mesmo dia, com o que dá para fazer
-              e com o que não dá.
+              Conte o seu. A resposta chega no mesmo dia, com o que dá para fazer e com o
+              que não dá.
             </p>
           </div>
           <Link

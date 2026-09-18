@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, ClipboardCheck, MessageCircle, Ruler, ScrollText } from "lucide-react";
+import {
+  ArrowRight,
+  ClipboardCheck,
+  MessageCircle,
+  Ruler,
+  ScrollText,
+} from "lucide-react";
 import { AcaoZap } from "@/components/acao";
 import { CabecaPagina } from "@/components/cabeca-pagina";
 import { arquivo } from "@/lib/caminho";
@@ -83,15 +89,17 @@ export default function PaginaAvaliacao() {
             data-revela
             className="max-w-[26ch] font-display text-[clamp(1.7rem,3.6vw,2.9rem)] font-semibold leading-[1.12] tracking-[-0.03em] text-tinta-800"
           >
-            Preço é o que alguém pede. Valor é o que se sustenta num papel
-            assinado.
+            Preço é o que alguém pede. Valor é o que se sustenta num papel assinado.
           </p>
-          <p data-revela className="border-t border-terracota-600/30 pt-6 text-lg text-tinta-500">
+          <p
+            data-revela
+            className="border-t border-terracota-600/30 pt-6 text-lg text-tinta-500"
+          >
             <span className="mb-3 block font-display text-xl font-semibold text-terracota-600">
               {SLOGAN}
             </span>
-            Patrimônio se mede. O parecer é o documento que transforma o que
-            você tem num número que o banco, o juiz e a outra parte aceitam.
+            Patrimônio se mede. O parecer é o documento que transforma o que você tem num
+            número que o banco, o juiz e a outra parte aceitam.
           </p>
         </div>
       </Revela>
@@ -134,10 +142,9 @@ export default function PaginaAvaliacao() {
             <div data-revela>
               <h2 className="text-2xl">Quem assina o parecer</h2>
               <p className="mt-4 max-w-[58ch] text-lg text-tinta-500">
-                As duas são avaliadoras cadastradas no CNAI, e é esse
-                cadastro que permite emitir parecer de valor. Prazo e preço
-                dependem do imóvel e da finalidade, e são combinados na primeira
-                conversa, antes de começar.
+                As duas são avaliadoras cadastradas no CNAI, e é esse cadastro que permite
+                emitir parecer de valor. Prazo e preço dependem do imóvel e da finalidade,
+                e são combinados na primeira conversa, antes de começar.
               </p>
             </div>
             <Link
@@ -159,8 +166,8 @@ export default function PaginaAvaliacao() {
         >
           <h2 className="text-3xl text-papel">Precisa de um valor defensável?</h2>
           <p className="mx-auto mt-4 max-w-[46ch] text-tinta-200">
-            Diga o imóvel e para que serve o parecer. A gente responde com prazo e
-            valor antes de começar.
+            Diga o imóvel e para que serve o parecer. A gente responde com prazo e valor
+            antes de começar.
           </p>
           <AcaoZap
             recuo="/contato/"

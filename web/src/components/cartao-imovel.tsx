@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { BedDouble, Bath, Car, Maximize } from "lucide-react";
 import { Midia } from "@/components/midia";
-import { moeda, type Imovel } from "@/lib/imoveis";
+import type { Imovel } from "@/lib/carteira";
+import { moeda } from "@/lib/imoveis";
 import { cn } from "@/lib/utils";
 
 export function CartaoImovel({
@@ -49,10 +50,7 @@ export function CartaoImovel({
         {im.selos.length > 0 && (
           <div className="absolute left-4 top-4 flex flex-wrap gap-2">
             {im.selos.map((s) => (
-              <span
-                key={s}
-                className="tinta rotulo rounded-full px-3 py-1.5"
-              >
+              <span key={s} className="tinta rotulo rounded-full px-3 py-1.5">
                 {s}
               </span>
             ))}
@@ -65,9 +63,7 @@ export function CartaoImovel({
             {im.porMes && <span className="text-sm font-semibold"> / mês</span>}
           </span>
           {!fila && (
-            <span className="tinta rotulo rounded-full px-3 py-1.5">
-              {im.bairro}
-            </span>
+            <span className="tinta rotulo rounded-full px-3 py-1.5">{im.bairro}</span>
           )}
         </div>
       </div>

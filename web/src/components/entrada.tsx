@@ -7,7 +7,6 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-
 function comQuadro(armar: () => (() => void) | void) {
   let cancelado = false;
   let desfazer: (() => void) | void;
@@ -48,7 +47,6 @@ function emPalavras(el: HTMLElement): HTMLElement[] {
   return palavras;
 }
 
-
 export function EntradaAbertura({ children }: { children: React.ReactNode }) {
   const raiz = useRef<HTMLDivElement>(null);
 
@@ -72,12 +70,15 @@ export function EntradaAbertura({ children }: { children: React.ReactNode }) {
           tl.from(titulo, { y: 26, duration: 0.7 });
         }
 
-        tl.from("[data-entra='busca']", { y: 26, autoAlpha: 0, duration: 0.6 }, "-=0.45")
-          .from(
-            "[data-entra='ficha']",
-            { x: 44, y: 16, autoAlpha: 0, duration: 0.7 },
-            "-=0.42",
-          );
+        tl.from(
+          "[data-entra='busca']",
+          { y: 26, autoAlpha: 0, duration: 0.6 },
+          "-=0.45",
+        ).from(
+          "[data-entra='ficha']",
+          { x: 44, y: 16, autoAlpha: 0, duration: 0.7 },
+          "-=0.42",
+        );
 
         const cao = window.setTimeout(() => {
           if (tl.progress() < 1) tl.progress(1);
@@ -95,7 +96,6 @@ export function EntradaAbertura({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
 
 export function Revela({
   children,

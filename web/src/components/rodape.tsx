@@ -33,9 +33,7 @@ export function Rodape() {
               categoria: "text-areia-300",
             }}
           />
-          <p className="mt-8 font-display text-2xl font-semibold text-papel">
-            {SLOGAN}
-          </p>
+          <p className="mt-8 font-display text-2xl font-semibold text-papel">{SLOGAN}</p>
           <p className="mt-4 max-w-[32ch] text-tinta-200">
             Centro, Tijuca e Zona Sul. Das 9h às 19h, de segunda a sexta.
           </p>
@@ -109,15 +107,14 @@ export function Rodape() {
 
       <div className="trilho relative flex flex-wrap gap-x-8 gap-y-3 border-t border-white/12 py-7 text-sm text-tinta-200">
         <span>{NOME} · Rio de Janeiro</span>
-        <span className="num">
-          {SOCIAS.map((s) => s.creci).join(" · ")}
-        </span>
-        <Link href="/privacidade" className="underline underline-offset-4 transition-colors hover:text-papel">
+        <span className="num">{SOCIAS.map((s) => s.creci).join(" · ")}</span>
+        <Link
+          href="/privacidade"
+          className="underline underline-offset-4 transition-colors hover:text-papel"
+        >
           Privacidade
         </Link>
-        <span>
-          Protótipo de layout. Imóveis, preços e imagens são exemplos.
-        </span>
+        <span>Protótipo de layout. Imóveis, preços e imagens são exemplos.</span>
       </div>
     </footer>
   );

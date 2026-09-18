@@ -6,7 +6,8 @@ import { arquivo } from "@/lib/caminho";
 import carteira from "../../../public/video/carteira.webp";
 import { Vitrine } from "@/components/vitrine";
 import { Cena } from "@/components/cenas";
-import { BAIRROS, DISPONIVEIS, REGIOES, moeda } from "@/lib/imoveis";
+import { BAIRROS } from "@/lib/carteira";
+import { DISPONIVEIS, REGIOES, moeda } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
 
 export const metadata = metaDaPagina({
@@ -36,7 +37,11 @@ export default function PaginaImoveis() {
       <p className="trilho mt-3 text-sm text-tinta-500">
         Imagem de ambiente. Não retrata imóvel da carteira.
       </p>
-      <Suspense fallback={<div className="trilho py-24 text-tinta-500">Carregando a carteira…</div>}>
+      <Suspense
+        fallback={
+          <div className="trilho py-24 text-tinta-500">Carregando a carteira…</div>
+        }
+      >
         <Vitrine />
       </Suspense>
 

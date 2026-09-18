@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vitest";
 import type { Artigo } from "@/lib/revista";
-import { artigo, empresa, grafo, pessoas, revista, trilha } from "@/lib/dados-estruturados";
+import {
+  artigo,
+  empresa,
+  grafo,
+  pessoas,
+  revista,
+  trilha,
+} from "@/lib/dados-estruturados";
 import { SOCIAS } from "@/lib/site";
 
 const exemplo: Artigo = {

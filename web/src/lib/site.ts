@@ -64,5 +64,6 @@ export const ENDERECO = {
   cidade: "Rio de Janeiro",
   estado: "RJ",
   cep: "20021-120",
-  linha: "Av. Franklin Roosevelt, 39 · sala 1402 · Centro · Rio de Janeiro/RJ · 20021-120",
+  linha:
+    "Av. Franklin Roosevelt, 39 · sala 1402 · Centro · Rio de Janeiro/RJ · 20021-120",
 };

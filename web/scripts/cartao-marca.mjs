@@ -8,8 +8,7 @@ import { regioesAtendidas } from "./regioes.mjs";
 const executar = promisify(execFile);
 
 const CHROME =
-  process.env.CHROME ||
-  "C:/Program Files/Google/Chrome/Application/chrome.exe";
+  process.env.CHROME || "C:/Program Files/Google/Chrome/Application/chrome.exe";
 
 const SAIDA = resolve("src/app/opengraph-image.png");
 const GEMEO = resolve("src/app/twitter-image.png");
@@ -125,7 +124,11 @@ if (size < 20000) throw new Error(`captura suspeita: ${size} bytes`);
 await copyFile(SAIDA, GEMEO);
 await rm(pasta, { recursive: true, force: true });
 
-await writeFile(CARIMBO, `${REGIOES.join(" · ")}
-`, "utf8");
+await writeFile(
+  CARIMBO,
+  `${REGIOES.join(" · ")}
+`,
+  "utf8",
+);
 
 console.log(`cartão da marca: ${MARCA} · ${REGIOES.join(" · ")}`);

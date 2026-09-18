@@ -1,13 +1,6 @@
 import { describe, expect, it } from "vitest";
-import {
-  BAIRROS,
-  DISPONIVEIS,
-  IMOVEIS,
-  REGIOES,
-  acharPorCodigo,
-  buscar,
-  moeda,
-} from "@/lib/imoveis";
+import { BAIRROS, IMOVEIS } from "@/lib/carteira";
+import { DISPONIVEIS, REGIOES, acharPorCodigo, buscar, moeda } from "@/lib/imoveis";
 
 describe("acharPorCodigo", () => {
   const alvo = IMOVEIS[0];
