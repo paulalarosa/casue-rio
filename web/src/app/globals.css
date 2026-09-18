@@ -3,38 +3,7 @@
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
-
-/* ============================================================ MARCA
-
-   🔴 A fonte de verdade da cor é ESTE arquivo, e agora é o único. A raiz do
-   repositório tinha `ds/tokens`, `site/` e `assets/` do protótipo estático
-   anterior, todos parados na marca velha e todos capazes de devolver azul e
-   ouro a quem fosse ler por ali. Foram apagados, e estão no histórico.
-
-   🔴 16/09: a paleta virou TERRACOTA. As sócias pediram "laranja mais para
-   o terracota, argila queimado", com off-white no lugar do branco, e a
-   areia continua sendo o par que dá personalidade. O verde Tijuca saiu:
-   com a terracota assumindo a ação, duas cores de acento brigariam, e a
-   regra que dá força ao acento é ele aparecer pouco.
-
-   A ordem é: areia e areia clara são PLANO, terracota é a MARCA e a AÇÃO,
-   bronze é o rótulo, tinta quente é o texto longo.
-
-   🔴 Vermelho de sinal continua fora, e agora por dois motivos: era pedido
-   das sócias, e um vermelho de erro ao lado de uma marca terracota seria
-   indistinguível. O estado de erro é tinta escura. */
 @theme {
-  /* Tinta: a rampa neutra da marca, e a UNICA. Antes havia duas (azul e
-     neutro) e a mesma decisao cabia em duas escalas, que e como texto
-     apagado acaba com dois cinzas diferentes na mesma pagina.
-
-     🔴 A rampa foi AQUECIDA em 16/09, junto com a virada para terracota:
-     preto neutro ao lado de terracota puxa o cinza para o verde. O desvio
-     de luminancia por degrau ficou abaixo de 0,011, MEDIDO, justamente para
-     nao achatar as ilustracoes de imovel, que separam dia, tarde e noite
-     pela claridade do ceu. Ja aconteceu de um rename achatar as tres.
-
-     `tinta-800` e a tinta quente (#171310), `tinta-600` e o chumbo. */
   --color-tinta-50: #f4f1eb;
   --color-tinta-100: #e7e2d9;
   --color-tinta-200: #cdc6ba;
@@ -45,10 +14,6 @@
   --color-tinta-700: #2c2724;
   --color-tinta-800: #171310;
   --color-tinta-900: #0a0706;
-
-  /* Areia. O passo 500 e a areia da marca (#DDCBAA), que e PLANO, nao
-     texto: sobre o off-white ela da 1,4:1. Quem pode virar texto pequeno e
-     o `areia-800`, medido em 5,24:1. */
   --color-areia-50: #fbf8f1;
   --color-areia-100: #f5efe1;
   --color-areia-200: #ede2cb;
@@ -59,17 +24,6 @@
   --color-areia-700: #9a8763;
   --color-areia-800: #71634a;
   --color-areia-900: #4a4132;
-
-  /* TERRACOTA: a marca, e tambem a acao. Os nomes que as socias deram
-     moram nos degraus, para ninguem ter de adivinhar qual e qual:
-       400 telha  ·  500 argila queimada  ·  600 TERRACOTA  ·  700 repouso
-
-     🔴 O 600 (#A8482A) e o unico degrau que serve nos DOIS sentidos sobre o
-     off-white: 5,18:1 de texto sobre ele, e 5,18:1 dele sobre o papel, que
-     e o caso do botao. O 500 da 4,13:1 nos dois e reprova nos dois.
-
-     🔴 Sobre faixa escura a terracota NAO serve para texto: 3,19:1. La quem
-     fala e a telha (5,37:1) ou a areia. */
   --color-terracota-50: #fdf4f0;
   --color-terracota-100: #f8e3d9;
   --color-terracota-200: #efc7b3;
@@ -80,30 +34,14 @@
   --color-terracota-700: #8e3b22;
   --color-terracota-800: #6e2d1a;
   --color-terracota-900: #451b10;
-
-  /* BRONZE: o neutro quente que PODE virar texto pequeno, 5,23:1 sobre o
-     off-white. E o lugar do rotulo e do dado secundario, que antes era o
-     `areia-800`. */
   --color-bronze-400: #a87340;
   --color-bronze-500: #8a5a33;
   --color-bronze-600: #6f4828;
-
-  /* O papel. Fundo da pagina no claro, e cor do texto sobre banda escura. */
   --color-papel: #f6f2e9;
-
-  /* Unbounded e display de verdade: so titulo, marca e numero grande. Em
-     corpo de texto ela nao funciona, e por isso a Archivo entra embaixo. */
   --font-display: var(--font-unbounded), "Century Gothic", Futura, sans-serif;
   --font-sans: var(--font-archivo), "Segoe UI", system-ui, Arial, sans-serif;
   --font-mono: var(--font-plex), ui-monospace, monospace;
-
-  /* Raio generoso: a direção é arredondada e flutuante. `--radius` alimenta
-     a escala do shadcn (sm .6 · md .8 · lg 1 · xl 1.4 · 2xl 1.8 · 3xl 2.2). */
   --radius: 0.5rem;
-
-  /* Sombra tingida de TINTA, que e quente. Preto puro sobre areia acinzenta.
-     Duas camadas: contato curto e queda longa. É a queda longa que faz o
-     componente flutuar em vez de parecer colado. */
   --shadow-flutua-1:
     0 1px 2px rgba(17, 17, 16, 0.05), 0 6px 16px -6px rgba(17, 17, 16, 0.12);
   --shadow-flutua-2:
@@ -114,18 +52,8 @@
 
   --ease-saida: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-firme: cubic-bezier(0.65, 0, 0.35, 1);
-
-  /* Altura ocupada pela barra do topo, contando o vão acima dela. Toda
-     página reserva ESTE número; foi a falta dele que deixou o menu por
-     cima da abertura em tela baixa. */
   --altura-topo: 4.75rem;
 }
-
-/* ------------------------------------------- ponte com o shadcn
-   Os componentes do shadcn usam utilitário (`border-border`, `bg-primary`),
-   e utilitário só existe se a cor estiver registrada no tema. Este bloco é
-   a ponte entre as variáveis semânticas de baixo e o Tailwind. Ele veio no
-   template e não pode sair: sem ele o build para em "unknown utility". */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -167,10 +95,6 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 }
-
-/* ------------------------------------------------- semânticos shadcn
-   Os componentes do shadcn leem estas variáveis. Mapear aqui faz botão,
-   campo e diálogo já nascerem na cor da marca, sem `className` por cima. */
 :root {
   --background: #f6f2e9;
   --foreground: #111110;
@@ -178,8 +102,6 @@
   --card-foreground: #111110;
   --popover: #fffdf8;
   --popover-foreground: #111110;
-  /* A acao e VERDE e o texto e a tinta. Botao preto num site inteiro preto
-     desaparece: o que separa "leia" de "clique" aqui e a cor, nao o peso. */
   --primary: #a8482a;
   --primary-foreground: #f6f2e9;
   --secondary: #ede2cb;
@@ -188,8 +110,6 @@
   --muted-foreground: #56544f;
   --accent: #f5efe1;
   --accent-foreground: #8a5a33;
-  /* Sem vermelho: pedido das socias. O erro fala pelo peso e pelo icone, e
-     a cor e a tinta escura, nao um alarme. */
   --destructive: #2c2724;
   --border: #e3ddd0;
   --input: #c8c5bd;
@@ -207,11 +127,6 @@
   --sidebar-accent-foreground: #71634a;
   --sidebar-border: #e3ddd0;
   --sidebar-ring: #1e4d3b;
-
-  /* Vidro. Duas receitas, e a escolha entre elas não é gosto:
-     `--vidro-*` é para painel sobre CENA ESCURA (a casa 3D, foto, faixa azul);
-     `--vidro-claro-*` é para painel sobre o off-white.
-     Vidro sobre cor chapada não refrata nada e vira só uma caixa clara. */
   --vidro-fundo: rgba(246, 242, 233, 0.1);
   --vidro-traco: rgba(246, 242, 233, 0.26);
   --vidro-realce: rgba(255, 255, 255, 0.34);
@@ -253,14 +168,6 @@
   --vidro-claro-traco: rgba(246, 242, 233, 0.14);
   --vidro-claro-realce: rgba(246, 242, 233, 0.18);
 }
-
-/* ============================================================= VIDRO
-   Painel de vidro tem quatro partes, e faltando uma ele vira caixa cinza:
-   1. desfoque COM saturação (sem saturar, a cor de trás sai lavada);
-   2. traço de 1px na borda, que é o corte do vidro;
-   3. realce interno no topo, que é a luz batendo na quina;
-   4. sombra longa, que é o que faz flutuar.
-   Onde não há `backdrop-filter` o painel fica opaco: legibilidade primeiro. */
 @utility vidro {
   background: var(--vidro-fundo);
   border: 1px solid var(--vidro-traco);
@@ -270,11 +177,6 @@
   -webkit-backdrop-filter: blur(var(--vidro-desfoque)) saturate(165%);
   backdrop-filter: blur(var(--vidro-desfoque)) saturate(165%);
 }
-
-/* Terceira receita, e a mais usada em cima de imagem: vidro TINGIDO de
-   azul. A receita clara não escurece o bastante e o texto papel some sobre
-   a parte clara de uma foto ou ilustração. Aqui o painel garante contraste
-   sem deixar de ser vidro, que é o material para controle sobre imagem. */
 @utility vidro-tinta {
   background: rgba(10, 10, 9, 0.52);
   border: 1px solid rgba(246, 242, 233, 0.22);
@@ -284,13 +186,6 @@
   -webkit-backdrop-filter: blur(14px) saturate(150%);
   backdrop-filter: blur(14px) saturate(150%);
 }
-
-/* Etiqueta e controle SOBRE IMAGEM. Parece vidro tingido, mas não desfoca:
-   sobre foto ou ilustração o desfoque não muda a leitura, e cada elemento
-   com `backdrop-filter` é uma passada de composição que lê o fundo. Eram 29
-   numa página só, a maioria etiqueta de preço. Vidro de verdade ficou onde
-   ele é o material principal: barra do topo, painel da abertura, busca,
-   barra de filtro e o slogan de dentro do apartamento. */
 @utility tinta {
   background: rgba(10, 10, 9, 0.66);
   border: 1px solid rgba(246, 242, 233, 0.2);
@@ -319,10 +214,6 @@
     background: rgba(10, 10, 9, 0.88);
   }
 }
-
-/* Brilho que corre na borda do painel quando o cursor entra. É o único
-   efeito de "vidro premium" que eu deixo: um só, e no elemento que a
-   pessoa está tocando. */
 @utility borda-viva {
   position: relative;
   isolation: isolate;
@@ -351,18 +242,12 @@
     opacity: 1;
   }
 }
-
-/* Campo de luz atrás do vidro. Sem nada por trás, vidro não tem o que
-   refratar: é este campo que dá o que borrar nas faixas claras. */
 @utility campo-luz {
   position: relative;
   isolation: isolate;
   &::before {
     content: "";
     position: absolute;
-    /* Sem vazamento LATERAL: medido, o campo de luz saindo 10% para fora do
-       trilho criava 94px de rolagem horizontal, e nem `overflow-x: clip` no
-       html segurou. Vazar só na vertical resolve na origem. */
     inset: -20% 0;
     z-index: -1;
     pointer-events: none;
@@ -378,10 +263,6 @@
     filter: blur(6px);
   }
 }
-
-/* Ritmo vertical em DOIS valores, não em seis. Seção com py-12, py-16 e
-   py-24 espalhados pela página é o que faz o olho achar que algo está
-   desalinhado, mesmo quando cada bloco está certo sozinho. */
 @utility secao {
   padding-block: 5rem;
 }
@@ -396,9 +277,6 @@
     padding-block: 4.5rem;
   }
 }
-
-/* Ilha: bloco arredondado que ocupa o trilho. O recuo interno é o MESMO em
-   todas, senão o texto de dentro desalinha do texto das seções de fora. */
 @utility ilha {
   border-radius: 1rem;
   padding: 3.5rem 2rem;
@@ -408,16 +286,6 @@
     padding: 3.5rem 3rem;
   }
 }
-
-/* 🔴 A margem lateral cresce com a tela, e isso e proposital.
-
-   Antes era uma so: `100% - 2.5rem`, ou seja 20px de cada lado em QUALQUER
-   largura. No telefone e apertado; num monitor de 1440 o conteudo encostava
-   nas bordas com 40px, e ela disse isso com todas as letras. Respiro nao e
-   uma medida fixa: e uma proporcao do que a pessoa ve.
-
-   Medido a 1440: eram 40px de cada lado, agora sao 64px. A 1920 a largura
-   maxima (84rem) ja manda, e a sobra vira margem sozinha. */
 @utility trilho {
   width: min(100% - 3rem, 84rem);
   margin-inline: auto;
@@ -432,8 +300,6 @@
     width: min(100% - 8rem, 84rem);
   }
 }
-
-/* Grão de papel por cima de tudo. Vidro sem grão fica plástico. */
 @utility grao {
   &::after {
     content: "";
@@ -447,33 +313,10 @@
   }
 }
 
-/* Revelação por rolagem. O estado escondido mora num ATRIBUTO que o
-   JavaScript só escreve depois de confirmar que existe viewport: sem isso,
-   um gatilho que não dispara deixaria a seção invisível para sempre, que é
-   exatamente o defeito que já apareceu duas vezes aqui.
-
-   🔴 Esconder é INSTANTÂNEO e a transição só entra depois, com o segundo
-   atributo. Com a transição valendo desde o começo, as dezesseis seções
-   apareciam no carregamento e SUMIAM em sete décimos, uma por uma, antes de
-   voltar na rolagem. Animação para entrar, corte seco para sair de cena. */
-/* 🔴 Aqui havia o par `data-oculto` / `data-anima` que escondia e revelava a
-   seção em CSS. Quem faz isso agora é o GSAP, em `entrada.tsx`, porque
-   escalonamento e quebra do título em palavras não cabem numa transição de
-   CSS. O que NÃO mudou é a doutrina: esconder só acontece dentro de um
-   quadro já provado vivo, e existe cão de guarda. O estado escondido é
-   estilo em linha, e é por isso que a regra de impressão lá embaixo precisa
-   de `!important` também na `visibility`. */
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  /* O corte tem de ser no HTML, nao no BODY: o body propaga o overflow para
-     a viewport e computa `visible` para si mesmo, entao `overflow-x: clip`
-     no body NAO impede a rolagem lateral (medido: rolava 94px mesmo assim).
-     `clip` e nao `hidden` porque clip nao cria contexto de rolagem, e assim
-     `position: sticky` continua valendo. O campo de luz vaza 10% para fora
-     do trilho de proposito, e e esse vazamento que o corte segura. */
   html {
     overflow-x: clip;
   }
@@ -481,8 +324,6 @@
     @apply bg-background text-foreground font-sans;
     -webkit-font-smoothing: antialiased;
   }
-  /* Entrelinha junto do tamanho: display grande com entrelinha de corpo
-     abre buraco entre as linhas e desmancha o titulo. */
   h1,
   h2,
   h3 {
@@ -502,7 +343,6 @@
     font-weight: 600;
     line-height: 1.2;
   }
-  /* Número é mono e tabular; rótulo em maiúscula é sans 600 espaçado. */
   .num {
     @apply font-mono tabular-nums;
   }
@@ -526,17 +366,6 @@
     scroll-behavior: auto !important;
   }
 }
-
-/* ============================================================ IMPRESSÃO
-
-   Quem visita imóvel leva papel: a ficha impressa é peça de trabalho da
-   corretora e do cliente. Sem esta regra, a folha sai com o topo fixo em
-   cima do texto, a cena 3D como um retângulo escuro, botão de WhatsApp que
-   ninguém clica no papel, e sombra de caixa borrando a tinta.
-
-   🔴 A trava mais importante é a última: a revelação por rolagem esconde
-   seção com opacidade zero, e opacidade zero IMPRIME EM BRANCO. Sem forçar
-   a volta, metade da ficha sai como página vazia. */
 @media print {
   @page {
     margin: 14mm;
@@ -546,7 +375,6 @@
     background: #fff !important;
     color: #16181d !important;
   }
-  /* Fora do papel: navegação, rodapé, cena, ação e decoração. */
   header,
   footer,
   nav,
@@ -558,7 +386,6 @@
   button {
     display: none !important;
   }
-  /* Sem sombra e sem vidro: no papel viram borrão cinza. */
   *,
   *::before,
   *::after {
@@ -576,16 +403,11 @@
     color: #16181d !important;
     border: 1px solid #c9c6bd !important;
   }
-  /* 🔴 Seção escondida pela revelação sairia em branco. O GSAP esconde com
-     `autoAlpha`, que escreve `visibility: hidden` EM LINHA, e estilo em
-     linha ganha de folha: sem a linha da visibilidade aqui, a seção some do
-     papel mesmo com a opacidade forçada. */
   [data-revela] {
     opacity: 1 !important;
     visibility: visible !important;
     transform: none !important;
   }
-  /* Coluna de preço deixa de flutuar: no papel não existe rolagem. */
   .sticky {
     position: static !important;
   }

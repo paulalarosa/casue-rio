@@ -36,13 +36,15 @@ Cada pasta tem um `.env.example`. Copie para `.env.local` (site) ou `.env`
 ## Conferir
 
 ```bash
+node scripts/sem-comentarios.mjs --exigir
 cd web
+npm run format:check
 npm run lint
 npm run typecheck
 npm run test
 ```
 
-Os três rodam no CI antes de qualquer publicação.
+Os cinco rodam no CI antes de qualquer publicação.
 
 ## Onde mora o conteúdo
 
@@ -87,14 +89,22 @@ do fluxo do GitHub, em **Actions → última publicação → cards-instagram**.
 
 ## Padrão de código
 
-Sem comentários. Explicação de decisão vive fora do arquivo. O varredor
-`scripts/sem-comentarios.mjs` usa o TypeScript do próprio repositório e
-preserva o que é funcional (`eslint-disable`, `@ts-`, `@license`, shebang).
+Sem comentários, e vale para o repositório inteiro: TypeScript, JavaScript,
+CSS, YAML e shell. Explicação de decisão vive fora do arquivo.
+
+O varredor `scripts/sem-comentarios.mjs` usa um analisador por linguagem, nunca
+expressão regular: o TypeScript do próprio repositório, o PostCSS e o `yaml`.
+Preserva o que é funcional (`eslint-disable`, `@ts-`, `@license`, shebang),
+confere que o YAML continua significando a mesma coisa e passa todo bloco
+`run:` por `bash -n` antes de gravar.
 
 ```bash
 node scripts/sem-comentarios.mjs
 node scripts/sem-comentarios.mjs --gravar
+node scripts/sem-comentarios.mjs --exigir
 ```
+
+A terceira forma é a que roda no CI: acha um comentário, a publicação para.
 
 Formatação por Prettier em `web/`, verificada no CI com `npm run format:check`.
 

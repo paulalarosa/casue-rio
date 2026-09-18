@@ -1,59 +1,18 @@
-# Publica o site na AWS: S3 por trás do CloudFront.
-#
-# 🔴 Este fluxo NÃO FAZ NADA enquanto `vars.AWS_ROLE_ARN` estiver vazia. É o
-# que permite ele existir no repositório antes de a infraestrutura existir,
-# sem pintar de vermelho toda publicação.
 name: Publicar na AWS
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
-  # Publicar no painel republica o site.
   repository_dispatch:
     types: [conteudo]
-  # 🔴 A CONFERÊNCIA DE QUINZE EM QUINZE MINUTOS É O AGENDAMENTO DA REVISTA.
-  #
-  # O site filtra os artigos por `data <= agora`. Um texto publicado no painel
-  # com data e hora à frente fica pronto e fora do ar; quando esta tarefa roda
-  # depois da hora marcada, a condição passa a valer e ele entra sozinho. A
-  # Sanity vende isso pronto no plano Growth, a 15 dólares por pessoa por mês.
-  # Aqui sai de graça, com o que já existe.
-  #
-  # 🔴 Os minutos são 7, 22, 37 e 52, e não 0, 15, 30, 45, DE PROPÓSITO. O
-  # GitHub enfileira tarefa agendada quando está cheio, e a hora cheia é o
-  # instante mais disputado do mundo em CI, porque é onde todo mundo agenda.
-  # Fugir do minuto redondo tira a tarefa da fila mais longa de graça.
-  #
-  # 🔴 E ela NÃO republica o site quatro vezes por hora. O trabalho `decidir`
-  # confere primeiro se venceu a hora de alguém, e na esmagadora maioria das
-  # vezes o fluxo acaba ali, em quinze segundos. Sem isso seriam 96 builds por
-  # dia, 96 invalidações de CloudFront (as mil primeiras do mês são grátis, o
-  # resto é cobrado) e um histórico de publicação ilegível, onde o build que
-  # falhou de verdade some no meio do ruído.
-  #
-  # 🔴 A armadilha que sobra: o GitHub DESLIGA tarefas agendadas depois de 60
-  # dias sem atividade no repositório, sem avisar. A rede de proteção é que
-  # qualquer publicação no painel remonta o site na hora, e a remontagem
-  # carrega junto todo artigo cuja hora já passou. O pior caso não é o texto
-  # não sair: é sair quando qualquer outra coisa for publicada.
   schedule:
     - cron: "7,22,37,52 * * * *"
 
 permissions:
   contents: read
-  # Exigido pelo OIDC: é o que deixa o fluxo pedir um token de identidade à
-  # AWS em vez de guardar chave de acesso aqui dentro. Chave de acesso em
-  # segredo do repositório é chave que ninguém lembra de girar.
   id-token: write
 
-# 🔴 `cancel-in-progress` é FALSO para a tarefa agendada, e verdadeiro para
-# todo o resto. Sem essa distinção existe um jeito de o site simplesmente não
-# publicar: a conferência das 14h07 entra no mesmo grupo, cancela uma
-# publicação que estava no meio, descobre que não tem nada vencido e termina
-# sem fazer nada. O texto que alguém acabou de publicar fica pelo caminho, e o
-# fluxo aparece verde. Publicação de verdade pode atropelar conferência;
-# conferência não atropela ninguém.
 concurrency:
   group: aws
   cancel-in-progress: ${{ github.event_name != 'schedule' }}
@@ -76,19 +35,6 @@ jobs:
           npm ci
           npm run typecheck
 
-  # Vale a pena publicar agora? Para tudo que não é a tarefa agendada, sim,
-  # sempre: alguém empurrou código ou alguém publicou no painel.
-  #
-  # Para a tarefa agendada, a pergunta é uma só: o painel tem mais artigos
-  # com a hora vencida do que o site tem no ar? O sitemap do site é a
-  # resposta, e ele serve bem porque é gerado da MESMA consulta que monta as
-  # páginas. Comparar as duas pontas é exato e não precisa guardar estado
-  # nenhum entre uma execução e outra.
-  # Vale a pena publicar agora? Para tudo que não é a tarefa agendada, sim,
-  # sempre: alguém empurrou código ou alguém publicou no painel. Para a
-  # tarefa agendada, quem responde é `.github/scripts/venceu.sh`, que mora
-  # fora deste arquivo porque script dentro de YAML não tem como ser testado
-  # sem publicar.
   decidir:
     runs-on: ubuntu-latest
     outputs:
@@ -125,6 +71,9 @@ jobs:
         working-directory: web
         run: npm ci
 
+      - name: Conferir o repositório
+        run: node scripts/sem-comentarios.mjs --exigir
+
       - name: Conferir
         working-directory: web
         run: |
@@ -136,32 +85,13 @@ jobs:
       - name: Construir
         working-directory: web
         env:
-          # 🔴 VAZIO, e isto é a diferença mais importante entre esta
-          # publicação e a do Pages. Lá o site mora em `usuario.github.io/REPO`
-          # e todo caminho absoluto precisa do prefixo; aqui ele mora na raiz
-          # de um domínio próprio. Deixar o prefixo aqui faria cada folha de
-          # estilo, cada vídeo e cada imagem procurar `/casue-rio/...` num
-          # servidor onde essa pasta não existe.
           NEXT_PUBLIC_BASE_PATH: ""
           NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_DATASET: ${{ vars.SANITY_DATASET }}
-          # Vazia enquanto a variável GA_ID não existir no repositório, e
-          # vazia é o estado sem cookie, sem Google e sem faixa. Criar a
-          # variável liga tudo de uma vez, inclusive o texto da privacidade.
           NEXT_PUBLIC_GA_ID: ${{ vars.GA_ID }}
         run: npm run build
 
-      # 🔴 AS PEÇAS DE INSTAGRAM SAEM POR AQUI, e não pelo site.
-      #
-      # Artefato do GitHub só baixa quem tem acesso ao repositório. É o que
-      # cumpre a combinação: quem cuida da conta baixa e repassa a quem vai
-      # postar, e as peças não ficam num endereço público que qualquer um
-      # descobre. O `cards-instagram.mjs` já as tirou de `out/` antes deste
-      # passo, então elas não existem mais no que sobe para o balde.
-      #
-      # 90 dias é de sobra: a peça é do dia do texto. Passou disso, o build
-      # seguinte gera de novo, porque ela é derivada, não original.
       - uses: actions/upload-artifact@v4
         with:
           name: cards-instagram
@@ -174,15 +104,6 @@ jobs:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
-      # Duas passadas de sincronia, e a ordem importa.
-      #
-      # 🔴 Primeiro o que tem nome versionado (`/_next/`), com cache longo:
-      # esses arquivos têm o resumo do conteúdo no nome, então nunca mudam de
-      # conteúdo sem mudar de nome, e podem ficar um ano no navegador.
-      #
-      # 🔴 Depois o HTML, com `no-cache`. Se o HTML fosse junto no cache
-      # longo, a pessoa que visitou o site ontem continuaria vendo a página
-      # velha por um ano, apontando para pacotes que já não existem.
       - name: Subir os arquivos com nome versionado
         working-directory: web
         run: |
@@ -199,8 +120,6 @@ jobs:
             --exclude "_next/static/*" \
             --cache-control "public, max-age=0, must-revalidate"
 
-      # A invalidação é o que faz a página nova aparecer agora, e não quando
-      # o cache da borda expirar sozinho.
       - name: Limpar o cache da borda
         run: |
           aws cloudfront create-invalidation \

@@ -6,8 +6,11 @@ import path from "node:path";
 
 const exigir = createRequire(path.join(process.cwd(), "web", "package.json"));
 const ts = exigir("typescript");
+const postcss = exigir("postcss");
+const yaml = exigir("yaml");
 
 const GRAVAR = process.argv.includes("--gravar");
+const EXIGIR = process.argv.includes("--exigir");
 const GUARDAR =
   /^(\/\/\/|\/\/\s*(eslint|@ts-|prettier|biome|sourceMappingURL)|\/\*\s*(eslint|@ts-|@license|@vite|webpack|!))/;
 
@@ -17,7 +20,7 @@ const alvos = execSync("git ls-files --cached --others --exclude-standard", {
   .split("\n")
   .map((l) => l.trim())
   .filter(Boolean)
-  .filter((f) => /\.(ts|tsx|mjs|js)$/.test(f))
+  .filter((f) => /\.(ts|tsx|mjs|mts|js|css|ya?ml|sh)$/.test(f))
   .filter((f) => !f.includes("node_modules"))
   .filter((f) => f !== "scripts/sem-comentarios.mjs");
 
@@ -96,23 +99,117 @@ function limpar(texto, faixas) {
   return saida.replace(/\n{3,}/g, "\n\n");
 }
 
+function emJs(texto, caminho) {
+  const faixas = faixasDe(texto, caminho);
+  if (faixas.length === 0) return null;
+  const limpo = limpar(texto, faixas);
+  faixasDe(limpo, caminho);
+  return { quantos: faixas.length, limpo };
+}
+
+function emCss(texto, caminho) {
+  const raiz = postcss.parse(texto, { from: caminho });
+  let quantos = 0;
+  raiz.walkComments((no) => {
+    if (GUARDAR.test(`/*${no.text}`)) return;
+    quantos += 1;
+    no.remove();
+  });
+  if (quantos === 0) return null;
+
+  const limpo = raiz.toString().replace(/\n{3,}/g, "\n\n");
+  const sobrou = [];
+  postcss.parse(limpo, { from: caminho }).walkComments((no) => sobrou.push(no));
+  if (sobrou.length) throw new Error(`${caminho}: sobrou comentario depois de limpar`);
+  return { quantos, limpo };
+}
+
+const HASH = /^\s*#(?!!)/;
+
+function semLinhasDeCerquilha(texto) {
+  return texto
+    .split("\n")
+    .filter((linha) => !HASH.test(linha))
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n");
+}
+
+function scripts(doc) {
+  const achados = [];
+  yaml.visit(doc, {
+    Pair(_chave, par) {
+      if (par.key?.value === "run" && typeof par.value?.value === "string") {
+        achados.push(par.value.value);
+      }
+    },
+  });
+  return achados;
+}
+
+function conferirShell(trecho, caminho) {
+  try {
+    execSync("bash -n", { input: trecho, stdio: ["pipe", "ignore", "pipe"] });
+  } catch (erro) {
+    throw new Error(`${caminho}: shell quebrado depois de limpar\n${erro.stderr}`);
+  }
+}
+
+function emYaml(texto, caminho) {
+  const limpo = semLinhasDeCerquilha(texto);
+  const quantos = texto.split("\n").filter((l) => HASH.test(l)).length;
+  if (quantos === 0) return null;
+
+  const antes = yaml.parseDocument(texto);
+  const depois = yaml.parseDocument(limpo);
+  if (depois.errors.length) {
+    throw new Error(`${caminho}: YAML quebrado depois de limpar`);
+  }
+
+  const chaveDe = (doc) =>
+    JSON.stringify(doc.toJS(), (chave, valor) =>
+      chave === "run" && typeof valor === "string" ? semLinhasDeCerquilha(valor) : valor,
+    );
+  if (chaveDe(antes) !== chaveDe(depois)) {
+    throw new Error(`${caminho}: a limpeza mudou o significado do YAML`);
+  }
+  for (const trecho of scripts(depois)) conferirShell(trecho, caminho);
+
+  return { quantos, limpo };
+}
+
+function emShell(texto, caminho) {
+  const quantos = texto.split("\n").filter((l) => HASH.test(l)).length;
+  if (quantos === 0) return null;
+  const limpo = semLinhasDeCerquilha(texto);
+  conferirShell(limpo, caminho);
+  return { quantos, limpo };
+}
+
+function varredorDe(caminho) {
+  if (/\.css$/.test(caminho)) return emCss;
+  if (/\.ya?ml$/.test(caminho)) return emYaml;
+  if (/\.sh$/.test(caminho)) return emShell;
+  return emJs;
+}
+
 let totalFaixas = 0;
 let totalArquivos = 0;
 
 for (const alvo of alvos) {
   const texto = readFileSync(alvo, "utf8");
-  const faixas = faixasDe(texto, alvo);
-  if (faixas.length === 0) continue;
+  const achado = varredorDe(alvo)(texto, alvo);
+  if (!achado) continue;
 
-  const limpo = limpar(texto, faixas);
-  faixasDe(limpo, alvo);
-
-  totalFaixas += faixas.length;
+  totalFaixas += achado.quantos;
   totalArquivos += 1;
-  if (GRAVAR) writeFileSync(alvo, limpo);
-  process.stdout.write(`${String(faixas.length).padStart(4)}  ${alvo}\n`);
+  if (GRAVAR) writeFileSync(alvo, achado.limpo);
+  process.stdout.write(`${String(achado.quantos).padStart(4)}  ${alvo}\n`);
 }
 
-process.stdout.write(
-  `\n${totalFaixas} comentarios em ${totalArquivos} arquivos${GRAVAR ? " (gravado)" : " (ensaio, use --gravar)"}\n`,
-);
+const modo = GRAVAR ? " (gravado)" : EXIGIR ? "" : " (ensaio, use --gravar)";
+process.stdout.write(`\n${totalFaixas} comentarios em ${totalArquivos} arquivos${modo}\n`);
+
+if (EXIGIR && totalFaixas > 0) {
+  process.stdout.write("\nO repositorio e sem comentario. Rode: node scripts/sem-comentarios.mjs --gravar\n");
+  process.exit(1);
+}
