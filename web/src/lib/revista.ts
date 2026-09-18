@@ -19,11 +19,14 @@ export type Artigo = {
   corpo?: PortableTextBlock[];
 };
 
-/* 🔴 `publicado == true` entra na consulta e não no filtro depois, e a
-   diferença não é de gosto: o rascunho nem sai do servidor. Filtrar depois
-   de receber significa que o texto não terminado viaja pela rede e fica
-   dentro do HTML gerado, onde qualquer pessoa lê. Rascunho de imobiliária
-   pode ter preço que ainda vai mudar. */
+/* 🔴 Não há filtro de "publicado" nestas consultas, e isso está certo: quem
+   filtra rascunho é a própria Sanity. Medido em 18/09/2026, criando um
+   rascunho e consultando sem token: a API pública devolve lista vazia.
+   Rascunho mora sob o prefixo `drafts.` e só sai com chave.
+
+   Eu tinha criado um campo `publicado` aqui, e ele era um segundo
+   interruptor por cima do botão de publicar do painel. Saiu: elas clicariam
+   em publicar e o texto não apareceria, sem nada na tela dizendo por quê. */
 const CAMPOS = `
   "slug": slug.current,
   titulo,
@@ -35,7 +38,7 @@ const CAMPOS = `
 
 export async function listarArtigos(): Promise<Artigo[]> {
   return consultar<Artigo[]>(
-    `*[_type == "artigo" && publicado == true && defined(slug.current)]
+    `*[_type == "artigo" && defined(slug.current)]
      | order(data desc) { ${CAMPOS} }`,
     {},
     [],
@@ -44,7 +47,7 @@ export async function listarArtigos(): Promise<Artigo[]> {
 
 export async function lerArtigo(slug: string): Promise<Artigo | null> {
   return consultar<Artigo | null>(
-    `*[_type == "artigo" && publicado == true && slug.current == $slug][0]
+    `*[_type == "artigo" && slug.current == $slug][0]
      { ${CAMPOS}, corpo }`,
     { slug },
     null,

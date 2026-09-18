@@ -136,24 +136,26 @@ export const artigo = defineType({
       ],
       validation: (r) => r.required().min(1),
     }),
-    defineField({
-      name: "publicado",
-      title: "Publicado",
-      type: "boolean",
-      initialValue: false,
-      description:
-        "Enquanto estiver desligado, o texto existe só aqui. O site não o recebe nem por link direto.",
-    }),
   ],
+  /* 🔴 NÃO existe campo "publicado" aqui, e a ausência é a decisão.
+
+     Eu tinha criado um, e ele era um SEGUNDO interruptor por cima do botão
+     de publicar da própria Sanity. Medido: a consulta pública não devolve
+     rascunho nem com esse campo ligado. Ou seja, quem escrevesse o primeiro
+     texto clicaria no botão verde grande, o texto não apareceria no site, e
+     não haveria nada na tela explicando o porquê.
+
+     Um botão para uma coisa. Publicar é publicar, e despublicar está no menu
+     do próprio documento. */
   preview: {
-    select: { titulo: "titulo", data: "data", autora: "autora", publicado: "publicado", media: "capa" },
-    prepare({ titulo, data, autora, publicado, media }) {
+    select: { titulo: "titulo", data: "data", autora: "autora", media: "capa" },
+    prepare({ titulo, data, autora, media }) {
       const quando = data
         ? new Date(`${data}T12:00:00`).toLocaleDateString("pt-BR")
         : "sem data";
       return {
-        title: `${publicado ? "" : "· "}${titulo ?? "Sem título"}`,
-        subtitle: `${quando} · ${autora ?? "—"}${publicado ? "" : " · rascunho"}`,
+        title: titulo ?? "Sem título",
+        subtitle: `${quando} · ${autora ?? "—"}`,
         media,
       };
     },

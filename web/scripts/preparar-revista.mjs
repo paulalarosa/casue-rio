@@ -78,7 +78,7 @@ if (!projeto) {
 
 async function quantosArtigos() {
   if (!projeto) return 0;
-  const consulta = `count(*[_type == "artigo" && publicado == true && defined(slug.current)])`;
+  const consulta = `count(*[_type == "artigo" && defined(slug.current)])`;
   const url =
     `https://${projeto}.api.sanity.io/v2026-09-01/data/query/${conjunto}` +
     `?query=${encodeURIComponent(consulta)}`;
