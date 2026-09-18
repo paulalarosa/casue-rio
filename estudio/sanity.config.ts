@@ -1,7 +1,11 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
-import { visionTool } from "@sanity/vision";
+import { HelpCircleIcon } from "@sanity/icons/HelpCircle";
 import { tipos } from "./schemaTypes";
+import { tema } from "./marca/tema";
+import { Placa } from "./marca/placa";
+import { Tipografia } from "./marca/tipografia";
+import { ComoPublicar } from "./marca/como-publicar";
 
 /* O painel da Casuê Rio.
 
@@ -32,25 +36,43 @@ if (!projectId) {
 export default defineConfig({
   name: "casue-rio",
   title: "Casuê Rio",
+  /* A placa no lugar do quadradinho da Sanity. É o que diz, em meio segundo
+     e antes de qualquer texto carregar, que este painel é o da casa. */
+  icon: Placa,
   projectId,
   dataset,
   schema: { types: tipos },
+  theme: tema,
+  studio: { components: { layout: Tipografia } },
   plugins: [
-    /* A ordem da barra lateral é a ordem do trabalho delas: imóvel entra
-       toda semana, artigo de vez em quando, bairro quase nunca. */
+    /* 🔴 DUAS portas na barra lateral, e nenhuma a mais.
+
+       O painel já teve Imóveis e Bairros. Saíram: o painel é das duas, e o
+       que as duas fazem aqui é escrever. Tudo o mais que muda no site muda
+       em código, com quem faz a manutenção, e é por isso que o erro de um
+       artigo nunca passa de um artigo.
+
+       A segunda porta é a ajuda, e ela está aqui dentro em vez de num PDF
+       por um motivo medido em todo projeto: manual que mora fora do painel
+       responde a dúvida do primeiro dia e some no segundo. A dúvida volta às
+       nove da noite de um domingo, com o painel aberto e ninguém para
+       perguntar.
+
+       A janela de consulta (Vision) também saiu. Ela roda GROQ à mão e é
+       ferramenta de quem monta, não de quem escreve. */
     structureTool({
       structure: (S) =>
         S.list()
           .title("Casuê Rio")
           .items([
-            S.documentTypeListItem("imovel").title("Imóveis"),
             S.documentTypeListItem("artigo").title("Revista"),
             S.divider(),
-            S.documentTypeListItem("bairro").title("Bairros"),
+            S.listItem()
+              .title("Como publicar")
+              .id("como-publicar")
+              .icon(HelpCircleIcon)
+              .child(S.component(ComoPublicar).id("como-publicar").title("Como publicar")),
           ]),
     }),
-    /* A janela de consulta fica só para mim: é onde eu confiro o que o site
-       vai receber antes de trocar a fonte de dados. */
-    visionTool({ defaultApiVersion: "2026-09-01" }),
   ],
 });

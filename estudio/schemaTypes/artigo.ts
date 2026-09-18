@@ -1,4 +1,13 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { DocumentTextIcon } from "@sanity/icons/DocumentText";
+
+/* Hoje no fuso do Rio, em "AAAA-MM-DD".
+
+   🔴 `toISOString()` daria a data em UTC, que depois das 21h no Rio ja e o
+   dia seguinte: um texto marcado para amanha apareceria como "no ar" tres
+   horas antes. Aqui a conta e feita no fuso de quem escreve. */
+const hojeNoRio = () =>
+  new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo" }).format(new Date());
 
 /* O artigo da revista.
 
@@ -16,11 +25,14 @@ export const artigo = defineType({
   name: "artigo",
   title: "Artigo",
   type: "document",
+  icon: DocumentTextIcon,
   fields: [
     defineField({
       name: "titulo",
       title: "Título",
       type: "string",
+      description:
+        "Curto e direto. Sai grande no topo do artigo, no card da lista e na aba do navegador.",
       validation: (r) => r.required().max(80),
     }),
     defineField({
@@ -43,16 +55,30 @@ export const artigo = defineType({
     }),
     defineField({
       name: "data",
-      title: "Data",
+      title: "Publicar em",
       type: "date",
       options: { dateFormat: "DD/MM/YYYY" },
-      initialValue: () => new Date().toISOString().slice(0, 10),
+      initialValue: hojeNoRio,
+      /* 🔴 ESTE CAMPO AGENDA, e um campo só, de propósito.
+
+         Data futura significa duas coisas ao mesmo tempo, e elas são a
+         mesma: o texto entra no site naquele dia, e é aquele dia que
+         aparece assinado embaixo do título. Já escrevi a versão com dois
+         campos, "data do texto" e "data de publicação", e ela sempre acaba
+         com os dois diferentes por engano e ninguém sabendo qual manda.
+
+         O site filtra por `data <= hoje` na hora de montar as páginas, e uma
+         tarefa diária no GitHub remonta o site de manhã. Quem estiver
+         marcado para hoje entra sozinho. */
+      description:
+        "Hoje publica agora. Uma data à frente agenda: o texto entra no site naquele dia, de manhã, e é essa a data que sai assinada nele.",
       validation: (r) => r.required(),
     }),
     defineField({
       name: "autora",
       title: "Quem escreveu",
       type: "string",
+      description: "Quem assina. O nome aparece no artigo e na lista da revista.",
       /* 🔴 Os dois nomes vêm por extenso, e batem com `SOCIAS` em
          `web/src/lib/site.ts`. Nome e sobrenome sempre: chamar alguém só
          pelo sobrenome soa a departamento, e esta empresa é o contrário
@@ -79,12 +105,15 @@ export const artigo = defineType({
           validation: (r) => r.required(),
         }),
       ],
-      description: "Opcional. Sem capa, a lista mostra só o texto, que também funciona.",
+      description:
+        "Opcional, e sem ela funciona: a lista mostra só o texto. Se puser, use horizontal e de 1600 px de largura para cima, senão ela sai borrada no topo do artigo.",
     }),
     defineField({
       name: "corpo",
       title: "Texto",
       type: "array",
+      description:
+        "O menu de estilos tem parágrafo, dois subtítulos, citação e lista. Não tem cor nem tamanho, e isso é de propósito: a aparência é do site. Colar do Word funciona, a formatação do Word é descartada.",
       of: [
         defineArrayMember({
           type: "block",
@@ -153,9 +182,16 @@ export const artigo = defineType({
       const quando = data
         ? new Date(`${data}T12:00:00`).toLocaleDateString("pt-BR")
         : "sem data";
+      /* 🔴 O agendamento aparece NA LISTA, e não só dentro do documento.
+         Um texto publicado com data à frente não está no site, e a única
+         tela em que isso é visível sem abrir nada é esta. Sem o aviso aqui,
+         a lista mostraria um artigo com cara de no ar que não está. */
+      const agendado = Boolean(data) && data > hojeNoRio();
       return {
         title: titulo ?? "Sem título",
-        subtitle: `${quando} · ${autora ?? "—"}`,
+        subtitle: agendado
+          ? `Agendado para ${quando} · ${autora ?? "sem autora"}`
+          : `${quando} · ${autora ?? "sem autora"}`,
         media,
       };
     },

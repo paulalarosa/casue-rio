@@ -1,10 +1,5 @@
 # Publica o site na AWS: S3 por trás do CloudFront.
 #
-# Roda em paralelo com o GitHub Pages DE PROPÓSITO, durante a transição. Só
-# se apaga o `pages.yml` depois de o domínio estar apontado e o endereço novo
-# conferido: trocar de hospedagem e desligar a antiga no mesmo empurrão é como
-# se muda de casa levando a chave da antiga junto.
-#
 # 🔴 Este fluxo NÃO FAZ NADA enquanto `vars.AWS_ROLE_ARN` estiver vazia. É o
 # que permite ele existir no repositório antes de a infraestrutura existir,
 # sem pintar de vermelho toda publicação.
@@ -14,9 +9,28 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  # Publicar no painel republica o site. Mesmo gatilho do Pages.
+  # Publicar no painel republica o site.
   repository_dispatch:
     types: [conteudo]
+  # 🔴 A remontagem diária É O AGENDAMENTO DA REVISTA.
+  #
+  # O site filtra os artigos por `data <= hoje`. Um texto publicado no painel
+  # com data à frente fica pronto e fora do ar; quando esta tarefa roda no dia
+  # marcado, a condição passa a valer e ele entra sozinho. A Sanity vende isso
+  # pronto no plano Growth, a 15 dólares por pessoa por mês. Aqui sai de graça,
+  # com o que já existe.
+  #
+  # 12:00 UTC é 9h no Rio, que não tem horário de verão desde 2019. O GitHub
+  # pode atrasar uma tarefa agendada em bons minutos quando está cheio, e para
+  # um texto que entra "de manhã" isso é irrelevante.
+  #
+  # 🔴 A armadilha é outra: o GitHub DESLIGA tarefas agendadas depois de 60
+  # dias sem atividade no repositório, sem avisar. A rede de proteção é que
+  # qualquer publicação no painel remonta o site na hora, e a remontagem
+  # carrega junto todo artigo cuja data já chegou. O pior caso não é o texto
+  # não sair: é sair no dia em que qualquer outra coisa for publicada.
+  schedule:
+    - cron: "0 12 * * *"
 
 permissions:
   contents: read

@@ -76,9 +76,24 @@ if (!projeto) {
   console.warn("[revista] sem NEXT_PUBLIC_SANITY_PROJECT_ID: rota desligada.");
 }
 
+/* 🔴 A MESMA condição de `web/src/lib/revista.ts`, e a duplicação é o risco
+   deste arquivo. Se as duas divergirem, o pior caso é concreto: um texto
+   agendado para amanhã contaria aqui como publicado, a rota do artigo
+   ligaria, e o `generateStaticParams` da rota, que usa a consulta filtrada,
+   devolveria lista vazia. Lista vazia com `output: export` é ERRO DURO, e
+   a publicação inteira do site cai por causa de um texto que nem era para
+   estar no ar ainda. Mudou lá, muda aqui, na mesma hora. */
+function hojeNoRio() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Sao_Paulo",
+  }).format(new Date());
+}
+
 async function quantosArtigos() {
   if (!projeto) return 0;
-  const consulta = `count(*[_type == "artigo" && defined(slug.current)])`;
+  const consulta =
+    `count(*[_type == "artigo" && defined(slug.current)` +
+    ` && data <= "${hojeNoRio()}"])`;
   const url =
     `https://${projeto}.api.sanity.io/v2026-09-01/data/query/${conjunto}` +
     `?query=${encodeURIComponent(consulta)}`;

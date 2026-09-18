@@ -4,8 +4,24 @@
     {
       "name": "cs-web",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--prefix", "web"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "web"
+      ],
       "port": 3000
+    },
+    {
+      "name": "cs-painel",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "estudio"
+      ],
+      "port": 3333
     }
   ]
 }
