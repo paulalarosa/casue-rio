@@ -1,4 +1,4 @@
-import { SITE, NOME, DESCRICAO, SLOGAN, ENDERECO, SOCIAS, EMAIL } from "@/lib/site";
+import { SITE, NOME, DESCRICAO, SLOGAN, ENDERECO, SOCIAS } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
 import { listarArtigos, dataPorExtenso } from "@/lib/revista";
 
@@ -35,7 +35,11 @@ export async function GET() {
     `- Atuação: ${REGIOES.join(", ")}, na cidade do Rio de Janeiro.`,
     `- Serviços: compra, venda, aluguel e avaliação de imóveis. Não trabalha com temporada.`,
     `- Endereço: ${ENDERECO.linha}`,
-    `- E-mail: ${EMAIL}`,
+    /* 🔴 O e-mail NÃO entra aqui. Este arquivo é texto puro, público e
+       feito para máquina ler: é o lugar mais fácil do site inteiro para um
+       robô colher endereço. Quem precisa falar vai pela página de contato,
+       que é o que este arquivo aponta. */
+    `- Contato: pela página ${SITE}/contato/`,
     "",
     "## Quem assina",
     "",

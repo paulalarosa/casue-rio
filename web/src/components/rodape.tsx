@@ -3,12 +3,13 @@ import Link from "next/link";
    arroba: e sinal de perfil e nao finge ser o logo de terceiro. */
 import { MessageCircle, Mail, MapPin, AtSign } from "lucide-react";
 import { Assinatura } from "@/components/assinatura";
+import { AcaoEmail } from "@/components/acao";
 import {
   ENDERECO,
   SOCIAS,
   SLOGAN,
   NOME,
-  EMAIL,
+  TEM_EMAIL,
   INSTAGRAM,
   INSTAGRAM_URL,
 } from "@/lib/site";
@@ -89,17 +90,19 @@ export function Rodape() {
                 <MessageCircle className="size-4" aria-hidden /> WhatsApp
               </Link>
             </li>
-            {EMAIL && (
+            {TEM_EMAIL && (
               <li>
-                {/* E-mail REAL vira `mailto:` de verdade. Enquanto ele não
-                    existia, este item mandava para a página de contato, que
-                    é o mesmo cuidado que o botão de WhatsApp ainda tem. */}
-                <a
-                  href={`mailto:${EMAIL}`}
+                {/* 🔴 O endereço NÃO é escrito, e o elemento continua sendo um
+                    link para a página de contato: quem abrir em aba nova, ou
+                    estiver sem script, cai num lugar útil em vez de em nada.
+                    O aplicativo de e-mail abre no clique, e o endereço só é
+                    montado nesse instante. */}
+                <AcaoEmail
+                  recuo="/contato/"
                   className="flex items-center gap-2 transition-colors hover:text-papel"
                 >
-                  <Mail className="size-4 shrink-0" aria-hidden /> {EMAIL}
-                </a>
+                  <Mail className="size-4 shrink-0" aria-hidden /> Escrever por e-mail
+                </AcaoEmail>
               </li>
             )}
             {INSTAGRAM && (

@@ -1,16 +1,16 @@
 import { AtSign, Mail, MessageCircle } from "lucide-react";
+import { AcaoEmail, AcaoZap } from "@/components/acao";
 import Link from "next/link";
 import { CabecaPagina } from "@/components/cabeca-pagina";
 import calcadao from "../../../public/video/calcadao.webp";
 import { Painel } from "@/components/painel";
 import { Midia } from "@/components/midia";
 import { FormContato } from "@/components/form-contato";
-import { linkZap } from "@/lib/imoveis";
 import {
   ENDERECO,
   HORARIO,
   TELEFONE,
-  EMAIL,
+  TEM_EMAIL,
   INSTAGRAM,
   INSTAGRAM_URL,
   metaDaPagina,
@@ -64,13 +64,12 @@ export default function PaginaContato() {
                 <p className="mt-3 text-tinta-500">
                   Mesmo número para compra, venda, aluguel e avaliação.
                 </p>
-                <a
-                  href={linkZap()}
-                  className="mt-6 flex w-fit items-center gap-2 rounded-full bg-terracota-600 px-7 py-3.5 font-semibold text-papel shadow-[var(--shadow-flutua-1)] transition-transform duration-300 hover:-translate-y-0.5 hover:bg-terracota-700"
-                >
+                {/* 🔴 SEM `recuo`: esta É a página de contato, e mandar de
+                    volta para ela mesma não é recuo nenhum. Aqui o elemento é
+                    botão, e o número não aparece em lugar nenhum. */}
+                <AcaoZap className="mt-6 flex w-fit items-center gap-2 rounded-full bg-terracota-600 px-7 py-3.5 font-semibold text-papel shadow-[var(--shadow-flutua-1)] transition-transform duration-300 hover:-translate-y-0.5 hover:bg-terracota-700">
                   <MessageCircle className="size-5" aria-hidden /> Falar no WhatsApp
-                </a>
-                <p className="num mt-4 text-tinta-500">{TELEFONE}</p>
+                </AcaoZap>
               </>
             ) : (
               <p className="mt-3 max-w-[52ch] text-tinta-500">
@@ -91,18 +90,20 @@ export default function PaginaContato() {
               valor. É a mesma trava do botão de WhatsApp: link que não leva
               a ninguém é pior do que link nenhum. */}
           <ul className="space-y-3 md:border-l md:border-tinta-800/10 md:pl-8">
-            {EMAIL && (
+            {TEM_EMAIL && (
               <li>
-                <a
-                  href={`mailto:${EMAIL}`}
-                  className="flex items-center gap-3 rounded-[0.75rem] border border-tinta-800/10 bg-tinta-50 px-4 py-3 transition-colors hover:bg-tinta-800/6"
-                >
+                <AcaoEmail className="flex w-full items-center gap-3 rounded-[0.75rem] border border-tinta-800/10 bg-tinta-50 px-4 py-3 text-left transition-colors hover:bg-tinta-800/6">
                   <Mail className="size-4 shrink-0 text-bronze-500" aria-hidden />
                   <span>
                     <span className="rotulo block text-tinta-500">E-mail</span>
-                    <span className="block font-semibold text-tinta-800">{EMAIL}</span>
+                    {/* 🔴 O rótulo diz o que o clique FAZ, não qual é o
+                        endereço. Era aqui que o e-mail aparecia escrito, e é
+                        justamente esta linha que a cliente pediu para sumir. */}
+                    <span className="block font-semibold text-tinta-800">
+                      Abrir o aplicativo de e-mail
+                    </span>
                   </span>
-                </a>
+                </AcaoEmail>
               </li>
             )}
             {INSTAGRAM && (

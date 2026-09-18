@@ -54,9 +54,28 @@ export const SEGUNDA_FRASE: string = "";
    compilar. */
 export const TELEFONE: string = "";
 
-/* E-mail e Instagram chegaram em 17/09/2026 e são REAIS, ao contrário do
-   telefone. O e-mail vira `mailto:` de verdade e o perfil vira link. */
-export const EMAIL: string = "rio.casue@gmail.com";
+/* 🔴 O E-MAIL VIVE PARTIDO EM DUAS METADES, e isso não é paranoia: é
+   decisão da cliente de que telefone e e-mail não aparecem na tela, só a
+   ação. Junto, ele acabaria escrito em algum `href="mailto:"`, que é o
+   primeiro lugar onde robô de coleta de endereço procura, e apareceria na
+   barra de status do navegador a cada `hover`.
+
+   Partido aqui e juntado só no instante do clique, em `components/acao.tsx`,
+   uma expressão regular procurando e-mail no HTML ou no pacote não casa com
+   nenhuma das metades.
+
+   🔴 NADA DISSO O ESCONDE de quem roda um navegador de verdade para raspar
+   a página: o endereço precisa existir para o clique funcionar. O que se
+   ganha é o caso comum, que é o robô que varre HTML. Vale dizer para
+   ninguém achar que o endereço virou segredo.
+
+   Quem quiser o endereço montado usa `enderecoEmail()`, e quem for exibir
+   contato usa `<AcaoEmail>`, que não exibe nada. */
+const EMAIL_PARTES = ["rio.casue", "gmail.com"] as const;
+export const TEM_EMAIL = true;
+export function enderecoEmail() {
+  return EMAIL_PARTES.join("@");
+}
 export const INSTAGRAM: string = "casuerio";
 export const INSTAGRAM_URL = INSTAGRAM ? `https://instagram.com/${INSTAGRAM}` : "";
 export const HORARIO = "Das 9h às 19h, de segunda a sexta.";
