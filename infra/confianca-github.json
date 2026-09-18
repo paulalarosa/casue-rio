@@ -1,4 +1,24 @@
 {
+  "_comentario": [
+    "Quem pode assumir o papel de publicação: o GitHub Actions deste",
+    "repositório, na branch main, e mais ninguém.",
+    "",
+    "🔴 O `sub` traz IDENTIFICADORES NUMÉRICOS, e isso derrubou a publicação",
+    "três vezes antes de eu ir olhar. Todo tutorial ensina o formato",
+    "`repo:dono/repo:ref:refs/heads/main`. O que o GitHub emite de verdade,",
+    "lido no CloudTrail do próprio erro, é:",
+    "",
+    "  repo:paulalarosa@127963502/casue-rio@1364478444:ref:refs/heads/main",
+    "",
+    "com o id da conta depois do nome do dono e o id do repositório depois do",
+    "nome do repositório. O erro que a AWS devolve é o genérico",
+    "`Not authorized to perform sts:AssumeRoleWithWebIdentity`, que não diz",
+    "uma palavra sobre qual condição falhou — daí ter valido mais procurar o",
+    "evento no CloudTrail do que continuar adivinhando.",
+    "",
+    "E o formato com id é MELHOR: renomear o repositório não quebra a",
+    "confiança, e um repositório novo com o mesmo nome não herda o acesso."
+  ],
   "Version": "2012-10-17",
   "Statement": [
     {
@@ -9,10 +29,8 @@
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
-          "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
-        },
-        "StringLike": {
-          "token.actions.githubusercontent.com:sub": "repo:paulalarosa/casue-rio:ref:refs/heads/main"
+          "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+          "token.actions.githubusercontent.com:sub": "repo:paulalarosa@127963502/casue-rio@1364478444:ref:refs/heads/main"
         }
       }
     }
