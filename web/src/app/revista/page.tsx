@@ -7,6 +7,8 @@ import { Painel } from "@/components/painel";
 import { arquivo } from "@/lib/caminho";
 import posterParede from "../../../public/video/parede.webp";
 import { listarArtigos, dataPorExtenso } from "@/lib/revista";
+import { Dados } from "@/components/dados";
+import { revista, trilha, grafo } from "@/lib/dados-estruturados";
 import { imagem } from "@/lib/sanity";
 import { INSTAGRAM, INSTAGRAM_URL, metaDaPagina } from "@/lib/site";
 
@@ -55,6 +57,20 @@ export default async function PaginaRevista() {
 
   return (
     <>
+      {/* 🔴 O `Blog` só é declarado quando existe artigo. Um blog vazio em
+          dado estruturado é uma promessa que a página não cumpre, e o
+          buscador confere. */}
+      {materias.length > 0 && (
+        <Dados>
+          {grafo(
+            revista(materias),
+            trilha([
+              { nome: "Início", caminho: "/" },
+              { nome: "Revista", caminho: "/revista/" },
+            ]),
+          )}
+        </Dados>
+      )}
       <CabecaPagina
         titulo="Revista"
         linha="O que a gente aprende trabalhando, escrito por quem assina o contrato."

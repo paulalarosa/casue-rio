@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { Dados } from "@/components/dados";
 import Link from "next/link";
 import { MessageCircle, ShieldCheck, ArrowRight, Check } from "lucide-react";
 import { Galeria } from "@/components/galeria";
@@ -131,12 +132,7 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(dados).replace(/</g, "\u003c"),
-        }}
-      />
+      <Dados>{dados}</Dados>
       {/* A imagem passa a IDENTIFICAR o imóvel: selo e localização em cima,
           título e preço embaixo. Quem chega por link compartilhado sabe o
           que está vendo sem rolar a página. */}

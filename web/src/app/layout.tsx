@@ -3,7 +3,9 @@ import { Unbounded, Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Topo } from "@/components/topo";
 import { Rodape } from "@/components/rodape";
-import { SITE, MARCA, NOME, DESCRICAO, SLOGAN, ENDERECO, SOCIAS } from "@/lib/site";
+import { Dados } from "@/components/dados";
+import { empresa, pessoas, grafo } from "@/lib/dados-estruturados";
+import { SITE, MARCA, NOME, DESCRICAO, SLOGAN } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
 
 /* Unbounded é a fonte da marca, escolhida pelas sócias numa folha de nove
@@ -64,44 +66,6 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-/* Dados estruturados da imobiliária. É o que faz a busca entender que aqui
-   tem um negócio, com área de atuação e não só páginas de texto.
-
-   🔴 `telephone`, `address` e os registros NÃO entram enquanto não vierem da
-   cliente: dado estruturado errado é pior que dado ausente, porque a busca
-   passa a mostrar o errado com confiança. */
-const DADOS = {
-  "@context": "https://schema.org",
-  "@type": "RealEstateAgent",
-  name: NOME,
-  description: DESCRICAO,
-  url: SITE,
-  /* 🔴 Também DERIVADO das regiões, pelo mesmo motivo: esta lista estava
-     escrita à mão e continuou anunciando o Grajaú à busca depois de o
-     bairro sair do site. Dado estruturado errado é pior que ausente. */
-  areaServed: REGIOES.map((r) => ({
-    "@type": "Place",
-    name: `${r}, Rio de Janeiro`,
-  })),
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: `${ENDERECO.rua}, ${ENDERECO.complemento}`,
-    addressLocality: ENDERECO.cidade,
-    addressRegion: ENDERECO.estado,
-    postalCode: ENDERECO.cep,
-    addressCountry: "BR",
-  },
-  /* Cada sócia com o registro que dá para conferir no conselho. É o campo
-     que a busca usa para casar o negócio com a pessoa. */
-  employee: SOCIAS.map((s) => ({
-    "@type": "RealEstateAgent",
-    name: s.nome,
-    identifier: [s.creci, s.cnai],
-  })),
-  knowsLanguage: "pt-BR",
-  slogan: SLOGAN,
-};
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -109,12 +73,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${unbounded.variable} ${archivo.variable} ${plex.variable} h-full antialiased grao`}
     >
       <body className="min-h-full flex flex-col">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(DADOS).replace(/</g, "\u003c"),
-          }}
-        />
+        {/* 🔴 A empresa e as duas pessoas são declaradas UMA VEZ, aqui, e
+            todo o resto do site só aponta para elas por `@id`. Antes este
+            bloco era um objeto solto neste arquivo; agora vem de
+            `dados-estruturados.ts`, de onde o artigo e a revista também
+            puxam. Uma definição, um lugar para corrigir. */}
+        <Dados>{grafo(empresa(), ...pessoas())}</Dados>
         <Topo />
         <main id="conteudo" className="flex-1">
           {children}

@@ -46,3 +46,7 @@ next-env.d.ts
 # A pagina do artigo e GERADA por scripts/preparar-revista.mjs a partir de
 # src/app/revista/_artigo/. A fonte e versionada; esta copia nao.
 src/app/revista/[slug]/
+
+# Peças de Instagram: material de trabalho, geradas a cada build e baixadas
+# como artefato do GitHub. Não vão para o site nem para o repositório.
+cards/

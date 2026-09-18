@@ -123,6 +123,23 @@ jobs:
           NEXT_PUBLIC_SANITY_DATASET: ${{ vars.SANITY_DATASET }}
         run: npm run build
 
+      # 🔴 AS PEÇAS DE INSTAGRAM SAEM POR AQUI, e não pelo site.
+      #
+      # Artefato do GitHub só baixa quem tem acesso ao repositório. É o que
+      # cumpre a combinação: quem cuida da conta baixa e repassa a quem vai
+      # postar, e as peças não ficam num endereço público que qualquer um
+      # descobre. O `cards-instagram.mjs` já as tirou de `out/` antes deste
+      # passo, então elas não existem mais no que sobe para o balde.
+      #
+      # 90 dias é de sobra: a peça é do dia do texto. Passou disso, o build
+      # seguinte gera de novo, porque ela é derivada, não original.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cards-instagram
+          path: web/cards/
+          retention-days: 90
+          if-no-files-found: ignore
+
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
