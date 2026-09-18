@@ -67,7 +67,8 @@ const site = await ler("src/lib/site.ts");
 
 const MARCA = pegar(site, /export const MARCA = "([^"]+)"/, "a MARCA");
 const DESCRITIVO = pegar(site, /export const DESCRITIVO = "([^"]+)"/, "o DESCRITIVO");
-const FRASE = pegar(site, /export const FRASE =\s*\n?\s*"([^"]+)"/, "a FRASE");
+/* La o cartao dizia a FRASE, que saiu do projeto em 17/09/2026 porque as
+   socias nao gostaram dela. A manchete agora e o SLOGAN. */
 const SLOGAN = pegar(site, /export const SLOGAN =\s*\n?\s*"([^"]+)"/, "o SLOGAN");
 
 const REGIOES = await regioesAtendidas();
@@ -140,10 +141,10 @@ const html = `<!doctype html><meta charset="utf-8">
   </div>
   <div class="cat">${DESCRITIVO}</div>
 </div>
-<h1>${FRASE}</h1>
+<h1>${SLOGAN}</h1>
 <div class="pe">
   <span>${REGIOES.join(" · ")}</span>
-  <span class="slogan">${SLOGAN}</span>
+  <span class="slogan">Documentação conferida.</span>
 </div>
 `;
 

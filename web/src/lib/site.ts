@@ -23,11 +23,17 @@ export const DESCRICAO =
 /* As duas frases da marca ficam aqui porque aparecem em lugares que não se
    olham: a abertura, o rodapé, o cartão de compartilhamento da home e o
    cartão de cada imóvel. Espalhadas, uma correção sempre esquecia uma. */
-export const FRASE = "Quem mostra o imóvel é quem lê a matrícula.";
+/* 🔴 "Quem mostra o imóvel é quem lê a matrícula." SAIU em 17/09/2026: as
+   sócias não gostaram. Ela era o h1 da home, o título do cartão de
+   compartilhamento e a descrição do site na busca, ou seja, a primeira coisa
+   que qualquer pessoa lia. Não sobrou nenhum lugar com ela.
 
-/* 🔴 O slogan é a frase que ELAS pediram para aparecer mais, e por isso ele
-   saiu de um lugar só. Hoje ele abre a faixa de vídeo da home, fecha o
-   rodapé, assina a página de quem somos e encerra a carteira.
+   Quem assumiu o posto é o SLOGAN, que é delas e que elas pediram para usar
+   mais. Ele não é mais "a frase de apoio": é a manchete.
+
+   🔴 Não existe mais uma constante `FRASE` separada, e isso é de propósito.
+   Duas frases de marca no código davam dois títulos concorrentes, e foi por
+   isso que a home chegou a mostrar as duas em telas seguidas.
 
    Uma segunda frase vem delas e ainda não chegou. O lugar dela já existe
    aqui embaixo, VAZIO: quem consome `SEGUNDA_FRASE` some com o bloco

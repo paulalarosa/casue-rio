@@ -311,24 +311,45 @@ Leva dois ou três minutos, e é de propósito: página de imóvel precisa exist
 pronta no HTML para o buscador indexar, e num site de imobiliária é o
 buscador que traz gente.
 
+### A página do artigo liga sozinha
+
+🔴 Com `output: export`, uma rota dinâmica que não gera nenhuma página é
+**erro duro**, não caso previsto: o build inteiro cai. Ou seja, a página do
+artigo não pode existir em `[slug]/` enquanto não houver texto publicado.
+
+Quem resolve é `web/scripts/preparar-revista.mjs`, que roda antes de todo
+build: pergunta ao painel quantos artigos estão publicados e copia
+`_artigo/` para `[slug]/` se houver, ou apaga `[slug]/` se não houver. A
+fonte versionada é `_artigo/`; a cópia está no `.gitignore`.
+
+A primeira versão disto era um `mv` na mão, escrito aqui. Estava errado:
+significava que no dia da primeira publicação o site republicaria sem o texto,
+porque alguém esqueceu um comando que ninguém leu. Automação que depende de
+memória humana é o mesmo que não ter automação.
+
+🔴 O script lê `.env.local` por conta própria, e isso também foi defeito
+antes: ele roda FORA do Next, e quem carrega `.env.local` é o Next. Sem isso
+a rota era desligada em silêncio na máquina de quem trabalha no site, e
+funcionava na publicação — o pior tipo de defeito, o que só aparece para quem
+desenvolve.
+
 ### O que falta ligar
 
-1. Criar o projeto em `sanity.io` e anotar o `projectId`.
-2. No GitHub, em Settings > Secrets and variables > Actions > **Variables**,
-   criar `SANITY_PROJECT_ID` e `SANITY_DATASET`. Não são segredos: a chave
-   pública da Sanity só lê, e só o que está publicado.
-3. `cd estudio && npm run deploy`, e convidar as duas por e-mail.
-4. 🔴 Quando o primeiro artigo for publicado, ligar a página do artigo:
+1. 🟢 Projeto criado: `hpmn0ser`, conjunto `production`.
+2. 🟢 `SANITY_PROJECT_ID` e `SANITY_DATASET` já estão em Settings > Secrets
+   and variables > Actions > **Variables**. Não são segredos: a chave pública
+   da Sanity só lê, e só o que está publicado.
+3. 🟢 Os nove imóveis e os três bairros já estão no painel, pelo
+   `estudio/migrar.mjs`.
+4. Publicar o painel, que precisa de login no navegador:
 
    ```bash
-   mv web/src/app/revista/_artigo web/src/app/revista/"[slug]"
+   cd estudio
+   npx sanity login
+   npm run deploy
    ```
 
-   Ela está pronta e parada numa pasta com underscore, que o Next não trata
-   como rota. O motivo é uma regra que eu descobri quebrando o build: com
-   `output: export`, uma rota dinâmica que não gera nenhuma página é **erro
-   duro**, não caso previsto. Com zero artigos, o arquivo em `[slug]/`
-   derrubaria toda publicação do site.
+5. Criar o webhook de republicação, na tabela acima.
 
 ---
 

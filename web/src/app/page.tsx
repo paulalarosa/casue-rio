@@ -45,11 +45,14 @@ export default function Home() {
       <Abertura>
         <EntradaAbertura>
           <Painel variante="escuro" className="max-w-3xl rounded-[1rem] p-8 sm:p-12">
+            {/* 🔴 O h1 mudou em 17/09/2026. Era "Quem mostra o imóvel é quem
+                lê a matrícula.", e as sócias não gostaram. Quem assumiu é o
+                slogan delas, que já era o pedido: usar essa frase mais. */}
             <h1
               data-entra="titulo"
-              className="max-w-[19ch] font-display text-[clamp(1.9rem,min(5.2vw,6.4svh),4.25rem)] leading-[1.03] text-papel"
+              className="max-w-[16ch] font-display text-[clamp(1.9rem,min(5.2vw,6.4svh),4.25rem)] leading-[1.03] text-papel"
             >
-              Quem mostra o imóvel é quem lê a matrícula.
+              {SLOGAN}
             </h1>
           </Painel>
 
@@ -129,21 +132,25 @@ export default function Home() {
         </div>
       </Revela>
 
-      {/* ======================================================== SLOGAN
-          O slogan da marca, dentro do imóvel. Chega DEPOIS de a página ter
-          mostrado o que promete, que é a ordem certa: primeiro a prova,
-          depois a frase. */}
+      {/* ========================================================== FAIXA
+          🔴 Esta faixa carregava o slogan. Com ele promovido a h1, repetir
+          aqui seria a mesma frase duas vezes na mesma rolagem, que é
+          exatamente o defeito que este corte de home veio consertar.
+
+          O que ela diz agora é o que o vídeo mostra e que precisava de
+          legenda: por que o cômodo está vazio. É afirmação, não enfeite —
+          quem chega de outro site de imobiliária está acostumado a sala
+          montada com móvel que não vai junto. */}
       <FaixaVideo
         fonte={arquivo("/video/sala.mp4")}
         poster={posterSala}
         altura="min-h-[24rem] sm:min-h-[32rem]"
       >
-        <p className="font-display text-[clamp(1.8rem,4.4vw,3.2rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-papel">
-          {SLOGAN}
+        <p className="max-w-[18ch] font-display text-[clamp(1.8rem,4.4vw,3.2rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-papel">
+          O imóvel vazio é o que a gente entrega.
         </p>
         <p className="mt-5 max-w-[42ch] text-base text-tinta-200 sm:text-lg">
-          Sem móvel e sem montagem: o imóvel vazio é o que a gente entrega para
-          você imaginar o seu.
+          Sem móvel e sem montagem. O resto quem imagina é você.
         </p>
       </FaixaVideo>
 

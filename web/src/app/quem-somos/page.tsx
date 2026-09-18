@@ -5,12 +5,12 @@ import { Revela } from "@/components/entrada";
 import { Painel } from "@/components/painel";
 import { arquivo } from "@/lib/caminho";
 import posterGradil from "../../../public/video/gradil.webp";
-import { SOCIAS, SLOGAN, FRASE, metaDaPagina } from "@/lib/site";
+import { SOCIAS, SLOGAN, metaDaPagina } from "@/lib/site";
 
 export const metadata = metaDaPagina({
   titulo: "Quem somos",
   descricao:
-    "Duas corretoras e avaliadoras no Rio de Janeiro, com CRECI e CNAI. Quem mostra o imóvel é quem lê a matrícula e quem assina o contrato.",
+    "Duas corretoras e avaliadoras no Rio de Janeiro, com CRECI e CNAI. Quem mostra o imóvel é quem cuida da papelada e quem assina o contrato.",
   caminho: "/quem-somos",
 });
 
@@ -42,23 +42,22 @@ export default function PaginaQuemSomos() {
       </p>
 
       {/* ======================================================== A PROMESSA
-          As duas frases da marca, juntas e uma vez só. A de cima é o que a
-          empresa faz; a de baixo é para quê. */}
+          🔴 Aqui havia DUAS frases de marca lado a lado, e uma delas saiu do
+          projeto inteiro em 17/09/2026 porque as sócias não gostaram. Ficou
+          uma só, que é o slogan delas, e ela agora é a manchete — no site
+          inteiro, não só aqui. */}
       <Revela className="trilho secao">
         <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-end">
           <h2
             data-revela
-            className="max-w-[20ch] text-[clamp(1.9rem,4vw,3.1rem)] leading-[1.08]"
+            className="max-w-[16ch] text-[clamp(1.9rem,4vw,3.1rem)] leading-[1.08]"
           >
-            {FRASE}
+            {SLOGAN}
           </h2>
           <div data-revela className="border-t border-terracota-600/30 pt-6">
-            <p className="font-display text-xl font-semibold text-terracota-600">
-              {SLOGAN}
-            </p>
-            <p className="mt-4 text-lg leading-relaxed text-tinta-500">
+            <p className="text-lg leading-relaxed text-tinta-500">
               Você não é passado para outro setor. Quem abre a porta do imóvel é
-              a mesma que levanta a matrícula, conversa com o condomínio e senta
+              a mesma que levanta a papelada, conversa com o condomínio e senta
               na assinatura.
             </p>
           </div>

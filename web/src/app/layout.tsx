@@ -3,7 +3,7 @@ import { Unbounded, Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Topo } from "@/components/topo";
 import { Rodape } from "@/components/rodape";
-import { SITE, MARCA, NOME, DESCRICAO, FRASE, SLOGAN, ENDERECO, SOCIAS } from "@/lib/site";
+import { SITE, MARCA, NOME, DESCRICAO, SLOGAN, ENDERECO, SOCIAS } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
 
 /* Unbounded é a fonte da marca, escolhida pelas sócias numa folha de nove
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     /* Montada das regiões atendidas, e não escrita à mão: a lista aqui já
        ficou atrasada duas vezes, uma quando entrou região e outra quando
        saiu. Derivada, ela acompanha. */
-    description: `${FRASE} ${REGIOES.join(", ").replace(/, ([^,]+)$/, " e $1")}.`,
+    description: `${SLOGAN} ${REGIOES.join(", ").replace(/, ([^,]+)$/, " e $1")}.`,
     url: "/",
     siteName: NOME,
     locale: "pt_BR",
