@@ -5,25 +5,14 @@ import { Midia } from "@/components/midia";
 import { VideoFundo } from "@/components/video-fundo";
 import type { NomeCena } from "@/components/cenas";
 
-/* Cabeça das páginas internas: ilha escura dentro do trilho, em vez de faixa
-   colada nas bordas. O fundo dela pode ser três coisas, e é só isso que muda
-   de uma página para outra: nada, a ilustração da marca, ou vídeo. */
 export function CabecaPagina({
   titulo,
   linha,
   trilha,
-  /* Com `cena`, a ilha VIRA a ilustração da marca: nome dentro dela, como
-     na ficha do imóvel. Sem nada, fica a ilha lisa. */
   cena,
   semente,
   foto,
-  /* Com `video`, a ilha vira o filme. Mesma ilha, mesmo véu, mesmo texto por
-     cima: o vídeo entra no lugar da ilustração e nada mais se mexe. */
   video,
-  /* Manchete com três números é a abertura de uma das referências que ela
-     mandou, e serve onde a ilha lisa estava só com título e uma linha.
-     🔴 Só número DERIVADO entra aqui: "4.500 clientes satisfeitos" é o
-     tipo de fato que enche essas telas e que aqui seria invento. */
   fatos,
 }: {
   titulo: string;
@@ -69,11 +58,6 @@ export function CabecaPagina({
             />
           </div>
         )}
-        {/* Véu em gradiente, não desfoque: o custo do desfoque em peça desse
-            tamanho já cobrou caro uma vez.
-            🔴 Era `rgba(9,22,42,·)`, o azul da marca velha, e ficou para trás
-            na troca de identidade: ele lavava de frio uma cena que agora é
-            toda areia e tinta. */}
         {(cena || video) && (
           <div
             aria-hidden
@@ -110,9 +94,6 @@ export function CabecaPagina({
             </span>
           ))}
         </nav>
-        {/* Sobre imagem, a linha fica EMBAIXO do título, na mesma coluna: à
-            direita ela cai na parte clara da ilustração, onde o véu é mais
-            fraco, e perde contraste. */}
         <div
           className={
             cena || video

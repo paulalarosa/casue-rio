@@ -2,22 +2,6 @@ import { SITE, NOME, DESCRICAO, SLOGAN, ENDERECO, SOCIAS } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
 import { listarArtigos, dataPorExtenso } from "@/lib/revista";
 
-/* `llms.txt`: o mapa do site para modelo de linguagem.
-
-   🔴 Isto NÃO é SEO, e vale dizer para não criar expectativa. É uma
-   convenção proposta, não um padrão que alguém garantiu cumprir, e não
-   existe medição pública confiável de quanto os modelos realmente a leem
-   hoje. Está aqui porque custa um arquivo gerado do que já existe e porque
-   o custo de estar errado é zero: se ninguém ler, nada muda.
-
-   O que ele resolve, quando é lido, é concreto: o site é um monte de HTML
-   com menu, rodapé, vídeo e animação, e o modelo precisa adivinhar o que é
-   conteúdo. Aqui a resposta vem em texto limpo, com quem é a empresa, onde
-   ela atua, quem assina o quê e o endereço de cada texto.
-
-   🔴 Gerado da MESMA lista que monta a revista, com o filtro de agendamento
-   junto. Artigo marcado para semana que vem não entra aqui antes da hora,
-   senão o modelo aprende um endereço que ainda dá 404. */
 export const dynamic = "force-static";
 
 export async function GET() {
@@ -35,10 +19,6 @@ export async function GET() {
     `- Atuação: ${REGIOES.join(", ")}, na cidade do Rio de Janeiro.`,
     `- Serviços: compra, venda, aluguel e avaliação de imóveis. Não trabalha com temporada.`,
     `- Endereço: ${ENDERECO.linha}`,
-    /* 🔴 O e-mail NÃO entra aqui. Este arquivo é texto puro, público e
-       feito para máquina ler: é o lugar mais fácil do site inteiro para um
-       robô colher endereço. Quem precisa falar vai pela página de contato,
-       que é o que este arquivo aponta. */
     `- Contato: pela página ${SITE}/contato/`,
     "",
     "## Quem assina",

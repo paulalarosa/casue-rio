@@ -3,20 +3,6 @@
 import { useState } from "react";
 import { Check, Link2, Printer, Share2 } from "lucide-react";
 
-/* Compartilhar a ficha, que é como corretora trabalha: o imóvel viaja por
-   link no WhatsApp, não por visita ao site.
-
-   Três caminhos, e cada um existe por um motivo:
-   - COMPARTILHAR do sistema, quando o aparelho tem (é o gesto do celular,
-     e leva para qualquer aplicativo, inclusive o WhatsApp);
-   - COPIAR o endereço, que é o que funciona no computador;
-   - IMPRIMIR, porque quem visita imóvel leva papel, e a folha impressa
-     sai formatada pela regra de impressão do site.
-
-   🔴 O estado do botão não pode mentir: "Copiado" só aparece depois de a
-   escrita na área de transferência dar certo, e volta sozinho. Em contexto
-   sem permissão a mensagem diz para copiar da barra de endereço, em vez de
-   fingir que copiou. */
 export function Compartilhar({ titulo }: { titulo: string }) {
   const [copiado, setCopiado] = useState<"nao" | "sim" | "falhou">("nao");
 
@@ -37,7 +23,6 @@ export function Compartilhar({ titulo }: { titulo: string }) {
     try {
       await navigator.share({ title: titulo, url: window.location.href });
     } catch {
-      /* Cancelar o compartilhamento não é erro: é a pessoa desistindo. */
     }
   }
 

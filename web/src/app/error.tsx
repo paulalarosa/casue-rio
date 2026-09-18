@@ -5,8 +5,6 @@ import { RotateCcw } from "lucide-react";
 import { Painel } from "@/components/painel";
 import { AssinaturaLinha } from "@/components/assinatura";
 
-/* Erro de execução com saída e sem jargão. A pessoa que chega aqui quer
-   falar com uma corretora, não ler pilha de exceção. */
 export default function Erro({ reset }: { error: Error; reset: () => void }) {
   return (
     <div className="trilho flex min-h-[70svh] items-center justify-center py-32">

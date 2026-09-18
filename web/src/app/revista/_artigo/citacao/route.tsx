@@ -2,12 +2,6 @@ import { ImageResponse } from "next/og";
 import { listarArtigos, lerArtigo } from "@/lib/revista";
 import { fontes, frasePara, Placa, TINTA, PAPEL, TERRACOTA } from "@/lib/cartao";
 
-/* A peça de citação, 1080 × 1080.
-
-   Ela existe porque frase isolada e título são dois posts diferentes: um
-   convida a ler, o outro é lido ali mesmo. A frase sai do bloco de citação
-   do artigo, que já foi escolhido por quem escreveu para ser destacado.
-   Sem citação no texto, a chamada assume. */
 export const dynamic = "force-static";
 
 export async function generateStaticParams() {
@@ -24,8 +18,6 @@ export async function GET(
   if (!a) return new Response("não encontrado", { status: 404 });
 
   const frase = frasePara(a.corpo, a.linha);
-  /* Uma frase de 90 caracteres precisa de corpo maior que uma de 220. Três
-     degraus resolvem o material real sem medir transbordo a cada post. */
   const corpo = frase.length > 180 ? 50 : frase.length > 110 ? 60 : 72;
 
   return new ImageResponse(

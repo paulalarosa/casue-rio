@@ -8,15 +8,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Painel } from "@/components/painel";
 import { TELEFONE } from "@/lib/site";
 
-/* O consentimento é trava, não enfeite: sem ele marcado o envio não passa, e
-   o erro aparece junto do campo. O WhatsApp continua sendo o caminho rápido;
-   este formulário existe para quem não usa. */
 type Erros = { nome?: string; contato?: string; consentimento?: string };
 
-/* Validação no envio, não a cada tecla: acusar erro enquanto a pessoa ainda
-   está digitando o nome é o jeito mais rápido de irritar quem quer falar
-   com você. Depois do primeiro envio, o erro some assim que o campo fica
-   válido, que aí sim a correção é imediata. */
 function validar(nome: string, contato: string, ok: boolean): Erros {
   const e: Erros = {};
   if (nome.trim().length < 2) e.nome = "Diga como a gente te chama.";
@@ -49,21 +42,12 @@ export function FormContato() {
     const achados = validar(nome, contato, ok);
     setErros(achados);
     if (Object.keys(achados).length) {
-      /* Foco no primeiro campo com problema: sem isso, em formulário longo
-         a pessoa fica olhando o botão sem entender o que faltou. */
       const alvo = document.querySelector<HTMLElement>("[aria-invalid='true']");
       alvo?.focus();
       return;
     }
     setEnviado(true);
 
-    /* 🔴 Entregar de verdade, com o que existe. O site é estático e não há
-       CRM, então não há para onde POSTAR. Mas o canal delas é WhatsApp:
-       montar a mensagem e abrir a conversa entrega o recado sem servidor
-       nenhum, e a pessoa só confirma no aplicativo.
-
-       Sem número cadastrado isto não roda, e o aviso abaixo diz a verdade
-       em vez de fingir envio. */
     if (TELEFONE) {
       const texto = [
         `Olá! Sou ${nome.trim()}.`,

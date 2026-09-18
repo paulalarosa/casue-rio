@@ -1,21 +1,5 @@
 import type { NomeCena } from "@/components/cenas";
-import { TELEFONE } from "@/lib/site";
 
-/* Casuê Rio · portfólio de exemplo.
-   Nenhum imóvel aqui é real. Este arquivo é o que a manutenção mensal edita:
-   sem banco e sem CRM, a carteira é um módulo TypeScript. A contagem viva
-   dos filtros é derivada daqui, e o tipo abaixo é o contrato: faltando campo
-   obrigatório, a página nem compila, que é melhor do que publicar torto. */
-
-/* 🔴 TEMPORADA NÃO EXISTE nesta imobiliária, e isto mudou em 17/09/2026:
-   antes era o contrário, temporada existia e aluguel não. Elas trabalham
-   VENDA e ALUGUEL, mais avaliação. O tipo é o que segura isso: com
-   "temporada" fora da união, qualquer imóvel, filtro ou rótulo que tente
-   usar temporada não compila, e foi assim que os dois anúncios de diária e
-   os quatro seletores foram encontrados de uma vez.
-
-   🔴 GRAJAÚ SAIU na mesma data, pelo mesmo mecanismo: fora da união de
-   regiões, e o compilador aponta cada lugar que ainda o citava. */
 export type Finalidade = "comprar" | "alugar";
 export type Regiao = "Centro" | "Tijuca" | "Zona Sul";
 
@@ -40,11 +24,7 @@ export type Imovel = {
   destaque: boolean;
   resumo: string;
   fechado?: boolean;
-  /** Aluguel: o preço é MENSAL, e a ficha precisa dizer isso ao lado do
-   *  número. Sem esta marca um aluguel de R$ 2.800 fica parecendo o preço
-   *  do imóvel, que é o erro mais caro que uma vitrine pode cometer. */
   porMes?: boolean;
-  /** Quando a foto da cliente chegar, é só preencher: a cena sai e a foto entra. */
   foto?: string;
   fotos?: string[];
   alt?: string;
@@ -289,18 +269,8 @@ export const BAIRROS: Bairro[] = [
   },
 ];
 
-/* 🔴 As regiões dos filtros saem DAQUI, e não de uma lista escrita à mão em
-   cada componente. Era assim antes, e quando uma região entrou os dois
-   seletores continuaram oferecendo a lista velha: o imóvel existia na
-   carteira e não aparecia em filtro nenhum. */
 export const REGIOES: Regiao[] = BAIRROS.map((b) => b.chave);
 
-/* 🔴 Imóvel VENDIDO não é imóvel disponível, e estava entrando na conta:
-   a carteira dizia "10 imóveis" e a pastilha do Centro dizia 2 contando um
-   que já saiu. Quem procura imóvel lê contagem como oferta.
-
-   Ele continua no site, porque venda fechada é prova de trabalho, mas numa
-   faixa própria no fim da lista e fora de toda contagem. */
 export const DISPONIVEIS = IMOVEIS.filter((im) => !im.fechado);
 export const VENDIDOS = IMOVEIS.filter((im) => im.fechado);
 
@@ -314,30 +284,6 @@ export function moeda(v: number | null | undefined) {
   return v === null || v === undefined ? "—" : BRL.format(v);
 }
 
-/* A mensagem já vai preenchida com o código. Sem isso a corretora precisa
-   perguntar de qual imóvel se trata, e a resposta atrasa. */
-/* 🔴 Sem número, NÃO devolve link de WhatsApp. `wa.me/` sem destinatário
-   abre o aplicativo numa tela de "número inválido", e a pessoa sai
-   acreditando que falou com a imobiliária. Enquanto o número único da
-   empresa não é definido, o destino é a página de contato. Assim que
-   `TELEFONE` for preenchido em `lib/site.ts`, todos os botões do site
-   passam a abrir a conversa com a mensagem pronta. */
-export function linkZap(im?: Imovel) {
-  if (!TELEFONE) return "/contato/";
-  const texto = im
-    ? `Olá! Vi o imóvel ${im.codigo}, ${im.titulo}, no site e queria saber mais.`
-    : "Olá! Vim pelo site.";
-  const numero = TELEFONE.replace(/\D/g, "");
-  return `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
-}
-
-/* Retrato numérico de uma região, DERIVADO da carteira: quantos imóveis,
-   faixa de preço e área mediana. Número derivado não envelhece, porque se
-   a carteira muda a frase muda sozinha, e é o oposto de "4.500 clientes
-   satisfeitos" escrito à mão numa tela de portfólio.
-
-   Mediana, não média: uma cobertura de 300 m² no meio de conjugados puxa a
-   média para um número que não descreve nada. */
 export function retratoDaRegiao(regiao: Regiao) {
   const lista = DISPONIVEIS.filter((im) => im.regiao === regiao && !im.porMes);
   if (!lista.length) return null;
@@ -351,22 +297,6 @@ export function retratoDaRegiao(regiao: Regiao) {
   };
 }
 
-/* Busca por TEXTO, e o caso que importa é o código.
-
-   🔴 Quem chega com um código na mão veio de outro lugar: da placa na
-   janela, do anúncio, do print que a sócia mandou no WhatsApp. Essa pessoa
-   não quer filtrar uma lista, quer abrir UM imóvel. Por isso a função
-   devolve o imóvel inteiro quando o texto é um código, e quem chama decide
-   ir direto para a ficha em vez de mostrar uma lista de um item só.
-
-   A comparação joga fora tudo que não é letra ou número, dos dois lados:
-   "cr 0142", "CR-0142", "cr0142" e "0142" abrem o mesmo imóvel. Hífen
-   digitado errado é o jeito mais comum de uma busca por código não achar
-   nada que existe.
-
-   Sem código, cai para texto solto sobre título, bairro e resumo, que é o
-   que a pessoa faz quando não tem o código: escreve "cobertura" ou
-   "Tijuca". */
 function cru(t: string) {
   return t
     .toLowerCase()
@@ -380,7 +310,6 @@ export function acharPorCodigo(termo: string) {
   if (!alvo) return null;
   return (
     IMOVEIS.find((im) => cru(im.codigo) === alvo) ??
-    /* Só os dígitos: a pessoa lê "0142" na placa e não copia o prefixo. */
     (/^\d{3,}$/.test(alvo)
       ? IMOVEIS.find((im) => cru(im.codigo).endsWith(alvo)) ?? null
       : null)

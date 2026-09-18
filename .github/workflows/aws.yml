@@ -108,6 +108,13 @@ jobs:
         working-directory: web
         run: npm ci
 
+      - name: Conferir
+        working-directory: web
+        run: |
+          npm run lint
+          npm run typecheck
+          npm run test
+
       - name: Construir
         working-directory: web
         env:

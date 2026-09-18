@@ -9,33 +9,6 @@ import { Dados } from "@/components/dados";
 import { artigo as dadosDoArtigo, trilha, grafo } from "@/lib/dados-estruturados";
 import { metaDaPagina } from "@/lib/site";
 
-/* A página de um artigo.
-
-   🔴 ESTA PASTA COMEÇA COM UNDERSCORE, e por isso o Next NÃO a trata como
-   rota. É de propósito, e eu descobri o motivo quebrando o build:
-
-     Error: Page "/revista/[slug]" returned an empty array from
-     "generateStaticParams()". With "output: export", at least one route
-     must be generated.
-
-   Eu tinha suposto que devolver lista vazia deixaria a rota simplesmente não
-   existir. Não deixa: em exportação estática isso é erro duro, sem escape.
-   Ou seja, este arquivo não pode morar em `[slug]/` enquanto não houver
-   nenhum artigo publicado, porque hoje ele derrubaria toda publicação do
-   site por causa de uma página que ninguém pediu.
-
-   🔴 QUEM LIGA E DESLIGA É `scripts/preparar-revista.mjs`, que roda antes
-   de todo build e copia esta pasta para `[slug]/` quando há artigo com a
-   hora vencida, apagando-a quando não há.
-
-   Aqui morava a instrução de fazer isso À MÃO, com um `mv`. Estava errada
-   como automação: dependia de alguém lembrar, num dia em que essa pessoa
-   não estaria por perto, e o preço de esquecer era o site inteiro parar de
-   publicar. Instrução que depende de memória humana não é automação, é uma
-   armadilha com manual.
-
-   As peças de Instagram vivem aqui dentro pelo mesmo motivo: `cartao/` e
-   `citacao/` ligam e desligam junto com o artigo, sem uma segunda regra. */
 export async function generateStaticParams() {
   const artigos = await listarArtigos();
   return artigos.map((a) => ({ slug: a.slug }));
@@ -69,11 +42,6 @@ export default async function PaginaArtigo({
 
   return (
     <article className="trilho" style={{ paddingTop: "calc(var(--altura-topo) + 1.75rem)" }}>
-      {/* 🔴 O artigo aponta para a AUTORA por `@id`, e a autora é declarada
-          uma vez no layout com CRECI e CNAI. É essa cadeia que separa "um
-          texto sobre ITBI na internet" de "uma corretora registrada
-          escreveu sobre ITBI", que é a diferença entre ser parafraseado e
-          ser citado pelo nome. */}
       <Dados>
         {grafo(
           dadosDoArtigo(artigo, capa),
@@ -97,8 +65,6 @@ export default async function PaginaArtigo({
       <p className="mt-6 max-w-[55ch] text-xl leading-relaxed text-tinta-500">
         {artigo.linha}
       </p>
-      {/* Quem escreveu e quando, na mesma linha e em rótulo: é dado, não
-          texto, e é o que dá a um texto de imobiliária o peso de ter dono. */}
       <p className="rotulo mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-bronze-500">
         <span>{artigo.autora}</span>
         <span aria-hidden className="text-tinta-300">·</span>

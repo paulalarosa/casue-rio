@@ -2,26 +2,7 @@ import { SITE, NOME, DESCRICAO, SLOGAN, ENDERECO, SOCIAS } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
 import type { Artigo } from "@/lib/revista";
 
-/* Dados estruturados, todos deste arquivo.
-
-   🔴 O QUE FAZ ISTO FUNCIONAR PARA IA NÃO É TER SCHEMA, É TER `@id`.
-
-   Um site que declara "RealEstateAgent" numa página e "Person" em outra dá
-   ao buscador dois cartões soltos. Com `@id`, o artigo aponta para a pessoa,
-   a pessoa aponta para a empresa, e a empresa carrega os CRECIs: deixa de
-   ser texto sobre imóveis e vira uma empresa identificável com duas
-   profissionais registradas que assinam o que escrevem. É essa cadeia que
-   um modelo de linguagem consegue seguir para citar a Casuê pelo nome em
-   vez de parafrasear uma página anônima.
-
-   🔴 O que NÃO entra aqui é tão importante quanto o que entra. Nada de
-   `FAQPage` sem pergunta e resposta visíveis na tela, nada de `aggregateRating`
-   sem avaliação real, nada de telefone antes de existir telefone. Dado
-   estruturado que não corresponde ao que está na página é violação das
-   diretrizes do Google e derruba o resultado inteiro, não só o campo. Dado
-   errado é pior que ausente, porque a busca mostra o errado com confiança. */
-
-export const ID_EMPRESA = `${SITE}/#empresa`;
+const ID_EMPRESA = `${SITE}/#empresa`;
 
 const semAcento = (t: string) =>
   t
@@ -31,12 +12,9 @@ const semAcento = (t: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
-export const idDaPessoa = (nome: string) =>
+const idDaPessoa = (nome: string) =>
   `${SITE}/quem-somos/#${semAcento(nome)}`;
 
-/* Cada sócia como pessoa, com o registro que dá para conferir no conselho.
-   É o campo que separa "alguém escreveu sobre ITBI na internet" de "uma
-   corretora com CRECI escreveu sobre ITBI". */
 export function pessoas() {
   return SOCIAS.map((s) => ({
     "@type": "Person" as const,
@@ -58,9 +36,6 @@ export function empresa() {
     url: `${SITE}/`,
     slogan: SLOGAN,
     knowsLanguage: "pt-BR",
-    /* 🔴 DERIVADO das regiões, e não escrito à mão. A lista manual que
-       estava aqui continuou anunciando o Grajaú à busca depois de o bairro
-       sair do site. */
     areaServed: REGIOES.map((r) => ({
       "@type": "Place",
       name: `${r}, Rio de Janeiro`,
@@ -77,8 +52,6 @@ export function empresa() {
   };
 }
 
-/* A trilha. Ela aparece na busca como caminho embaixo do título e, para um
-   modelo, diz de que seção do site aquele texto veio. */
 export function trilha(itens: { nome: string; caminho: string }[]) {
   return {
     "@type": "BreadcrumbList" as const,
@@ -91,12 +64,6 @@ export function trilha(itens: { nome: string; caminho: string }[]) {
   };
 }
 
-/* 🔴 `datePublished` E `dateModified`, sempre os dois, e sem inventar
-   nenhum dos dois. O painel guarda um instante só, que é a hora de
-   publicar; usar esse mesmo valor nos dois campos é a verdade. Preencher
-   `dateModified` com a data do build seria dizer que todo artigo foi
-   revisado toda vez que o site subiu, o que é falso e é justamente o sinal
-   que se tenta forjar para parecer conteúdo fresco. */
 export function artigo(a: Artigo, imagem?: string | null) {
   return {
     "@type": "BlogPosting" as const,
@@ -134,12 +101,6 @@ export function revista(artigos: Artigo[]) {
   };
 }
 
-/* 🔴 UM grafo por página, não cinco etiquetas soltas.
-
-   `@graph` é o que permite os `@id` se resolverem entre si sem repetir o
-   conteúdo de cada nó. Sem ele, a página do artigo teria de repetir a
-   empresa inteira e as duas pessoas inteiras dentro do artigo, e a primeira
-   vez que o CRECI mudasse ficariam três cópias, duas delas erradas. */
 export function grafo(...nos: object[]) {
   return { "@context": "https://schema.org", "@graph": nos };
 }

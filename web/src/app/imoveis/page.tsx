@@ -17,10 +17,6 @@ export const metadata = metaDaPagina({
 });
 
 export default function PaginaImoveis() {
-  /* Os três números da abertura saem da carteira, e não da mão: tirar um
-     imóvel do arquivo de dados muda a manchete junto. A entrada começa em
-     compra, porque aluguel mensal ao lado de preço de venda faria a
-     carteira parecer cem vezes mais barata. */
   const compra = DISPONIVEIS.filter((im) => im.finalidade === "comprar");
   const menor = Math.min(...compra.map((im) => im.preco));
 
@@ -37,29 +33,13 @@ export default function PaginaImoveis() {
         trilha={[{ href: "/", texto: "Início" }, { texto: "Imóveis" }]}
         video={{ fonte: arquivo("/video/carteira.mp4"), poster: carteira }}
       />
-      {/* 🔴 O aviso é mais necessário AQUI do que em qualquer outra página.
-          Esta é a carteira: telhado de verdade atrás dos três números, sem
-          uma linha dizendo o contrário, insinua que aquele casario é o
-          estoque. Não é, e elas têm CRECI. */}
       <p className="trilho mt-3 text-sm text-tinta-500">
         Imagem de ambiente. Não retrata imóvel da carteira.
       </p>
-      {/* `useSearchParams` precisa de fronteira de suspense: sem ela a página
-          inteira vira dinâmica e perde a geração estática. */}
       <Suspense fallback={<div className="trilho py-24 text-tinta-500">Carregando a carteira…</div>}>
         <Vitrine />
       </Suspense>
 
-      {/* ======================================================== BAIRROS
-          🔴 Esta faixa é a fusão que ela pediu. "Imóveis" e "Bairros" eram
-          duas entradas de menu para a mesma coisa vista de dois ângulos, e
-          quem chega não sabe qual abrir. Agora existe uma entrada só, e os
-          bairros aparecem DENTRO dela, depois da lista: quem já procurou e
-          não achou pelo filtro é exatamente quem quer navegar por região.
-
-          As páginas de cada bairro continuam existindo, continuam indexadas
-          e continuam linkadas de cada ficha de imóvel. O que saiu foi a
-          segunda porta no topo, não o conteúdo. */}
       <section className="trilho secao">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>

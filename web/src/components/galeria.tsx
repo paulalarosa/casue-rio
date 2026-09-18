@@ -7,17 +7,9 @@ import { Midia } from "@/components/midia";
 import type { Imovel } from "@/lib/imoveis";
 import { cn } from "@/lib/utils";
 
-/* Roteiro da galeria: enquanto não há fotografia, mostra só as cenas que
-   fazem sentido para aquele imóvel, e o contador diz quantas são.
-
-   🔴 Contador fixo em "1 / 12" com cinco desenhos em ciclo é mentira que o
-   cliente descobre na primeira seta. Quando `fotos` existir no arquivo de
-   dados, é ele que manda e o número vem do tamanho da lista. */
 type Quadro = { foto?: string; cena: NomeCena };
 
 function roteiro(im: Imovel): Quadro[] {
-  /* Foto manda. Quando `fotos` existir, o roteiro é ele: o contador passa a
-     dizer o número real de fotografias, sem precisar mexer em nada aqui. */
   if (im.fotos?.length) return im.fotos.map((f) => ({ foto: f, cena: im.cena }));
   if (im.foto) return [{ foto: im.foto, cena: im.cena }];
   const lista: Quadro[] = [{ cena: im.cena }];
@@ -26,17 +18,12 @@ function roteiro(im: Imovel): Quadro[] {
   return lista;
 }
 
-/* `capa` é o conteúdo que fica SOBRE a imagem: selo, bairro, código,
-   título e preço. Vem de fora porque é a página que sabe o que identifica
-   o imóvel, e a galeria só sabe trocar de quadro. */
 export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
   const quadros = roteiro(im);
   const [i, setI] = useState(0);
   const toqueX = useRef<number | null>(null);
   const anda = (d: number) => setI((v) => (v + d + quadros.length) % quadros.length);
 
-  /* Seta do teclado anda na galeria. Esquerda e direita não rolam a página,
-     então não há conflito, e é o gesto que quem usa teclado tenta primeiro. */
   useEffect(() => {
     function tecla(e: KeyboardEvent) {
       const emCampo = (e.target as HTMLElement)?.closest("input, textarea, select");
@@ -48,8 +35,6 @@ export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
     return () => window.removeEventListener("keydown", tecla);
   });
 
-  /* Arrastar com o dedo. No celular a seta é alvo pequeno perto da borda, e
-     ninguém procura botão numa foto: procura arrastar. */
   function inicio(e: React.PointerEvent) {
     toqueX.current = e.clientX;
   }
@@ -70,9 +55,6 @@ export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
         onPointerDown={inicio}
         onPointerUp={fim}
       >
-        {/* A primeira imagem da ficha é o LCP: é a única da página que entra
-            com prioridade. Proporção mais alta que a de antes (era 21/9)
-            porque agora existe texto dentro dela. */}
         <div className="relative aspect-[16/9] w-full max-md:aspect-4/5">
           <Midia
             foto={quadros[i].foto}
@@ -87,9 +69,6 @@ export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
 
         {capa && (
           <>
-            {/* Véu em gradiente, não desfoque: é a página que mais rola, e
-                `backdrop-filter` em elemento desse tamanho foi metade do
-                travamento que ela reclamou. */}
             <div
               aria-hidden
               className="pointer-events-none absolute inset-0"
@@ -121,8 +100,6 @@ export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
           ))}
         </div>
 
-        {/* Contador no ALTO à direita: embaixo ele disputava lugar com o
-            preço, e preço é o que a pessoa procura primeiro. */}
         <span
           aria-live="polite"
           className="tinta num absolute right-5 top-5 rounded-full px-4 py-2 text-sm"

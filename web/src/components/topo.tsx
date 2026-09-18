@@ -8,21 +8,6 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/s
 import { AssinaturaFaixa, AssinaturaNome } from "@/components/assinatura";
 import { cn } from "@/lib/utils";
 
-/* 🔴 O menu perdeu duas entradas em 17/09/2026, e as duas por REDUNDÂNCIA,
-   não por falta de conteúdo:
-
-   · "Bairros" saiu porque ela e "Imóveis" mandavam para a mesma coisa vista
-     de dois jeitos, e quem chega não sabe qual das duas abrir. Os bairros
-     agora moram DENTRO de /imoveis, numa faixa própria, e as páginas de cada
-     bairro continuam existindo e continuam indexadas.
-   · "Contato" saiu porque o botão ao lado já é o contato. Duas portas para a
-     mesma conversa, uma escrita e uma pintada, é o tipo de repetição que faz
-     a pessoa procurar a diferença entre elas.
-
-   "Jurídico" saiu por decisão dela, e a página junto.
-
-   O que sobrou são quatro assuntos que não se confundem: o que tem à venda,
-   quanto vale, quem são elas, e o que escrevem. */
 const LINKS = [
   { href: "/imoveis", texto: "Imóveis" },
   { href: "/avaliacao", texto: "Avaliação" },
@@ -30,28 +15,12 @@ const LINKS = [
   { href: "/revista", texto: "Revista" },
 ];
 
-/* Barra que flutua destacada do topo, em vez de colar na borda da tela.
-
-   Sobre a abertura ela usa a receita TINGIDA, e não a clara: atrás dela
-   passa a fachada iluminada do prédio, e medido no enquadramento de tela
-   baixa os links em azul claro sobre vidro claro ficavam ilegíveis quando a
-   parte clara da cena entrava. Vidro sobre imagem precisa de tinta, igual
-   à etiqueta de preço no cartão. Depois da rolagem vira vidro claro,
-   porque aí atrás é o off-white. */
 export function Topo() {
   const caminho = usePathname();
   const [rolou, setRolou] = useState(false);
   const [menu, setMenu] = useState(false);
   const sobreCena = caminho === "/" && !rolou;
 
-  /* Trocar de página fecha o menu: gaveta aberta sobre a página nova é o
-     defeito clássico de menu em rota do lado do cliente.
-
-     🔴 Isto era um `useEffect` com `setMenu(false)` dentro, e o lint barra
-     com razão: fechar o menu não é sincronizar com sistema externo, é
-     estado derivado do caminho. Ajustar durante a renderização é o jeito
-     que o React documenta, e ainda economiza uma pintura, porque o menu
-     nunca chega a aparecer aberto na página nova. */
   const [ondeAbriu, setOndeAbriu] = useState(caminho);
   if (ondeAbriu !== caminho) {
     setOndeAbriu(caminho);
@@ -67,8 +36,6 @@ export function Topo() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-60 pt-3 sm:pt-4">
-      {/* Primeiro alvo do Tab: sem ele, quem navega por teclado atravessa o
-          menu inteiro em toda página antes de chegar ao conteúdo. */}
       <a
         href="#conteudo"
         className="sr-only focus:not-sr-only focus:absolute focus:left-6 focus:top-6 focus:z-70 focus:rounded-full focus:bg-tinta-800 focus:px-5 focus:py-3 focus:font-semibold focus:text-papel"
@@ -84,21 +51,6 @@ export function Topo() {
         )}
       >
         <Link href="/" className="flex shrink-0 items-center" aria-label="Casuê Rio, início">
-          {/* Montagem 04 · faixa. A folha de marca é explícita: "04 em barras
-              e testeiras", e esta é a barra. Placa, nome, fio e descritivo em
-              uma linha só, com o descritivo saindo abaixo de `lg`, onde a
-              barra deixa de ter largura para ele.
-
-              🔴 A placa NÃO inverte sobre a cena escura. A montagem 16 mantém
-              o esmalte terracota sobre a tinta e muda só o nome: a placa é um
-              bloco cheio, que pede 3:1 e mede 3,19:1 ali. Quem precisa mudar
-              é a palavra ao lado.
-
-              🔴 E o ê NÃO é colorido aqui. Nas montagens com placa o nome sai
-              numa cor só: o ê em terracota é a versão SEM placa, a 05, e é
-              ela que existe justamente para substituir a placa quando esta
-              não cabe. Com a placa ao lado, o acento seria a mesma cor a dois
-              centímetros de si mesma. */}
           <AssinaturaFaixa
             className="text-[1.05rem] sm:text-[1.15rem]"
             cores={{
@@ -139,44 +91,15 @@ export function Topo() {
           className={cn(
             "ml-auto inline-flex shrink-0 items-center rounded-full px-4 py-2.5 text-sm font-semibold md:ml-0",
             "shadow-[var(--shadow-flutua-1)] transition-transform duration-300 hover:-translate-y-0.5",
-            /* 🔴 Terracota nos DOIS estados. Antes era areia sobre a cena e
-               tinta depois da rolagem, ou seja, a acao principal do site
-               nunca teve cor. Medido: papel sobre terracota-600 da 5,18:1
-               sobre o claro; sobre a cena escura o botao e um bloco cheio,
-               que pede 3:1 e nao 4,5, e passa.
-
-               🔴 O repouso escurece nos dois estados, nunca clareia: eu
-               tinha posto `terracota-500` no hover e medi 4,13:1 de papel
-               sobre ele, ou seja, o botao REPROVAVA justamente enquanto o
-               mouse estava em cima. Estado de interacao tambem e estado. */
             sobreCena
               ? "bg-terracota-600 text-papel hover:bg-terracota-700"
               : "bg-terracota-600 text-papel hover:bg-terracota-700",
           )}
         >
-          {/* 🔴 "Falar" sozinho não diz com quem nem convida; "Falar com a
-              gente" convida e é o mesmo título da página de destino, então o
-              botão e a página deixam de ter dois nomes para a mesma coisa.
-
-              🔴 E não diz "sócia": o contato passou a ser um canal único da
-              empresa, não um por pessoa, e rótulo que promete falar com uma
-              pessoa específica promete o que o canal não entrega.
-
-              🔴 SEM ícone, e foi medido: com o balãozinho o botão dava 177px
-              numa barra de 1297, e a 1024 de tela ele virava o elemento mais
-              pesado da barra depois do menu inteiro. O ícone dizia
-              "mensagem", que é exatamente o que as três palavras ao lado já
-              dizem — ilustrar o rótulo com o próprio rótulo. Pílula cheia em
-              terracota já é o botão mais visível da tela, não precisa de
-              desenho para ser reconhecida.
-
-              O rótulo curto fica no celular, onde a barra não tem largura. */}
           <span className="hidden sm:inline">Falar com a gente</span>
           <span className="sm:hidden">Falar</span>
         </Link>
 
-        {/* No celular o menu inteiro ficava de fora: só existia o botão de
-            falar, e as quatro páginas não tinham como ser alcançadas. */}
         <Sheet open={menu} onOpenChange={setMenu}>
           <SheetTrigger
             aria-label="Abrir menu"
@@ -191,20 +114,10 @@ export function Topo() {
           </SheetTrigger>
           <SheetContent side="right" className="w-[min(20rem,86vw)] p-8">
             <SheetTitle className="sr-only">Navegação</SheetTitle>
-            {/* Montagem 05 · sem placa, que é a que a folha manda usar
-                "onde a placa já aparece na mesma página". É o caso exato: a
-                gaveta abre a três dedos da barra, e a barra tem a placa. Duas
-                placas na mesma tela gastariam o símbolo em vez de firmá-lo.
-
-                E é a ÚNICA montagem em que o ê sai colorido: sem a placa ao
-                lado, é ele que carrega a cor da marca. */}
             <div className="mt-6">
               <AssinaturaNome className="text-[2rem]" empilhado />
             </div>
             <nav aria-label="Principal" className="mt-10 flex flex-col gap-1">
-              {/* Fechar no clique, e não só na troca de rota: tocar no link
-                  da página em que já se está não muda a rota, e a gaveta
-                  ficaria aberta sem nada ter acontecido. */}
               {LINKS.map((l) => (
                 <Link
                   key={l.href}

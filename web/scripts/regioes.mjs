@@ -1,7 +1,3 @@
-/* As regiões atendidas, lidas de `BAIRROS` em `src/lib/imoveis.ts`, na ordem
-   em que ele as declara. Fica num módulo só porque duas coisas precisam da
-   mesma lista sem se falarem: quem DESENHA o cartão da marca e quem CONFERE,
-   no build, se o cartão desenhado ainda corresponde. */
 import { readFile } from "node:fs/promises";
 
 export async function regioesAtendidas() {

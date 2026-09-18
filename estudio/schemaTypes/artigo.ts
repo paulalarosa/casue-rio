@@ -1,13 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { DocumentTextIcon } from "@sanity/icons/DocumentText";
 
-/* Daqui a uma hora, arredondado, para o campo já nascer com algo plausível.
-
-   🔴 O valor gravado é sempre ISO em UTC, e a tela sempre mostra o fuso do
-   Rio. Essa separação é o que evita o erro clássico: guardar "18/09 09:00"
-   sem fuso e o build, que roda em servidor americano, ler isso como 09:00
-   UTC, ou seja, 6h da manhã no Rio. Data e hora sem fuso não são data e
-   hora, são um texto que parece uma. */
 const daquiUmaHora = () => {
   const d = new Date();
   d.setMinutes(0, 0, 0);
@@ -15,18 +8,6 @@ const daquiUmaHora = () => {
   return d.toISOString();
 };
 
-/* O artigo da revista.
-
-   🔴 O corpo é texto ESTRUTURADO, não HTML colado, e a diferença aparece no
-   dia em que alguém escrever no Word e colar aqui: HTML de editor traz fonte,
-   tamanho e cor embutidos, e o artigo sai com Calibri no meio de um site em
-   Unbounded. Aqui o editor guarda só o PAPEL de cada trecho — isto é um
-   parágrafo, isto é um subtítulo, isto é uma citação — e quem decide a
-   aparência continua sendo o CSS do site.
-
-   Por isso a lista de estilos é curta de propósito: parágrafo, dois níveis de
-   subtítulo e citação. Não existe escolha de cor nem de tamanho, e isso é a
-   funcionalidade, não a falta dela. */
 export const artigo = defineType({
   name: "artigo",
   title: "Artigo",
@@ -69,17 +50,6 @@ export const artigo = defineType({
         timeStep: 15,
       },
       initialValue: daquiUmaHora,
-      /* 🔴 ESTE CAMPO AGENDA, e um campo só, de propósito.
-
-         Data futura significa duas coisas ao mesmo tempo, e elas são a
-         mesma: o texto entra no site naquele dia, e é aquele dia que
-         aparece assinado embaixo do título. Já escrevi a versão com dois
-         campos, "data do texto" e "data de publicação", e ela sempre acaba
-         com os dois diferentes por engano e ninguém sabendo qual manda.
-
-         O site filtra por `data <= agora` na hora de montar as páginas, e
-         uma tarefa no GitHub confere de quinze em quinze minutos se chegou
-         a hora de alguém. Quem venceu entra sozinho. */
       description:
         "Data e hora passadas publicam na próxima conferência. À frente, agenda: o texto entra no site na hora marcada, com uma folga de uns quinze minutos, e é essa data que sai assinada nele.",
       validation: (r) => r.required(),
@@ -89,10 +59,6 @@ export const artigo = defineType({
       title: "Quem escreveu",
       type: "string",
       description: "Quem assina. O nome aparece no artigo e na lista da revista.",
-      /* 🔴 Os dois nomes vêm por extenso, e batem com `SOCIAS` em
-         `web/src/lib/site.ts`. Nome e sobrenome sempre: chamar alguém só
-         pelo sobrenome soa a departamento, e esta empresa é o contrário
-         disso. Mudou lá, muda aqui. */
       options: {
         list: [
           { title: "Débora de Almeida Carvalho", value: "Débora de Almeida Carvalho" },
@@ -176,16 +142,6 @@ export const artigo = defineType({
       validation: (r) => r.required().min(1),
     }),
   ],
-  /* 🔴 NÃO existe campo "publicado" aqui, e a ausência é a decisão.
-
-     Eu tinha criado um, e ele era um SEGUNDO interruptor por cima do botão
-     de publicar da própria Sanity. Medido: a consulta pública não devolve
-     rascunho nem com esse campo ligado. Ou seja, quem escrevesse o primeiro
-     texto clicaria no botão verde grande, o texto não apareceria no site, e
-     não haveria nada na tela explicando o porquê.
-
-     Um botão para uma coisa. Publicar é publicar, e despublicar está no menu
-     do próprio documento. */
   preview: {
     select: { titulo: "titulo", data: "data", autora: "autora", media: "capa" },
     prepare({ titulo, data, autora, media }) {
@@ -199,10 +155,6 @@ export const artigo = defineType({
             minute: "2-digit",
           })
         : "sem data";
-      /* 🔴 O agendamento aparece NA LISTA, e não só dentro do documento.
-         Um texto publicado com data à frente não está no site, e a única
-         tela em que isso é visível sem abrir nada é esta. Sem o aviso aqui,
-         a lista mostraria um artigo com cara de no ar que não está. */
       const agendado = Boolean(data) && new Date(data) > new Date();
       return {
         title: titulo ?? "Sem título",

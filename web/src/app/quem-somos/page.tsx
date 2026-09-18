@@ -14,21 +14,6 @@ export const metadata = metaDaPagina({
   caminho: "/quem-somos",
 });
 
-/* Esta página nasceu do CORTE da home: "Quem atende você" ocupava quase um
-   terço da rolagem inicial e falava de gente, não de imóvel, que é o que a
-   home precisa provar primeiro. Aqui o mesmo conteúdo respira e ganha o que
-   não cabia lá: a frase da marca, o compromisso e os registros explicados.
-
-   🔴 O vídeo é o `portaria.mp4`, e ele substituiu o `gradil.mp4`. O gradil
-   era bonito e não dizia nada: ferro fundido em close fala de artesanato,
-   não de imobiliária. Portaria de prédio carioca fala de porta, de chave e
-   de chegar, que é o assunto desta página. Ladrilho hidráulico, caixas de
-   correio e porta de ferro com sol entrando.
-
-   🔴 Nenhum contato por sócia. É canal único da empresa, decisão delas: não
-   há "falar com a Débora" e "falar com a Alessandra", há falar com a
-   Casuê Rio. Por isso a chamada no fim é uma só. */
-
 export default function PaginaQuemSomos() {
   return (
     <>
@@ -42,11 +27,6 @@ export default function PaginaQuemSomos() {
         Imagem de ambiente. Não retrata imóvel da carteira.
       </p>
 
-      {/* ======================================================== A PROMESSA
-          🔴 Aqui havia DUAS frases de marca lado a lado, e uma delas saiu do
-          projeto inteiro em 17/09/2026 porque as sócias não gostaram. Ficou
-          uma só, que é o slogan delas, e ela agora é a manchete — no site
-          inteiro, não só aqui. */}
       <Revela className="trilho secao">
         <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-end">
           <h2
@@ -65,10 +45,6 @@ export default function PaginaQuemSomos() {
         </div>
       </Revela>
 
-      {/* ========================================================== AS SÓCIAS
-          🔴 Nome completo, sempre. O site chamava as duas pelo sobrenome
-          ("falar com a Carvalho"), que soa a departamento e não a pessoa, e
-          é justamente o contrário do que esta página afirma. */}
       <Revela className="campo-luz trilho secao relative">
         <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">Quem atende você</h2>
         <p className="mt-3 text-lg text-tinta-500">
@@ -78,9 +54,6 @@ export default function PaginaQuemSomos() {
         <div className="mt-12 grid gap-8 md:grid-cols-2">
           {SOCIAS.map((s) => (
             <div key={s.nome} data-revela className="flex flex-col gap-5">
-              {/* Retrato que ainda não existe: painel com a inicial e a
-                  especificação da foto que falta. Foto de banco no lugar de
-                  uma sócia seria a mentira mais fácil de perceber. */}
               <div className="relative isolate flex aspect-4/5 items-center justify-center overflow-hidden rounded-[0.875rem] bg-tinta-800 shadow-[var(--shadow-flutua-2)]">
                 <span
                   aria-hidden
@@ -109,12 +82,6 @@ export default function PaginaQuemSomos() {
         </div>
       </Revela>
 
-      {/* ========================================================= REGISTRO
-          🔴 Este é o ÚNICO lugar do site onde CRECI e CNAI aparecem
-          explicados. Eles estavam repetidos no rodapé, na home e na página
-          de avaliação: número de registro repetido em todo canto deixa de
-          ser credencial e vira ruído. No rodapé sobrou uma linha curta, que
-          é prova; a explicação é aqui. */}
       <Revela className="trilho secao">
         <div className="grid gap-8 lg:grid-cols-2">
           <Painel data-revela className="p-8">
@@ -144,7 +111,6 @@ export default function PaginaQuemSomos() {
         </div>
       </Revela>
 
-      {/* ========================================================== CHAMADA */}
       <Revela className="trilho secao pb-8">
         <div
           data-revela

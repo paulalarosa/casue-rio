@@ -19,23 +19,6 @@ export const metadata = metaDaPagina({
   caminho: "/revista",
 });
 
-/* A revista.
-
-   🔴 Os textos vêm do painel da Sanity, e a lista chega VAZIA enquanto o
-   projeto não existir ou nenhum artigo estiver publicado. Os dois casos
-   caem no mesmo estado de tela, que é o de baixo: a página diz que o
-   primeiro texto não saiu e manda para o Instagram, onde elas já publicam.
-
-   🔴 O que eu NÃO fiz foi escrever matérias de exemplo para a grade não
-   ficar vazia. Texto assinado por corretora com CRECI, escrito por mim, é o
-   mesmo erro do depoimento inventado que já saiu deste site.
-
-   🔴 O vídeo é o `escrivaninha.mp4`, e ele substituiu o `parede.mp4`. A
-   parede era o pior vídeo do site: uma sombra de janela que podia ser de
-   qualquer lugar do mundo, na página de uma revista sobre o Rio. Aqui há
-   mesa, jornal aberto, cortina se mexendo e prédio carioca pela janela.
-   Alguém lê e alguém escreve, e é no Rio. */
-
 const ASSUNTOS = [
   {
     titulo: "O que a matrícula conta",
@@ -59,9 +42,6 @@ export default async function PaginaRevista() {
 
   return (
     <>
-      {/* 🔴 O `Blog` só é declarado quando existe artigo. Um blog vazio em
-          dado estruturado é uma promessa que a página não cumpre, e o
-          buscador confere. */}
       {materias.length > 0 && (
         <Dados>
           {grafo(

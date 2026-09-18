@@ -6,7 +6,8 @@ import { Galeria } from "@/components/galeria";
 import { Compartilhar } from "@/components/compartilhar";
 import { CartaoImovel } from "@/components/cartao-imovel";
 import { Painel } from "@/components/painel";
-import { IMOVEIS, DISPONIVEIS, BAIRROS, moeda, linkZap } from "@/lib/imoveis";
+import { IMOVEIS, DISPONIVEIS, BAIRROS, moeda } from "@/lib/imoveis";
+import { AcaoZap } from "@/components/acao";
 import { SITE, NOME, metaDaPagina } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -17,18 +18,11 @@ export async function generateMetadata({ params }: PageProps<"/imoveis/[codigo]"
   const { codigo } = await params;
   const im = IMOVEIS.find((x) => x.codigo === codigo);
   if (!im) return { title: "Imóvel" };
-  /* Barra no fim: `trailingSlash` está ligado, e canônico que aponta para
-     endereço sem barra aponta para uma página que não existe. */
   const meta = metaDaPagina({
     titulo: `${im.titulo} · ${im.bairro}`,
     descricao: im.resumo,
     caminho: `/imoveis/${im.codigo}`,
   });
-  /* 🔴 A imagem é declarada COM extensão. O Next exporta a rota de imagem
-     sem extensão nenhuma, e hospedagem estática decide o tipo pelo nome:
-     sem `.png` o arquivo sai como `application/octet-stream` e o WhatsApp
-     descarta. A cópia com extensão é feita por `scripts/og-com-extensao`,
-     que roda junto do build. */
   return {
     ...meta,
     openGraph: {
@@ -45,10 +39,6 @@ export async function generateMetadata({ params }: PageProps<"/imoveis/[codigo]"
   };
 }
 
-/* O que a gente confere antes da proposta. Não é lista de serviço
-   genérica: é a etapa que essa imobiliária faz e que o anúncio de portal
-   não faz, escrita como conteúdo da página. Nenhum prazo e nenhuma
-   alíquota aqui, porque isso depende de confirmação delas. */
 const CONFERIDO = [
   "Matrícula atualizada, com a cadeia de proprietários",
   "Ônus, penhora e ação contra o vendedor",
@@ -57,8 +47,6 @@ const CONFERIDO = [
   "Regularidade da planta na Prefeitura",
 ];
 
-/* Rótulo em cima, valor embaixo, e valor que não existe é travessão, nunca
-   um número plausível: ficha com número inventado parece ficha preenchida. */
 function Item({
   rotulo,
   valor,
@@ -67,9 +55,7 @@ function Item({
 }: {
   rotulo: string;
   valor: string | number | null;
-  /** Corpo de leitura, para a fita de especificação da ficha. */
   grande?: boolean;
-  /** Fio à esquerda: separa as colunas da fita sem precisar de caixa. */
   fio?: boolean;
 }) {
   const vazio = valor === null || valor === undefined || valor === "";
@@ -98,12 +84,8 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
   const parecidos = DISPONIVEIS.filter(
     (x) => x.regiao === im.regiao && x.codigo !== im.codigo,
   ).slice(0, 3);
-  /* O texto do bairro é conteúdo que já existe: reaproveitar aqui evita
-     escrever de novo e mantém a página do bairro como fonte única. */
   const bairro = BAIRROS.find((b) => b.chave === im.regiao);
 
-  /* Anúncio em dado estruturado: preço, área, quartos e bairro. É assim que
-     o imóvel aparece na busca com a ficha, e não como parágrafo solto. */
   const dados = {
     "@context": "https://schema.org",
     "@type": "Residence",
@@ -133,9 +115,6 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
   return (
     <>
       <Dados>{dados}</Dados>
-      {/* A imagem passa a IDENTIFICAR o imóvel: selo e localização em cima,
-          título e preço embaixo. Quem chega por link compartilhado sabe o
-          que está vendo sem rolar a página. */}
       <Galeria
         im={im}
         capa={
@@ -151,9 +130,6 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
               ))}
             </div>
             <div className="max-w-[46rem]">
-              {/* Região só quando ela ACRESCENTA: na Tijuca o bairro e a
-                  região têm o mesmo nome, e "Tijuca · Tijuca" lê como
-                  defeito de dado. */}
               <span className="rotulo text-areia-300">
                 {im.bairro}
                 {im.bairro !== im.regiao ? ` · ${im.regiao}` : ""} · {im.codigo}
@@ -170,9 +146,6 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
         }
       />
 
-      {/* Fita de especificação: número grande com fio entre as colunas. É a
-          primeira coisa que quem procura imóvel compara, e estava dentro de
-          uma lista de definição no meio da página. */}
       <dl className="trilho mt-10 grid grid-cols-2 gap-y-8 border-y border-tinta-800/12 py-8 sm:grid-cols-3 lg:grid-cols-6">
         {(
           [
@@ -222,7 +195,6 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
           )}
         </div>
 
-        {/* A coluna de preço acompanha a rolagem: é a ação da página. */}
         <Painel className="sticky top-28 p-8">
           <span className="font-display text-4xl font-bold text-tinta-800">
             {moeda(im.preco)}
@@ -239,12 +211,13 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
             </div>
           </dl>
 
-          <a
-            href={linkZap(im)}
+          <AcaoZap
+            im={im}
+            recuo="/contato/"
             className="mt-7 flex w-full items-center justify-center gap-2 rounded-full bg-tinta-800 px-6 py-4 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
           >
             <MessageCircle className="size-5" aria-hidden /> Falar sobre este imóvel
-          </a>
+          </AcaoZap>
           <p className="mt-3 flex items-center gap-2 text-sm text-tinta-500">
             <span className="size-2 rounded-full bg-[#1F6B4A]" aria-hidden />
             Resposta em minutos, das 9h às 19h.
@@ -280,9 +253,6 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
               Ver todos <ArrowRight className="size-4" aria-hidden />
             </Link>
           </div>
-          {/* 🔴 A grade era sempre de três colunas. Com dois parecidos, e
-              a Tijuca só tem esses, sobrava um buraco do tamanho de um
-              cartão. A coluna acompanha quantos existem. */}
           <div
             className={
               parecidos.length >= 3

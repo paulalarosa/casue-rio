@@ -14,41 +14,14 @@ import { arquivo } from "@/lib/caminho";
 import { VideoFundo } from "@/components/video-fundo";
 import posterNoite from "../../public/video/noite.webp";
 
-/* 🔴 A home ENCOLHEU em 17/09/2026, e por decisão dela. Saíram, nesta ordem:
-
-     · "O que acontece antes de você assinar", com as três etapas numeradas;
-     · "Onde a gente atua", com a grade de bairros;
-     · "O problema quase nunca aparece na visita. Aparece na matrícula.";
-     · o compromisso das sócias, em citação;
-     · "Quem atende você", que MUDOU DE CASA e hoje é o corpo de /quem-somos.
-
-   O que ficou são quatro blocos, e cada um faz uma coisa que os outros não
-   fazem: a abertura afirma e deixa buscar, os destaques provam que existe
-   carteira, a faixa diz o slogan dentro de um imóvel, e a chamada pede a
-   conversa. Página curta que não se repete vale mais do que página longa
-   com três versões do mesmo argumento, que era o que estava acontecendo:
-   "a gente lê a matrícula antes" aparecia em três seções seguidas.
-
-   🔴 Dois vídeos ficaram sem casa com esse corte e foram para páginas que
-   não tinham vídeo nenhum, em vez de aparecerem duas vezes cada: reaproveitar
-   peça de vídeo em dois lugares é o que faz o site parecer que tem um filme
-   só. Os dois já saíram desde então, trocados por planos que falam do
-   assunto da página: `escrivaninha` na revista e `portaria` em quem somos. */
-
 export default function Home() {
   const destaques = DISPONIVEIS.filter((im) => im.destaque);
 
   return (
     <>
-      {/* ===================================================== ABERTURA
-          A rua da Zona Sul no fim da tarde, em vídeo. O painel de vidro só
-          existe porque tem cidade atrás dele para refratar. */}
       <Abertura>
         <EntradaAbertura>
           <Painel variante="escuro" className="max-w-3xl rounded-[1rem] p-8 sm:p-12">
-            {/* 🔴 O h1 mudou em 17/09/2026. Era "Quem mostra o imóvel é quem
-                lê a matrícula.", e as sócias não gostaram. Quem assumiu é o
-                slogan delas, que já era o pedido: usar essa frase mais. */}
             <h1
               data-entra="titulo"
               className="max-w-[16ch] font-display text-[clamp(1.9rem,min(5.2vw,6.4svh),4.25rem)] leading-[1.03] text-papel"
@@ -61,10 +34,6 @@ export default function Home() {
             <Busca />
           </div>
 
-          {/* Ficha flutuando sobre a cena. É o jeito mais curto de a abertura
-              PROVAR que existe carteira, em vez de prometer. Só no desktop:
-              em tela estreita ela tapa a busca, que é o que a página quer
-              que a pessoa use. */}
           {destaques[0] && (
             <Link
               href={`/imoveis/${destaques[0].codigo}/`}
@@ -97,7 +66,6 @@ export default function Home() {
         </EntradaAbertura>
       </Abertura>
 
-      {/* ==================================================== DESTAQUES */}
       <Revela id="destaques" className="trilho secao">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -115,10 +83,6 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* 🔴 O `h-full` mora no ENVELOPE e o cartão estica dentro dele. Foi
-            medido quando ficou solto: a coluna da direita tinha 713px, cada
-            envelope 344px, e o `<article>` dentro só 177px, deixando 167px de
-            vazio embaixo de cada ficha. */}
         <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
           <div data-revela>
             <CartaoImovel im={destaques[0]} variante="largo" />
@@ -133,15 +97,6 @@ export default function Home() {
         </div>
       </Revela>
 
-      {/* ========================================================== FAIXA
-          🔴 Esta faixa carregava o slogan. Com ele promovido a h1, repetir
-          aqui seria a mesma frase duas vezes na mesma rolagem, que é
-          exatamente o defeito que este corte de home veio consertar.
-
-          O que ela diz agora é o que o vídeo mostra e que precisava de
-          legenda: por que o cômodo está vazio. É afirmação, não enfeite —
-          quem chega de outro site de imobiliária está acostumado a sala
-          montada com móvel que não vai junto. */}
       <FaixaVideo
         fonte={arquivo("/video/sala.mp4")}
         poster={posterSala}
@@ -155,9 +110,6 @@ export default function Home() {
         </p>
       </FaixaVideo>
 
-      {/* ====================================================== CHAMADA
-          A rua de noite, com as janelas acesas: "tem gente em casa" é a
-          última coisa que a página diz antes de alguém mandar mensagem. */}
       <Revela className="trilho secao">
         <div
           data-revela

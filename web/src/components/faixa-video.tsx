@@ -2,9 +2,6 @@ import { type StaticImageData } from "next/image";
 import { VideoFundo } from "@/components/video-fundo";
 import { cn } from "@/lib/utils";
 
-/* Faixa de largura total com vídeo no fundo e conteúdo por cima. Quem cuida
-   do vídeo, do pôster e de quem pediu menos movimento é o `VideoFundo`; aqui
-   sobra só a forma da faixa, que é o que muda de um lugar para outro. */
 export function FaixaVideo({
   fonte,
   poster,

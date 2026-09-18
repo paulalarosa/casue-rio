@@ -3,11 +3,6 @@ import { listarArtigos, lerArtigo, dataPorExtenso } from "@/lib/revista";
 import { fontes, Placa, TINTA, PAPEL, AREIA, TERRACOTA, BRONZE } from "@/lib/cartao";
 import { MARCA } from "@/lib/site";
 
-/* A peça de feed, 1080 × 1350.
-
-   🔴 Vertical 4:5 e não quadrado: é o maior retrato que o Instagram aceita
-   sem cortar, ou seja, o formato que ocupa mais tela de celular por post.
-   Quadrado joga fora um terço do espaço de graça. */
 export const dynamic = "force-static";
 
 export async function generateStaticParams() {
@@ -54,9 +49,6 @@ export async function GET(
 
         <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
           <div style={{ display: "flex", width: 96, height: 8, background: TERRACOTA }} />
-          {/* 🔴 O título vem da Sanity com no máximo 80 caracteres, e é essa
-              validação que deixa um corpo de 68 px caber aqui sem teste de
-              transbordo. Se o limite do painel mudar, esta arte quebra. */}
           <div
             style={{
               display: "flex",

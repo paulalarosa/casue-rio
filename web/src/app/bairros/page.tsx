@@ -15,29 +15,6 @@ export const metadata = metaDaPagina({
   caminho: "/bairros",
 });
 
-/* 🔴 Esta página dizia a mesma coisa duas vezes, e ela viu antes de mim.
-
-   Era assim: um título "Onde a gente atua" com a linha "Clique no bairro
-   que você procura", e logo abaixo um banner de vídeo escrito "Quatro
-   mercados diferentes, quatro contas diferentes". Duas manchetes seguidas,
-   uma em cima da outra, dizendo a mesma coisa com palavras diferentes —
-   o leitor lê as duas procurando a diferença e não acha.
-
-   O conserto não foi apagar uma: foi juntar as duas numa peça só. O resto
-   do site já resolve isso com a `CabecaPagina`, que põe o vídeo POR BAIXO
-   do título em vez de ao lado. Então esta página passou a usar a mesma
-   receita das outras, a frase forte virou a linha do título, e o banner
-   solto deixou de existir. Uma peça, uma manchete, e o vídeo fazendo o que
-   vídeo faz bem, que é ser fundo.
-
-   🔴 Ela também saiu do menu do topo, por redundância com "Imóveis". Continua
-   linkada do rodapé, da carteira e de cada ficha de imóvel: o que mudou é
-   que quem chega não precisa mais escolher entre duas portas para a mesma
-   sala. */
-
-/* Por extenso, e derivado da lista de regiões: quando uma região entra ou
-   sai, a manchete acompanha sozinha. Foi por número escrito à mão que a
-   página ficou dizendo "quatro mercados" depois de o Grajaú sair. */
 const POR_EXTENSO: Record<number, string> = {
   1: "Um",
   2: "Dois",
@@ -60,9 +37,6 @@ export default function PaginaBairros() {
         video={{ fonte: arquivo("/video/horizonte.mp4"), poster: posterHorizonte }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Bairros" }]}
       />
-      {/* 🔴 O aviso continua: a imagem é de ambiente e não retrata imóvel da
-          carteira. Vídeo de fachada num site de imobiliária sem essa linha
-          vira anúncio do que não existe. */}
       <p className="trilho mt-3 text-sm text-tinta-500">
         Imagem de ambiente. Não retrata imóvel da carteira.
       </p>

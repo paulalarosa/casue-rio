@@ -2,17 +2,6 @@ import { ImageResponse } from "next/og";
 import { IMOVEIS, moeda } from "@/lib/imoveis";
 import { MARCA, NOME, DESCRITIVO, SLOGAN } from "@/lib/site";
 
-/* Imagem de compartilhamento POR IMÓVEL.
-
-   Antes todo link do site compartilhava a mesma arte, então mandar um
-   apartamento no WhatsApp mostrava o cartão genérico da imobiliária: quem
-   recebia não sabia qual imóvel era antes de abrir. Como corretora
-   trabalha mandando link, essa é a peça que mais aparece fora do site.
-
-   Sai no build, uma por imóvel, porque a exportação é estática. Sem fonte
-   embutida de propósito: `ImageResponse` precisaria do arquivo da fonte, e
-   o desenho aguenta bem a sans do sistema, com a marca vindo do bloco de
-   cor e do fio dourado. */
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = `Imóvel na ${NOME}`;
@@ -66,9 +55,6 @@ export default async function Imagem({ params }: PageProps<"/imoveis/[codigo]">)
           </div>
           {im && (
             <div style={{ display: "flex", alignItems: "baseline", gap: 26 }}>
-              {/* 🔴 Texto montado ANTES: o Satori exige `display` explícito em
-                  div com mais de um filho, e duas expressões seguidas viram
-                  dois nós de texto. O build inteiro para por causa disso. */}
               <div style={{ display: "flex", fontSize: 58, fontWeight: 700, color: AREIA }}>
                 {`${moeda(im.preco)}${im.porMes ? " / mês" : ""}`}
               </div>
@@ -86,9 +72,6 @@ export default async function Imagem({ params }: PageProps<"/imoveis/[codigo]">)
             paddingTop: 26,
           }}
         >
-          {/* Marca e descritivo empilhados, na mesma proporção do lockup do
-              site: nome grande e "Negócios Imobiliários" em caixa alta
-              espaçada, bem menor. */}
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             <div style={{ display: "flex", fontSize: 34, fontWeight: 700, letterSpacing: -1 }}>
               {MARCA}

@@ -7,9 +7,6 @@ import { NOME } from "@/lib/site";
 
 export const metadata = { title: `Página não encontrada · ${NOME}` };
 
-/* Erro 404 na marca, e com saída. Página de erro padrão do framework num
-   site de imobiliária parece site quebrado, e quem chega aqui geralmente
-   veio de um link de imóvel que já saiu da carteira. */
 export default function NaoEncontrada() {
   return (
     <div className="trilho flex min-h-[70svh] items-center justify-center py-32">

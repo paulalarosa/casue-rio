@@ -4,12 +4,6 @@ import { Midia } from "@/components/midia";
 import { moeda, type Imovel } from "@/lib/imoveis";
 import { cn } from "@/lib/utils";
 
-/* O cartão é redondo e flutuante, e o vidro dele mora só nas etiquetas, que
-   ficam SOBRE a imagem, que é onde existe profundidade para refratar.
-
-   🔴 As etiquetas usam a receita TINGIDA, não a clara: medido no primeiro
-   corte, "EXCLUSIVO" em papel sobre vidro claro em cima da parte clara da
-   ilustração ficava ilegível. Vidro sobre imagem precisa de tinta. */
 export function CartaoImovel({
   im,
   variante = "padrao",
@@ -27,13 +21,6 @@ export function CartaoImovel({
         "shadow-[var(--shadow-flutua-1)] transition-[transform,box-shadow] duration-500 ease-[var(--ease-saida)]",
         "hover:-translate-y-1.5 hover:shadow-[var(--shadow-flutua-3)]",
         "borda-viva focus-within:-translate-y-1.5",
-        /* 🔴 `h-full` aqui e o conserto do "solto".
-           Medido na home a 1440: a coluna da direita tinha 713px, cada caixa
-           344px, e o cartao dentro dela 177px. Sobravam 167px de vazio
-           EMBAIXO de cada um, e era isso que fazia os dois parecerem
-           deslocados do cartao grande. O `h-full` estava no INVOLUCRO, que
-           obedecia, e nao no cartao, que nao obedecia ninguem.
-           A imagem cresce junto porque a coluna dela tambem e `h-full`. */
         fila && "grid h-full grid-cols-[minmax(0,15rem)_minmax(0,1fr)] items-stretch",
       )}
     >
@@ -77,8 +64,6 @@ export function CartaoImovel({
             {moeda(im.preco)}
             {im.porMes && <span className="text-sm font-semibold"> / mês</span>}
           </span>
-          {/* Na fila o encaixe tem 15rem: preço e bairro juntos não cabem,
-              e o bairro já aparece na ficha. Fica só o preço. */}
           {!fila && (
             <span className="tinta rotulo rounded-full px-3 py-1.5">
               {im.bairro}

@@ -8,26 +8,6 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-/* Vídeo de fundo: pôster por baixo, sempre, e o vídeo por cima quando pode.
-
-   🔴 Isto nasceu de duplicação: a faixa do slogan e a cabeça das páginas
-   internas iam repetir o mesmo bloco de regras de acessibilidade, e regra
-   repetida é regra que fica para trás quando muda. A abertura da home NÃO
-   usa isto de propósito: lá o arquivo troca por largura de tela (corte em
-   retrato) e o pôster também, e enfiar isso aqui deixaria o componente com
-   dois modos em vez de um.
-
-   As três regras, num lugar só:
-   · Quem pediu menos movimento ou está economizando dados não recebe vídeo
-     nenhum. O elemento nem monta, então o `autoPlay` nunca desrespeita.
-   · O arquivo só começa a baixar quando a peça chega perto da tela. Numa
-     peça que já nasce visível o observador dispara na primeira medição, e
-     por isso não existe um atalho para "ligar agora": o atalho seria
-     `setState` dentro de efeito, que o lint barra e que pinta a tela uma vez
-     a mais sem ganhar nada.
-   · Quem dá o play é o ATRIBUTO. A chamada imperativa corria com
-     `readyState` 0 e no celular voltava rejeitada em silêncio, então o vídeo
-     simplesmente não tocava e nada avisava. `onCanPlay` fica de reserva. */
 export function VideoFundo({
   fonte,
   poster,
@@ -35,8 +15,6 @@ export function VideoFundo({
   prioridade = false,
   posicao,
   sizes = "100vw",
-  /* Paralaxe: o fundo anda contra a rolagem. Desligado por padrão, porque
-     numa peça que ocupa a tela inteira o efeito enjoa. */
   paralaxe = false,
 }: {
   fonte: string;
@@ -52,14 +30,6 @@ export function VideoFundo({
   const [ligar, setLigar] = useState(false);
   const [tocando, setTocando] = useState(false);
 
-  /* 🔴 Aqui o ScrollTrigger é seguro, e isso é uma escolha, não descuido: ele
-     só DESLOCA uma peça que já está visível. Se nunca disparar, o fundo fica
-     parado, que é o site de antes. O que ele nunca faz neste projeto é
-     esconder conteúdo para revelar depois, porque foi assim que a home
-     inteira já ficou em opacidade zero uma vez.
-
-     O fundo é 118% da caixa e nasce centrado: a folga de 9% para cada lado é
-     o que garante que o deslocamento de 7% nunca mostre a borda do recorte. */
   useGSAP(
     () => {
       if (!paralaxe) return;
@@ -106,8 +76,6 @@ export function VideoFundo({
 
     const alvo = caixa.current;
     if (!alvo) return;
-    /* Sem `IntersectionObserver` (contexto de pré-visualização, miniatura) o
-       pior caso tem de ser a peça mostrar o pôster, nunca ficar vazia. */
     if (typeof IntersectionObserver === "undefined") return;
     const olho = new IntersectionObserver(
       (entradas) => {

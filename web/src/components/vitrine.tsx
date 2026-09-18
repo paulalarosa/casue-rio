@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { MessageCircle, X } from "lucide-react";
 import { CartaoImovel } from "@/components/cartao-imovel";
 import { Painel } from "@/components/painel";
+import { AcaoZap } from "@/components/acao";
 import {
   Select,
   SelectContent,
@@ -16,7 +17,6 @@ import {
   VENDIDOS,
   REGIOES,
   buscar,
-  linkZap,
   type Finalidade,
   type Imovel,
   type Regiao,
@@ -28,8 +28,6 @@ const FINALIDADES: [Finalidade, string][] = [
   ["alugar", "Alugar"],
 ];
 
-/* Ordem fica na URL junto com o filtro: assim o link que a sócia manda no
-   WhatsApp abre exatamente a lista que ela viu. */
 const ORDENS: Record<string, { rotulo: string; cmp: (a: Imovel, b: Imovel) => number }> = {
   selecionados: {
     rotulo: "Selecionados",
@@ -45,8 +43,6 @@ export function Vitrine() {
   const router = useRouter();
   const regiao = params.get("regiao") as Regiao | null;
   const finalidade = params.get("finalidade") as Finalidade | null;
-  /* O texto da busca chega pela URL, igual aos outros dois filtros, e por
-     isso o link que a sócia manda no WhatsApp reabre a mesma lista. */
   const termo = params.get("q") ?? "";
   const ordem = params.get("ordem") && ORDENS[params.get("ordem")!] ? params.get("ordem")! : "selecionados";
 
@@ -59,15 +55,9 @@ export function Vitrine() {
     )
     .sort(ORDENS[ordem].cmp);
 
-  /* Contagem VIVA: cada pastilha mostra quantos sobram se ela for ligada,
-     considerando o outro filtro já ligado. Pastilha que levaria a zero nasce
-     desabilitada, então ninguém clica para achar lista vazia. */
   function contarCom(chave: "regiao" | "finalidade", valor: string) {
     const alt = { regiao: regiao as string | null, finalidade: finalidade as string | null };
     alt[chave] = valor;
-    /* 🔴 A contagem conta dentro do que o TEXTO já filtrou. Contar sobre a
-       carteira inteira faria a pastilha prometer seis imóveis e entregar
-       um, que é pior do que não ter número nenhum. */
     return base.filter(
       (im) =>
         (!alt.regiao || im.regiao === alt.regiao) &&
@@ -114,8 +104,6 @@ export function Vitrine() {
 
   return (
     <>
-      {/* A barra fica grudada no topo enquanto a lista rola: filtro que sai
-          de vista obriga a rolar de volta para trocar de bairro. */}
       <div className="sticky top-20 z-30 mt-10">
         <div className="trilho">
           <div className="vidro-claro flex flex-wrap items-center gap-x-3 gap-y-3 rounded-[0.75rem] px-5 py-3">
@@ -144,8 +132,6 @@ export function Vitrine() {
                 </Select>
               </label>
 
-              {/* `aria-live`: quem usa leitor de tela precisa ouvir que a
-                  lista mudou, senão o filtro parece não ter feito nada. */}
               <span aria-live="polite" className="text-sm text-tinta-500">
                 <b className="num text-tinta-800">{lista.length}</b>{" "}
                 {lista.length === 1 ? "imóvel" : "imóveis"}
@@ -166,9 +152,6 @@ export function Vitrine() {
       </div>
 
       <div className="trilho py-12">
-        {/* Busca por texto tem de aparecer COMO texto na tela: pastilha de
-            bairro a pessoa vê ligada, mas um "?q=" vindo de link abriria uma
-            lista curta sem nenhuma explicação do porquê. */}
         {termo && (
           <p className="mb-8 flex flex-wrap items-center gap-2 text-tinta-500">
             Busca por <b className="font-display text-tinta-800">{termo}</b>
@@ -188,9 +171,6 @@ export function Vitrine() {
             ))}
           </div>
         ) : (
-          /* Beco sem saída não existe: quando o filtro não acha nada, a saída
-             é falar com a gente, que é o que a pessoa faria de qualquer
-             jeito. Carteira curta é o normal aqui, não é erro. */
           <Painel className="mx-auto max-w-xl p-10 text-center">
             <h2 className="text-2xl">Nenhum imóvel com esses filtros</h2>
             <p className="mt-4 text-tinta-500">
@@ -205,21 +185,17 @@ export function Vitrine() {
               >
                 Limpar filtros
               </button>
-              <a
-                href={linkZap()}
+              <AcaoZap
+                recuo="/contato/"
                 className="inline-flex items-center gap-2 rounded-full bg-tinta-800 px-6 py-3 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
               >
                 <MessageCircle className="size-5" aria-hidden /> Dizer o que procuro
-              </a>
+              </AcaoZap>
             </div>
           </Painel>
         )}
       </div>
 
-      {/* Venda fechada é prova de trabalho, e por isso fica no site. Fica
-          DEPOIS da lista, em faixa própria e fora de toda contagem: dentro
-          da grade, um imóvel que já saiu inflava o número de disponíveis e
-          fazia a pessoa clicar num anúncio que não existe mais. */}
       {VENDIDOS.length > 0 && !termo && !regiao && !finalidade && (
         <div className="secao relative bg-tinta-800 text-papel">
           <div className="trilho">

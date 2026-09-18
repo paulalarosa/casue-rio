@@ -1,29 +1,6 @@
-/* Ilustração da marca no lugar da fotografia que ainda não chegou.
-
-   🔴 Antes eram cinco desenhos FIXOS num sprite, chamados por `<use>`. Com
-   dez imóveis e cinco desenhos, cada figura aparecia duas ou três vezes, e
-   duas idênticas caíam lado a lado na mesma fileira da carteira: era o sinal
-   mais forte de que o conteúdo não era real. Agora cada cena é desenhada a
-   partir de uma semente, que é o código do imóvel: hora do dia, número de
-   andares, ritmo das janelas acesas, altura dos morros, listras do toldo e o
-   lado da porta saem daí. Dois prédios não saem iguais.
-
-   🔴 O sorteio é DETERMINÍSTICO, e isso não é detalhe: o mesmo imóvel
-   precisa ter sempre o mesmo desenho (senão a lista pisca a cada visita), e
-   o servidor e o navegador precisam desenhar igual (senão a hidratação
-   acusa diferença e o React descarta a página inteira).
-
-   🔴 As cores saem SÓ da paleta, e a paleta da Casuê Rio tem um matiz só:
-   a variação de hora é de CLARIDADE, não de cor. Girar matiz daria mais
-   variedade e tiraria o desenho da marca.
-
-   Quando a foto real chegar, `foto` no arquivo de dados vence e a `<Cena>`
-   nem chega a ser chamada. */
 
 export type NomeCena = "predio" | "casa" | "interior" | "vista" | "comercial";
 
-/* xorshift de 32 bits semeado por FNV-1a. Escrito à mão porque
-   `Math.random()` daria desenho diferente a cada quadro e a cada máquina. */
 function sorteio(semente: string) {
   let h = 2166136261;
   for (let i = 0; i < semente.length; i++) {
@@ -48,8 +25,6 @@ type Sorte = ReturnType<typeof sorteio>;
 
 const cor = (nome: string) => `var(--color-${nome})`;
 
-/* A hora do dia, em papéis e não em cores soltas: quem desenha pede "massa"
-   ou "luz" e não precisa saber qual tom do tema entra em cada hora. */
 type Hora = {
   ceu: string;
   morro: string;
@@ -63,31 +38,10 @@ type Hora = {
   acesa: number;
   sol: boolean;
   noite: boolean;
-  /* Peso do sorteio. 🔴 Noite é a hora mais bonita e a que menos pode
-     dominar: com as três horas igualmente prováveis, cinco dos seis
-     primeiros cartões saíram escuros e a carteira inteira perdeu o
-     off-white da marca. Dia e tarde carregam a página; noite tempera. */
   peso: number;
 };
 
 const HORAS: Hora[] = [
-  /* 🔴 A troca de paleta quase matou esta parte sem avisar. Renomear token
-     por token deixou as tres horas com a mesma cor de fundo, porque no tema
-     antigo elas se separavam por CLARIDADE DO AZUL e no tema novo o azul
-     virou cinza escuro em todos os passos. Dia e noite sairam igualmente
-     pretos, e a carteira inteira ficou uma fileira de retangulos escuros.
-
-     Aqui as horas voltam a se separar pela claridade do CEU: areia clara de
-     dia, areia funda de tarde, tinta de noite. A massa do predio nao muda
-     entre as horas, que e o que faz as tres parecerem o mesmo desenho em
-     horarios diferentes, e nao tres desenhos.
-
-     🔴 16/09: o `topo`, que e a platibanda e a faixa do terreo, virou
-     TERRACOTA. Era `tinta-700` nas tres horas, ou seja, nao separava hora
-     nenhuma: mexer nele nao corre o risco de achatar o dia contra a noite,
-     que e o defeito que ja aconteceu aqui. E telha em predio carioca e
-     terracota de verdade, entao a cor da marca entra como fato e nao como
-     enfeite. A hora escurece o degrau junto com o resto da cena. */
   {
     ceu: cor("areia-200"),
     morro: cor("areia-500"),
@@ -145,8 +99,6 @@ function horaSorteada(s: Sorte) {
   return HORAS[0];
 }
 
-/* Os morros ao fundo: é o que faz a cena ser do Rio e não de uma cidade
-   qualquer, e é também o que mais muda de um desenho para o outro. */
 function morros(s: Sorte, h: Hora, base: number, L: number) {
   const quantos = s.entre(2, 3) + (L > 520 ? 2 : 0);
   const peças = [];
@@ -200,8 +152,6 @@ function predio(s: Sorte, h: Hora, L: number) {
     <>
       <rect width={L} height="275" fill={h.ceu} />
       {morros(s, h, 140, L)}
-      {/* Vizinhança repetida até a borda: em faixa panorâmica o prédio
-          aparece dentro de uma rua, e não sozinho num campo azul. */}
       {Array.from({ length: Math.ceil(cx / 92) }, (_, i) => {
         const alt = 78 + ((i * 37) % 62);
         return (
@@ -279,9 +229,6 @@ function casa(s: Sorte, h: Hora, L: number) {
         const x = i === 0 ? cx - s.entre(120, 152) : cx + s.entre(100, 150);
         const r = s.entre(18, 34);
         return (
-          /* 🔴 A copa era `tinta-800` sobre um chão `tinta-900`: a árvore
-             estava desenhada e simplesmente não aparecia. Silhueta pede o
-             tom da massa, que é mais claro que o chão em qualquer hora. */
           <g key={`arv-${i}`}>
             <rect x={x - 4} y={258 - r * 2} width="9" height={r * 2} fill={h.topo} />
             <circle cx={x} cy={252 - r * 2} r={r} fill={h.massa} />
@@ -298,17 +245,7 @@ function interior(s: Sorte, h: Hora, L: number) {
   const cx = L / 2;
   const colunas = s.entre(2, 3);
   const linhas = s.entre(2, 3);
-  /* Dois formatos de janela, e não só duas posições: com a janela sempre
-     no mesmo retângulo, duas salas seguidas liam como a mesma sala. */
   const janelao = s.chance(0.5);
-  /* O tom da parede também sorteia: duas salas com a mesma parede e a
-     mesma janela liam como a mesma sala mesmo com móvel diferente. */
-  /* 🔴 O terceiro sorteio era `h.topo`, e quando o topo virou terracota isso
-     passou a pintar UMA PAREDE INTEIRA de terracota em um a cada tres
-     interiores. Duas coisas erradas de uma vez: contradiz a regra que a
-     terracota entra como telha, que e fato, e nao como enfeite; e cria um
-     ponto fora da curva no meio de uma grade de nove cartoes. Aqui o quente
-     entra fundo, como parede pintada escura, e nao como bloco. */
   const parede = s.um([h.parede, h.massa, cor("terracota-900")]);
   const jx = cx + (janelao ? s.entre(-30, -4) : s.entre(6, 32));
   const jl = janelao ? s.entre(170, 200) : s.entre(112, 136);
@@ -338,8 +275,6 @@ function interior(s: Sorte, h: Hora, L: number) {
           />
         ))}
       </g>
-      {/* A mancha de luz no chão sai da janela, então acompanha onde ela
-          está: janela deslocada com luz parada lê como erro de desenho. */}
       <path
         d={`M${jx + 8} ${jy + jh} L${jx + jl - 8} ${jy + jh} L${jx + jl - 74} 262 L${jx - 118} 262 Z`}
         fill={cor("areia-100")}
@@ -436,7 +371,6 @@ function vista(s: Sorte, h: Hora, L: number) {
 }
 
 function comercial(s: Sorte, h: Hora, L: number) {
-  /* `e` é a borda esquerda da fachada, que tem 332 de largura fixa. */
   const e = L / 2 - 166;
   const janelasAlto = s.entre(3, 5);
   const acesa = s.entre(0, janelasAlto - 1);
@@ -512,19 +446,8 @@ const DESENHOS: Record<NomeCena, (s: Sorte, h: Hora, L: number) => React.ReactNo
 export function Cena({
   nome,
   rotulo,
-  /* Sem semente a cena é sempre a mesma, o que serve para peça única (a
-     abertura de um bairro, por exemplo). Em lista, passar o código do
-     imóvel é o que impede dois cartões iguais. */
   semente,
-  /* 🔴 Onde o corte se apoia. O desenho é 1,45:1 e a cabeça de página é
-     3,7:1: recortando pelo MEIO sobra a barriga da fachada, que lê como
-     padronagem e não como prédio. Ancorado na BASE aparece a marquise, a
-     entrada e a rua, que é o que faz o desenho ter pé no chão. */
   ancora = "meio",
-  /* Largura do desenho. 🔴 O desenho é 1,45:1 e a cabeça de página é
-     3,7:1: com a mesma largura o recorte amplia a barriga da fachada e o
-     prédio vira padronagem. Em `panorama` a cena desenha mais cidade em
-     volta, em vez de aproximar. */
   panorama = false,
   className,
 }: {
@@ -537,8 +460,6 @@ export function Cena({
 }) {
   const s = sorteio(`${nome}|${semente ?? ""}`);
   const hora = horaSorteada(s);
-  /* Espelhar e reenquadrar custam nada e mudam muito: mesmo com a mesma
-     hora e o mesmo número de andares, o desenho deixa de parecer cópia. */
   const espelho = s.chance(0.5);
   const z = s.entre(0, 14);
   const L = panorama ? 1040 : 400;

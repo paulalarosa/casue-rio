@@ -12,35 +12,6 @@ export const metadata = metaDaPagina({
   caminho: "/privacidade",
 });
 
-/* A política de privacidade.
-
-   🔴 CADA AFIRMAÇÃO AQUI FOI MEDIDA EM 18/09/2026, e não copiada de modelo.
-   Política genérica é pior que nenhuma: promete o que o site não cumpre e
-   esconde o que ele faz. O que eu medi, antes de escrever uma linha:
-
-     formulário           não existe, o contato é mailto: e link
-     cookie               nenhum
-     analytics / pixel    nenhum
-     fontes               servidas do próprio domínio pelo next/font, então
-                          o navegador não fala com o Google
-     registro de acesso   DESLIGADO na CloudFront e no S3, conferido por
-                          get-distribution-config e get-bucket-logging
-     terceiros            cdn.sanity.io nas fotos da Revista, e só
-
-   🔴 O cdn.sanity.io é o achado que mudou o texto. Sem medir, eu teria
-   escrito "este site não fala com ninguém", que é o que ele parece fazer. A
-   capa de artigo vem do CDN do painel, então abrir a Revista faz o
-   navegador de quem visita pedir a imagem a eles, e eles veem o IP. Está
-   declarado abaixo porque é verdade, não porque é conveniente.
-
-   🔴 NÃO HÁ PRAZO EM NÚMERO neste texto, e a ausência é decisão. Escrever
-   "guardamos por 5 anos" seria eu inventando uma regra que elas não
-   definiram, e prazo inventado em documento jurídico é promessa que a
-   empresa não sabe que fez. O texto diz o critério; o número entra quando
-   elas decidirem.
-
-   Se o site mudar, esta página muda junto, e a data no topo também. */
-
 const ATUALIZADA = "18 de setembro de 2026";
 
 function Bloco({ titulo, children }: { titulo: string; children: React.ReactNode }) {
@@ -87,10 +58,6 @@ export default function PaginaPrivacidade() {
 
       <Bloco titulo="Quem é responsável">
         <p>
-          {/* 🔴 O endereço é montado com VÍRGULA, e não com o `ENDERECO.linha`
-              do rodapé. Aquela linha usa `·` porque lá ela é um dado, numa
-              coluna; aqui ela está no meio de uma frase, e ponto médio em
-              prosa lê como falha de formatação. */}
           {NOME}, com escritório na {ENDERECO.rua}, {ENDERECO.complemento},{" "}
           {ENDERECO.bairro}, {ENDERECO.cidade}, {ENDERECO.estado},{" "}
           <span className="num">{ENDERECO.cep}</span>. As responsáveis são{" "}
@@ -102,10 +69,6 @@ export default function PaginaPrivacidade() {
           .
         </p>
         <p>
-          {/* 🔴 O endereço NÃO é escrito, aqui como em todo o site: é
-              decisão da cliente, e a LGPD pede canal de contato claro, não
-              endereço impresso na página. O botão abre o aplicativo de
-              e-mail já endereçado, que é o canal funcionando. */}
           Para qualquer assunto desta página, inclusive pedir os seus dados de
           volta ou pedir que sejam apagados, é por e-mail.
         </p>
@@ -126,11 +89,6 @@ export default function PaginaPrivacidade() {
             Não existe formulário. Todo contato sai do site para o e-mail ou
             para o WhatsApp.
           </li>
-          {/* 🔴 Estes marcadores SAEM DO MESMO INTERRUPTOR que liga o Google
-              Analytics. É o que impede o erro mais comum de política de
-              privacidade: alguém instala a medição numa terça e a página
-              continua jurando que o site não usa cookie. Aqui as duas coisas
-              não têm como divergir. */}
           {temMedicao ? (
             <>
               <li>

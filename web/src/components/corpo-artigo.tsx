@@ -2,18 +2,6 @@ import Image from "next/image";
 import { PortableText, type PortableTextBlock } from "@portabletext/react";
 import { imagem } from "@/lib/sanity";
 
-/* O texto do artigo, desenhado pelo site.
-
-   🔴 O painel guarda só o PAPEL de cada trecho: isto é parágrafo, isto é
-   subtítulo, isto é citação. Quem decide a aparência é este arquivo, e é por
-   isso que um texto colado do Word não consegue trazer Calibri para dentro
-   de um site em Unbounded. É a mesma razão de o painel não oferecer escolha
-   de cor nem de tamanho: a escolha mora aqui, uma vez, para todos os textos.
-
-   🔴 A coluna tem `65ch` e não é arbitrário: é a medida em que a linha de
-   texto longo cansa menos o olho. Largura de coluna é a única decisão de
-   leitura que um blog realmente tem para tomar. */
-
 const COMPONENTES = {
   block: {
     normal: ({ children }: { children?: React.ReactNode }) => (
@@ -25,9 +13,6 @@ const COMPONENTES = {
     h3: ({ children }: { children?: React.ReactNode }) => (
       <h3 className="mt-10 font-display text-xl font-semibold text-tinta-800">{children}</h3>
     ),
-    /* A citação usa o fio de terracota à esquerda, que é o mesmo recurso do
-       painel de aviso da página de avaliação: um elemento de marca, não uma
-       decoração nova. */
     blockquote: ({ children }: { children?: React.ReactNode }) => (
       <blockquote className="mt-10 border-l-4 border-terracota-600 pl-6 font-display text-xl leading-relaxed font-semibold text-tinta-800">
         {children}
@@ -58,9 +43,6 @@ const COMPONENTES = {
       value?: { href?: string };
     }) => {
       const href = value?.href ?? "#";
-      /* Link para fora leva `noreferrer`, e para dentro não abre aba nova:
-         abrir aba para o próprio site é o tique que faz a pessoa perder o
-         botão de voltar. */
       const fora = /^https?:\/\//.test(href);
       return (
         <a
@@ -79,10 +61,6 @@ const COMPONENTES = {
     }: {
       value: { alt?: string; legenda?: string };
     }) => {
-      /* 🔴 Largura de 1600 e não a original: foto de celular tem 4000px de
-         largura e três megabytes, e o texto seria lido no telefone de quem
-         está dentro do ônibus. A Sanity redimensiona e converte o formato na
-         entrega, então a origem pode ser pesada sem custo para quem lê. */
       const url = imagem(value as never, 1600, 1000);
       if (!url) return null;
       return (

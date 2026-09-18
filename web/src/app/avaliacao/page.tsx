@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, ClipboardCheck, MessageCircle, Ruler, ScrollText } from "lucide-react";
+import { AcaoZap } from "@/components/acao";
 import { CabecaPagina } from "@/components/cabeca-pagina";
 import { arquivo } from "@/lib/caminho";
 import avaliacao from "../../../public/video/avaliacao.webp";
@@ -12,25 +13,6 @@ export const metadata = metaDaPagina({
     "Parecer de valor assinado por avaliadora cadastrada no CNAI, no Rio de Janeiro. Para definir preço de venda, inventário, partilha e garantia bancária.",
   caminho: "/avaliacao",
 });
-
-/* Página própria porque avaliação é SERVIÇO, e serviço que só existe como
-   parágrafo dentro de outra página não é encontrado nem citado. É também o
-   que o CNAI habilita, e quase nenhuma imobiliária pequena mostra.
-
-   🔴 Sem prazo e sem preço: os dois dependem do caso e de confirmação
-   delas, e número inventado aqui é o tipo de coisa que vira problema
-   depois de contratada.
-
-   🔴 O LAYOUT foi refeito em 17/09/2026, e o defeito era estrutural, não de
-   acabamento: a página tinha uma grade de `24rem_1fr` com DUAS colunas que
-   começavam cada uma com um `h2` do mesmo tamanho, uma com dois cartões de
-   registro e um painel, a outra com quatro itens. Dois títulos irmãos na
-   mesma altura fazem o olho não saber qual ler primeiro, e a coluna curta
-   deixava um rio de vazio ao lado da longa.
-
-   Agora cada assunto ocupa a largura inteira e vem um de cada vez: o que é,
-   quando serve, como funciona, quem assina, e o pedido. Uma ideia por faixa
-   é o que dá ritmo sem precisar de mais caixa. */
 
 const QUANDO = [
   {
@@ -91,17 +73,10 @@ export default function PaginaAvaliacao() {
         video={{ fonte: arquivo("/video/avaliacao.mp4"), poster: avaliacao }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Avaliação" }]}
       />
-      {/* Cômodo VAZIO, de propósito, como na faixa do slogan. Avaliação é
-          medir o que existe antes de alguém morar ali, e sala mobiliada
-          viraria anúncio de um imóvel que não está à venda. */}
       <p className="trilho mt-3 text-sm text-tinta-500">
         Imagem de ambiente. Não retrata imóvel da carteira.
       </p>
 
-      {/* ========================================================= O QUE É
-          Uma afirmação, larga, com o slogan encostado nela. É aqui que a
-          frase da marca cabe melhor em todo o site: avaliação é exatamente
-          o momento em que a casa deixa de ser sonho e vira número. */}
       <Revela className="trilho secao">
         <div className="grid gap-10 lg:grid-cols-[1.35fr_1fr] lg:items-end">
           <p
@@ -121,9 +96,6 @@ export default function PaginaAvaliacao() {
         </div>
       </Revela>
 
-      {/* ================================================ QUANDO VOCÊ PRECISA
-          Quatro casos, numerados, em faixa de largura inteira. Eram quatro
-          itens espremidos ao lado de uma barra lateral. */}
       <Revela className="trilho secao">
         <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">Quando você precisa</h2>
         <p className="mt-3 max-w-[52ch] text-lg text-tinta-500">
@@ -140,9 +112,6 @@ export default function PaginaAvaliacao() {
         </ul>
       </Revela>
 
-      {/* ==================================================== COMO FUNCIONA
-          A faixa escura, que é o que dá alternância à página. Três passos,
-          na ordem em que acontecem. */}
       <Revela className="secao relative bg-tinta-800 text-papel">
         <div className="trilho">
           <h2 className="text-[clamp(1.7rem,3vw,2.5rem)] text-papel">Como funciona</h2>
@@ -159,12 +128,6 @@ export default function PaginaAvaliacao() {
         </div>
       </Revela>
 
-      {/* ====================================================== QUEM ASSINA
-          🔴 Encolheu de propósito. Aqui havia dois cartões repetindo CRECI e
-          CNAI das duas sócias, que também estavam no rodapé e na home: o
-          mesmo número em todo canto deixa de ser credencial e vira ruído.
-          O que esta página precisa dizer é UMA coisa, que é o cadastro que
-          autoriza a assinatura. O resto mora em /quem-somos. */}
       <Revela className="trilho secao">
         <div className="ilha relative isolate overflow-hidden border border-tinta-800/10 bg-areia-100">
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
@@ -189,7 +152,6 @@ export default function PaginaAvaliacao() {
         </div>
       </Revela>
 
-      {/* ============================================================ PEDIDO */}
       <Revela className="trilho secao pb-8">
         <div
           data-revela
@@ -200,12 +162,12 @@ export default function PaginaAvaliacao() {
             Diga o imóvel e para que serve o parecer. A gente responde com prazo e
             valor antes de começar.
           </p>
-          <Link
-            href="/contato"
+          <AcaoZap
+            recuo="/contato/"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-terracota-600 px-7 py-4 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5 hover:bg-terracota-700"
           >
             <MessageCircle className="size-5" aria-hidden /> Pedir uma avaliação
-          </Link>
+          </AcaoZap>
         </div>
       </Revela>
     </>

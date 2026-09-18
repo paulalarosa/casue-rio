@@ -1,18 +1,6 @@
 import { Box, Card, Container, Flex, Heading, Stack, Text } from "@sanity/ui";
 import { Placa } from "./placa";
 
-/* A página de ajuda, dentro do próprio painel.
-
-   🔴 Ela existe porque o manual que mora fora do painel não é lido. Um PDF
-   no e-mail, um documento no Drive ou uma conversa no WhatsApp respondem a
-   dúvida do primeiro dia e somem no segundo. A dúvida volta às nove da noite
-   de um domingo, com o painel aberto e ninguém para perguntar. Ajuda que não
-   está a um clique do trabalho não é ajuda.
-
-   O texto é curto de propósito: cinco passos e três conferências. Tudo o que
-   é sobre um campo específico mora na descrição do campo, embaixo dele, onde
-   a dúvida realmente nasce. */
-
 const TERRACOTA = "#a8482a";
 const TINTA = "#171310";
 const BRONZE = "#8a5a33";

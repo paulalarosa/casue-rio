@@ -8,17 +8,10 @@ import { CartaoImovel } from "@/components/cartao-imovel";
 import { BAIRROS, DISPONIVEIS, moeda, retratoDaRegiao } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
 
-/* Rota estática: são três recortes conhecidos, então saem prontos no build
-   e não custam servidor. `params` é Promise desde o Next 15. */
 export function generateStaticParams() {
   return BAIRROS.map((b) => ({ chave: b.chave }));
 }
 
-/* 🔴 As quatro páginas de bairro saíam com o título e a descrição PADRÃO
-   da home, porque não havia metadado nenhum aqui. Página de bairro é
-   exatamente o que uma imobiliária quer que a busca local encontre, e as
-   quatro estavam competindo entre si com o mesmo texto. O número vem da
-   carteira, então a descrição também não envelhece. */
 export async function generateMetadata({ params }: PageProps<"/bairros/[chave]">) {
   const { chave } = await params;
   const b = BAIRROS.find((x) => x.chave === decodeURIComponent(chave));
@@ -43,13 +36,6 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
 
   return (
     <>
-      {/* 🔴 A alameda de palmeiras imperiais entra no lugar da ilustração
-          POR BAIRRO, e isso tem um custo que vale dizer: as quatro páginas
-          de bairro passam a abrir com o mesmo plano, onde antes cada uma
-          tinha um desenho semeado pela própria chave. Troquei especificidade
-          por presença, porque o desenho semeado nunca retratou o bairro de
-          verdade, e a alameda é vocabulário da cidade inteira. Se elas
-          preferirem o contrário, é uma linha. */}
       <CabecaPagina
         titulo={b.nome}
         linha={b.linha}
@@ -61,18 +47,12 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
         ]}
       />
 
-      {/* O texto do bairro em coluna de leitura, sem a imagem ao lado: ela
-          agora é a própria abertura, e repetir a mesma cena duas vezes na
-          mesma tela era a redundância que sobrava aqui. */}
       <div className="trilho secao">
         <p className="max-w-[62ch] text-[clamp(1.05rem,1.5vw,1.35rem)] leading-relaxed text-tinta-500">
           {b.texto}
         </p>
       </div>
 
-      {/* Fita de números do bairro, tirada da carteira. A página falava do
-          bairro sem dizer nada mensurável, e é o número que faz a diferença
-          entre texto de bairro e texto de corretora. */}
       {retrato && (
         <dl className="trilho grid grid-cols-2 gap-y-8 border-y border-tinta-800/12 py-8 sm:grid-cols-3">
           {[

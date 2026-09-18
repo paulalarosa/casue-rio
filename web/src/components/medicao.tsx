@@ -12,25 +12,6 @@ import {
   gravarEscolha,
 } from "@/lib/medicao";
 
-/* A faixa de consentimento e o script de audiência.
-
-   🔴 O script SÓ EXISTE depois do "sim". Enquanto a escolha não for "sim",
-   o `<Script>` não é renderizado, o `googletagmanager.com` nunca é pedido e
-   nenhum cookie é criado. É a diferença entre pedir permissão e avisar que
-   já fez.
-
-   🔴 `useSyncExternalStore` e não `useState` com `useEffect`. A escolha mora
-   no `localStorage`, que é estado de fora do React e não existe no servidor:
-   este gancho existe exatamente para isso, e resolve de uma vez a
-   hidratação, a sincronia entre abas e a atualização depois do clique. A
-   versão com `useEffect` que eu escrevi antes disparava renderização em
-   cascata, e o lint do React 19 reclamou com razão. */
-
-/* 🔴 `useEscolha` e não `usarEscolha`, contra a regra de nomes deste
-   repositório. Não é escolha de estilo: o lint do React só reconhece um
-   gancho personalizado se o nome começar com `use`, e com `usarEscolha` ele
-   trata isto como função comum e passa a acusar violação das regras de
-   ganchos em todo uso. Quando a ferramenta manda no nome, ela ganha. */
 function useEscolha() {
   return useSyncExternalStore(assinar, lerEscolha, lerNoServidor);
 }
@@ -55,10 +36,6 @@ function Faixa({ responder }: { responder: (v: "sim" | "nao") => void }) {
           </Link>
           .
         </p>
-        {/* 🔴 Os dois botões têm o MESMO peso. Recusa escondida em texto
-            cinza claro ao lado de um botão colorido é consentimento obtido no
-            empurrão, e consentimento assim não é livre, que é o que a lei
-            pede. */}
         <div className="flex shrink-0 gap-3">
           <button
             type="button"
@@ -109,21 +86,12 @@ const ESTADO: Record<string, string> = {
   indefinido: "Verificando a sua escolha neste navegador.",
 };
 
-/* O mesmo interruptor, dentro da página de privacidade.
-
-   🔴 Política que promete "você pode revogar a qualquer momento" e não
-   mostra COMO é a política que a maioria escreve. Revogar tem de ser um
-   botão, no mesmo lugar onde a frase promete. */
 export function EscolhaDeCookies() {
   const escolha = useEscolha();
   if (!temMedicao) return null;
 
   function responder(v: "sim" | "nao") {
     gravarEscolha(v);
-    /* 🔴 Tirar o consentimento tem de tirar o script DE VERDADE, e ele já
-       foi carregado nesta aba. Recarregar é o único jeito honesto: a página
-       volta sem ele, em vez de fingir que sumiu enquanto o `gtag` continua
-       na memória mandando evento. */
     if (v === "nao") window.location.reload();
   }
 
