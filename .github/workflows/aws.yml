@@ -121,6 +121,10 @@ jobs:
           NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_DATASET: ${{ vars.SANITY_DATASET }}
+          # Vazia enquanto a variável GA_ID não existir no repositório, e
+          # vazia é o estado sem cookie, sem Google e sem faixa. Criar a
+          # variável liga tudo de uma vez, inclusive o texto da privacidade.
+          NEXT_PUBLIC_GA_ID: ${{ vars.GA_ID }}
         run: npm run build
 
       # 🔴 AS PEÇAS DE INSTAGRAM SAEM POR AQUI, e não pelo site.

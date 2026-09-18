@@ -4,6 +4,7 @@ import "./globals.css";
 import { Topo } from "@/components/topo";
 import { Rodape } from "@/components/rodape";
 import { Dados } from "@/components/dados";
+import { Medicao } from "@/components/medicao";
 import { empresa, pessoas, grafo } from "@/lib/dados-estruturados";
 import { SITE, MARCA, NOME, DESCRICAO, SLOGAN } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
@@ -84,6 +85,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Rodape />
+        {/* 🔴 Não renderiza NADA enquanto `NEXT_PUBLIC_GA_ID` estiver vazia,
+            e é assim que o site está hoje: sem cookie, sem terceiro, sem
+            faixa. Quando a variável for preenchida, aparecem os três ao
+            mesmo tempo, incluindo o trecho da página de privacidade, que sai
+            do mesmo interruptor. */}
+        <Medicao />
       </body>
     </html>
   );

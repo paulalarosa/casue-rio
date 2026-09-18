@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { ENDERECO, EMAIL, NOME, SOCIAS, metaDaPagina } from "@/lib/site";
+import { ENDERECO, NOME, SOCIAS, metaDaPagina } from "@/lib/site";
+import { AcaoEmail } from "@/components/acao";
+import { EscolhaDeCookies } from "@/components/medicao";
+import { temMedicao } from "@/lib/medicao";
 
 export const metadata = metaDaPagina({
   titulo: "Privacidade",
@@ -99,12 +102,20 @@ export default function PaginaPrivacidade() {
           .
         </p>
         <p>
+          {/* 🔴 O endereço NÃO é escrito, aqui como em todo o site: é
+              decisão da cliente, e a LGPD pede canal de contato claro, não
+              endereço impresso na página. O botão abre o aplicativo de
+              e-mail já endereçado, que é o canal funcionando. */}
           Para qualquer assunto desta página, inclusive pedir os seus dados de
-          volta ou pedir que sejam apagados, o endereço é{" "}
-          <a href={`mailto:${EMAIL}`} className={elo}>
-            {EMAIL}
-          </a>
-          .
+          volta ou pedir que sejam apagados, é por e-mail.
+        </p>
+        <p>
+          <AcaoEmail
+            recuo="/contato/"
+            className="inline-flex items-center rounded-full bg-tinta-800 px-6 py-3 font-semibold text-papel transition-transform duration-300 hover:-translate-y-0.5"
+          >
+            Escrever para a Casuê Rio
+          </AcaoEmail>
         </p>
       </Bloco>
 
@@ -115,11 +126,29 @@ export default function PaginaPrivacidade() {
             Não existe formulário. Todo contato sai do site para o e-mail ou
             para o WhatsApp.
           </li>
-          <li>Não usamos cookie, nem para preferência, nem para medição.</li>
-          <li>
-            Não há Google Analytics, pixel de rede social nem qualquer
-            ferramenta de audiência.
-          </li>
+          {/* 🔴 Estes marcadores SAEM DO MESMO INTERRUPTOR que liga o Google
+              Analytics. É o que impede o erro mais comum de política de
+              privacidade: alguém instala a medição numa terça e a página
+              continua jurando que o site não usa cookie. Aqui as duas coisas
+              não têm como divergir. */}
+          {temMedicao ? (
+            <>
+              <li>
+                Usamos o Google Analytics para contar visitas, e só depois de
+                você aceitar. Sem o aceite, ele não carrega e nenhum cookie é
+                criado.
+              </li>
+              <li>Não há pixel de rede social nem ferramenta de publicidade.</li>
+            </>
+          ) : (
+            <>
+              <li>Não usamos cookie, nem para preferência, nem para medição.</li>
+              <li>
+                Não há Google Analytics, pixel de rede social nem qualquer
+                ferramenta de audiência.
+              </li>
+            </>
+          )}
           <li>
             As fontes são servidas do nosso próprio endereço, então o seu
             navegador não pede nada ao Google para desenhar esta página.
@@ -214,17 +243,68 @@ export default function PaginaPrivacidade() {
       </Bloco>
 
       <Bloco titulo="Por quanto tempo guardamos">
+        <ul className={lista}>
+          <li>
+            <b className="font-semibold text-tinta-800">
+              Conversa que não virou negócio: <span className="num">2 anos</span>{" "}
+              sem contato
+            </b>
+            , e depois apagamos. Antes disso, é só pedir e apagamos na hora.
+          </li>
+          <li>
+            <b className="font-semibold text-tinta-800">
+              Documento fiscal: <span className="num">5 anos</span>
+            </b>
+            , contados do ano seguinte ao da emissão. É o prazo que o Código
+            Tributário Nacional dá ao fisco para cobrar, e guardar menos que
+            isso é ficar sem como provar o que já foi pago.
+          </li>
+          <li>
+            <b className="font-semibold text-tinta-800">
+              Contrato e documento de negócio fechado:{" "}
+              <span className="num">10 anos</span>
+            </b>{" "}
+            a partir do fim do contrato. É o prazo geral de prescrição do
+            Código Civil, ou seja, o tempo em que aquele negócio ainda pode
+            ser discutido na Justiça.
+          </li>
+        </ul>
         <p>
-          Conversa que não virou negócio fica guardada enquanto houver sentido
-          em retomá-la, e some quando você pedir. Basta escrever.
-        </p>
-        <p>
-          Documento de negócio fechado é outra coisa: contrato, comprovação e
-          registro têm prazo definido por lei, pelo fisco e pelo conselho
-          profissional, e ficam guardados pelo tempo que essas regras exigem,
-          mesmo depois de a negociação terminar.
+          Os dois últimos prazos não são escolha nossa, e por isso um pedido
+          de apagar não alcança esses documentos enquanto o prazo correr.
+          Vencido, o documento é descartado.
         </p>
       </Bloco>
+
+      {temMedicao && (
+        <Bloco titulo="Medição de audiência e cookies">
+          <p>
+            Usamos o Google Analytics para saber quantas pessoas visitam o site
+            e quais páginas elas leem. Ele não nos diz quem você é: o que chega
+            é contagem, página, origem da visita e o seu endereço de IP, que
+            pedimos ao Google para encurtar antes de guardar.
+          </p>
+          <p>
+            <b className="font-semibold text-tinta-800">
+              Nada disso carrega antes de você aceitar.
+            </b>{" "}
+            Até o seu aceite, o site não pede uma linha ao Google e não cria
+            cookie nenhum. Aceitando, o Google cria cookies no seu navegador
+            para não contar a mesma pessoa duas vezes, e eles são dele, não
+            nossos. O Google trata esses dados nos servidores dele, fora do
+            Brasil.
+          </p>
+          <p>
+            A base legal aqui é o seu consentimento, e consentimento se tira
+            com a mesma facilidade com que se dá:
+          </p>
+          <EscolhaDeCookies />
+          <p>
+            A sua resposta fica guardada só neste navegador e não é enviada a
+            ninguém. Em outro aparelho, perguntamos de novo.
+          </p>
+        </Bloco>
+      )}
 
       <Bloco titulo="O que você pode exigir">
         <p>A LGPD dá a você, sobre os seus dados, o direito de pedir:</p>
@@ -241,13 +321,10 @@ export default function PaginaPrivacidade() {
           <li>a explicação de por que negamos algum desses pedidos, se negarmos.</li>
         </ul>
         <p>
-          O caminho é o mesmo para tudo: escrever para{" "}
-          <a href={`mailto:${EMAIL}`} className={elo}>
-            {EMAIL}
-          </a>
-          . Respondemos por escrito, e se não pudermos atender, explicamos por
-          quê. Você também pode reclamar à Autoridade Nacional de Proteção de
-          Dados, a ANPD.
+          O caminho é o mesmo para tudo: escrever por e-mail, no botão lá em
+          cima. Respondemos por escrito, e se não pudermos atender, explicamos
+          por quê. Você também pode reclamar à Autoridade Nacional de Proteção
+          de Dados, a ANPD.
         </p>
       </Bloco>
 
