@@ -29,10 +29,11 @@ import posterNoite from "../../public/video/noite.webp";
    com três versões do mesmo argumento, que era o que estava acontecendo:
    "a gente lê a matrícula antes" aparecia em três seções seguidas.
 
-   🔴 Dois vídeos ficaram SEM CASA com esse corte, o `parede.mp4` e o
-   `gradil.mp4`. Eles não foram espalhados pelo que sobrou: cada um foi para
-   uma página nova, que não tinha vídeo nenhum. Reaproveitar peça de vídeo em
-   dois lugares é o que faz o site parecer que tem um filme só. */
+   🔴 Dois vídeos ficaram sem casa com esse corte e foram para páginas que
+   não tinham vídeo nenhum, em vez de aparecerem duas vezes cada: reaproveitar
+   peça de vídeo em dois lugares é o que faz o site parecer que tem um filme
+   só. Os dois já saíram desde então, trocados por planos que falam do
+   assunto da página: `escrivaninha` na revista e `portaria` em quem somos. */
 
 export default function Home() {
   const destaques = DISPONIVEIS.filter((im) => im.destaque);

@@ -5,7 +5,7 @@ import { CabecaPagina } from "@/components/cabeca-pagina";
 import { Revela } from "@/components/entrada";
 import { Painel } from "@/components/painel";
 import { arquivo } from "@/lib/caminho";
-import posterParede from "../../../public/video/parede.webp";
+import posterEscrivaninha from "../../../public/video/escrivaninha.webp";
 import { listarArtigos, dataPorExtenso } from "@/lib/revista";
 import { Dados } from "@/components/dados";
 import { revista, trilha, grafo } from "@/lib/dados-estruturados";
@@ -30,9 +30,11 @@ export const metadata = metaDaPagina({
    ficar vazia. Texto assinado por corretora com CRECI, escrito por mim, é o
    mesmo erro do depoimento inventado que já saiu deste site.
 
-   O vídeo é o `parede.mp4`, que ficou sem casa quando a faixa escura saiu
-   da home. Sombra de janela andando devagar numa parede vazia: tempo
-   passando, que é do que uma revista trata. */
+   🔴 O vídeo é o `escrivaninha.mp4`, e ele substituiu o `parede.mp4`. A
+   parede era o pior vídeo do site: uma sombra de janela que podia ser de
+   qualquer lugar do mundo, na página de uma revista sobre o Rio. Aqui há
+   mesa, jornal aberto, cortina se mexendo e prédio carioca pela janela.
+   Alguém lê e alguém escreve, e é no Rio. */
 
 const ASSUNTOS = [
   {
@@ -74,7 +76,7 @@ export default async function PaginaRevista() {
       <CabecaPagina
         titulo="Revista"
         linha="O que a gente aprende trabalhando, escrito por quem assina o contrato."
-        video={{ fonte: arquivo("/video/parede.mp4"), poster: posterParede }}
+        video={{ fonte: arquivo("/video/escrivaninha.mp4"), poster: posterEscrivaninha }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Revista" }]}
       />
       <p className="trilho mt-3 text-sm text-tinta-500">

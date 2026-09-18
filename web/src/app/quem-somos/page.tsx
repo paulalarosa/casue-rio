@@ -4,7 +4,7 @@ import { CabecaPagina } from "@/components/cabeca-pagina";
 import { Revela } from "@/components/entrada";
 import { Painel } from "@/components/painel";
 import { arquivo } from "@/lib/caminho";
-import posterGradil from "../../../public/video/gradil.webp";
+import posterPortaria from "../../../public/video/portaria.webp";
 import { SOCIAS, SLOGAN, metaDaPagina } from "@/lib/site";
 
 export const metadata = metaDaPagina({
@@ -19,10 +19,11 @@ export const metadata = metaDaPagina({
    home precisa provar primeiro. Aqui o mesmo conteúdo respira e ganha o que
    não cabia lá: a frase da marca, o compromisso e os registros explicados.
 
-   🔴 O vídeo é o `gradil.mp4`, que ficou sem casa quando a página jurídica
-   saiu. Ele não foi espalhado por aí: veio para UMA página que não tinha
-   vídeo nenhum. Ferro fundido em close, luz rasante, feito à mão e batendo
-   sol — é o plano mais próximo de "quem somos" que existe na pasta.
+   🔴 O vídeo é o `portaria.mp4`, e ele substituiu o `gradil.mp4`. O gradil
+   era bonito e não dizia nada: ferro fundido em close fala de artesanato,
+   não de imobiliária. Portaria de prédio carioca fala de porta, de chave e
+   de chegar, que é o assunto desta página. Ladrilho hidráulico, caixas de
+   correio e porta de ferro com sol entrando.
 
    🔴 Nenhum contato por sócia. É canal único da empresa, decisão delas: não
    há "falar com a Débora" e "falar com a Alessandra", há falar com a
@@ -34,7 +35,7 @@ export default function PaginaQuemSomos() {
       <CabecaPagina
         titulo="Quem somos"
         linha="Duas corretoras. A mesma pessoa cuida da visita, da papelada e do contrato."
-        video={{ fonte: arquivo("/video/gradil.mp4"), poster: posterGradil }}
+        video={{ fonte: arquivo("/video/portaria.mp4"), poster: posterPortaria }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Quem somos" }]}
       />
       <p className="trilho mt-3 text-sm text-tinta-500">

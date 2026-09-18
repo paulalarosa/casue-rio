@@ -45,7 +45,12 @@ next-env.d.ts
 
 # A pagina do artigo e GERADA por scripts/preparar-revista.mjs a partir de
 # src/app/revista/_artigo/. A fonte e versionada; esta copia nao.
-src/app/revista/[slug]/
+# 🔴 Os colchetes vão ESCAPADOS. Sem a barra invertida, `[slug]` é uma
+# classe de caracteres do glob: casa com as pastas `s`, `l`, `u` e `g`,
+# e NÃO com a pasta chamada `[slug]`. A regra parecia certa, o arquivo
+# gerado entrava no commit assim mesmo, e eu desrastreei duas vezes
+# antes de conferir com `git check-ignore -v` em vez de ler o arquivo.
+src/app/revista/\[slug\]/
 
 # Peças de Instagram: material de trabalho, geradas a cada build e baixadas
 # como artefato do GitHub. Não vão para o site nem para o repositório.
