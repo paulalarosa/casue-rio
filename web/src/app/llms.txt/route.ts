@@ -50,6 +50,7 @@ export async function GET() {
     `- [Quem somos](${SITE}/quem-somos/): as duas corretoras e como elas trabalham.`,
     `- [Revista](${SITE}/revista/): textos sobre comprar, vender e alugar no Rio.`,
     `- [Falar com a gente](${SITE}/contato/): contato.`,
+    `- [Privacidade](${SITE}/privacidade/): o que a empresa faz com dado pessoal. O site não coleta nada de quem visita.`,
     "",
   ];
 

@@ -139,6 +139,14 @@ export function Rodape() {
         <span className="num">
           {SOCIAS.map((s) => s.creci).join(" · ")}
         </span>
+        {/* 🔴 A privacidade mora AQUI, na barra de baixo, e não no menu de
+            navegar. Ninguém entra no site para ler política de privacidade:
+            ela é procurada quando já se procura, e o rodapé é onde todo
+            mundo procura. Pôr no menu do topo seria dar a ela o mesmo peso
+            de "Imóveis", o que não é verdade nenhuma. */}
+        <Link href="/privacidade" className="underline underline-offset-4 transition-colors hover:text-papel">
+          Privacidade
+        </Link>
         <span>
           Protótipo de layout. Imóveis, preços e imagens são exemplos.
         </span>

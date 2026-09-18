@@ -30,11 +30,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/quem-somos",
     "/revista",
     "/contato",
+    "/privacidade",
   ].map((r) => ({
     url: comBarra(r),
     lastModified: agora,
     changeFrequency: "monthly" as const,
-    priority: r === "" ? 1 : 0.8,
+    /* A privacidade entra no sitemap para ser encontrada por quem a
+       procura, e com prioridade baixa para não competir com o que o site
+       tem a oferecer. */
+    priority: r === "" ? 1 : r === "/privacidade" ? 0.3 : 0.8,
   }));
 
   const imoveis = IMOVEIS.map((im) => ({
