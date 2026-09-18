@@ -32,10 +32,33 @@ export const cliente = PROJETO
       projectId: PROJETO,
       dataset: CONJUNTO,
       apiVersion: VERSAO,
-      /* `useCdn` ligado: o site é estático e lê na hora do build, então o
-         conteúdo em cache é exatamente o que se quer. Publicar dispara uma
-         republicação, e é ela que traz o texto novo. */
-      useCdn: true,
+      /* 🔴 `useCdn` DESLIGADO, e o comentário que estava aqui defendia o
+         contrário. Ele dizia que o cache era "exatamente o que se quer",
+         porque publicar dispara a republicação. O raciocínio ignorava que
+         as duas coisas correm ao mesmo tempo, e a corrida foi medida, não
+         imaginada, no primeiro artigo de teste:
+
+           12:39:29  artigo gravado no painel
+           12:39:33  webhook acorda o GitHub
+           12:40:11  build começa
+           12:40:12  preparar-revista.mjs pergunta a `api.sanity.io`  → 1
+           12:40:26  generateStaticParams pergunta a `apicdn.sanity.io` → 0
+
+           Error: Page "/revista/[slug]" returned an empty array from
+           "generateStaticParams()". With "output: export", at least one
+           route must be generated.
+
+         O contador liga a rota do artigo pela porta sem cache, o site monta
+         a rota pela porta com cache, e as duas discordam por alguns
+         segundos. A publicação inteira cai, no exato momento em que alguém
+         acabou de apertar Publish, que é o pior momento possível: quem
+         publicou vê o site igual e não tem como saber por quê.
+
+         O cache existe para aguentar visita, e este site não manda visita
+         nenhuma para a Sanity: ele lê meia dúzia de vezes, no build, uma vez
+         por publicação. Não há o que economizar aqui, e o que se ganha é a
+         garantia de que as duas portas contam a mesma história. */
+      useCdn: false,
     })
   : null;
 
