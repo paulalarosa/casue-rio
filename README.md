@@ -268,17 +268,25 @@ existe porque a home já ficou inteira em opacidade zero, em produção:
 
 ## O painel
 
-As duas escrevem em [`estudio/`](estudio/), que é um Sanity Studio. Elas
-entram num endereço próprio, com o e-mail delas, e não precisam de conta no
+🟢 **No ar em https://casue-rio.sanity.studio** desde 18/09/2026. O endereço
+redireciona para o painel dentro da conta Sanity, e é ele que as duas abrem
+para escrever. Elas entram com o e-mail delas e não precisam de conta no
 GitHub nem na AWS.
+
+O código do painel é [`estudio/`](estudio/), um Sanity Studio.
 
 ```bash
 cd estudio
 cp .env.example .env     # e preencha com o projectId
 npm install
 npm run dev              # painel local, http://localhost:3333
-npm run deploy           # publica o painel em <nome>.sanity.studio
+npm run deploy           # republica em casue-rio.sanity.studio
 ```
+
+🔴 O endereço e o `appId` estão gravados em `sanity.cli.ts`. Sem eles, o
+próximo `deploy` pergunta o nome, quem responder responde no escuro, e o
+resultado é um SEGUNDO painel com outro endereço enquanto as duas continuam
+abrindo o primeiro.
 
 🔴 **Por que Sanity e não Strapi ou Directus.** Os três são de licença
 gratuita, mas o Strapi e o Directus são servidores Node: para o painel
@@ -341,15 +349,9 @@ desenvolve.
    da Sanity só lê, e só o que está publicado.
 3. 🟢 Os nove imóveis e os três bairros já estão no painel, pelo
    `estudio/migrar.mjs`.
-4. Publicar o painel, que precisa de login no navegador:
-
-   ```bash
-   cd estudio
-   npx sanity login
-   npm run deploy
-   ```
-
-5. Criar o webhook de republicação, na tabela acima.
+4. 🟢 Painel publicado em https://casue-rio.sanity.studio.
+5. Convidar as duas por e-mail, em `sanity.io/manage` > Members.
+6. Criar o webhook de republicação, na tabela acima.
 
 ---
 
