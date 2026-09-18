@@ -4,7 +4,7 @@ Site da imobiliária de **Débora de Almeida Carvalho** (CRECI/RJ 92.984 · CNAI
 53.073) e **Alessandra Soverchi de Seixas** (CRECI/RJ 92.989 · CNAI 53.072),
 no Rio de Janeiro.
 
-**No ar:** https://paulalarosa.github.io/casue-rio/
+**No ar:** https://casuerio.com.br
 
 > A marca era **Carvalho & Seixas** e passou a ser **Casuê Rio** em 15/09/2026.
 > O repositório mudou de nome junto. Se algum lugar ainda disser o nome antigo,
@@ -14,7 +14,7 @@ no Rio de Janeiro.
 
 ## O que é
 
-Site estático, exportado e publicado no GitHub Pages a cada empurrão na `main`.
+Site estático, exportado e publicado na AWS a cada empurrão na `main`.
 **Sem servidor seu no ar**: o conteúdo vem de um painel hospedado por terceiro
 (veja [O painel](#o-painel)) e o que sobe é arquivo puro. A carteira de imóveis
 ainda mora num módulo TypeScript (`web/src/lib/imoveis.ts`), e é o arquivo que
@@ -27,9 +27,43 @@ npm run dev     # http://localhost:3000
 npm run build   # exporta para web/out
 ```
 
-A publicação é automática (`.github/workflows/`). O prefixo de caminho e o
-endereço canônico são **derivados do nome do repositório**, então renomear o
-repo não quebra o site; o que muda é a URL.
+A publicação é automática (`.github/workflows/aws.yml`): constrói, sincroniza
+com o S3 e limpa o cache da borda. As credenciais vêm por **OIDC**, então não
+há chave de acesso guardada no GitHub.
+
+### A infraestrutura
+
+| | |
+|---|---|
+| Domínio | `casuerio.com.br`, registrado no Registro.br, DNS na Route 53 |
+| Zona | `Z080692022E1MA4NRS7TX` |
+| Balde | `casuerio-site-prod` · privado, versionado, cifrado |
+| CloudFront | `EXP9HRVUWH2GF` |
+| Papel de CI | `casue-rio-deploy`, por OIDC |
+
+Os arquivos de infraestrutura estão em [`infra/`](infra/).
+
+🔴 **A função de reescrita não é opcional.** O site sai com `trailingSlash`,
+então cada rota é uma pasta com `index.html` dentro. O GitHub Pages resolvia
+índice de diretório em qualquer profundidade; o **S3 com acesso de origem
+NÃO**, porque o `DefaultRootObject` vale só para a raiz. Sem a função, a home
+abre e todas as outras páginas dão **403** — o site parece no ar e não está.
+Ela também canoniza: `/imoveis` vira `/imoveis/`, e `www` vira o domínio sem
+`www`, os dois com 301.
+
+🔴 **`PriceClass_All`, nunca `_100`.** O `_100` cobre EUA, Canadá, Europa e
+Israel: não tem América do Sul. O público é carioca.
+
+🔴 **`NEXT_PUBLIC_BASE_PATH` vazio.** No Pages o site morava em
+`usuario.github.io/REPO` e todo caminho absoluto precisava do prefixo; aqui
+ele mora na raiz de um domínio. É a mesma armadilha de `basePath` que já
+custou 404 calado neste projeto.
+
+🔴 **A confiança do OIDC usa identificador NUMÉRICO.** Todo tutorial ensina
+`repo:dono/repo:ref:refs/heads/main`. O que o GitHub emite de verdade é
+`repo:paulalarosa@127963502/casue-rio@1364478444:ref:refs/heads/main`. A AWS
+responde só `Not authorized to perform sts:AssumeRoleWithWebIdentity`, sem
+dizer qual condição falhou; quem conta é o CloudTrail.
 
 ---
 
