@@ -4,7 +4,6 @@ import { useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import largo from "../../public/video/abertura.webp";
 import retrato from "../../public/video/abertura-retrato.webp";
-import { MARCA } from "@/lib/site";
 import { arquivo } from "@/lib/caminho";
 
 const LARGURA_RETRATO = 768;
@@ -69,14 +68,6 @@ export function Abertura({ children }: { children: React.ReactNode }) {
             } ${corte === "largo" ? "object-[62%_center]" : ""}`}
           />
         )}
-
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 whitespace-nowrap px-4 text-center font-display text-[clamp(2rem,11vw,9.5rem)] font-bold leading-[0.8] tracking-[-0.035em] text-papel/[0.1]"
-          style={{ top: "calc(var(--altura-topo) - 0.75rem)" }}
-        >
-          {MARCA}
-        </span>
 
         <div
           aria-hidden
