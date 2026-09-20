@@ -6,7 +6,6 @@ import {
   ENDERECO,
   SOCIAS,
   SLOGAN,
-  NOME,
   TEM_EMAIL,
   INSTAGRAM,
   INSTAGRAM_URL,
@@ -44,7 +43,6 @@ export function Rodape() {
           <ul className="space-y-1 text-tinta-200">
             {[
               ["/imoveis", "Imóveis"],
-              ["/bairros", "Bairros"],
               ["/avaliacao", "Avaliação"],
               ["/quem-somos", "Quem somos"],
               ["/revista", "Revista"],
@@ -108,8 +106,7 @@ export function Rodape() {
         </div>
       </div>
 
-      <div className="trilho relative flex flex-wrap gap-x-8 gap-y-3 border-t border-white/12 py-7 text-sm text-tinta-200">
-        <span>{NOME} · Rio de Janeiro</span>
+      <div className="trilho relative flex flex-wrap items-center justify-between gap-x-8 gap-y-2 border-t border-white/12 py-7 text-sm text-tinta-200">
         <span className="num">{SOCIAS.map((s) => s.creci).join(" · ")}</span>
         <Link
           href="/privacidade"
@@ -117,7 +114,6 @@ export function Rodape() {
         >
           Privacidade
         </Link>
-        <span>Protótipo de layout. Imóveis, preços e imagens são exemplos.</span>
       </div>
     </footer>
   );
