@@ -11,6 +11,10 @@ export const SLOGAN = "Aqui seu sonho vira patrimônio.";
 
 export const TELEFONE: string = "";
 
+export function numerosDoCreci(separador = " · ") {
+  return SOCIAS.map((s) => s.creci.replace("CRECI/RJ ", "")).join(separador);
+}
+
 const EMAIL_PARTES = ["rio.casue", "gmail.com"] as const;
 export const TEM_EMAIL = true;
 export function enderecoEmail() {

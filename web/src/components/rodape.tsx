@@ -4,8 +4,8 @@ import { Assinatura } from "@/components/assinatura";
 import { AcaoEmail, AcaoZap } from "@/components/acao";
 import {
   ENDERECO,
-  SOCIAS,
   SLOGAN,
+  numerosDoCreci,
   TEM_EMAIL,
   INSTAGRAM,
   INSTAGRAM_URL,
@@ -107,7 +107,7 @@ export function Rodape() {
       </div>
 
       <div className="trilho relative flex flex-wrap items-center justify-between gap-x-8 gap-y-2 border-t border-white/12 py-7 text-sm text-tinta-200">
-        <span className="num">{SOCIAS.map((s) => s.creci).join(" · ")}</span>
+        <span className="num">CRECI/RJ {numerosDoCreci()}</span>
         <Link
           href="/privacidade"
           className="inline-flex min-h-11 items-center underline underline-offset-4 transition-colors hover:text-papel md:min-h-0"

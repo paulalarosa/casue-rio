@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { ENDERECO, NOME, SOCIAS, metaDaPagina } from "@/lib/site";
+import { ENDERECO, NOME, SOCIAS, numerosDoCreci, metaDaPagina } from "@/lib/site";
 import { AcaoEmail } from "@/components/acao";
 import { EscolhaDeCookies } from "@/components/medicao";
 import { temMedicao } from "@/lib/medicao";
@@ -64,11 +64,7 @@ export default function PaginaPrivacidade() {
           {ENDERECO.bairro}, {ENDERECO.cidade}, {ENDERECO.estado},{" "}
           <span className="num">{ENDERECO.cep}</span>. As responsáveis são{" "}
           {SOCIAS.map((s) => s.nome).join(" e ")}, corretoras inscritas no CRECI/RJ sob os
-          números{" "}
-          <span className="num">
-            {SOCIAS.map((s) => s.creci.replace("CRECI/RJ ", "")).join(" e ")}
-          </span>
-          .
+          números <span className="num">{numerosDoCreci(" e ")}</span>.
         </p>
         <p>
           Para qualquer assunto desta página, inclusive pedir os seus dados de volta ou
