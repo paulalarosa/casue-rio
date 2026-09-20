@@ -68,7 +68,7 @@ export default function PaginaImoveis() {
             return (
               <Link
                 key={b.chave}
-                href={`/bairros/${encodeURIComponent(b.chave)}`}
+                href={`/bairros/${b.apelido}/`}
                 className="group relative isolate flex min-h-[18rem] flex-col justify-end overflow-hidden rounded-[0.875rem] p-5 shadow-[var(--shadow-flutua-2)] transition-transform duration-500 ease-[var(--ease-saida)] hover:-translate-y-1.5"
               >
                 <Cena

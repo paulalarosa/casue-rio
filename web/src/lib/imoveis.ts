@@ -15,6 +15,14 @@ export function moeda(v: number | null | undefined) {
   return v === null || v === undefined ? "—" : BRL.format(v);
 }
 
+export function apelidoDaRegiao(regiao: Regiao) {
+  return BAIRROS.find((b) => b.chave === regiao)?.apelido ?? "";
+}
+
+export function bairroPorApelido(apelido: string) {
+  return BAIRROS.find((b) => b.apelido === apelido) ?? null;
+}
+
 export function retratoDaRegiao(regiao: Regiao) {
   const lista = DISPONIVEIS.filter((im) => im.regiao === regiao && !im.porMes);
   if (!lista.length) return null;

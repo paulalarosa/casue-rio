@@ -5,7 +5,7 @@ import { Revela } from "@/components/entrada";
 import { Painel } from "@/components/painel";
 import { arquivo } from "@/lib/caminho";
 import posterPortaria from "../../../public/video/portaria.webp";
-import { SOCIAS, SLOGAN, metaDaPagina } from "@/lib/site";
+import { SOCIAS, metaDaPagina } from "@/lib/site";
 
 export const metadata = metaDaPagina({
   titulo: "Quem somos",
@@ -33,12 +33,13 @@ export default function PaginaQuemSomos() {
             data-revela
             className="max-w-[16ch] text-[clamp(1.9rem,4vw,3.1rem)] leading-[1.08]"
           >
-            {SLOGAN}
+            Você não é passado para outro setor.
           </h2>
           <div data-revela className="border-t border-terracota-600/30 pt-6">
             <p className="text-lg leading-relaxed text-tinta-500">
-              Você não é passado para outro setor. Quem abre a porta do imóvel é a mesma
-              que levanta a papelada, conversa com o condomínio e senta na assinatura.
+              Quem abre a porta do imóvel é a mesma que levanta a papelada, conversa com o
+              síndico, corre atrás da certidão que faltou e senta na assinatura. Você não
+              repete a sua história para a próxima pessoa da fila, porque não existe fila.
             </p>
           </div>
         </div>

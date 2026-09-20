@@ -4,7 +4,7 @@ import { CabecaPagina } from "@/components/cabeca-pagina";
 import { Revela } from "@/components/entrada";
 import { Cena } from "@/components/cenas";
 import { BAIRROS } from "@/lib/carteira";
-import { DISPONIVEIS, REGIOES } from "@/lib/imoveis";
+import { DISPONIVEIS, REGIOES, moeda, retratoDaRegiao } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
 import { arquivo } from "@/lib/caminho";
 import posterHorizonte from "../../../public/video/horizonte.webp";
@@ -57,10 +57,11 @@ export default function PaginaBairros() {
         <div className="grid gap-6 md:grid-cols-3">
           {BAIRROS.map((b) => {
             const n = DISPONIVEIS.filter((im) => im.regiao === b.chave).length;
+            const retrato = retratoDaRegiao(b.chave);
             return (
               <Link
                 key={b.chave}
-                href={`/bairros/${encodeURIComponent(b.chave)}`}
+                href={`/bairros/${b.apelido}/`}
                 data-revela
                 className="group relative isolate flex min-h-[24rem] flex-col justify-end overflow-hidden rounded-[0.875rem] p-6 shadow-[var(--shadow-flutua-2)] transition-transform duration-500 ease-[var(--ease-saida)] hover:-translate-y-1.5"
               >
@@ -78,6 +79,14 @@ export default function PaginaBairros() {
                   <h3 className="font-display text-2xl font-bold text-papel">{b.nome}</h3>
                   <span className="num mt-1 block text-sm text-areia-300">
                     {n} {n === 1 ? "imóvel" : "imóveis"}
+                    {retrato && (
+                      <>
+                        {" · "}
+                        {retrato.menor === retrato.maior
+                          ? moeda(retrato.menor)
+                          : `${moeda(retrato.menor)} a ${moeda(retrato.maior)}`}
+                      </>
+                    )}
                   </span>
                   <p className="mt-3 text-sm text-tinta-200">{b.linha}</p>
                 </div>

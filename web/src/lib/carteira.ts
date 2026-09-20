@@ -237,6 +237,7 @@ export const IMOVEIS: Imovel[] = [
 export type Bairro = {
   nome: string;
   chave: Regiao;
+  apelido: string;
   cena: NomeCena;
   linha: string;
   texto: string;
@@ -246,6 +247,7 @@ export const BAIRROS: Bairro[] = [
   {
     nome: "Centro",
     chave: "Centro",
+    apelido: "centro",
     cena: "predio",
     linha: "O escritório fica aqui, e é daqui que sai a papelada.",
     texto:
@@ -254,6 +256,7 @@ export const BAIRROS: Bairro[] = [
   {
     nome: "Tijuca",
     chave: "Tijuca",
+    apelido: "tijuca",
     cena: "casa",
     linha: "Bairro de família, com metrô e a floresta ali em cima.",
     texto:
@@ -262,6 +265,7 @@ export const BAIRROS: Bairro[] = [
   {
     nome: "Zona Sul",
     chave: "Zona Sul",
+    apelido: "zona-sul",
     cena: "vista",
     linha: "Do Flamengo a Copacabana, venda e aluguel.",
     texto:

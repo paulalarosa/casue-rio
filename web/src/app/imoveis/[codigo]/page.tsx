@@ -187,7 +187,7 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
               <h2 className="mt-14 text-2xl">Sobre o {bairro.nome}</h2>
               <p className="mt-5 max-w-[62ch] text-tinta-500">{bairro.texto}</p>
               <Link
-                href={`/bairros/${encodeURIComponent(bairro.chave)}/`}
+                href={`/bairros/${bairro.apelido}/`}
                 className="mt-6 inline-flex items-center gap-2 rounded-full border border-tinta-800/20 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
               >
                 Ver o {bairro.nome} <ArrowRight className="size-4" aria-hidden />

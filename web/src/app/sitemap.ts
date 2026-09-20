@@ -34,7 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const bairros = BAIRROS.map((b) => ({
-    url: comBarra(`/bairros/${encodeURIComponent(b.chave)}`),
+    url: comBarra(`/bairros/${b.apelido}`),
     lastModified: agora,
     changeFrequency: "monthly" as const,
     priority: 0.6,

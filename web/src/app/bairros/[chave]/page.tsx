@@ -6,16 +6,16 @@ import { arquivo } from "@/lib/caminho";
 import alameda from "../../../../public/video/alameda.webp";
 import { CartaoImovel } from "@/components/cartao-imovel";
 import { BAIRROS } from "@/lib/carteira";
-import { DISPONIVEIS, moeda, retratoDaRegiao } from "@/lib/imoveis";
+import { DISPONIVEIS, bairroPorApelido, moeda, retratoDaRegiao } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
 
 export function generateStaticParams() {
-  return BAIRROS.map((b) => ({ chave: b.chave }));
+  return BAIRROS.map((b) => ({ chave: b.apelido }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/bairros/[chave]">) {
   const { chave } = await params;
-  const b = BAIRROS.find((x) => x.chave === decodeURIComponent(chave));
+  const b = bairroPorApelido(chave);
   if (!b) return {};
   const retrato = retratoDaRegiao(b.chave);
   const quantos = retrato
@@ -24,13 +24,13 @@ export async function generateMetadata({ params }: PageProps<"/bairros/[chave]">
   return metaDaPagina({
     titulo: `Imóveis em ${b.nome}`,
     descricao: `${quantos}${b.linha} ${b.texto}`.slice(0, 300),
-    caminho: `/bairros/${encodeURIComponent(b.chave)}`,
+    caminho: `/bairros/${b.apelido}`,
   });
 }
 
 export default async function PaginaBairro({ params }: PageProps<"/bairros/[chave]">) {
   const { chave } = await params;
-  const b = BAIRROS.find((x) => x.chave === decodeURIComponent(chave));
+  const b = bairroPorApelido(chave);
   if (!b) notFound();
   const lista = DISPONIVEIS.filter((im) => im.regiao === b.chave);
   const retrato = retratoDaRegiao(b.chave);

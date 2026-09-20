@@ -11,7 +11,7 @@ import { CabecaPagina } from "@/components/cabeca-pagina";
 import { arquivo } from "@/lib/caminho";
 import avaliacao from "../../../public/video/avaliacao.webp";
 import { Revela } from "@/components/entrada";
-import { SLOGAN, metaDaPagina } from "@/lib/site";
+import { metaDaPagina } from "@/lib/site";
 
 export const metadata = metaDaPagina({
   titulo: "Avaliação de imóvel",
@@ -96,10 +96,10 @@ export default function PaginaAvaliacao() {
             className="border-t border-terracota-600/30 pt-6 text-lg text-tinta-500"
           >
             <span className="mb-3 block font-display text-xl font-semibold text-terracota-600">
-              {SLOGAN}
+              Patrimônio se mede.
             </span>
-            Patrimônio se mede. O parecer é o documento que transforma o que você tem num
-            número que o banco, o juiz e a outra parte aceitam.
+            O parecer é o documento que transforma o que você tem num número que o banco,
+            o juiz e a outra parte aceitam. Opinião não entra em processo, laudo entra.
           </p>
         </div>
       </Revela>
