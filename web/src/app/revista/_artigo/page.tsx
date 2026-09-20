@@ -65,8 +65,8 @@ export default async function PaginaArtigo({
         </Link>
       </nav>
 
-      <header className="mt-8 max-w-[22ch] sm:max-w-[26ch]">
-        <h1 className="text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.05]">
+      <header className="mt-8">
+        <h1 className="max-w-[16ch] text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.05] sm:max-w-[20ch]">
           {artigo.titulo}
         </h1>
       </header>
@@ -100,7 +100,7 @@ export default async function PaginaArtigo({
         {artigo.corpo && <CorpoArtigo blocos={artigo.corpo} />}
       </div>
 
-      <div className="ilha relative isolate mb-8 overflow-hidden bg-tinta-800 text-papel">
+      <div className="ilha relative isolate mb-20 overflow-hidden bg-tinta-800 text-papel">
         <div className="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
           <div>
             <h2 className="max-w-[22ch] text-[clamp(1.6rem,3vw,2.3rem)] text-papel">

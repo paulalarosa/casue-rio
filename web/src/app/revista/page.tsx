@@ -1,15 +1,14 @@
-import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, AtSign } from "lucide-react";
 import { CabecaPagina } from "@/components/cabeca-pagina";
 import { Revela } from "@/components/entrada";
 import { Painel } from "@/components/painel";
+import { CartaoArtigo, DestaqueArtigo } from "@/components/cartao-artigo";
+import { cn } from "@/lib/utils";
 import { arquivo } from "@/lib/caminho";
 import posterEscrivaninha from "../../../public/video/escrivaninha.webp";
-import { listarArtigos, dataPorExtenso } from "@/lib/revista";
+import { listarArtigos } from "@/lib/revista";
 import { Dados } from "@/components/dados";
 import { revista, trilha, grafo } from "@/lib/dados-estruturados";
-import { imagem } from "@/lib/sanity";
 import { INSTAGRAM, INSTAGRAM_URL, metaDaPagina } from "@/lib/site";
 
 export const metadata = metaDaPagina({
@@ -64,47 +63,20 @@ export default async function PaginaRevista() {
       </p>
 
       {materias.length > 0 ? (
-        <Revela className="trilho secao">
-          <div className="grid gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
-            {materias.map((m) => {
-              const capa = m.capa ? imagem(m.capa, 800, 500) : null;
-              return (
-                <Link
-                  key={m.slug}
-                  href={`/revista/${m.slug}/`}
-                  data-revela
-                  className="group flex flex-col"
-                >
-                  {capa && (
-                    <div className="relative mb-5 aspect-16/10 overflow-hidden rounded-[0.875rem] shadow-[var(--shadow-flutua-1)]">
-                      <Image
-                        src={capa}
-                        alt={m.capa?.alt ?? ""}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-700 ease-[var(--ease-saida)] group-hover:scale-105"
-                      />
-                    </div>
-                  )}
-                  <div className="border-t border-tinta-800/15 pt-5 transition-colors group-hover:border-terracota-600">
-                    <span className="rotulo flex flex-wrap items-center gap-x-2 text-bronze-500">
-                      <time dateTime={m.data} className="num">
-                        {dataPorExtenso(m.data)}
-                      </time>
-                      <span aria-hidden className="text-tinta-300">
-                        ·
-                      </span>
-                      <span>{m.autora}</span>
-                    </span>
-                    <h2 className="mt-3 font-display text-2xl leading-tight text-tinta-800">
-                      {m.titulo}
-                    </h2>
-                    <p className="mt-3 text-tinta-500">{m.linha}</p>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+        <Revela className="trilho secao space-y-20">
+          <DestaqueArtigo materia={materias[0]} />
+          {materias.length > 1 && (
+            <div
+              className={cn(
+                "grid gap-x-8 gap-y-12 border-t border-tinta-800/12 pt-16",
+                materias.length > 3 ? "md:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2",
+              )}
+            >
+              {materias.slice(1).map((m) => (
+                <CartaoArtigo key={m.slug} materia={m} />
+              ))}
+            </div>
+          )}
         </Revela>
       ) : (
         <Revela className="trilho secao">

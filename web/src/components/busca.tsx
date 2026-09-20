@@ -49,7 +49,8 @@ export function Busca({ variante = "escuro" }: { variante?: "claro" | "escuro" }
   }
 
   const gatilho = cn(
-    "h-auto w-full justify-between border-0 bg-transparent px-0 py-0 font-display text-lg font-semibold shadow-none",
+    "h-auto min-h-11 w-full justify-between border-0 bg-transparent px-0 py-0 font-display text-lg font-semibold shadow-none",
+    "-my-1.5",
     "focus-visible:ring-0 focus-visible:border-0 dark:bg-transparent",
     escuro ? "text-papel" : "text-tinta-800",
   );
@@ -74,7 +75,7 @@ export function Busca({ variante = "escuro" }: { variante?: "claro" | "escuro" }
           placeholder="CR-0142, cobertura, Tijuca…"
           aria-label="Código do imóvel ou palavra"
           className={cn(
-            "w-full border-0 bg-transparent p-0 font-display text-lg font-semibold outline-none",
+            "-my-1.5 min-h-11 w-full border-0 bg-transparent p-0 font-display text-lg font-semibold outline-none",
             escuro
               ? "text-papel placeholder:text-papel/40"
               : "text-tinta-800 placeholder:text-tinta-400",

@@ -159,7 +159,7 @@ export default function PaginaAvaliacao() {
         </div>
       </Revela>
 
-      <Revela className="trilho secao pb-8">
+      <Revela className="trilho secao">
         <div
           data-revela
           className="ilha relative isolate overflow-hidden bg-tinta-800 text-center text-papel"

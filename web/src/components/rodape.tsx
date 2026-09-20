@@ -14,7 +14,7 @@ import {
 
 export function Rodape() {
   return (
-    <footer className="relative mt-24 overflow-hidden bg-tinta-800 text-papel">
+    <footer className="relative overflow-hidden bg-tinta-800 text-papel">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-70"
@@ -41,7 +41,7 @@ export function Rodape() {
 
         <nav aria-label="Navegar">
           <h3 className="rotulo mb-5 text-areia-300">Navegar</h3>
-          <ul className="space-y-2 text-tinta-200">
+          <ul className="space-y-1 text-tinta-200">
             {[
               ["/imoveis", "Imóveis"],
               ["/bairros", "Bairros"],
@@ -50,7 +50,10 @@ export function Rodape() {
               ["/revista", "Revista"],
             ].map(([href, texto]) => (
               <li key={href}>
-                <Link href={href} className="transition-colors hover:text-papel">
+                <Link
+                  href={href}
+                  className="flex min-h-11 items-center transition-colors hover:text-papel md:min-h-8"
+                >
                   {texto}
                 </Link>
               </li>
@@ -60,11 +63,11 @@ export function Rodape() {
 
         <div>
           <h3 className="rotulo mb-5 text-areia-300">Falar</h3>
-          <ul className="space-y-2 text-tinta-200">
+          <ul className="space-y-1 text-tinta-200">
             <li>
               <AcaoZap
                 recuo="/contato/"
-                className="flex items-center gap-2 transition-colors hover:text-papel"
+                className="flex min-h-11 items-center gap-2 transition-colors hover:text-papel md:min-h-8"
               >
                 <MessageCircle className="size-4" aria-hidden /> WhatsApp
               </AcaoZap>
@@ -73,7 +76,7 @@ export function Rodape() {
               <li>
                 <AcaoEmail
                   recuo="/contato/"
-                  className="flex items-center gap-2 transition-colors hover:text-papel"
+                  className="flex min-h-11 items-center gap-2 transition-colors hover:text-papel md:min-h-8"
                 >
                   <Mail className="size-4 shrink-0" aria-hidden /> Escrever por e-mail
                 </AcaoEmail>
@@ -85,7 +88,7 @@ export function Rodape() {
                   href={INSTAGRAM_URL}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2 transition-colors hover:text-papel"
+                  className="flex min-h-11 items-center gap-2 transition-colors hover:text-papel md:min-h-8"
                 >
                   <AtSign className="size-4 shrink-0" aria-hidden /> {INSTAGRAM}
                 </a>
@@ -110,7 +113,7 @@ export function Rodape() {
         <span className="num">{SOCIAS.map((s) => s.creci).join(" · ")}</span>
         <Link
           href="/privacidade"
-          className="underline underline-offset-4 transition-colors hover:text-papel"
+          className="inline-flex min-h-11 items-center underline underline-offset-4 transition-colors hover:text-papel md:min-h-0"
         >
           Privacidade
         </Link>

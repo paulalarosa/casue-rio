@@ -76,7 +76,7 @@ export default function Home() {
           </div>
           <Link
             href="/imoveis"
-            className="inline-flex items-center gap-2 rounded-full border border-tinta-800/15 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-tinta-800/15 px-5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
           >
             Ver os {DISPONIVEIS.length} imóveis
             <ArrowRight className="size-4" aria-hidden />

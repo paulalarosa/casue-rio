@@ -77,7 +77,7 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
         </dl>
       )}
 
-      <div className="trilho secao pb-8">
+      <div className="trilho secao">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <h2 className="text-3xl">Imóveis em {b.nome}</h2>
           <Link

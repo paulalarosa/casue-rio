@@ -27,7 +27,7 @@ function Descritivo({ cor, className }: { cor: string; className?: string }) {
   return (
     <span
       className={cn("font-sans font-semibold uppercase leading-none", cor, className)}
-      style={{ fontSize: "0.289em", letterSpacing: "0.2em" }}
+      style={{ fontSize: "max(0.289em, 0.625rem)", letterSpacing: "0.2em" }}
     >
       Negócios Imobiliários
     </span>
@@ -74,9 +74,9 @@ export function AssinaturaFaixa({
       </span>
       <span
         aria-hidden
-        className="ml-[1.077em] hidden h-[1.378em] w-px bg-current opacity-25 lg:block"
+        className="ml-[1.077em] hidden h-[1.378em] w-px bg-current opacity-25 xl:block"
       />
-      <Descritivo cor={c.categoria} className="ml-[0.838em] hidden lg:inline" />
+      <Descritivo cor={c.categoria} className="ml-[0.838em] hidden xl:inline" />
     </span>
   );
 }

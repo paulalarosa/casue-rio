@@ -52,7 +52,7 @@ export function Topo() {
       >
         <Link
           href="/"
-          className="flex shrink-0 items-center"
+          className="flex min-h-11 shrink-0 items-center"
           aria-label="Casuê Rio, início"
         >
           <AssinaturaFaixa
@@ -93,7 +93,7 @@ export function Topo() {
         <Link
           href="/contato"
           className={cn(
-            "ml-auto inline-flex shrink-0 items-center rounded-full px-4 py-2.5 text-sm font-semibold md:ml-0",
+            "ml-auto inline-flex min-h-11 shrink-0 items-center rounded-full px-4 text-sm font-semibold md:ml-0",
             "shadow-[var(--shadow-flutua-1)] transition-transform duration-300 hover:-translate-y-0.5",
             sobreCena
               ? "bg-terracota-600 text-papel hover:bg-terracota-700"
