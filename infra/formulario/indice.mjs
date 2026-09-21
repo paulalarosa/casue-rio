@@ -26,7 +26,7 @@ export async function handler(evento) {
     );
   } catch (erro) {
     console.error("[formulario] SES recusou:", erro);
-    const aviso = "Não consegui enviar agora. Tente pelo WhatsApp.";
+    const aviso = "Não consegui enviar agora. Tente de novo em instantes.";
     return responder(502, { erro: aviso }, exame.origem);
   }
 

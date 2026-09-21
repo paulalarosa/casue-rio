@@ -9,7 +9,11 @@ REGIAO=us-east-1
 cp indice.mjs index.mjs
 trap 'rm -f index.mjs pacote.zip' EXIT
 rm -f pacote.zip
-zip -q -j pacote.zip index.mjs regras.mjs
+if command -v zip >/dev/null; then
+  zip -q -j pacote.zip index.mjs regras.mjs
+else
+  powershell -NoProfile -Command "Compress-Archive -Path index.mjs,regras.mjs -DestinationPath pacote.zip -Force"
+fi
 
 aws lambda update-function-code \
   --function-name "$FUNCAO" \
