@@ -59,7 +59,7 @@ export default async function PaginaRevista() {
         trilha={[{ href: "/", texto: "Início" }, { texto: "Revista" }]}
       />
       <p className="trilho mt-3 text-sm text-tinta-500">
-        Imagem de ambiente. Não retrata imóvel da carteira.
+        Imagem de ambiente. Não retrata imóvel anunciado.
       </p>
 
       {materias.length > 0 ? (

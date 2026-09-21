@@ -28,7 +28,7 @@ export async function GET() {
     "## Páginas",
     "",
     `- [Início](${SITE}/): a empresa e a busca de imóveis.`,
-    `- [Imóveis](${SITE}/imoveis/): a carteira, com busca por código, bairro e finalidade, e uma página por região.`,
+    `- [Imóveis](${SITE}/imoveis/): tudo o que está anunciado, com busca por código, bairro e finalidade, e uma página por região.`,
     `- [Avaliação](${SITE}/avaliacao/): como um parecer de avaliação chega a um número.`,
     `- [Quem somos](${SITE}/quem-somos/): as duas corretoras e como elas trabalham.`,
     `- [Revista](${SITE}/revista/): textos sobre comprar, vender e alugar no Rio.`,

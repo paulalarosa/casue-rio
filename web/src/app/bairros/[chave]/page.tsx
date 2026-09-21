@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: PageProps<"/bairros/[chave]">
   if (!b) return {};
   const retrato = retratoDaRegiao(b.chave);
   const quantos = retrato
-    ? `${retrato.quantos} ${retrato.quantos === 1 ? "imóvel" : "imóveis"} na carteira. `
+    ? `${retrato.quantos} ${retrato.quantos === 1 ? "imóvel anunciado" : "imóveis anunciados"}. `
     : "";
   return metaDaPagina({
     titulo: `Imóveis em ${b.nome}`,
@@ -58,7 +58,7 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
         <dl className="trilho grid grid-cols-2 gap-y-8 border-y border-tinta-800/12 py-8 sm:grid-cols-3">
           {[
             [
-              "Na carteira",
+              "Anunciados",
               `${retrato.quantos} ${retrato.quantos === 1 ? "imóvel" : "imóveis"}`,
             ],
             ["Faixa de preço", `${moeda(retrato.menor)} a ${moeda(retrato.maior)}`],
@@ -84,7 +84,7 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
             href={`/imoveis?regiao=${encodeURIComponent(b.chave)}`}
             className="inline-flex items-center gap-2 rounded-full border border-tinta-800/15 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
           >
-            Ver na carteira <ArrowRight className="size-4" aria-hidden />
+            Ver todos os imóveis <ArrowRight className="size-4" aria-hidden />
           </Link>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

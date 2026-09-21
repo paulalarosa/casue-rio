@@ -13,7 +13,6 @@ export function CabecaPagina({
   semente,
   foto,
   video,
-  fatos,
 }: {
   titulo: string;
   linha: string;
@@ -22,7 +21,6 @@ export function CabecaPagina({
   semente?: string;
   foto?: string;
   video?: { fonte: string; poster: StaticImageData; posicao?: string };
-  fatos?: { valor: string; rotulo: string }[];
 }) {
   return (
     <div className="trilho" style={{ paddingTop: "calc(var(--altura-topo) + 1.75rem)" }}>
@@ -112,18 +110,6 @@ export function CabecaPagina({
             {linha}
           </p>
         </div>
-        {fatos && fatos.length > 0 && (
-          <dl className="mt-9 grid max-w-2xl grid-cols-3 gap-5 border-t border-white/18 pt-6">
-            {fatos.map((f) => (
-              <div key={f.rotulo}>
-                <dt className="num text-2xl font-semibold text-papel sm:text-3xl">
-                  {f.valor}
-                </dt>
-                <dd className="rotulo mt-1 text-tinta-200">{f.rotulo}</dd>
-              </div>
-            ))}
-          </dl>
-        )}
       </div>
     </div>
   );

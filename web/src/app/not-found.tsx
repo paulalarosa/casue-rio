@@ -14,14 +14,14 @@ export default function NaoEncontrada() {
         <AssinaturaLinha className="text-[1.9rem]" />
         <h1 className="mt-8 text-3xl">Esta página não existe mais</h1>
         <p className="mt-4 text-tinta-500">
-          Talvez o imóvel já tenha sido vendido. A carteira continua aqui.
+          Talvez o imóvel já tenha sido vendido. Os outros continuam aqui.
         </p>
         <div className="mt-9 flex flex-wrap justify-center gap-3">
           <Link
             href="/imoveis"
             className="rounded-full bg-tinta-800 px-6 py-3 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
           >
-            Ver a carteira
+            Ver os imóveis
           </Link>
           <Link
             href="/contato"

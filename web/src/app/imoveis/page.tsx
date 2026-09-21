@@ -7,39 +7,31 @@ import carteira from "../../../public/video/carteira.webp";
 import { Vitrine } from "@/components/vitrine";
 import { Cena } from "@/components/cenas";
 import { BAIRROS } from "@/lib/carteira";
-import { DISPONIVEIS, REGIOES, moeda, retratoDaRegiao } from "@/lib/imoveis";
+import { DISPONIVEIS, moeda, retratoDaRegiao } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
 
 export const metadata = metaDaPagina({
-  titulo: "A carteira",
+  titulo: "Imóveis no Rio",
   descricao:
     "Imóveis para comprar e alugar no Centro, na Tijuca e na Zona Sul do Rio, com documentação conferida antes da proposta.",
   caminho: "/imoveis",
 });
 
 export default function PaginaImoveis() {
-  const compra = DISPONIVEIS.filter((im) => im.finalidade === "comprar");
-  const menor = Math.min(...compra.map((im) => im.preco));
-
   return (
     <>
       <CabecaPagina
-        titulo="A carteira"
+        titulo="Imóveis no Rio"
         linha="Documentação conferida antes de entrar na lista."
-        fatos={[
-          { valor: String(DISPONIVEIS.length), rotulo: "imóveis" },
-          { valor: String(REGIOES.length), rotulo: "regiões no Rio" },
-          { valor: moeda(menor), rotulo: "a partir de" },
-        ]}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Imóveis" }]}
         video={{ fonte: arquivo("/video/carteira.mp4"), poster: carteira }}
       />
       <p className="trilho mt-3 text-sm text-tinta-500">
-        Imagem de ambiente. Não retrata imóvel da carteira.
+        Imagem de ambiente. Não retrata imóvel anunciado.
       </p>
       <Suspense
         fallback={
-          <div className="trilho py-24 text-tinta-500">Carregando a carteira…</div>
+          <div className="trilho py-24 text-tinta-500">Carregando os imóveis…</div>
         }
       >
         <Vitrine />

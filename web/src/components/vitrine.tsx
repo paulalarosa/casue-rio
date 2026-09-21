@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { MessageCircle, X } from "lucide-react";
+import { ArrowUpDown, MessageCircle, X } from "lucide-react";
 import { CartaoImovel } from "@/components/cartao-imovel";
 import { Painel } from "@/components/painel";
 import { AcaoZap } from "@/components/acao";
@@ -77,27 +77,24 @@ export function Vitrine() {
 
   const pastilha = (chave: "regiao" | "finalidade", valor: string, texto: string) => {
     const ativa = (chave === "regiao" ? regiao : finalidade) === valor;
-    const n = contarCom(chave, valor);
+    const vazia = contarCom(chave, valor) === 0;
     return (
       <button
         key={valor}
         type="button"
         onClick={() => mexer({ [chave]: ativa ? null : valor })}
         aria-pressed={ativa}
-        disabled={n === 0 && !ativa}
+        disabled={vazia && !ativa}
         className={cn(
-          "inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300",
+          "inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold transition-colors duration-300",
           "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-areia-500",
-          "disabled:cursor-not-allowed disabled:opacity-40",
+          "disabled:cursor-not-allowed disabled:opacity-35",
           ativa
             ? "bg-tinta-800 text-papel shadow-[var(--shadow-flutua-1)]"
             : "border border-tinta-800/15 text-tinta-800 hover:bg-tinta-800/6",
         )}
       >
         {texto}
-        <span className={cn("num text-xs", ativa ? "text-tinta-200" : "text-tinta-500")}>
-          {n}
-        </span>
       </button>
     );
   };
@@ -106,45 +103,44 @@ export function Vitrine() {
     <>
       <div className="sticky top-20 z-30 mt-10">
         <div className="trilho">
-          <div className="vidro-claro flex flex-wrap items-center gap-x-3 gap-y-3 rounded-[0.75rem] px-5 py-3">
-            <span className="rotulo text-tinta-500">Bairro</span>
-            {REGIOES.map((r) => pastilha("regiao", r, r))}
-            <span className="rotulo ml-2 text-tinta-500">Finalidade</span>
-            {FINALIDADES.map(([v, t]) => pastilha("finalidade", v, t))}
+          <div className="vidro-claro flex flex-col gap-2 rounded-[0.75rem] px-4 py-2.5 sm:flex-row sm:items-center sm:gap-4 sm:px-5">
+            <div className="flex min-w-0 items-center gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {REGIOES.map((r) => pastilha("regiao", r, r))}
+              <span aria-hidden className="h-6 w-px shrink-0 bg-tinta-800/15" />
+              {FINALIDADES.map(([v, t]) => pastilha("finalidade", v, t))}
+            </div>
 
-            <div className="ml-auto flex items-center gap-3">
-              <label className="flex items-center gap-2">
-                <span className="rotulo text-tinta-500">Ordem</span>
-                <Select
-                  value={ordem}
-                  onValueChange={(v) => mexer({ ordem: v ?? "selecionados" })}
-                >
-                  <SelectTrigger
-                    aria-label="Ordenar a lista"
-                    className="h-9 rounded-full border-tinta-800/15 bg-transparent px-4 text-sm font-semibold text-tinta-800 shadow-none"
-                  >
-                    <SelectValue>{(v) => ORDENS[String(v)]?.rotulo}</SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.entries(ORDENS).map(([k, o]) => (
-                      <SelectItem key={k} value={k}>
-                        {o.rotulo}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </label>
-
-              <span aria-live="polite" className="text-sm text-tinta-500">
+            <div className="flex min-h-11 items-center gap-3 sm:ml-auto">
+              <span aria-live="polite" className="shrink-0 text-sm text-tinta-500">
                 <b className="num text-tinta-800">{lista.length}</b>{" "}
                 {lista.length === 1 ? "imóvel" : "imóveis"}
               </span>
+
+              <Select
+                value={ordem}
+                onValueChange={(v) => mexer({ ordem: v ?? "selecionados" })}
+              >
+                <SelectTrigger
+                  aria-label="Ordenar a lista"
+                  className="ml-auto min-h-11 w-auto gap-2 rounded-full border-tinta-800/15 bg-transparent px-4 text-sm font-semibold text-tinta-800 shadow-none sm:ml-0"
+                >
+                  <ArrowUpDown className="size-4 shrink-0 text-tinta-500" aria-hidden />
+                  <SelectValue>{(v) => ORDENS[String(v)]?.rotulo}</SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(ORDENS).map(([k, o]) => (
+                    <SelectItem key={k} value={k}>
+                      {o.rotulo}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
               {(termo || regiao || finalidade || ordem !== "selecionados") && (
                 <button
                   type="button"
                   onClick={() => router.replace("/imoveis", { scroll: false })}
-                  className="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
+                  className="inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full px-3 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
                 >
                   <X className="size-3.5" aria-hidden /> Limpar
                 </button>
@@ -177,8 +173,8 @@ export function Vitrine() {
           <Painel className="mx-auto max-w-xl p-10 text-center">
             <h2 className="text-2xl">Nenhum imóvel com esses filtros</h2>
             <p className="mt-4 text-tinta-500">
-              Diga o que você procura. A gente avisa quando entrar, ou procura fora da
-              carteira.
+              Diga o que você procura. A gente avisa quando entrar, ou procura fora do que
+              está anunciado.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <button
@@ -205,8 +201,8 @@ export function Vitrine() {
             <div className="grid gap-4 lg:grid-cols-[1fr_26rem] lg:items-end">
               <h2 className="text-[clamp(1.6rem,3vw,2.4rem)] text-papel">Já vendidos</h2>
               <p className="max-w-[42ch] text-tinta-200">
-                Saíram da carteira, e ficam aqui porque contam como a gente trabalha. Não
-                entram na contagem de disponíveis.
+                Saíram do ar, e ficam aqui porque contam como a gente trabalha. Não entram
+                na contagem de disponíveis.
               </p>
             </div>
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
