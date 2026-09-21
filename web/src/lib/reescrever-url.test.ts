@@ -57,6 +57,11 @@ describe("reescrever-url", () => {
     expect(pedir("/bairros/zona-sul/").uri).toBe("/bairros/zona-sul/index.html");
   });
 
+  it("leva o índice de bairros para a carteira", () => {
+    expect(pedir("/bairros/").headers?.location?.value).toBe("/imoveis/");
+    expect(pedir("/bairros").headers?.location?.value).toBe("/imoveis/");
+  });
+
   it("não mexe em arquivo com extensão", () => {
     expect(pedir("/sitemap.xml").uri).toBe("/sitemap.xml");
   });

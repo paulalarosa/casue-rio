@@ -15,6 +15,10 @@ function handler(event) {
     return mover("https://" + host.slice(4) + uri);
   }
 
+  if (uri === "/bairros" || uri === "/bairros/") {
+    return mover("/imoveis/");
+  }
+
   var bairro = uri.match(/^\/bairros\/([^/]+)\/?$/);
   if (bairro) {
     var apelido = decodeURIComponent(bairro[1])

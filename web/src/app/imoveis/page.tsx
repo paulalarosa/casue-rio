@@ -1,13 +1,13 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+
 import { CabecaPagina } from "@/components/cabeca-pagina";
 import { arquivo } from "@/lib/caminho";
 import carteira from "../../../public/video/carteira.webp";
 import { Vitrine } from "@/components/vitrine";
 import { Cena } from "@/components/cenas";
 import { BAIRROS } from "@/lib/carteira";
-import { DISPONIVEIS, REGIOES, moeda } from "@/lib/imoveis";
+import { DISPONIVEIS, REGIOES, moeda, retratoDaRegiao } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
 
 export const metadata = metaDaPagina({
@@ -46,25 +46,17 @@ export default function PaginaImoveis() {
       </Suspense>
 
       <section className="trilho secao">
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h2 className="text-[clamp(1.7rem,3vw,2.4rem)]">Procurar por bairro</h2>
-            <p className="mt-3 text-lg text-tinta-500">
-              Cada região tem uma conta diferente, e a gente faz as três.
-            </p>
-          </div>
-          <Link
-            href="/bairros"
-            className="inline-flex items-center gap-2 rounded-full border border-tinta-800/15 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
-          >
-            Ver os bairros
-            <ArrowRight className="size-4" aria-hidden />
-          </Link>
+        <div className="mb-10">
+          <h2 className="text-[clamp(1.7rem,3vw,2.4rem)]">Procurar por bairro</h2>
+          <p className="mt-3 max-w-[52ch] text-lg text-tinta-500">
+            Cada região tem uma conta diferente, e a gente faz as três.
+          </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
           {BAIRROS.map((b) => {
             const n = DISPONIVEIS.filter((im) => im.regiao === b.chave).length;
+            const retrato = retratoDaRegiao(b.chave);
             return (
               <Link
                 key={b.chave}
@@ -85,7 +77,16 @@ export default function PaginaImoveis() {
                   <h3 className="font-display text-xl font-bold text-papel">{b.nome}</h3>
                   <span className="num mt-1 block text-sm text-areia-300">
                     {n} {n === 1 ? "imóvel" : "imóveis"}
+                    {retrato && (
+                      <>
+                        {" · "}
+                        {retrato.menor === retrato.maior
+                          ? moeda(retrato.menor)
+                          : `${moeda(retrato.menor)} a ${moeda(retrato.maior)}`}
+                      </>
+                    )}
                   </span>
+                  <p className="mt-2 text-sm text-tinta-200">{b.linha}</p>
                 </div>
               </Link>
             );
