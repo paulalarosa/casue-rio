@@ -66,6 +66,28 @@ export default function Home() {
         </EntradaAbertura>
       </Abertura>
 
+      <Revela className="trilho secao">
+        <div className="grid gap-10 lg:grid-cols-[1.35fr_1fr] lg:items-end">
+          <p
+            data-revela
+            className="max-w-[24ch] font-display text-[clamp(1.7rem,3.6vw,2.9rem)] font-semibold leading-[1.12] tracking-[-0.03em] text-tinta-800"
+          >
+            Plano vira patrimônio quando alguém cuida da parte chata.
+          </p>
+          <p
+            data-revela
+            className="border-t border-terracota-600/30 pt-6 text-lg text-tinta-500"
+          >
+            <span className="mb-3 block font-display text-xl font-semibold text-terracota-600">
+              Compra, venda e avaliação.
+            </span>
+            A Casuê Rio aproxima pessoas de oportunidades que fazem sentido para o que
+            elas querem. Atendimento próximo, olho no que cada imóvel tem de particular, e
+            a decisão sai clara em vez de sair no susto.
+          </p>
+        </div>
+      </Revela>
+
       <Revela id="destaques" className="trilho secao">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -109,6 +131,54 @@ export default function Home() {
           Sem móvel e sem montagem. O resto quem imagina é você.
         </p>
       </FaixaVideo>
+
+      <Revela className="trilho secao">
+        <div className="grid gap-x-10 gap-y-14 lg:grid-cols-2">
+          <div data-revela className="border-t border-terracota-600/40 pt-8">
+            <h2 className="max-w-[18ch] text-[clamp(1.6rem,2.8vw,2.3rem)]">
+              O imóvel que você visita. A oportunidade que você enxerga.
+            </h2>
+            <p className="mt-5 max-w-[48ch] text-tinta-500">
+              Para quem investe, o olhar é mais duro: localização, estado de conservação,
+              potencial de transformação, aproveitamento, liquidez e perspectiva de
+              valorização. A gente levanta isso antes da proposta, não depois.
+            </p>
+            <p className="mt-4 max-w-[48ch] text-tinta-500">
+              Em cada visita a gente mostra o que o imóvel tem, responde o que você
+              perguntar e aponta o detalhe que muda a conta.
+            </p>
+            <Link
+              href="/imoveis"
+              className="mt-7 inline-flex min-h-11 items-center gap-2 font-semibold text-terracota-600 transition-colors hover:text-terracota-700"
+            >
+              Ver os imóveis
+              <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </div>
+
+          <div data-revela className="border-t border-terracota-600/40 pt-8">
+            <h2 className="max-w-[18ch] text-[clamp(1.6rem,2.8vw,2.3rem)]">
+              O imóvel certo para viver bem.
+            </h2>
+            <p className="mt-5 max-w-[48ch] text-tinta-500">
+              Comprar para morar passa longe de metragem e endereço. É escolher onde a sua
+              vida vai acontecer, e isso depende de coisas que não cabem no anúncio.
+            </p>
+            <p className="mt-4 max-w-[48ch] text-tinta-500">
+              A gente olha junto com você a distribuição dos ambientes, a luz, a rua, a
+              infraestrutura do condomínio e o que faz sentido para o seu momento e para a
+              sua família.
+            </p>
+            <Link
+              href="/contato"
+              className="mt-7 inline-flex min-h-11 items-center gap-2 font-semibold text-terracota-600 transition-colors hover:text-terracota-700"
+            >
+              Contar o que procuro
+              <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </div>
+        </div>
+      </Revela>
 
       <Revela className="trilho secao">
         <div

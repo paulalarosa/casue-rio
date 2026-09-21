@@ -43,10 +43,12 @@ export function Rodape() {
           <h3 className="rotulo mb-5 text-areia-300">Navegar</h3>
           <ul className="space-y-1 text-tinta-200">
             {[
+              ["/", "Início"],
               ["/imoveis", "Imóveis"],
               ["/avaliacao", "Avaliação"],
-              ["/quem-somos", "Quem somos"],
               ["/revista", "Revista"],
+              ["/quem-somos", "Quem somos"],
+              ["/contato", "Contato"],
             ].map(([href, texto]) => (
               <li key={href}>
                 <Link

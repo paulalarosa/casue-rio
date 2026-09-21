@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 
 import { CabecaPagina } from "@/components/cabeca-pagina";
+import { FormBusca } from "@/components/form-busca";
 import { arquivo } from "@/lib/caminho";
 import carteira from "../../../public/video/carteira.webp";
 import { Vitrine } from "@/components/vitrine";
@@ -83,6 +84,32 @@ export default function PaginaImoveis() {
               </Link>
             );
           })}
+        </div>
+      </section>
+      <section className="trilho secao" id="buscamos-para-voce">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
+          <div>
+            <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">
+              Não encontrou o imóvel que procura?
+            </h2>
+            <p className="mt-5 max-w-[46ch] text-lg text-tinta-500">
+              A gente pode buscar para você. A atuação da Casuê Rio não para nos imóveis
+              que estão nesta página.
+            </p>
+            <p className="mt-6 max-w-[46ch] text-tinta-500">
+              Primeiro a gente entende o que você procura: localização, características,
+              necessidades, estilo e objetivo. Quando a oportunidade certa ainda não está
+              disponível, sai uma captação direcionada, procurando no mercado o imóvel que
+              combina com esse perfil.
+            </p>
+            <p className="mt-6 max-w-[46ch] text-tinta-500">
+              Porque achar o imóvel certo não é mostrar o que a gente tem. É entender o
+              que você procura e ir atrás do que faz sentido.
+            </p>
+          </div>
+          <div className="ilha border border-tinta-800/10 bg-areia-100">
+            <FormBusca />
+          </div>
         </div>
       </section>
     </>

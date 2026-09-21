@@ -71,6 +71,28 @@ O fluxo também dispara por:
   artigo marcado para o futuro vence a hora. Quem decide é
   `.github/scripts/venceu.sh`, comparando o painel com o sitemap do site.
 
+## Formulários
+
+Os três formulários do site (contato, "busque para mim" em Imóveis e "quer
+vender" em Avaliação) postam para uma função Lambda com Function URL, que
+monta o e-mail e entrega pelo Amazon SES.
+
+O código mora em `infra/formulario/`. `regras.mjs` é a parte pura, coberta por
+`web/src/lib/formulario.test.ts`; `indice.mjs` só acrescenta o SES. `subir.sh`
+zipa os dois e atualiza a função.
+
+Quatro travas, e nenhuma delas é captcha:
+
+- **o destino é fixo no código**, e a política do papel ainda prende o SES a um
+  único remetente e a um único destinatário, então nem alterar o código abre a
+  porta para usar isso como relé;
+- **campo-armadilha** escondido, que só robô preenche;
+- **trava de tempo**: formulário respondido em menos de três segundos não sai;
+- **limite por IP**: três envios em dez minutos.
+
+O SES está no modo restrito, que só entrega para endereço verificado. Como o
+único destino é verificado, isso serve de teto: 200 e-mails por dia.
+
 ### Variáveis do repositório
 
 | variável                              | para quê                                                           |
@@ -80,6 +102,7 @@ O fluxo também dispara por:
 | `SITE_URL`                            | endereço canônico                                                   |
 | `SANITY_PROJECT_ID`, `SANITY_DATASET` | leitura do painel                                                   |
 | `GA_ID`                               | medição. Vazia: sem script, sem cookie e sem faixa de consentimento |
+| `FORM_URL`                            | Function URL que recebe os formulários. Vazia: os formulários avisam que o envio não está ligado |
 
 ## Peças de Instagram
 

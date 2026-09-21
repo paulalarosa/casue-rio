@@ -53,9 +53,10 @@ export default function PaginaPrivacidade() {
       </header>
 
       <p className="mt-10 text-xl leading-relaxed text-tinta-500">
-        Este site não coleta nada de quem visita. Não há formulário, não há cookie e não
-        há rastreador. O que existe de dado pessoal na Casuê Rio chega por e-mail,
-        WhatsApp e Instagram, e é disso que esta página trata.
+        Este site só recebe o que você escolhe escrever num dos formulários. Não há cookie
+        nem rastreador antes do seu aceite, e ninguém é perfilado por navegar aqui. O
+        resto do contato chega por e-mail, WhatsApp e Instagram, e é disso que esta página
+        trata.
       </p>
 
       <Bloco titulo="Quem é responsável">
@@ -84,8 +85,9 @@ export default function PaginaPrivacidade() {
         <p>Conferido em {ATUALIZADA}, página por página:</p>
         <ul className={lista}>
           <li>
-            Não existe formulário. Todo contato sai do site para o e-mail ou para o
-            WhatsApp.
+            Os três formulários do site mandam o que você escreveu direto para a caixa de
+            entrada da Casuê Rio. Nada fica guardado no site, e o endereço de destino é
+            fixo no código: não existe campo que mude para onde a mensagem vai.
           </li>
           {temMedicao ? (
             <>
@@ -129,13 +131,21 @@ export default function PaginaPrivacidade() {
           ao abrir a Revista, o seu navegador pede as imagens a eles, que recebem o seu IP
           e o seu navegador. Os servidores das duas ficam fora do Brasil.
         </p>
+        <p>
+          Quando você envia um formulário, a Amazon Web Services também entra: é uma
+          função deles que recebe o que você escreveu e transforma em e-mail, e é o
+          serviço de e-mail deles que entrega. Nessa passagem ficam registrados, por pouco
+          tempo, o seu endereço de IP e o horário, para barrar disparo automático. O
+          conteúdo do formulário não é guardado em banco nenhum: ele vira e-mail e acaba
+          na caixa de entrada.
+        </p>
       </Bloco>
 
       <Bloco titulo="O que recebemos quando você fala com a gente">
         <p>
-          Quando você escreve por e-mail, manda mensagem no WhatsApp ou no Instagram, ou
-          liga, chega o que você contar: nome, forma de contato e o que procura, quer
-          vender ou quer alugar.
+          Pelo formulário chega o que você preencher: nome, telefone, e-mail e o que você
+          procura ou quer vender, com bairro, quartos e vaga quando o formulário pergunta.
+          Por e-mail, WhatsApp, Instagram ou telefone chega o que você contar.
         </p>
         <p>
           Se a negociação avançar, o negócio passa a exigir mais: estado civil, profissão,

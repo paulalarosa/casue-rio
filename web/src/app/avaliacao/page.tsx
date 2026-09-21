@@ -1,13 +1,7 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  ClipboardCheck,
-  MessageCircle,
-  Ruler,
-  ScrollText,
-} from "lucide-react";
-import { AcaoZap } from "@/components/acao";
+import { ArrowRight, ClipboardCheck, Ruler, ScrollText } from "lucide-react";
 import { CabecaPagina } from "@/components/cabeca-pagina";
+import { FormAvaliacao } from "@/components/form-avaliacao";
 import { arquivo } from "@/lib/caminho";
 import avaliacao from "../../../public/video/avaliacao.webp";
 import { Revela } from "@/components/entrada";
@@ -159,22 +153,25 @@ export default function PaginaAvaliacao() {
         </div>
       </Revela>
 
-      <Revela className="trilho secao">
-        <div
-          data-revela
-          className="ilha relative isolate overflow-hidden bg-tinta-800 text-center text-papel"
-        >
-          <h2 className="text-3xl text-papel">Precisa de um valor defensável?</h2>
-          <p className="mx-auto mt-4 max-w-[46ch] text-tinta-200">
-            Diga o imóvel e para que serve o parecer. A gente responde com prazo e valor
-            antes de começar.
-          </p>
-          <AcaoZap
-            recuo="/contato/"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-terracota-600 px-7 py-4 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5 hover:bg-terracota-700"
-          >
-            <MessageCircle className="size-5" aria-hidden /> Pedir uma avaliação
-          </AcaoZap>
+      <Revela className="trilho secao" id="quero-vender">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
+          <div data-revela>
+            <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">
+              Quer vender o seu imóvel?
+            </h2>
+            <p className="mt-5 max-w-[46ch] text-lg text-tinta-500">
+              Conte onde fica e como ele é. A Casuê Rio volta com a faixa de valor que a
+              região pratica hoje e com o que muda esse número na prática.
+            </p>
+            <p className="mt-6 max-w-[46ch] text-tinta-500">
+              A primeira conversa não custa nada e não compromete você com nada. Prazo e
+              preço do parecer, quando ele for necessário, são combinados antes de
+              começar.
+            </p>
+          </div>
+          <div data-revela className="ilha border border-tinta-800/10 bg-areia-100">
+            <FormAvaliacao />
+          </div>
         </div>
       </Revela>
     </>

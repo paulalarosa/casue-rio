@@ -48,7 +48,7 @@ export default function PaginaQuemSomos() {
       <Revela className="campo-luz trilho secao relative">
         <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">Quem atende você</h2>
         <p className="mt-3 text-lg text-tinta-500">
-          Corretoras com CRECI e avaliadoras com CNAI.
+          As sócias-diretoras, com CRECI para intermediar e CNAI para avaliar.
         </p>
 
         <div className="mt-12 grid gap-8 md:grid-cols-2">
@@ -66,16 +66,21 @@ export default function PaginaQuemSomos() {
                 </span>
               </div>
               <div>
-                <span className="rotulo block text-bronze-500">
-                  Corretora e avaliadora
-                </span>
+                <span className="rotulo block text-bronze-500">{s.cargo}</span>
                 <span className="mt-1 block font-display text-3xl font-bold leading-tight text-tinta-800">
                   {s.nome}
                 </span>
                 <span className="num mt-3 block text-sm text-tinta-500">
                   {s.creci} · {s.cnai}
                 </span>
-                <p className="mt-4 text-tinta-500">{s.linha}</p>
+                <blockquote className="mt-6 border-l-2 border-terracota-600/50 pl-5 font-display text-lg leading-snug text-tinta-800">
+                  {s.citacao}
+                </blockquote>
+                {s.bio.map((paragrafo) => (
+                  <p key={paragrafo} className="mt-4 text-tinta-500">
+                    {paragrafo}
+                  </p>
+                ))}
               </div>
             </div>
           ))}

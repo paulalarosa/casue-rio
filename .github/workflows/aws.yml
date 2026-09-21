@@ -90,6 +90,7 @@ jobs:
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_DATASET: ${{ vars.SANITY_DATASET }}
           NEXT_PUBLIC_GA_ID: ${{ vars.GA_ID }}
+          NEXT_PUBLIC_FORM_URL: ${{ vars.FORM_URL }}
         run: npm run build
 
       - uses: actions/upload-artifact@v4

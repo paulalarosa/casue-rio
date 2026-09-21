@@ -1,162 +1,120 @@
 "use client";
 
 import { useState } from "react";
-import { AlertTriangle, Check, ShieldCheck } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
+import { ShieldCheck } from "lucide-react";
+import {
+  Armadilha,
+  BotaoEnviar,
+  CampoTexto,
+  Consentimento,
+  Resultado,
+} from "@/components/campos";
 import { Painel } from "@/components/painel";
-import { TELEFONE } from "@/lib/site";
-
-type Erros = { nome?: string; contato?: string; consentimento?: string };
-
-function validar(nome: string, contato: string, ok: boolean): Erros {
-  const e: Erros = {};
-  if (nome.trim().length < 2) e.nome = "Diga como a gente te chama.";
-  const digitos = contato.replace(/\D/g, "").length;
-  const pareceEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(contato.trim());
-  if (!contato.trim()) e.contato = "Sem isto a gente não tem como responder.";
-  else if (!pareceEmail && digitos < 10)
-    e.contato = "Escreva um e-mail ou um WhatsApp com DDD.";
-  if (!ok) e.consentimento = "Precisa autorizar o contato para a gente poder responder.";
-  return e;
-}
+import { useEnvio } from "@/lib/envio";
+import {
+  conferirEmail,
+  focarPrimeiroErro,
+  pedirConsentimento,
+  pedirNome,
+  type Erros,
+} from "@/lib/validar";
 
 export function FormContato() {
   const [nome, setNome] = useState("");
-  const [contato, setContato] = useState("");
-  const [ok, setOk] = useState(false);
+  const [telefone, setTelefone] = useState("");
+  const [email, setEmail] = useState("");
   const [mensagem, setMensagem] = useState("");
+  const [ok, setOk] = useState(false);
+  const [armadilha, setArmadilha] = useState("");
   const [erros, setErros] = useState<Erros>({});
-  const [tentou, setTentou] = useState(false);
-  const [enviado, setEnviado] = useState(false);
+  const { estado, recado, enviar } = useEnvio("contato");
 
-  function revalidar(n = nome, c = contato, k = ok) {
-    if (!tentou) return;
-    setErros(validar(n, c, k));
+  function conferir(): Erros {
+    const achados: Erros = {};
+    pedirNome(nome, achados);
+    conferirEmail(email, achados);
+    if (!telefone.trim() && !email.trim()) {
+      achados.telefone = "Deixe um WhatsApp ou um e-mail para a gente responder.";
+    }
+    if (mensagem.trim().length < 5)
+      achados.mensagem = "Conte em uma linha o que procura.";
+    pedirConsentimento(ok, achados);
+    return achados;
   }
 
-  function enviar(e: React.FormEvent) {
+  async function aoEnviar(e: React.FormEvent) {
     e.preventDefault();
-    setTentou(true);
-    const achados = validar(nome, contato, ok);
+    const achados = conferir();
     setErros(achados);
     if (Object.keys(achados).length) {
-      const alvo = document.querySelector<HTMLElement>("[aria-invalid='true']");
-      alvo?.focus();
+      focarPrimeiroErro();
       return;
     }
-    setEnviado(true);
+    await enviar({ nome, telefone, email, mensagem }, armadilha);
+  }
 
-    if (TELEFONE) {
-      const texto = [
-        `Olá! Sou ${nome.trim()}.`,
-        `Meu contato: ${contato.trim()}.`,
-        mensagem.trim() ? `O que procuro: ${mensagem.trim()}` : "",
-        "(enviado pelo formulário do site)",
-      ]
-        .filter(Boolean)
-        .join("\n");
-      window.open(
-        `https://wa.me/${TELEFONE.replace(/\D/g, "")}?text=${encodeURIComponent(texto)}`,
-        "_blank",
-        "noopener,noreferrer",
-      );
-    }
+  if (estado === "pronto") {
+    return (
+      <Resultado
+        estado={estado}
+        recado={recado}
+        sucesso="Recado recebido. A gente responde no mesmo dia útil."
+      />
+    );
   }
 
   return (
-    <form onSubmit={enviar} className="flex max-w-2xl flex-col gap-6" noValidate>
-      <label className="flex flex-col gap-2">
-        <span className="font-semibold text-tinta-800">Nome</span>
-        <Input
-          name="nome"
-          autoComplete="name"
-          value={nome}
-          onChange={(e) => {
-            setNome(e.target.value);
-            revalidar(e.target.value);
-          }}
-          aria-invalid={!!erros.nome}
-          aria-describedby={erros.nome ? "erro-nome" : undefined}
-          className="rounded-[0.75rem]"
-        />
-        {erros.nome && (
-          <span
-            id="erro-nome"
-            className="flex items-center gap-2 text-sm text-destructive"
-          >
-            <AlertTriangle className="size-4" aria-hidden /> {erros.nome}
-          </span>
-        )}
-      </label>
+    <form
+      onSubmit={aoEnviar}
+      className="relative flex max-w-2xl flex-col gap-6"
+      noValidate
+    >
+      <Armadilha valor={armadilha} aoMudar={setArmadilha} />
 
-      <label className="flex flex-col gap-2">
-        <span className="font-semibold text-tinta-800">WhatsApp ou e-mail</span>
-        <Input
-          name="contato"
-          inputMode="text"
-          autoComplete="tel email"
-          value={contato}
-          onChange={(e) => {
-            setContato(e.target.value);
-            revalidar(undefined, e.target.value);
-          }}
-          aria-invalid={!!erros.contato}
-          aria-describedby={erros.contato ? "erro-contato" : "dica-contato"}
-          className="rounded-[0.75rem]"
-        />
-        {erros.contato ? (
-          <span
-            id="erro-contato"
-            className="flex items-center gap-2 text-sm text-destructive"
-          >
-            <AlertTriangle className="size-4" aria-hidden /> {erros.contato}
-          </span>
-        ) : (
-          <span id="dica-contato" className="text-sm text-tinta-500">
-            É por aqui que a gente responde.
-          </span>
-        )}
-      </label>
+      <CampoTexto
+        id="contato-nome"
+        rotulo="Nome"
+        autoComplete="name"
+        valor={nome}
+        aoMudar={setNome}
+        erro={erros.nome}
+      />
 
-      <label className="flex flex-col gap-2">
-        <span className="font-semibold text-tinta-800">
-          O que você procura{" "}
-          <span className="font-normal text-tinta-500">· opcional</span>
-        </span>
-        <Textarea
-          name="mensagem"
-          rows={4}
-          className="rounded-[0.75rem]"
-          placeholder="Bairro, número de quartos, faixa de valor, prazo."
-          value={mensagem}
-          onChange={(e) => setMensagem(e.target.value)}
+      <div className="grid gap-6 sm:grid-cols-2">
+        <CampoTexto
+          id="contato-telefone"
+          rotulo="WhatsApp"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          valor={telefone}
+          aoMudar={setTelefone}
+          erro={erros.telefone}
+          dica="Com DDD."
         />
-      </label>
-
-      <label className="flex cursor-pointer items-start gap-3 text-sm text-tinta-500">
-        <Checkbox
-          checked={ok}
-          onCheckedChange={(v) => {
-            setOk(v === true);
-            revalidar(undefined, undefined, v === true);
-          }}
-          aria-invalid={!!erros.consentimento}
-          className="mt-0.5"
+        <CampoTexto
+          id="contato-email"
+          rotulo="E-mail"
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          valor={email}
+          aoMudar={setEmail}
+          erro={erros.email}
         />
-        <span>
-          Autorizo o contato sobre este pedido. Os dados são usados só para responder, não
-          vão para lista de disparo e podem ser apagados quando eu pedir.
-        </span>
-      </label>
+      </div>
 
-      {erros.consentimento && (
-        <p className="flex items-center gap-2 text-sm text-destructive" role="alert">
-          <AlertTriangle className="size-4" aria-hidden />
-          {erros.consentimento}
-        </p>
-      )}
+      <CampoTexto
+        id="contato-mensagem"
+        rotulo="O que você procura"
+        area
+        placeholder="Bairro, número de quartos, faixa de valor, prazo."
+        valor={mensagem}
+        aoMudar={setMensagem}
+        erro={erros.mensagem}
+      />
+
+      <Consentimento marcado={ok} aoMudar={setOk} erro={erros.consentimento} />
 
       <Painel className="flex gap-3 border-l-4 border-l-areia-500 p-5 text-sm">
         <ShieldCheck className="size-5 shrink-0 text-bronze-500" aria-hidden />
@@ -167,27 +125,8 @@ export function FormContato() {
         </span>
       </Painel>
 
-      <div className="flex justify-end">
-        <button
-          type="submit"
-          className="rounded-full bg-tinta-800 px-7 py-3.5 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
-        >
-          Enviar recado
-        </button>
-      </div>
-
-      {enviado && (
-        <p
-          className="flex items-center gap-3 rounded-[0.75rem] bg-tinta-800 px-5 py-4 text-papel"
-          role="status"
-          aria-live="polite"
-        >
-          <Check className="size-5 text-areia-300" aria-hidden />
-          {TELEFONE
-            ? "Recado pronto no WhatsApp. Confirme o envio na conversa que abriu."
-            : "Recado montado. Falta o número único da empresa entrar no ar para ele ser entregue."}
-        </p>
-      )}
+      <Resultado estado={estado} recado={recado} sucesso="" />
+      <BotaoEnviar estado={estado} texto="Enviar recado" />
     </form>
   );
 }

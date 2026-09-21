@@ -11,9 +11,15 @@ import { cn } from "@/lib/utils";
 const LINKS = [
   { href: "/imoveis", texto: "Imóveis" },
   { href: "/avaliacao", texto: "Avaliação" },
-  { href: "/quem-somos", texto: "Quem somos" },
   { href: "/revista", texto: "Revista" },
+  { href: "/quem-somos", texto: "Quem somos" },
 ];
+
+const INICIO = { href: "/", texto: "Início" };
+
+function atual(caminho: string, href: string) {
+  return href === "/" ? caminho === "/" : caminho.startsWith(href);
+}
 
 export function Topo() {
   const caminho = usePathname();
@@ -122,15 +128,15 @@ export function Topo() {
               <AssinaturaNome className="text-[2rem]" empilhado />
             </div>
             <nav aria-label="Principal" className="mt-10 flex flex-col gap-1">
-              {LINKS.map((l) => (
+              {[INICIO, ...LINKS].map((l) => (
                 <Link
                   key={l.href}
                   href={l.href}
                   onClick={() => setMenu(false)}
-                  aria-current={caminho.startsWith(l.href) ? "page" : undefined}
+                  aria-current={atual(caminho, l.href) ? "page" : undefined}
                   className={cn(
                     "rounded-[0.75rem] px-5 py-4 font-display text-2xl font-semibold transition-colors",
-                    caminho.startsWith(l.href)
+                    atual(caminho, l.href)
                       ? "bg-tinta-800/8 text-tinta-800"
                       : "text-tinta-600 hover:bg-tinta-800/6",
                   )}
