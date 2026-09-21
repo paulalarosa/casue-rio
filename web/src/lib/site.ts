@@ -71,3 +71,8 @@ export const ENDERECO = {
   linha:
     "Av. Franklin Roosevelt, 39 · sala 1402 · Centro · Rio de Janeiro/RJ · 20021-120",
 };
+
+export function mapaDoEndereco() {
+  const destino = `${ENDERECO.rua}, ${ENDERECO.bairro}, ${ENDERECO.cidade} - ${ENDERECO.estado}, ${ENDERECO.cep}`;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(destino)}`;
+}

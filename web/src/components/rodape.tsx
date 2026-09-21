@@ -5,6 +5,7 @@ import { AcaoEmail, AcaoZap } from "@/components/acao";
 import {
   ENDERECO,
   SLOGAN,
+  mapaDoEndereco,
   numerosDoCreci,
   TEM_EMAIL,
   INSTAGRAM,
@@ -92,15 +93,22 @@ export function Rodape() {
                 </a>
               </li>
             )}
-            <li className="flex gap-2 pt-2 text-sm leading-relaxed">
-              <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden />
-              <address className="not-italic">
-                {ENDERECO.rua}
-                <br />
-                {ENDERECO.complemento} · {ENDERECO.bairro}
-                <br />
-                {ENDERECO.cidade}/{ENDERECO.estado} · {ENDERECO.cep}
-              </address>
+            <li className="pt-2 text-sm leading-relaxed">
+              <a
+                href={mapaDoEndereco()}
+                target="_blank"
+                rel="noreferrer"
+                className="flex gap-2 transition-colors hover:text-papel"
+              >
+                <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden />
+                <address className="not-italic">
+                  {ENDERECO.rua}
+                  <br />
+                  {ENDERECO.complemento} · {ENDERECO.bairro}
+                  <br />
+                  {ENDERECO.cidade}/{ENDERECO.estado} · {ENDERECO.cep}
+                </address>
+              </a>
             </li>
           </ul>
         </div>

@@ -1,4 +1,4 @@
-import { AtSign, Mail, MessageCircle } from "lucide-react";
+import { AtSign, Mail, MapPin, MessageCircle } from "lucide-react";
 import { AcaoEmail, AcaoZap } from "@/components/acao";
 import Link from "next/link";
 import { CabecaPagina } from "@/components/cabeca-pagina";
@@ -8,6 +8,7 @@ import { Midia } from "@/components/midia";
 import { FormContato } from "@/components/form-contato";
 import {
   ENDERECO,
+  mapaDoEndereco,
   HORARIO,
   TELEFONE,
   TEM_EMAIL,
@@ -135,6 +136,15 @@ export default function PaginaContato() {
               <br />
               {ENDERECO.cidade}/{ENDERECO.estado} · {ENDERECO.cep}
             </address>
+            <a
+              href={mapaDoEndereco()}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-5 inline-flex min-h-11 w-fit items-center gap-2 rounded-full bg-papel/12 px-5 text-sm font-semibold text-papel transition-colors hover:bg-papel/20"
+            >
+              <MapPin className="size-4 shrink-0" aria-hidden />
+              Abrir no mapa
+            </a>
           </div>
           <p className="mt-4 text-sm text-tinta-500">
             Quem são as duas e o que cada registro autoriza está em{" "}
