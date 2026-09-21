@@ -7,14 +7,17 @@ import {
   BotaoEnviar,
   CampoTexto,
   Consentimento,
+  Erro,
   Resultado,
 } from "@/components/campos";
 import { Painel } from "@/components/painel";
 import { useEnvio } from "@/lib/envio";
+import { TEM_TURNSTILE, Turnstile } from "@/components/turnstile";
 import {
   conferirEmail,
   focarPrimeiroErro,
   pedirConsentimento,
+  pedirFicha,
   pedirNome,
   type Erros,
 } from "@/lib/validar";
@@ -26,6 +29,7 @@ export function FormContato() {
   const [mensagem, setMensagem] = useState("");
   const [ok, setOk] = useState(false);
   const [armadilha, setArmadilha] = useState("");
+  const [ficha, setFicha] = useState("");
   const [erros, setErros] = useState<Erros>({});
   const { estado, recado, enviar } = useEnvio("contato");
 
@@ -39,6 +43,7 @@ export function FormContato() {
     if (mensagem.trim().length < 5)
       achados.mensagem = "Conte em uma linha o que procura.";
     pedirConsentimento(ok, achados);
+    pedirFicha(ficha, TEM_TURNSTILE, achados);
     return achados;
   }
 
@@ -50,7 +55,7 @@ export function FormContato() {
       focarPrimeiroErro();
       return;
     }
-    await enviar({ nome, telefone, email, mensagem }, armadilha);
+    await enviar({ nome, telefone, email, mensagem }, armadilha, ficha);
   }
 
   if (estado === "pronto") {
@@ -115,6 +120,9 @@ export function FormContato() {
       />
 
       <Consentimento marcado={ok} aoMudar={setOk} erro={erros.consentimento} />
+
+      <Turnstile aoResolver={setFicha} acao="contato" />
+      {erros.ficha && <Erro id="erro-ficha" texto={erros.ficha} />}
 
       <Painel className="flex gap-3 border-l-4 border-l-areia-500 p-5 text-sm">
         <ShieldCheck className="size-5 shrink-0 text-bronze-500" aria-hidden />

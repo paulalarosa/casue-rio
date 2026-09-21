@@ -26,6 +26,12 @@ export function pedirConsentimento(marcado: boolean, erros: Erros) {
     erros.consentimento = "Precisa autorizar o contato para a gente responder.";
 }
 
+export function pedirFicha(ficha: string, exigida: boolean, erros: Erros) {
+  if (exigida && !ficha) {
+    erros.ficha = "Falta a confirmação de que você não é um robô. Aguarde um instante.";
+  }
+}
+
 export function focarPrimeiroErro() {
   const alvo = document.querySelector<HTMLElement>("[aria-invalid='true']");
   alvo?.focus();

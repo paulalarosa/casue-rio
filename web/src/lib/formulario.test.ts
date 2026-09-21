@@ -128,6 +128,25 @@ describe("armadilhas", () => {
   });
 });
 
+describe("ficha do Turnstile", () => {
+  it("chega até o envio para o Lambda conferir", () => {
+    const exame = examinarCom({ ...CONTATO, ficha: "0.abc-token" });
+    expect(exame.ficha).toBe("0.abc-token");
+  });
+
+  it("sem ficha, vem string vazia, e quem recusa é o Lambda", () => {
+    expect(examinarCom(CONTATO).ficha).toBe("");
+  });
+
+  it("ficha que não é texto não vira ficha", () => {
+    expect(examinarCom({ ...CONTATO, ficha: { falsa: true } }).ficha).toBe("");
+  });
+
+  it("o endereço de quem enviou sobe junto, para a Cloudflare conferir", () => {
+    expect(examinarCom(CONTATO).ip).toBe("203.0.113.9");
+  });
+});
+
 describe("limpeza", () => {
   it("tira quebra de linha e caractere de controle, que é o que injeta cabeçalho", () => {
     expect(limpar("Fulano\r\nBcc: alguem@exemplo.com", 200)).toBe(

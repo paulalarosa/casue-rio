@@ -18,8 +18,8 @@ export type Recado = { assunto: string; texto: string; respostaDe: string | null
 export type Lido = { erro: string; linhas?: undefined } | { erro?: undefined; linhas: string[]; respostaDe: string | null };
 
 export type Exame =
-  | { resposta: Resposta; origem?: undefined; recado?: undefined }
-  | { resposta?: undefined; origem: string; recado: Recado };
+  | { resposta: Resposta; origem?: undefined; ip?: undefined; ficha?: undefined; recado?: undefined }
+  | { resposta?: undefined; origem: string; ip: string; ficha: string; recado: Recado };
 
 export type Porteiro = (ip: string, agora: number) => boolean;
 

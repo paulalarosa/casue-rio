@@ -6,14 +6,17 @@ import {
   BotaoEnviar,
   CampoTexto,
   Consentimento,
+  Erro,
   Pastilhas,
   Resultado,
 } from "@/components/campos";
 import { useEnvio } from "@/lib/envio";
+import { TEM_TURNSTILE, Turnstile } from "@/components/turnstile";
 import {
   conferirEmail,
   focarPrimeiroErro,
   pedirConsentimento,
+  pedirFicha,
   pedirNome,
   pedirTelefone,
   type Erros,
@@ -29,6 +32,7 @@ export function FormAvaliacao() {
   const [vaga, setVaga] = useState<string[]>([]);
   const [ok, setOk] = useState(false);
   const [armadilha, setArmadilha] = useState("");
+  const [ficha, setFicha] = useState("");
   const [erros, setErros] = useState<Erros>({});
   const { estado, recado, enviar } = useEnvio("avaliacao");
 
@@ -39,6 +43,7 @@ export function FormAvaliacao() {
     pedirTelefone(telefone, achados);
     conferirEmail(email, achados);
     pedirConsentimento(ok, achados);
+    pedirFicha(ficha, TEM_TURNSTILE, achados);
     setErros(achados);
     if (Object.keys(achados).length) {
       focarPrimeiroErro();
@@ -55,6 +60,7 @@ export function FormAvaliacao() {
         vaga: vaga[0] ?? "",
       },
       armadilha,
+      ficha,
     );
   }
 
@@ -150,6 +156,9 @@ export function FormAvaliacao() {
       </div>
 
       <Consentimento marcado={ok} aoMudar={setOk} erro={erros.consentimento} />
+
+      <Turnstile aoResolver={setFicha} acao="avaliacao" />
+      {erros.ficha && <Erro id="erro-ficha" texto={erros.ficha} />}
       <Resultado estado={estado} recado={recado} sucesso="" />
       <BotaoEnviar estado={estado} texto="Quero avaliar o meu imóvel" />
     </form>

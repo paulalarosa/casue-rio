@@ -186,6 +186,8 @@ export function examinar(evento, passou, agora = Date.now()) {
 
   return {
     origem,
+    ip,
+    ficha: typeof entrada.ficha === "string" ? entrada.ficha : "",
     recado: { assunto: formulario.assunto, texto, respostaDe: lido.respostaDe },
   };
 }

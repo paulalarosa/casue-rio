@@ -6,15 +6,18 @@ import {
   BotaoEnviar,
   CampoTexto,
   Consentimento,
+  Erro,
   Pastilhas,
   Resultado,
 } from "@/components/campos";
 import { useEnvio } from "@/lib/envio";
+import { TEM_TURNSTILE, Turnstile } from "@/components/turnstile";
 import { BAIRROS_DE_ATENDIMENTO } from "@/lib/site";
 import {
   conferirEmail,
   focarPrimeiroErro,
   pedirConsentimento,
+  pedirFicha,
   pedirNome,
   pedirTelefone,
   type Erros,
@@ -30,6 +33,7 @@ export function FormBusca() {
   const [detalhes, setDetalhes] = useState("");
   const [ok, setOk] = useState(false);
   const [armadilha, setArmadilha] = useState("");
+  const [ficha, setFicha] = useState("");
   const [erros, setErros] = useState<Erros>({});
   const { estado, recado, enviar } = useEnvio("busca");
 
@@ -40,6 +44,7 @@ export function FormBusca() {
     pedirTelefone(telefone, achados);
     conferirEmail(email, achados);
     pedirConsentimento(ok, achados);
+    pedirFicha(ficha, TEM_TURNSTILE, achados);
     setErros(achados);
     if (Object.keys(achados).length) {
       focarPrimeiroErro();
@@ -56,6 +61,7 @@ export function FormBusca() {
         detalhes,
       },
       armadilha,
+      ficha,
     );
   }
 
@@ -151,6 +157,9 @@ export function FormBusca() {
       </div>
 
       <Consentimento marcado={ok} aoMudar={setOk} erro={erros.consentimento} />
+
+      <Turnstile aoResolver={setFicha} acao="busca" />
+      {erros.ficha && <Erro id="erro-ficha" texto={erros.ficha} />}
       <Resultado estado={estado} recado={recado} sucesso="" />
       <BotaoEnviar estado={estado} texto="Quero que busquem para mim" />
     </form>

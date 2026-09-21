@@ -81,14 +81,18 @@ O código mora em `infra/formulario/`. `regras.mjs` é a parte pura, coberta por
 `web/src/lib/formulario.test.ts`; `indice.mjs` só acrescenta o SES. `subir.sh`
 zipa os dois e atualiza a função.
 
-Quatro travas, e nenhuma delas é captcha:
+Cinco travas:
 
 - **o destino é fixo no código**, e a política do papel ainda prende o SES a um
   único remetente e a um único destinatário, então nem alterar o código abre a
   porta para usar isso como relé;
 - **campo-armadilha** escondido, que só robô preenche;
 - **trava de tempo**: formulário respondido em menos de três segundos não sai;
-- **limite por IP**: três envios em dez minutos.
+- **limite por IP**: três envios em dez minutos;
+- **Turnstile, da Cloudflare**, conferido no Lambda pela Siteverify. A conferência
+  no servidor é o que vale: captcha só no navegador o robô pula, porque ele posta
+  direto no endereço da função. O segredo mora no ambiente do Lambda, nunca no
+  repositório; a chave pública vai no HTML mesmo.
 
 O SES está no modo restrito, que só entrega para endereço verificado. Como o
 único destino é verificado, isso serve de teto: 200 e-mails por dia. A função
@@ -109,6 +113,7 @@ e-mail se Lambda e SES juntos passarem de US$ 0,50 no mês.
 | `SANITY_PROJECT_ID`, `SANITY_DATASET` | leitura do painel                                                   |
 | `GA_ID`                               | medição. Vazia: sem script, sem cookie e sem faixa de consentimento |
 | `FORM_URL`                            | Function URL que recebe os formulários. Vazia: os formulários avisam que o envio não está ligado |
+| `TURNSTILE_KEY`                       | chave pública do Turnstile. Vazia: os formulários funcionam sem o verificador |
 
 ## Peças de Instagram
 

@@ -139,6 +139,14 @@ export default function PaginaPrivacidade() {
           conteúdo do formulário não é guardado em banco nenhum: ele vira e-mail e acaba
           na caixa de entrada.
         </p>
+        <p>
+          Nos formulários há ainda um verificador da Cloudflare, o Turnstile, que separa
+          gente de robô sem pedir que você decifre nada. Ele recebe o seu endereço de IP e
+          sinais técnicos do navegador para tomar essa decisão, e a Cloudflare declara não
+          usar isso para publicidade nem para perfilar quem navega. Ele carrega só nas
+          páginas que têm formulário, e é o que evita que a nossa caixa de entrada vire
+          lixeira.
+        </p>
       </Bloco>
 
       <Bloco titulo="O que recebemos quando você fala com a gente">

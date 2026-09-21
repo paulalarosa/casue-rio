@@ -21,7 +21,7 @@ export function useEnvio(formulario: Nome) {
   const [recado, setRecado] = useState("");
   const desde = useDemora();
 
-  async function enviar(campos: Campos, armadilha: string) {
+  async function enviar(campos: Campos, armadilha: string, ficha: string) {
     if (!ENDERECO_DO_FORMULARIO) {
       setEstado("falhou");
       setRecado("O envio ainda não está ligado. Tente de novo daqui a pouco.");
@@ -39,6 +39,7 @@ export function useEnvio(formulario: Nome) {
           formulario,
           demora: desde(),
           sobrenome: armadilha,
+          ficha,
           campos,
         }),
       });
