@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { ArrowUpDown, MessageCircle, X } from "lucide-react";
+import { useState } from "react";
+import { ArrowUpDown, MessageCircle, Search, X } from "lucide-react";
 import { CartaoImovel } from "@/components/cartao-imovel";
 import { Painel } from "@/components/painel";
 import { AcaoZap } from "@/components/acao";
@@ -13,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { Finalidade, Imovel, Regiao } from "@/lib/carteira";
-import { DISPONIVEIS, VENDIDOS, REGIOES, buscar } from "@/lib/imoveis";
+import { DISPONIVEIS, VENDIDOS, REGIOES, acharPorCodigo, buscar } from "@/lib/imoveis";
 import { cn } from "@/lib/utils";
 
 const FINALIDADES: [Finalidade, string][] = [
@@ -43,6 +44,13 @@ export function Vitrine() {
       ? params.get("ordem")!
       : "selecionados";
 
+  const [escrito, setEscrito] = useState(termo);
+  const [ondeEstava, setOndeEstava] = useState(termo);
+  if (ondeEstava !== termo) {
+    setOndeEstava(termo);
+    setEscrito(termo);
+  }
+
   const base = termo ? buscar(termo) : DISPONIVEIS;
   const lista = base
     .filter(
@@ -63,6 +71,17 @@ export function Vitrine() {
         (!alt.regiao || im.regiao === alt.regiao) &&
         (!alt.finalidade || im.finalidade === alt.finalidade),
     ).length;
+  }
+
+  function procurarCodigo(e: React.FormEvent) {
+    e.preventDefault();
+    const alvo = escrito.trim();
+    const direto = acharPorCodigo(alvo);
+    if (direto) {
+      router.push(`/imoveis/${direto.codigo}/`);
+      return;
+    }
+    mexer({ q: alvo || null });
   }
 
   function mexer(mudanca: Record<string, string | null>) {
@@ -101,7 +120,31 @@ export function Vitrine() {
 
   return (
     <>
-      <div className="sticky top-20 z-30 mt-10">
+      <div className="trilho mt-10 flex flex-wrap items-center justify-end gap-x-4 gap-y-2">
+        <form onSubmit={procurarCodigo} role="search" className="flex items-center gap-3">
+          <label htmlFor="busca-codigo" className="rotulo shrink-0 text-bronze-500">
+            Buscar por código
+          </label>
+          <span className="flex min-h-11 items-center gap-2 rounded-full border border-tinta-800/15 px-4 transition-colors focus-within:border-tinta-800/40">
+            <Search className="size-4 shrink-0 text-tinta-500" aria-hidden />
+            <input
+              id="busca-codigo"
+              type="search"
+              inputMode="text"
+              autoComplete="off"
+              placeholder="CR-0000"
+              value={escrito}
+              onChange={(e) => setEscrito(e.target.value)}
+              className="w-[7rem] bg-transparent text-sm font-semibold text-tinta-800 placeholder:font-normal placeholder:text-tinta-500 focus:outline-none"
+            />
+          </span>
+          <button type="submit" className="sr-only">
+            Buscar
+          </button>
+        </form>
+      </div>
+
+      <div className="sticky top-20 z-30 mt-4">
         <div className="trilho">
           <div className="vidro-claro flex flex-col gap-2 rounded-[0.75rem] px-4 py-2.5 sm:flex-row sm:items-center sm:gap-4 sm:px-5">
             <div className="flex min-w-0 items-center gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

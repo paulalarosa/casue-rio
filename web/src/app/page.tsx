@@ -160,7 +160,7 @@ export default function Home() {
                 a qualidade de vida.
               </p>
             </div>
-            <p className="mt-7 border-l-2 border-terracota-600/50 pl-5 font-display text-lg leading-snug text-tinta-800">
+            <p className="mt-7 border-l-2 border-terracota-600/50 pl-5 font-display text-lg font-semibold leading-snug text-tinta-800">
               Nosso compromisso é ajudar você a encontrar um imóvel que atenda às suas
               necessidades e faça sentido para o seu momento de vida.
             </p>
@@ -200,7 +200,7 @@ export default function Home() {
                 alinhada aos seus objetivos de investimento.
               </p>
             </div>
-            <p className="mt-7 border-l-2 border-terracota-600/50 pl-5 font-display text-lg leading-snug text-tinta-800">
+            <p className="mt-7 border-l-2 border-terracota-600/50 pl-5 font-display text-lg font-semibold leading-snug text-tinta-800">
               Enxergue além do imóvel. Encontre oportunidades que fazem sentido para o seu
               patrimônio.
             </p>

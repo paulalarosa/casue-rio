@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, ClipboardCheck, Ruler, ScrollText } from "lucide-react";
 import { CabecaPagina } from "@/components/cabeca-pagina";
+import { Expansivel } from "@/components/expansivel";
 import { FormAvaliacao } from "@/components/form-avaliacao";
 import { arquivo } from "@/lib/caminho";
 import avaliacao from "../../../public/video/avaliacao.webp";
@@ -154,25 +155,30 @@ export default function PaginaAvaliacao() {
       </Revela>
 
       <Revela className="trilho secao" id="quero-vender">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
-          <div data-revela>
-            <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">
-              Quer vender o seu imóvel?
-            </h2>
-            <p className="mt-5 max-w-[46ch] text-lg text-tinta-500">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+          <h2 data-revela className="text-[clamp(1.8rem,3.4vw,2.75rem)]">
+            Quer vender o seu imóvel?
+          </h2>
+          <div data-revela className="space-y-4 text-tinta-500">
+            <p>
               Conte onde fica e como ele é. A Casuê Rio volta com a faixa de valor que a
               região pratica hoje e com o que muda esse número na prática.
             </p>
-            <p className="mt-6 max-w-[46ch] text-tinta-500">
+            <p>
               A primeira conversa não custa nada e não compromete você com nada. Prazo e
               preço do parecer, quando ele for necessário, são combinados antes de
               começar.
             </p>
           </div>
-          <div data-revela className="ilha border border-tinta-800/10 bg-areia-100">
-            <FormAvaliacao />
-          </div>
         </div>
+
+        <Expansivel
+          className="mt-12"
+          rotulo="Falar sobre o meu imóvel"
+          dica="Os dados do imóvel e a melhor forma de a gente te achar."
+        >
+          <FormAvaliacao />
+        </Expansivel>
       </Revela>
     </>
   );
