@@ -1,9 +1,15 @@
-import { Box, Card, Container, Flex, Heading, Stack, Text } from "@sanity/ui";
-import { Placa } from "./placa";
-
-const TERRACOTA = "#a8482a";
-const TINTA = "#171310";
-const BRONZE = "#8a5a33";
+import { Card, Stack, Text } from "@sanity/ui";
+import {
+  AREIA,
+  Botao,
+  Cartao,
+  Forte,
+  Linha,
+  PAPEL,
+  PaginaAjuda,
+  TERRACOTA,
+  TINTA,
+} from "./ajuda";
 
 const PASSOS = [
   {
@@ -41,112 +47,75 @@ const CONFERIR = [
 
 export function ComoPublicar() {
   return (
-    <Box padding={4} paddingY={5} style={{ overflowY: "auto", height: "100%" }}>
-      <Container width={1}>
-        <Stack gap={5}>
-          <Flex align="center" gap={3}>
-            <Placa tamanho={40} />
-            <Stack gap={2}>
-              <Heading
-                size={3}
-                style={{ fontFamily: '"Unbounded", "Century Gothic", sans-serif', color: TINTA }}
-              >
-                Como publicar
-              </Heading>
-              <Text size={1} style={{ color: BRONZE }}>
-                Cinco passos. Leva menos tempo do que escrever o primeiro parágrafo.
-              </Text>
-            </Stack>
-          </Flex>
+    <PaginaAjuda
+      titulo="Como publicar"
+      linha="Cinco passos. Leva menos tempo do que escrever o primeiro parágrafo."
+    >
+      <Stack gap={3}>
+        {PASSOS.map((p, i) => (
+          <Cartao key={p.titulo} selo={i + 1} titulo={p.titulo}>
+            <Linha>{p.texto}</Linha>
+          </Cartao>
+        ))}
+      </Stack>
 
-          <Stack gap={3}>
-            {PASSOS.map((p, i) => (
-              <Card key={p.titulo} padding={4} radius={3} shadow={1}>
-                <Flex gap={4} align="flex-start">
-                  <Box
-                    style={{
-                      flex: "none",
-                      width: 30,
-                      height: 30,
-                      borderRadius: 999,
-                      background: TERRACOTA,
-                      color: "#f6f2e9",
-                      display: "grid",
-                      placeItems: "center",
-                      fontWeight: 700,
-                      fontSize: 14,
-                      fontVariantNumeric: "tabular-nums",
-                    }}
-                  >
-                    {i + 1}
-                  </Box>
-                  <Stack gap={3} flex={1}>
-                    <Text weight="semibold" size={2} style={{ color: TINTA }}>
-                      {p.titulo}
-                    </Text>
-                    <Text size={1} muted style={{ lineHeight: 1.6 }}>
-                      {p.texto}
-                    </Text>
-                  </Stack>
-                </Flex>
-              </Card>
+      <Card
+        padding={4}
+        radius={3}
+        style={{ borderLeft: `4px solid ${TERRACOTA}` }}
+      >
+        <Stack gap={4}>
+          <Text weight="semibold" size={2} style={{ color: TINTA }}>
+            Antes de clicar em Publish
+          </Text>
+          <Stack gap={3} as="ul" style={{ margin: 0, paddingLeft: "1.1rem" }}>
+            {CONFERIR.map((c) => (
+              <Text key={c} as="li" size={1} muted style={{ lineHeight: 1.6 }}>
+                {c}
+              </Text>
             ))}
           </Stack>
-
-          <Card padding={4} radius={3} style={{ borderLeft: `4px solid ${TERRACOTA}` }}>
-            <Stack gap={4}>
-              <Text weight="semibold" size={2} style={{ color: TINTA }}>
-                Antes de clicar em Publish
-              </Text>
-              <Stack gap={3} as="ul" style={{ margin: 0, paddingLeft: "1.1rem" }}>
-                {CONFERIR.map((c) => (
-                  <Text key={c} as="li" size={1} muted style={{ lineHeight: 1.6 }}>
-                    {c}
-                  </Text>
-                ))}
-              </Stack>
-            </Stack>
-          </Card>
-
-          <Stack gap={4}>
-            <Text weight="semibold" size={2} style={{ color: TINTA }}>
-              Duas coisas que costumam assustar
-            </Text>
-            <Text size={1} muted style={{ lineHeight: 1.6 }}>
-              <b style={{ color: TINTA }}>Enquanto você não publica, ninguém vê.</b> O texto
-              salva sozinho a cada letra, e o que está salvo e não publicado é rascunho: mora
-              aqui dentro, não aparece no site. Dá para fechar no meio e voltar amanhã.
-            </Text>
-            <Text size={1} muted style={{ lineHeight: 1.6 }}>
-              <b style={{ color: TINTA }}>Publicar não é para sempre.</b> Para tirar do ar,
-              abra o texto e use o menu ao lado do botão Publish, na opção Unpublish. Ele volta
-              a ser rascunho, com tudo escrito no lugar.
-            </Text>
-          </Stack>
-
-          <Card padding={4} radius={3} style={{ background: TINTA }}>
-            <Stack gap={3}>
-              <Text size={1} style={{ color: "#c0ac87" }}>
-                O texto publicado aparece em
-              </Text>
-              <a
-                href="https://casuerio.com.br/revista/"
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  color: "#f6f2e9",
-                  fontWeight: 600,
-                  fontSize: 15,
-                  textDecoration: "underline",
-                  textUnderlineOffset: 4,
-                }}
-              >
-                casuerio.com.br/revista
-              </a>
-            </Stack>
-          </Card>
         </Stack>
-      </Container>
-    </Box>
+      </Card>
+
+      <Stack gap={4}>
+        <Text weight="semibold" size={2} style={{ color: TINTA }}>
+          Duas coisas que costumam assustar
+        </Text>
+        <Linha>
+          <Forte>Enquanto você não publica, ninguém vê.</Forte> O texto salva
+          sozinho a cada letra, e o que está salvo e não publicado é rascunho:
+          mora aqui dentro, não aparece no site. Dá para fechar no meio e voltar
+          amanhã.
+        </Linha>
+        <Linha>
+          <Forte>Publicar não é para sempre.</Forte> Dá para corrigir, tirar do
+          ar e apagar depois, e o texto continua guardado aqui. O passo a passo
+          está em <Botao>Depois de publicado</Botao>, aqui do lado.
+        </Linha>
+      </Stack>
+
+      <Card padding={4} radius={3} style={{ background: TINTA }}>
+        <Stack gap={3}>
+          <Text size={1} style={{ color: AREIA }}>
+            O texto publicado aparece em
+          </Text>
+          <a
+            href="https://casuerio.com.br/revista/"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              color: PAPEL,
+              fontWeight: 600,
+              fontSize: 15,
+              textDecoration: "underline",
+              textUnderlineOffset: 4,
+            }}
+          >
+            casuerio.com.br/revista
+          </a>
+        </Stack>
+      </Card>
+    </PaginaAjuda>
   );
 }

@@ -1,11 +1,13 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { HelpCircleIcon } from "@sanity/icons/HelpCircle";
+import { EditIcon } from "@sanity/icons/Edit";
 import { tipos } from "./schemaTypes";
 import { tema } from "./marca/tema";
 import { Placa } from "./marca/placa";
 import { Tipografia } from "./marca/tipografia";
 import { ComoPublicar } from "./marca/como-publicar";
+import { DepoisDePublicado } from "./marca/depois-de-publicado";
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID;
 const dataset = process.env.SANITY_STUDIO_DATASET ?? "production";
@@ -38,7 +40,20 @@ export default defineConfig({
               .title("Como publicar")
               .id("como-publicar")
               .icon(HelpCircleIcon)
-              .child(S.component(ComoPublicar).id("como-publicar").title("Como publicar")),
+              .child(
+                S.component(ComoPublicar)
+                  .id("como-publicar")
+                  .title("Como publicar"),
+              ),
+            S.listItem()
+              .title("Depois de publicado")
+              .id("depois-de-publicado")
+              .icon(EditIcon)
+              .child(
+                S.component(DepoisDePublicado)
+                  .id("depois-de-publicado")
+                  .title("Depois de publicado"),
+              ),
           ]),
     }),
   ],
