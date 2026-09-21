@@ -5,6 +5,7 @@ import { Topo } from "@/components/topo";
 import { Rodape } from "@/components/rodape";
 import { Dados } from "@/components/dados";
 import { Medicao } from "@/components/medicao";
+import { GA, temMedicao } from "@/lib/medicao";
 import { empresa, pessoas, grafo } from "@/lib/dados-estruturados";
 import { SITE, MARCA, NOME, DESCRICAO, SLOGAN } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
@@ -56,6 +57,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${unbounded.variable} ${archivo.variable} ${plex.variable} h-full antialiased grao`}
     >
       <body className="min-h-full flex flex-col">
+        {temMedicao && (
+          <>
+            <script
+              dangerouslySetInnerHTML={{
+                __html:
+                  `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}` +
+                  `gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});` +
+                  `gtag('js',new Date());gtag('config','${GA}',{anonymize_ip:true});`,
+              }}
+            />
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA}`} />
+          </>
+        )}
         <Dados>{grafo(empresa(), ...pessoas())}</Dados>
         <Topo />
         <main id="conteudo" className="flex-1">

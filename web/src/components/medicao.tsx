@@ -1,15 +1,14 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
-import Script from "next/script";
 import {
-  GA,
   temMedicao,
   assinar,
   lerEscolha,
   lerNoServidor,
   gravarEscolha,
+  avisarConsentimento,
 } from "@/lib/medicao";
 
 function useEscolha() {
@@ -59,24 +58,13 @@ function Faixa({ responder }: { responder: (v: "sim" | "nao") => void }) {
 
 export function Medicao() {
   const escolha = useEscolha();
-  if (!temMedicao) return null;
 
-  return (
-    <>
-      {escolha === "nenhuma" && <Faixa responder={gravarEscolha} />}
-      {escolha === "sim" && (
-        <>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA}`}
-            strategy="afterInteractive"
-          />
-          <Script id="ga" strategy="afterInteractive">
-            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA}',{anonymize_ip:true});`}
-          </Script>
-        </>
-      )}
-    </>
-  );
+  useEffect(() => {
+    if (escolha === "sim" || escolha === "nao") avisarConsentimento(escolha === "sim");
+  }, [escolha]);
+
+  if (!temMedicao || escolha !== "nenhuma") return null;
+  return <Faixa responder={gravarEscolha} />;
 }
 
 const ESTADO: Record<string, string> = {

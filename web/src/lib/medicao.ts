@@ -59,7 +59,28 @@ function apagarCookiesDoGoogle() {
   } catch {}
 }
 
+type Consentimento = Record<string, "granted" | "denied">;
+
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
+export function avisarConsentimento(aceitou: boolean) {
+  const estado: Consentimento = {
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    analytics_storage: aceitou ? "granted" : "denied",
+  };
+  try {
+    window.gtag?.("consent", "update", estado);
+  } catch {}
+}
+
 export function gravarEscolha(v: "sim" | "nao") {
+  avisarConsentimento(v === "sim");
   if (v === "nao") apagarCookiesDoGoogle();
   try {
     window.localStorage.setItem(CHAVE, v);
