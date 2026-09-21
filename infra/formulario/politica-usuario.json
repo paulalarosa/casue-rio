@@ -9,6 +9,8 @@
         "lambda:GetFunctionConfiguration",
         "lambda:UpdateFunctionCode",
         "lambda:UpdateFunctionConfiguration",
+        "lambda:PutFunctionConcurrency",
+        "lambda:GetFunctionConcurrency",
         "lambda:InvokeFunction",
         "lambda:CreateFunctionUrlConfig",
         "lambda:GetFunctionUrlConfig",
@@ -22,7 +24,12 @@
     {
       "Sid": "LerOsRegistros",
       "Effect": "Allow",
-      "Action": ["logs:FilterLogEvents", "logs:GetLogEvents", "logs:DescribeLogStreams"],
+      "Action": [
+        "logs:FilterLogEvents",
+        "logs:GetLogEvents",
+        "logs:DescribeLogStreams",
+        "logs:PutRetentionPolicy"
+      ],
       "Resource": "arn:aws:logs:us-east-1:751647213647:log-group:/aws/lambda/casue-rio-formulario:*"
     }
   ]

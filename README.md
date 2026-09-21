@@ -91,7 +91,13 @@ Quatro travas, e nenhuma delas é captcha:
 - **limite por IP**: três envios em dez minutos.
 
 O SES está no modo restrito, que só entrega para endereço verificado. Como o
-único destino é verificado, isso serve de teto: 200 e-mails por dia.
+único destino é verificado, isso serve de teto: 200 e-mails por dia. A função
+tem 5 execuções simultâneas reservadas, que é teto de estrago sem custo, e o
+log expira em 14 dias.
+
+Custo: Lambda e Function URL são zero dentro da faixa gratuita permanente, e o
+SES cobra US$ 0,10 por mil e-mails. O orçamento `formulario-casue-rio` avisa por
+e-mail se Lambda e SES juntos passarem de US$ 0,50 no mês.
 
 ### Variáveis do repositório
 
