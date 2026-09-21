@@ -133,47 +133,82 @@ export default function Home() {
       </FaixaVideo>
 
       <Revela className="trilho secao">
-        <div className="grid gap-x-10 gap-y-14 lg:grid-cols-2">
-          <div data-revela className="border-t border-terracota-600/40 pt-8">
-            <h2 className="max-w-[18ch] text-[clamp(1.6rem,2.8vw,2.3rem)]">
-              O imóvel que você visita. A oportunidade que você enxerga.
+        <div className="grid gap-x-14 gap-y-16 lg:grid-cols-2">
+          <div
+            data-revela
+            className="flex flex-col border-t border-terracota-600/40 pt-8"
+          >
+            <span className="rotulo text-bronze-500">Para morar</span>
+            <h2 className="mt-3 max-w-[18ch] text-[clamp(1.6rem,2.8vw,2.3rem)]">
+              O imóvel certo para viver bem.
             </h2>
-            <p className="mt-5 max-w-[48ch] text-tinta-500">
-              Para quem investe, o olhar é mais duro: localização, estado de conservação,
-              potencial de transformação, aproveitamento, liquidez e perspectiva de
-              valorização. A gente levanta isso antes da proposta, não depois.
-            </p>
-            <p className="mt-4 max-w-[48ch] text-tinta-500">
-              Em cada visita a gente mostra o que o imóvel tem, responde o que você
-              perguntar e aponta o detalhe que muda a conta.
+            <div className="mt-6 space-y-4 text-tinta-500">
+              <p>
+                Comprar um imóvel para morar é uma decisão que vai muito além de metragem
+                e localização. É escolher um espaço onde sua vida vai acontecer, onde
+                momentos especiais serão vividos e onde novas histórias serão construídas.
+              </p>
+              <p>
+                Em cada visita, nossa equipe apresenta as características da propriedade,
+                esclarece suas dúvidas e procura compreender o que faz sentido para o seu
+                estilo de vida, suas necessidades e os planos da sua família.
+              </p>
+              <p>
+                Observamos, junto com você, os detalhes que podem tornar um imóvel
+                especial: a distribuição dos ambientes, a iluminação, a localização, a
+                infraestrutura do condomínio e tudo aquilo que contribui para o conforto e
+                a qualidade de vida.
+              </p>
+            </div>
+            <p className="mt-7 border-l-2 border-terracota-600/50 pl-5 font-display text-lg leading-snug text-tinta-800">
+              Nosso compromisso é ajudar você a encontrar um imóvel que atenda às suas
+              necessidades e faça sentido para o seu momento de vida.
             </p>
             <Link
-              href="/imoveis"
-              className="mt-7 inline-flex min-h-11 items-center gap-2 font-semibold text-terracota-600 transition-colors hover:text-terracota-700"
+              href="/contato"
+              className="mt-auto inline-flex min-h-11 items-center gap-2 pt-8 font-semibold text-terracota-600 transition-colors hover:text-terracota-700"
             >
-              Ver os imóveis
+              Contar o que procuro
               <ArrowRight className="size-4" aria-hidden />
             </Link>
           </div>
 
-          <div data-revela className="border-t border-terracota-600/40 pt-8">
-            <h2 className="max-w-[18ch] text-[clamp(1.6rem,2.8vw,2.3rem)]">
-              O imóvel certo para viver bem.
+          <div
+            data-revela
+            className="flex flex-col border-t border-terracota-600/40 pt-8"
+          >
+            <span className="rotulo text-bronze-500">Para investimento imobiliário</span>
+            <h2 className="mt-3 max-w-[18ch] text-[clamp(1.6rem,2.8vw,2.3rem)]">
+              O imóvel que você visita. A oportunidade que você enxerga.
             </h2>
-            <p className="mt-5 max-w-[48ch] text-tinta-500">
-              Comprar para morar passa longe de metragem e endereço. É escolher onde a sua
-              vida vai acontecer, e isso depende de coisas que não cabem no anúncio.
-            </p>
-            <p className="mt-4 max-w-[48ch] text-tinta-500">
-              A gente olha junto com você a distribuição dos ambientes, a luz, a rua, a
-              infraestrutura do condomínio e o que faz sentido para o seu momento e para a
-              sua família.
+            <div className="mt-6 space-y-4 text-tinta-500">
+              <p>
+                Cada visita é uma oportunidade de enxergar além do imóvel. Nossa equipe
+                apresenta as características da propriedade, esclarece dúvidas e conduz
+                uma análise atenta aos detalhes que podem fazer a diferença em uma decisão
+                de investimento.
+              </p>
+              <p>
+                Para investidores, o olhar é ainda mais estratégico. Consideramos aspectos
+                como localização, estado de conservação, potencial de transformação,
+                possibilidades de aproveitamento, liquidez e perspectivas de valorização,
+                proporcionando uma visão mais ampla sobre cada oportunidade.
+              </p>
+              <p>
+                Nosso propósito é contribuir para que você compreenda o potencial de cada
+                imóvel e avalie suas possibilidades de forma consciente, planejada e
+                alinhada aos seus objetivos de investimento.
+              </p>
+            </div>
+            <p className="mt-7 border-l-2 border-terracota-600/50 pl-5 font-display text-lg leading-snug text-tinta-800">
+              Enxergue além do imóvel. Encontre oportunidades que fazem sentido para o seu
+              patrimônio.
             </p>
             <Link
-              href="/contato"
-              className="mt-7 inline-flex min-h-11 items-center gap-2 font-semibold text-terracota-600 transition-colors hover:text-terracota-700"
+              href="/imoveis"
+              className="mt-auto inline-flex min-h-11 items-center gap-2 pt-8 font-semibold text-terracota-600 transition-colors hover:text-terracota-700"
             >
-              Contar o que procuro
+              Ver os imóveis
               <ArrowRight className="size-4" aria-hidden />
             </Link>
           </div>
