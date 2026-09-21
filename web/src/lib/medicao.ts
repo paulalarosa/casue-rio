@@ -2,7 +2,7 @@ export const GA = process.env.NEXT_PUBLIC_GA_ID ?? "";
 
 export const temMedicao = GA !== "";
 
-const CHAVE = "casue-medicao";
+export const CHAVE = "casue-medicao";
 
 export type Escolha = "sim" | "nao" | "nenhuma" | "indefinido";
 

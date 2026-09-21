@@ -5,7 +5,7 @@ import { Topo } from "@/components/topo";
 import { Rodape } from "@/components/rodape";
 import { Dados } from "@/components/dados";
 import { Medicao } from "@/components/medicao";
-import { GA, temMedicao } from "@/lib/medicao";
+import { CHAVE, GA, temMedicao } from "@/lib/medicao";
 import { empresa, pessoas, grafo } from "@/lib/dados-estruturados";
 import { SITE, MARCA, NOME, DESCRICAO, SLOGAN } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
@@ -63,7 +63,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               dangerouslySetInnerHTML={{
                 __html:
                   `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}` +
-                  `gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});` +
+                  `var a='denied';try{if(localStorage.getItem('${CHAVE}')==='sim')a='granted'}catch(e){}` +
+                  `gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:a});` +
                   `gtag('js',new Date());gtag('config','${GA}',{anonymize_ip:true});`,
               }}
             />
