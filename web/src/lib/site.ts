@@ -5,7 +5,7 @@ export const MARCA = "Casuê Rio";
 export const DESCRITIVO = "Negócios Imobiliários";
 export const NOME = `${MARCA} ${DESCRITIVO}`;
 export const DESCRICAO =
-  "Imobiliária de duas sócias no Rio, corretoras com CRECI e avaliadoras com CNAI. Compra, venda, aluguel e avaliação no Centro, na Tijuca e na Zona Sul, com a documentação conferida antes da proposta.";
+  "Imobiliária no Rio de Janeiro, com CRECI e CNAI. Compra, venda, aluguel e avaliação no Centro, na Tijuca e na Zona Sul, com a documentação conferida antes da proposta.";
 
 export const SLOGAN = "Aqui seu sonho vira patrimônio.";
 

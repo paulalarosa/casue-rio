@@ -10,7 +10,7 @@ import { SOCIAS, metaDaPagina } from "@/lib/site";
 export const metadata = metaDaPagina({
   titulo: "Quem somos",
   descricao:
-    "Duas corretoras e avaliadoras no Rio de Janeiro, com CRECI e CNAI. Quem mostra o imóvel é quem cuida da papelada e quem assina o contrato.",
+    "A Casuê Rio no Rio de Janeiro, com CRECI e CNAI. Quem mostra o imóvel é quem cuida da papelada e quem assina o contrato.",
   caminho: "/quem-somos",
 });
 
@@ -19,7 +19,7 @@ export default function PaginaQuemSomos() {
     <>
       <CabecaPagina
         titulo="Quem somos"
-        linha="Duas corretoras. A mesma pessoa cuida da visita, da papelada e do contrato."
+        linha="Na Casuê Rio, quem mostra o imóvel é quem cuida da papelada e do contrato."
         video={{ fonte: arquivo("/video/portaria.mp4"), poster: posterPortaria }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Quem somos" }]}
       />
@@ -48,7 +48,7 @@ export default function PaginaQuemSomos() {
       <Revela className="campo-luz trilho secao relative">
         <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">Quem atende você</h2>
         <p className="mt-3 text-lg text-tinta-500">
-          As duas são corretoras com CRECI e avaliadoras com CNAI.
+          Corretoras com CRECI e avaliadoras com CNAI.
         </p>
 
         <div className="mt-12 grid gap-8 md:grid-cols-2">
@@ -116,10 +116,9 @@ export default function PaginaQuemSomos() {
           data-revela
           className="ilha relative isolate overflow-hidden bg-tinta-800 text-center text-papel"
         >
-          <h2 className="text-3xl text-papel">Fale com uma das duas.</h2>
+          <h2 className="text-3xl text-papel">Fale com a Casuê Rio.</h2>
           <p className="mx-auto mt-4 max-w-[46ch] text-tinta-200">
-            Um canal só, da empresa, e as duas atendem por ele. A resposta chega no mesmo
-            dia.
+            Um canal só, e a resposta chega no mesmo dia.
           </p>
           <Link
             href="/contato"

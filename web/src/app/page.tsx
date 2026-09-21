@@ -71,7 +71,7 @@ export default function Home() {
           <div>
             <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">Imóveis em destaque</h2>
             <p className="mt-3 text-lg text-tinta-500">
-              Escolhidos por elas, com documentação conferida.
+              Escolhidos um a um, com a documentação conferida.
             </p>
           </div>
           <Link

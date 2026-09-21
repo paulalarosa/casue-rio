@@ -86,8 +86,8 @@ export default async function PaginaRevista() {
                 O primeiro texto ainda não saiu.
               </h2>
               <p className="mt-6 max-w-[46ch] text-lg leading-relaxed text-tinta-500">
-                A revista vai ser escrita por elas, sobre o que aparece no trabalho de
-                verdade. Enquanto o primeiro não sai, o que já existe está no Instagram.
+                A revista sai do trabalho de verdade, não de pauta de marketing. Enquanto
+                o primeiro não sai, o que já existe está no Instagram.
               </p>
               {INSTAGRAM && (
                 <a

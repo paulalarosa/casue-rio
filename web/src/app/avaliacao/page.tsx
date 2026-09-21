@@ -142,9 +142,9 @@ export default function PaginaAvaliacao() {
             <div data-revela>
               <h2 className="text-2xl">Quem assina o parecer</h2>
               <p className="mt-4 max-w-[58ch] text-lg text-tinta-500">
-                As duas são avaliadoras cadastradas no CNAI, e é esse cadastro que permite
-                emitir parecer de valor. Prazo e preço dependem do imóvel e da finalidade,
-                e são combinados na primeira conversa, antes de começar.
+                A Casuê Rio tem avaliadoras cadastradas no CNAI, e é esse cadastro que
+                permite emitir parecer de valor. Prazo e preço dependem do imóvel e da
+                finalidade, e são combinados na primeira conversa, antes de começar.
               </p>
             </div>
             <Link

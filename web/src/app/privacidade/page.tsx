@@ -296,10 +296,10 @@ export default function PaginaPrivacidade() {
 
       <Bloco titulo="Segurança">
         <p>
-          Dado seu fica nas contas de trabalho das corretoras, com senha e verificação em
-          duas etapas, e é visto por elas duas. Não prometemos que nada pode dar errado,
-          porque ninguém honesto promete isso. O que prometemos é que, se algo acontecer
-          com dado seu, você será avisado.
+          Dado seu fica nas contas de trabalho da Casuê Rio, com senha e verificação em
+          duas etapas, e só quem atende você tem acesso. Não prometemos que nada pode dar
+          errado, porque ninguém honesto promete isso. O que prometemos é que, se algo
+          acontecer com dado seu, você será avisado.
         </p>
       </Bloco>
 

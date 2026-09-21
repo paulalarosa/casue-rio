@@ -30,7 +30,7 @@ export default function PaginaContato() {
     <>
       <CabecaPagina
         titulo="Falar com a gente"
-        linha="Você fala direto com uma das duas. Sem atendente e sem fila."
+        linha="Você fala direto com quem cuida do seu imóvel. Sem atendente e sem fila."
         video={{ fonte: arquivo("/video/calcadao.mp4"), poster: calcadao }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Contato" }]}
       />
@@ -41,7 +41,7 @@ export default function PaginaContato() {
           className="borda-viva grid gap-8 p-8 sm:p-10 md:grid-cols-[1.2fr_1fr] md:items-start"
         >
           <div>
-            <h2 className="font-display text-2xl">Um canal, as duas atendem</h2>
+            <h2 className="font-display text-2xl">Um canal só</h2>
             {TELEFONE ? (
               <>
                 <p className="mt-3 text-tinta-500">
@@ -53,8 +53,8 @@ export default function PaginaContato() {
               </>
             ) : (
               <p className="mt-3 max-w-[52ch] text-tinta-500">
-                O número único da empresa está sendo definido. Até ele entrar no ar, o
-                e-mail ao lado e o formulário abaixo chegam às duas.
+                O número único da Casuê Rio está sendo definido. Até ele entrar no ar, o
+                e-mail ao lado e o formulário abaixo chegam a quem atende.
               </p>
             )}
             <p className="mt-6 flex items-center gap-2 text-sm text-tinta-500">
@@ -147,7 +147,7 @@ export default function PaginaContato() {
             </a>
           </div>
           <p className="mt-4 text-sm text-tinta-500">
-            Quem são as duas e o que cada registro autoriza está em{" "}
+            Quem assina os contratos e o que cada registro autoriza está em{" "}
             <Link
               href="/quem-somos"
               className="font-semibold text-terracota-600 underline underline-offset-4 transition-colors hover:text-terracota-700"
