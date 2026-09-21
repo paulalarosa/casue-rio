@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { ArrowUpDown, MessageCircle, Search, X } from "lucide-react";
-import { CartaoImovel } from "@/components/cartao-imovel";
+import { GradeImoveis } from "@/components/grade-imoveis";
 import { Painel } from "@/components/painel";
 import { AcaoZap } from "@/components/acao";
 import {
@@ -207,11 +207,7 @@ export function Vitrine() {
           </p>
         )}
         {lista.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {lista.map((im) => (
-              <CartaoImovel key={im.codigo} im={im} />
-            ))}
-          </div>
+          <GradeImoveis imoveis={lista} />
         ) : (
           <Painel className="mx-auto max-w-xl p-10 text-center">
             <h2 className="text-2xl">Nenhum imóvel com esses filtros</h2>
@@ -248,11 +244,7 @@ export function Vitrine() {
                 na contagem de disponíveis.
               </p>
             </div>
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {VENDIDOS.map((im) => (
-                <CartaoImovel key={im.codigo} im={im} />
-              ))}
-            </div>
+            <GradeImoveis imoveis={VENDIDOS} className="mt-10" />
           </div>
         </div>
       )}

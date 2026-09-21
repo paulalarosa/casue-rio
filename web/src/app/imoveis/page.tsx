@@ -7,6 +7,7 @@ import { FormBusca } from "@/components/form-busca";
 import { arquivo } from "@/lib/caminho";
 import carteira from "../../../public/video/carteira.webp";
 import { Vitrine } from "@/components/vitrine";
+import { GradeImoveis } from "@/components/grade-imoveis";
 import { Cena } from "@/components/cenas";
 import { BAIRROS } from "@/lib/carteira";
 import { DISPONIVEIS, moeda, retratoDaRegiao } from "@/lib/imoveis";
@@ -33,7 +34,9 @@ export default function PaginaImoveis() {
       </p>
       <Suspense
         fallback={
-          <div className="trilho py-24 text-tinta-500">Carregando os imóveis…</div>
+          <div className="trilho pb-12 pt-24">
+            <GradeImoveis imoveis={DISPONIVEIS} />
+          </div>
         }
       >
         <Vitrine />
