@@ -3,7 +3,11 @@ import { montarCarta } from "./carta.mjs";
 export const DESTINO = "rio.casue@gmail.com";
 export const REMETENTE = "Site Casuê Rio <site@casuerio.com.br>";
 
-const ORIGENS = ["https://casuerio.com.br", "http://localhost:3000"];
+const ORIGENS = [
+  "https://casuerio.com.br",
+  "https://www.casuerio.com.br",
+  "http://localhost:3000",
+];
 const CORPO_MAXIMO = 12000;
 const ESPERA_MINIMA = 3000;
 const JANELA = 10 * 60 * 1000;
@@ -138,20 +142,17 @@ export function ler(formulario, entrada) {
   return { itens, respostaDe };
 }
 
-export function examinar(evento, passou, agora = Date.now()) {
-  const cabecalhos = evento.headers ?? {};
-  const pedida = cabecalhos.origin ?? cabecalhos.Origin ?? "";
+export function examinar(pedido, passou, agora = Date.now()) {
+  const metodo = pedido?.metodo ?? "POST";
+  const pedida = pedido?.origem ?? "";
   const conhecida = ORIGENS.includes(pedida);
   const origem = conhecida ? pedida : ORIGENS[0];
-  const metodo = evento.requestContext?.http?.method ?? "POST";
 
   if (metodo === "OPTIONS") return { resposta: responder(204, {}, origem) };
   if (metodo !== "POST") return { resposta: responder(405, { erro: "Método não aceito." }, origem) };
   if (!conhecida) return { resposta: responder(403, { erro: "Origem não aceita." }, origem) };
 
-  const cru = evento.isBase64Encoded
-    ? Buffer.from(evento.body ?? "", "base64").toString("utf8")
-    : (evento.body ?? "");
+  const cru = pedido?.corpo ?? "";
 
   if (cru.length > CORPO_MAXIMO) {
     return { resposta: responder(413, { erro: "Recado longo demais." }, origem) };
@@ -174,7 +175,7 @@ export function examinar(evento, passou, agora = Date.now()) {
     return { resposta: responder(200, { ok: true }, origem) };
   }
 
-  const ip = evento.requestContext?.http?.sourceIp ?? "sem-ip";
+  const ip = pedido?.ip || "sem-ip";
   if (!passou(ip, agora)) {
     const aviso = "Já recebemos o seu recado. Aguarde alguns minutos.";
     return { resposta: responder(429, { erro: aviso }, origem) };

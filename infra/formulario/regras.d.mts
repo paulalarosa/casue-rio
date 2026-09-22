@@ -27,6 +27,8 @@ export type Exame =
 
 export type Porteiro = (ip: string, agora: number) => boolean;
 
+export type Pedido = { metodo: string; origem: string; ip: string; corpo: string };
+
 export declare const DESTINO: string;
 export declare const REMETENTE: string;
 export declare const FORMULARIOS: Record<"contato" | "busca" | "avaliacao", Formulario>;
@@ -35,4 +37,4 @@ export declare function limpar(valor: unknown, max: number): string;
 export declare function responder(status: number, corpo: unknown, origem: string): Resposta;
 export declare function criarPorteiro(): Porteiro;
 export declare function ler(formulario: Formulario, entrada: Record<string, unknown>): Lido;
-export declare function examinar(evento: unknown, passou: Porteiro, agora?: number): Exame;
+export declare function examinar(pedido: Pedido, passou: Porteiro, agora?: number): Exame;

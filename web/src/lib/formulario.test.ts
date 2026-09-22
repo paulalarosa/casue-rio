@@ -25,9 +25,10 @@ const ORIGEM = "https://casuerio.com.br";
 
 function pedir(corpo: unknown, extras: Record<string, unknown> = {}) {
   return {
-    headers: { origin: ORIGEM },
-    requestContext: { http: { method: "POST", sourceIp: "203.0.113.9" } },
-    body: typeof corpo === "string" ? corpo : JSON.stringify(corpo),
+    metodo: "POST",
+    origem: ORIGEM,
+    ip: "203.0.113.9",
+    corpo: typeof corpo === "string" ? corpo : JSON.stringify(corpo),
     ...extras,
   };
 }
@@ -61,19 +62,32 @@ describe("destino", () => {
 describe("porta de entrada", () => {
   it("recusa origem de fora", () => {
     const exame = examinar(
-      { ...pedir(CONTATO), headers: { origin: "https://site-falso.com" } },
+      pedir(CONTATO, { origem: "https://site-falso.com" }),
       criarPorteiro(),
     );
     expect(resposta(exame).statusCode).toBe(403);
   });
 
+  it("aceita o www, que serve o mesmo site", () => {
+    const exame = examinar(
+      pedir(CONTATO, { origem: "https://www.casuerio.com.br" }),
+      criarPorteiro(),
+    );
+    expect(exame.recado).toBeDefined();
+  });
+
   it("responde o preflight sem olhar o corpo", () => {
     const exame = examinar(
-      { headers: { origin: ORIGEM }, requestContext: { http: { method: "OPTIONS" } } },
+      { metodo: "OPTIONS", origem: ORIGEM, ip: "203.0.113.9", corpo: "" },
       criarPorteiro(),
     );
     expect(resposta(exame).statusCode).toBe(204);
     expect(resposta(exame).headers["access-control-allow-origin"]).toBe(ORIGEM);
+  });
+
+  it("recusa método que não é POST", () => {
+    const exame = examinar(pedir(CONTATO, { metodo: "GET" }), criarPorteiro());
+    expect(resposta(exame).statusCode).toBe(405);
   });
 
   it("recusa corpo gigante", () => {
@@ -129,12 +143,12 @@ describe("armadilhas", () => {
 });
 
 describe("ficha do Turnstile", () => {
-  it("chega até o envio para o Lambda conferir", () => {
+  it("chega até o envio para a função conferir", () => {
     const exame = examinarCom({ ...CONTATO, ficha: "0.abc-token" });
     expect(exame.ficha).toBe("0.abc-token");
   });
 
-  it("sem ficha, vem string vazia, e quem recusa é o Lambda", () => {
+  it("sem ficha, vem string vazia, e quem recusa é a função", () => {
     expect(examinarCom(CONTATO).ficha).toBe("");
   });
 
