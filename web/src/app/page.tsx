@@ -9,6 +9,7 @@ import { Painel } from "@/components/painel";
 import { Midia } from "@/components/midia";
 import { EntradaAbertura, Revela } from "@/components/entrada";
 import { DISPONIVEIS, moeda } from "@/lib/imoveis";
+import { cn } from "@/lib/utils";
 import { SLOGAN } from "@/lib/site";
 import { arquivo } from "@/lib/caminho";
 import { VideoFundo } from "@/components/video-fundo";
@@ -91,7 +92,9 @@ export default function Home() {
       <Revela id="destaques" className="trilho secao">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">Imóveis em destaque</h2>
+            <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">
+              {destaques.length === 1 ? "Imóvel em destaque" : "Imóveis em destaque"}
+            </h2>
             <p className="mt-3 text-lg text-tinta-500">
               Escolhidos um a um, com a documentação conferida.
             </p>
@@ -100,22 +103,28 @@ export default function Home() {
             href="/imoveis"
             className="inline-flex min-h-11 items-center gap-2 rounded-full border border-tinta-800/15 px-5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
           >
-            Ver os {DISPONIVEIS.length} imóveis
+            {DISPONIVEIS.length === 1
+              ? "Ver o imóvel"
+              : `Ver os ${DISPONIVEIS.length} imóveis`}
             <ArrowRight className="size-4" aria-hidden />
           </Link>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+        <div
+          className={cn("grid gap-6", destaques.length > 1 && "lg:grid-cols-[1.2fr_1fr]")}
+        >
           <div data-revela>
             <CartaoImovel im={destaques[0]} variante="largo" />
           </div>
-          <div className="grid gap-6">
-            {destaques.slice(1, 3).map((im) => (
-              <div key={im.codigo} data-revela className="h-full">
-                <CartaoImovel im={im} variante="fila" />
-              </div>
-            ))}
-          </div>
+          {destaques.length > 1 && (
+            <div className="grid gap-6">
+              {destaques.slice(1, 3).map((im) => (
+                <div key={im.codigo} data-revela className="h-full">
+                  <CartaoImovel im={im} variante="fila" />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </Revela>
 

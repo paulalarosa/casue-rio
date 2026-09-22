@@ -4,7 +4,8 @@ import { ArrowRight } from "lucide-react";
 import { CabecaPagina } from "@/components/cabeca-pagina";
 import { arquivo } from "@/lib/caminho";
 import alameda from "../../../../public/video/alameda.webp";
-import { CartaoImovel } from "@/components/cartao-imovel";
+import { GradeImoveis } from "@/components/grade-imoveis";
+import { Painel } from "@/components/painel";
 import { BAIRROS } from "@/lib/carteira";
 import { DISPONIVEIS, bairroPorApelido, moeda, retratoDaRegiao } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
@@ -87,11 +88,23 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
             Ver todos os imóveis <ArrowRight className="size-4" aria-hidden />
           </Link>
         </div>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {lista.map((im) => (
-            <CartaoImovel key={im.codigo} im={im} />
-          ))}
-        </div>
+        {lista.length > 0 ? (
+          <GradeImoveis imoveis={lista} />
+        ) : (
+          <Painel className="p-10 text-center">
+            <h3 className="text-2xl">Ainda não temos imóvel anunciado em {b.nome}</h3>
+            <p className="mx-auto mt-4 max-w-[46ch] text-tinta-500">
+              A gente atende a região e faz captação direcionada. Conte o que procura e
+              vamos atrás.
+            </p>
+            <Link
+              href="/imoveis#buscamos-para-voce"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-tinta-800 px-6 py-3.5 font-semibold text-papel shadow-[var(--shadow-flutua-2)] transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              Contar o que eu procuro <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </Painel>
+        )}
       </div>
     </>
   );
