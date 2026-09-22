@@ -6,6 +6,7 @@ export function Audiencia() {
   return (
     <script
       type="module"
+      defer
       src="https://static.cloudflareinsights.com/beacon.min.js"
       data-cf-beacon={JSON.stringify({ token: FICHA })}
     />
