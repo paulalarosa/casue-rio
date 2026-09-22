@@ -1,0 +1,11 @@
+https://www.casuerio.com.br/* https://casuerio.com.br/:splat 301
+/bairros /imoveis/ 301
+/bairros/ /imoveis/ 301
+/bairros/Centro /bairros/centro/ 301
+/bairros/Centro/ /bairros/centro/ 301
+/bairros/Tijuca /bairros/tijuca/ 301
+/bairros/Tijuca/ /bairros/tijuca/ 301
+/bairros/Zona%20Sul /bairros/zona-sul/ 301
+/bairros/Zona%20Sul/ /bairros/zona-sul/ 301
+/bairros/Zona-Sul /bairros/zona-sul/ 301
+/bairros/Zona-Sul/ /bairros/zona-sul/ 301
