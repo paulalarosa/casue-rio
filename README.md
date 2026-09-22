@@ -115,6 +115,20 @@ e-mail se Lambda e SES juntos passarem de US$ 0,50 no mês.
 | `FORM_URL`                            | Function URL que recebe os formulários. Vazia: os formulários avisam que o envio não está ligado |
 | `TURNSTILE_KEY`                       | chave pública do Turnstile. Vazia: os formulários funcionam sem o verificador |
 
+## Fotos de imóvel
+
+As fotos originais não entram no repositório. `web/scripts/fotos.mjs` converte
+uma pasta de origem em WebP dentro de `web/public/imoveis/<codigo>/`, em dois
+tamanhos: o grande com até 1600px de largura e o `-min` de 480px, que é o que a
+tira de miniaturas carrega.
+
+```
+node scripts/fotos.mjs "caminho/das/fotos" "imoveis/cse-1001"
+```
+
+O `sharp` já vem junto com o Next, então não é dependência declarada. A galeria
+troca `.webp` por `-min.webp` sozinha nas miniaturas.
+
 ## Peças de Instagram
 
 Cada artigo publicado gera duas imagens na tipografia da marca, 1080×1350 para

@@ -18,6 +18,11 @@ function roteiro(im: Imovel): Quadro[] {
   return lista;
 }
 
+function miniatura(foto?: string) {
+  if (!foto) return foto;
+  return foto.replace(/\.webp$/, "-min.webp");
+}
+
 export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
   const quadros = roteiro(im);
   const [i, setI] = useState(0);
@@ -124,7 +129,7 @@ export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
             )}
           >
             <Midia
-              foto={q.foto}
+              foto={miniatura(q.foto)}
               cena={q.cena}
               semente={im.codigo}
               rotulo=""

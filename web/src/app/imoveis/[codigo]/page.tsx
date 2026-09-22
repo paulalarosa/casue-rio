@@ -187,6 +187,14 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
             {im.resumo}
           </p>
 
+          {im.descricao?.length ? (
+            <div className="mt-8 max-w-[62ch] space-y-4 text-tinta-500">
+              {im.descricao.map((paragrafo) => (
+                <p key={paragrafo}>{paragrafo}</p>
+              ))}
+            </div>
+          ) : null}
+
           <h2 className="mt-14 text-2xl">O que a gente confere antes da proposta</h2>
           <ul className="mt-7 grid gap-x-10 gap-y-4 sm:grid-cols-2">
             {CONFERIDO.map((linha) => (
@@ -221,6 +229,12 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
             {im.porMes && <span className="text-lg"> / mês</span>}
           </span>
           <dl className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+            {im.aluguel ? (
+              <div className="flex items-baseline gap-2">
+                <dt className="text-tinta-500">Aluguel</dt>
+                <dd className="num text-tinta-600">{moeda(im.aluguel)} / mês</dd>
+              </div>
+            ) : null}
             <div className="flex items-baseline gap-2">
               <dt className="text-tinta-500">Condomínio</dt>
               <dd className="num text-tinta-600">{moeda(im.condominio || null)}</dd>

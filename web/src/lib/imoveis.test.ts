@@ -83,8 +83,8 @@ describe("carteira", () => {
     expect(new Set(codigos).size).toBe(codigos.length);
   });
 
-  it("todo código segue o padrão CR-0000", () => {
-    for (const im of IMOVEIS) expect(im.codigo).toMatch(/^CR-\d{4}$/);
+  it("todo código serve de endereço: maiúscula, número, sem espaço", () => {
+    for (const im of IMOVEIS) expect(im.codigo).toMatch(/^[A-Z]{2,4}-\d{3,5}$/);
   });
 
   it("toda região anunciada tem bairro cadastrado", () => {
