@@ -123,7 +123,7 @@ tamanhos: o grande com até 1600px de largura e o `-min` de 480px, que é o que 
 tira de miniaturas carrega.
 
 ```
-node scripts/fotos.mjs "caminho/das/fotos" "imoveis/cse-1001"
+node scripts/fotos.mjs "caminho/das/fotos" "fotos/cse-1001"
 ```
 
 O `sharp` já vem junto com o Next, então não é dependência declarada. A galeria

@@ -1,4 +1,4 @@
-name: Publicar na AWS
+name: Publicar
 
 on:
   push:
@@ -56,7 +56,7 @@ jobs:
 
   publicar:
     needs: decidir
-    if: vars.AWS_ROLE_ARN != '' && needs.decidir.outputs.precisa == 'true'
+    if: needs.decidir.outputs.precisa == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -102,12 +102,23 @@ jobs:
           retention-days: 90
           if-no-files-found: ignore
 
-      - uses: aws-actions/configure-aws-credentials@v4
+      - name: Publicar no Cloudflare Pages
+        if: vars.CLOUDFLARE_ACCOUNT_ID != ''
+        working-directory: web
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npx --yes wrangler@4 pages deploy out --project-name=casuerio --branch=main --commit-hash="$GITHUB_SHA"
+
+      - if: vars.AWS_ROLE_ARN != ''
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
-      - name: Subir os arquivos com nome versionado
+      - if: vars.AWS_ROLE_ARN != ''
+        name: Subir os arquivos com nome versionado
         working-directory: web
         run: |
           aws s3 sync out/ s3://casuerio-site-prod/ \
@@ -115,7 +126,8 @@ jobs:
             --exclude "*" --include "_next/static/*" \
             --cache-control "public, max-age=31536000, immutable"
 
-      - name: Subir o resto
+      - if: vars.AWS_ROLE_ARN != ''
+        name: Subir o resto
         working-directory: web
         run: |
           aws s3 sync out/ s3://casuerio-site-prod/ \
@@ -123,7 +135,8 @@ jobs:
             --exclude "_next/static/*" \
             --cache-control "public, max-age=0, must-revalidate"
 
-      - name: Limpar o cache da borda
+      - if: vars.AWS_ROLE_ARN != ''
+        name: Limpar o cache da borda
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ vars.CLOUDFRONT_ID }} \
