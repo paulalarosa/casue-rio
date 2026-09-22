@@ -1,5 +1,11 @@
 import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
-import { DESTINO, REMETENTE, criarPorteiro, examinar, responder } from "./regras.mjs";
+import {
+  DESTINO,
+  REMETENTE,
+  criarPorteiro,
+  examinar,
+  responder,
+} from "./regras.mjs";
 
 const SEGREDO = process.env.TURNSTILE_SECRET ?? "";
 const CONFERENTE = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
@@ -15,7 +21,11 @@ async function fichaVale(ficha, ip) {
   if (ip && ip !== "sem-ip") corpo.set("remoteip", ip);
 
   const sinal = AbortSignal.timeout(5000);
-  const resposta = await fetch(CONFERENTE, { method: "POST", body: corpo, signal: sinal });
+  const resposta = await fetch(CONFERENTE, {
+    method: "POST",
+    body: corpo,
+    signal: sinal,
+  });
   const veredito = await resposta.json();
 
   if (!veredito.success) {
@@ -25,7 +35,20 @@ async function fichaVale(ficha, ip) {
 }
 
 export async function handler(evento) {
-  const exame = examinar(evento, passou);
+  const cabecalhos = evento.headers ?? {};
+  const cru = evento.isBase64Encoded
+    ? Buffer.from(evento.body ?? "", "base64").toString("utf8")
+    : (evento.body ?? "");
+
+  const exame = examinar(
+    {
+      metodo: evento.requestContext?.http?.method ?? "POST",
+      origem: cabecalhos.origin ?? cabecalhos.Origin ?? "",
+      ip: evento.requestContext?.http?.sourceIp ?? "sem-ip",
+      corpo: cru,
+    },
+    passou,
+  );
   if (exame.resposta) return exame.resposta;
 
   try {
@@ -35,7 +58,8 @@ export async function handler(evento) {
     }
   } catch (erro) {
     console.error("[formulario] Turnstile não respondeu:", erro);
-    const aviso = "Não consegui confirmar o envio agora. Tente de novo em instantes.";
+    const aviso =
+      "Não consegui confirmar o envio agora. Tente de novo em instantes.";
     return responder(503, { erro: aviso }, exame.origem);
   }
 
