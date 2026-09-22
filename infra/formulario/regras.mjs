@@ -1,3 +1,5 @@
+import { montarCarta } from "./carta.mjs";
+
 export const DESTINO = "rio.casue@gmail.com";
 export const REMETENTE = "Site Casuê Rio <site@casuerio.com.br>";
 
@@ -88,7 +90,7 @@ export function criarPorteiro() {
 }
 
 export function ler(formulario, entrada) {
-  const linhas = [];
+  const itens = [];
   let respostaDe = null;
 
   for (const [chave, rotulo, regra, obrigatorio] of formulario.campos) {
@@ -129,11 +131,11 @@ export function ler(formulario, entrada) {
       respostaDe = valor;
     }
 
-    linhas.push(`${rotulo}: ${valor}`);
+    itens.push({ rotulo, valor });
   }
 
-  if (!linhas.length) return { erro: "Formulário vazio." };
-  return { linhas, respostaDe };
+  if (!itens.length) return { erro: "Formulário vazio." };
+  return { itens, respostaDe };
 }
 
 export function examinar(evento, passou, agora = Date.now()) {
@@ -182,12 +184,16 @@ export function examinar(evento, passou, agora = Date.now()) {
   if (lido.erro) return { resposta: responder(400, { erro: lido.erro }, origem) };
 
   const carimbo = new Date(agora).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
-  const texto = [...lido.linhas, "", `Enviado pelo site em ${carimbo}.`].join("\n");
+  const linhas = lido.itens.map((i) => `${i.rotulo}: ${i.valor}`);
+  const texto = [...linhas, "", `Enviado pelo site em ${carimbo}.`].join("\n");
+  const quem = lido.itens.find((i) => i.rotulo === "Nome")?.valor;
+  const assunto = quem ? `${formulario.assunto} · ${quem}` : formulario.assunto;
+  const html = montarCarta({ assunto: formulario.assunto, itens: lido.itens, carimbo });
 
   return {
     origem,
     ip,
     ficha: typeof entrada.ficha === "string" ? entrada.ficha : "",
-    recado: { assunto: formulario.assunto, texto, respostaDe: lido.respostaDe },
+    recado: { assunto, texto, html, respostaDe: lido.respostaDe },
   };
 }

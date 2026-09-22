@@ -187,7 +187,10 @@ describe("campos", () => {
       telefone: "21",
       bairros: ["Tijuca", "Centro"],
     });
-    expect(lido.linhas ?? []).toContain("Bairros: Tijuca, Centro");
+    expect(lido.itens ?? []).toContainEqual({
+      rotulo: "Bairros",
+      valor: "Tijuca, Centro",
+    });
   });
 
   it("guarda o e-mail de quem escreveu para a resposta", () => {
@@ -200,6 +203,7 @@ describe("campos", () => {
       mensagem: "oi",
       inventado: "xis",
     });
-    expect((lido.linhas ?? []).join("\n")).not.toContain("xis");
+    const valores = (lido.itens ?? []).map((i) => i.valor).join("\n");
+    expect(valores).not.toContain("xis");
   });
 });

@@ -13,9 +13,13 @@ export type Resposta = {
   body: string;
 };
 
-export type Recado = { assunto: string; texto: string; respostaDe: string | null };
+export type Item = { rotulo: string; valor: string };
 
-export type Lido = { erro: string; linhas?: undefined } | { erro?: undefined; linhas: string[]; respostaDe: string | null };
+export type Recado = { assunto: string; texto: string; html: string; respostaDe: string | null };
+
+export type Lido =
+  | { erro: string; itens?: undefined }
+  | { erro?: undefined; itens: Item[]; respostaDe: string | null };
 
 export type Exame =
   | { resposta: Resposta; origem?: undefined; ip?: undefined; ficha?: undefined; recado?: undefined }

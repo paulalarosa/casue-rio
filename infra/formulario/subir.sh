@@ -10,9 +10,9 @@ cp indice.mjs index.mjs
 trap 'rm -f index.mjs pacote.zip' EXIT
 rm -f pacote.zip
 if command -v zip >/dev/null; then
-  zip -q -j pacote.zip index.mjs regras.mjs
+  zip -q -j pacote.zip index.mjs regras.mjs carta.mjs
 else
-  powershell -NoProfile -Command "Compress-Archive -Path index.mjs,regras.mjs -DestinationPath pacote.zip -Force"
+  powershell -NoProfile -Command "Compress-Archive -Path index.mjs,regras.mjs,carta.mjs -DestinationPath pacote.zip -Force"
 fi
 
 aws lambda update-function-code \

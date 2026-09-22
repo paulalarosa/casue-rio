@@ -39,7 +39,7 @@ export async function handler(evento) {
     return responder(503, { erro: aviso }, exame.origem);
   }
 
-  const { assunto, texto, respostaDe } = exame.recado;
+  const { assunto, texto, html, respostaDe } = exame.recado;
 
   try {
     await ses.send(
@@ -50,7 +50,10 @@ export async function handler(evento) {
         Content: {
           Simple: {
             Subject: { Data: assunto, Charset: "UTF-8" },
-            Body: { Text: { Data: texto, Charset: "UTF-8" } },
+            Body: {
+              Text: { Data: texto, Charset: "UTF-8" },
+              Html: { Data: html, Charset: "UTF-8" },
+            },
           },
         },
       }),
