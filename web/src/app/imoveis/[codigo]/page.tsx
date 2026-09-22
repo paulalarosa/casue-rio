@@ -1,7 +1,20 @@
 import { notFound } from "next/navigation";
 import { Dados } from "@/components/dados";
 import Link from "next/link";
-import { MessageCircle, ShieldCheck, ArrowRight, Check } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import {
+  ArrowRight,
+  Bath,
+  BedDouble,
+  Building2,
+  Car,
+  Check,
+  DoorOpen,
+  Maximize,
+  MessageCircle,
+  ShieldCheck,
+  Sofa,
+} from "lucide-react";
 import { Galeria } from "@/components/galeria";
 import { Compartilhar } from "@/components/compartilhar";
 import { CartaoImovel } from "@/components/cartao-imovel";
@@ -49,31 +62,35 @@ const CONFERIDO = [
 ];
 
 function Item({
+  Icone,
   rotulo,
   valor,
-  grande,
-  fio,
 }: {
+  Icone: LucideIcon;
   rotulo: string;
   valor: string | number | null;
-  grande?: boolean;
-  fio?: boolean;
 }) {
   const vazio = valor === null || valor === undefined || valor === "";
   return (
-    <div
-      className={`flex flex-col gap-1 ${
-        fio ? "sm:border-l sm:border-tinta-800/10 sm:pl-6" : ""
-      }`}
-    >
-      <dt className="rotulo text-tinta-500">{rotulo}</dt>
-      <dd
-        className={`num ${grande ? "text-2xl font-semibold" : ""} ${
-          vazio ? "text-tinta-500" : "text-tinta-800"
-        }`}
-      >
-        {vazio ? "—" : valor}
-      </dd>
+    <div className="flex items-center gap-3 border-t border-tinta-800/10 pt-4">
+      <Icone
+        className={
+          vazio ? "size-5 shrink-0 text-tinta-400" : "size-5 shrink-0 text-bronze-500"
+        }
+        aria-hidden
+      />
+      <div className="min-w-0">
+        <dd
+          className={
+            vazio
+              ? "num text-xl font-semibold leading-none text-tinta-400"
+              : "num text-xl font-semibold leading-none text-tinta-800"
+          }
+        >
+          {vazio ? "—" : valor}
+        </dd>
+        <dt className="mt-1.5 text-sm text-tinta-500">{rotulo}</dt>
+      </div>
     </div>
   );
 }
@@ -147,18 +164,20 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
         }
       />
 
-      <dl className="trilho mt-10 grid grid-cols-2 gap-y-8 border-y border-tinta-800/12 py-8 sm:grid-cols-3 lg:grid-cols-6">
+      <dl className="trilho mt-10 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-3 lg:grid-cols-6">
         {(
           [
-            ["Área útil", `${im.area} m²`],
-            ["Quartos", im.quartos || null],
-            ["Suítes", im.suites || null],
-            ["Banheiros", im.banheiros || null],
-            ["Vagas", im.vagas || null],
-            ["Andar", im.andar],
+            [Maximize, "Área útil", `${im.area} m²`],
+            [BedDouble, "Quartos", im.quartos || null],
+            [DoorOpen, "Suítes", im.suites || null],
+            [Bath, "Banheiros", im.banheiros || null],
+            [Car, "Vagas", im.vagas ? im.vagas : im.vagas === 0 ? "0" : null],
+            im.mobiliado
+              ? ([Sofa, "Mobiliado", "sim"] as const)
+              : ([Building2, "Andar", im.andar] as const),
           ] as const
-        ).map(([rotulo, valor], i) => (
-          <Item key={rotulo} rotulo={rotulo} valor={valor} grande fio={i > 0} />
+        ).map(([Icone, rotulo, valor]) => (
+          <Item key={rotulo} Icone={Icone} rotulo={rotulo} valor={valor} />
         ))}
       </dl>
 

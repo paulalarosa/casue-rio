@@ -18,6 +18,7 @@ export type Imovel = {
   banheiros: number;
   vagas: number;
   area: number;
+  mobiliado?: boolean;
   andar: string | null;
   ano: number | null;
   selos: string[];
