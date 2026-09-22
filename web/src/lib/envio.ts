@@ -8,6 +8,12 @@ export type Estado = "parado" | "enviando" | "pronto" | "falhou";
 
 const RECADO_PADRAO = "Não consegui enviar agora. Tente de novo em instantes.";
 
+function anotarEnvio(formulario: Nome) {
+  try {
+    window.gtag?.("event", "envio_formulario", { formulario });
+  } catch {}
+}
+
 export function useDemora() {
   const inicio = useRef(0);
   useEffect(() => {
@@ -53,6 +59,7 @@ export function useEnvio(formulario: Nome) {
       }
 
       setEstado("pronto");
+      anotarEnvio(formulario);
       return true;
     } catch {
       setEstado("falhou");

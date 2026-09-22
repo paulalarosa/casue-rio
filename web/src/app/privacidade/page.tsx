@@ -147,6 +147,14 @@ export default function PaginaPrivacidade() {
           páginas que têm formulário, e é o que evita que a nossa caixa de entrada vire
           lixeira.
         </p>
+        <p>
+          Da Cloudflare vem também a contagem de visitas do site. Ela não cria cookie, não
+          guarda identificador de ninguém e não tem como reconhecer a mesma pessoa em dois
+          dias diferentes: conta quantas vezes cada página foi aberta, de que país e por
+          qual navegador, e para. Por não criar cookie, essa contagem não depende do seu
+          aceite, e é por isso que ela existe aqui ao lado do Google Analytics, que
+          depende.
+        </p>
       </Bloco>
 
       <Bloco titulo="O que recebemos quando você fala com a gente">

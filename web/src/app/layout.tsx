@@ -5,6 +5,7 @@ import { Topo } from "@/components/topo";
 import { Rodape } from "@/components/rodape";
 import { Dados } from "@/components/dados";
 import { Medicao } from "@/components/medicao";
+import { Audiencia } from "@/components/audiencia";
 import { CHAVE, GA, temMedicao } from "@/lib/medicao";
 import { empresa, pessoas, grafo } from "@/lib/dados-estruturados";
 import { SITE, MARCA, NOME, DESCRICAO, SLOGAN } from "@/lib/site";
@@ -78,6 +79,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <Rodape />
         <Medicao />
+        <Audiencia />
       </body>
     </html>
   );

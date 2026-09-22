@@ -92,6 +92,7 @@ jobs:
           NEXT_PUBLIC_GA_ID: ${{ vars.GA_ID }}
           NEXT_PUBLIC_FORM_URL: ${{ vars.FORM_URL }}
           NEXT_PUBLIC_TURNSTILE_KEY: ${{ vars.TURNSTILE_KEY }}
+          NEXT_PUBLIC_CF_ANALYTICS: ${{ vars.CF_ANALYTICS }}
         run: npm run build
 
       - uses: actions/upload-artifact@v4
