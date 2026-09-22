@@ -19,10 +19,8 @@ function destinoDe(caminho: string) {
 }
 
 describe("_redirects do Pages", () => {
-  it("manda o www para o domínio sem www", () => {
-    expect(destinoDe("https://www.casuerio.com.br/*")).toBe(
-      "https://casuerio.com.br/:splat",
-    );
+  it("não tenta tratar host aqui, que o Pages ignora", () => {
+    expect(regras.filter((r) => r.de.startsWith("http"))).toEqual([]);
   });
 
   it("leva o índice de bairros para a carteira", () => {
