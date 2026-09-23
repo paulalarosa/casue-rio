@@ -1,4 +1,7 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { describe, expect, it, vi } from "vitest";
+import { QUEM_SOMOS_NO_AR } from "@/lib/site";
 
 vi.mock("@/lib/revista", () => ({
   listarArtigos: async () => [
@@ -40,5 +43,23 @@ describe("sitemap", () => {
       const distancia = Math.abs(agora - new Date(e.lastModified).getTime());
       expect(distancia).toBeGreaterThan(60_000);
     }
+  });
+});
+
+describe("quem somos guardada", () => {
+  const publicada = existsSync(path.join(process.cwd(), "src/app/quem-somos/page.tsx"));
+
+  it("a chave e a pasta dizem a mesma coisa", () => {
+    expect(publicada).toBe(QUEM_SOMOS_NO_AR);
+  });
+
+  it("o texto continua no repositório enquanto a página está fora", () => {
+    const guardada = existsSync(path.join(process.cwd(), "src/app/_quem-somos/page.tsx"));
+    expect(publicada || guardada).toBe(true);
+  });
+
+  it("o sitemap só lista a página quando ela está no ar", async () => {
+    const tem = (await sitemap()).some((e) => e.url.includes("/quem-somos/"));
+    expect(tem).toBe(QUEM_SOMOS_NO_AR);
   });
 });

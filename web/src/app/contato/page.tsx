@@ -15,6 +15,7 @@ import {
   INSTAGRAM,
   INSTAGRAM_URL,
   metaDaPagina,
+  QUEM_SOMOS_NO_AR,
 } from "@/lib/site";
 import { arquivo } from "@/lib/caminho";
 
@@ -146,16 +147,18 @@ export default function PaginaContato() {
               Abrir no mapa
             </a>
           </div>
-          <p className="mt-4 text-sm text-tinta-500">
-            Quem assina os contratos e o que cada registro autoriza está em{" "}
-            <Link
-              href="/quem-somos"
-              className="font-semibold text-terracota-600 underline underline-offset-4 transition-colors hover:text-terracota-700"
-            >
-              Quem somos
-            </Link>
-            .
-          </p>
+          {QUEM_SOMOS_NO_AR && (
+            <p className="mt-4 text-sm text-tinta-500">
+              Quem assina os contratos e o que cada registro autoriza está em{" "}
+              <Link
+                href="/quem-somos"
+                className="font-semibold text-terracota-600 underline underline-offset-4 transition-colors hover:text-terracota-700"
+              >
+                Quem somos
+              </Link>
+              .
+            </p>
+          )}
         </aside>
       </div>
     </>

@@ -7,12 +7,13 @@ import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { AssinaturaFaixa, AssinaturaNome } from "@/components/assinatura";
 import { cn } from "@/lib/utils";
+import { QUEM_SOMOS_NO_AR } from "@/lib/site";
 
 const LINKS = [
   { href: "/imoveis", texto: "Imóveis" },
   { href: "/avaliacao", texto: "Avaliação" },
   { href: "/revista", texto: "Revista" },
-  { href: "/quem-somos", texto: "Quem somos" },
+  ...(QUEM_SOMOS_NO_AR ? [{ href: "/quem-somos", texto: "Quem somos" }] : []),
 ];
 
 const INICIO = { href: "/", texto: "Início" };

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { SITE } from "@/lib/site";
+import { QUEM_SOMOS_NO_AR, SITE } from "@/lib/site";
 import { BAIRROS, IMOVEIS } from "@/lib/carteira";
 import { listarArtigos } from "@/lib/revista";
 
@@ -12,7 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "",
     "/imoveis",
     "/avaliacao",
-    "/quem-somos",
+    ...(QUEM_SOMOS_NO_AR ? ["/quem-somos"] : []),
     "/revista",
     "/contato",
     "/privacidade",

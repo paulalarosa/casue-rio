@@ -1,4 +1,12 @@
-import { SITE, NOME, DESCRICAO, SLOGAN, ENDERECO, SOCIAS } from "@/lib/site";
+import {
+  SITE,
+  NOME,
+  DESCRICAO,
+  SLOGAN,
+  ENDERECO,
+  SOCIAS,
+  QUEM_SOMOS_NO_AR,
+} from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
 import { listarArtigos, dataPorExtenso } from "@/lib/revista";
 
@@ -30,7 +38,11 @@ export async function GET() {
     `- [Início](${SITE}/): a empresa e a busca de imóveis.`,
     `- [Imóveis](${SITE}/imoveis/): tudo o que está anunciado, com busca por código, bairro e finalidade, e uma página por região.`,
     `- [Avaliação](${SITE}/avaliacao/): como um parecer de avaliação chega a um número.`,
-    `- [Quem somos](${SITE}/quem-somos/): quem responde pela Casuê Rio e o que cada registro autoriza.`,
+    ...(QUEM_SOMOS_NO_AR
+      ? [
+          `- [Quem somos](${SITE}/quem-somos/): quem responde pela Casuê Rio e o que cada registro autoriza.`,
+        ]
+      : []),
     `- [Revista](${SITE}/revista/): textos sobre comprar, vender e alugar no Rio.`,
     `- [Falar com a gente](${SITE}/contato/): contato.`,
     `- [Privacidade](${SITE}/privacidade/): o que a empresa faz com dado pessoal. O site não coleta nada de quem visita.`,

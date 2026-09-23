@@ -6,7 +6,7 @@ import { FormAvaliacao } from "@/components/form-avaliacao";
 import { arquivo } from "@/lib/caminho";
 import avaliacao from "../../../public/video/avaliacao.webp";
 import { Revela } from "@/components/entrada";
-import { metaDaPagina } from "@/lib/site";
+import { QUEM_SOMOS_NO_AR, metaDaPagina } from "@/lib/site";
 
 export const metadata = metaDaPagina({
   titulo: "Avaliação de imóvel",
@@ -142,14 +142,16 @@ export default function PaginaAvaliacao() {
                 finalidade, e são combinados na primeira conversa, antes de começar.
               </p>
             </div>
-            <Link
-              data-revela
-              href="/quem-somos"
-              className="inline-flex w-fit items-center gap-2 rounded-full border border-tinta-800/20 px-6 py-3 font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
-            >
-              Ver os registros
-              <ArrowRight className="size-4" aria-hidden />
-            </Link>
+            {QUEM_SOMOS_NO_AR && (
+              <Link
+                data-revela
+                href="/quem-somos"
+                className="inline-flex w-fit items-center gap-2 rounded-full border border-tinta-800/20 px-6 py-3 font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
+              >
+                Ver os registros
+                <ArrowRight className="size-4" aria-hidden />
+              </Link>
+            )}
           </div>
         </div>
       </Revela>

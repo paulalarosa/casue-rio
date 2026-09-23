@@ -10,6 +10,7 @@ import {
   TEM_EMAIL,
   INSTAGRAM,
   INSTAGRAM_URL,
+  QUEM_SOMOS_NO_AR,
 } from "@/lib/site";
 
 export function Rodape() {
@@ -47,7 +48,7 @@ export function Rodape() {
               ["/imoveis", "Imóveis"],
               ["/avaliacao", "Avaliação"],
               ["/revista", "Revista"],
-              ["/quem-somos", "Quem somos"],
+              ...(QUEM_SOMOS_NO_AR ? [["/quem-somos", "Quem somos"]] : []),
               ["/contato", "Contato"],
             ].map(([href, texto]) => (
               <li key={href}>

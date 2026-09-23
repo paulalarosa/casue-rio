@@ -9,6 +9,8 @@ export const DESCRICAO =
 
 export const SLOGAN = "Transformando planos em patrimônio.";
 
+export const QUEM_SOMOS_NO_AR = false;
+
 export const TELEFONE: string = "+55 21 96835-2746";
 
 export function soDigitos(telefone = TELEFONE) {

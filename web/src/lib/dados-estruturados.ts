@@ -7,6 +7,7 @@ import {
   SOCIAS,
   TELEFONE,
   soDigitos,
+  QUEM_SOMOS_NO_AR,
 } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
 import type { Artigo } from "@/lib/revista";
@@ -30,7 +31,7 @@ export function pessoas() {
     name: s.nome,
     jobTitle: "Corretora de imóveis",
     identifier: [s.creci, s.cnai],
-    url: `${SITE}/quem-somos/`,
+    url: QUEM_SOMOS_NO_AR ? `${SITE}/quem-somos/` : `${SITE}/`,
     worksFor: { "@id": ID_EMPRESA },
   }));
 }
