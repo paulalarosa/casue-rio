@@ -59,42 +59,12 @@ O painel tem uma porta só, Revista, mais uma página de ajuda. Imóvel e bairro
 saíram de lá de propósito: alteração de site passa pela manutenção.
 
 ## Publicar
-Empurrar na `main` publica. `.github/workflows/publicar.yml` confere, constrói
-e sobe `web/out/` para o **Cloudflare Pages**, projeto `casuerio`, com o
-wrangler em versão fixa. O `web/functions/` sobe junto e vira a função do
-formulário.
+Empurrar na `main` publica. `.github/workflows/publicar.yml` confere,
+constrói e sobe `web/out/` para o **Cloudflare Pages**, projeto `casuerio`.
+O fluxo também dispara por webhook do Sanity e por tarefa agendada.
 
-O fluxo também dispara por:
-
-- **webhook do Sanity**, via `repository_dispatch`, quando alguém publica um
-  texto;
-- **tarefa agendada**, a cada quinze minutos, que só republica quando um
-  artigo marcado para o futuro vence a hora. Quem decide é
-  `.github/scripts/venceu.sh`, comparando o painel com o sitemap do site.
-
-Enquanto a variável `AWS_ROLE_ARN` existir, o fluxo ainda sincroniza com o S3
-antigo. É só caminho de volta: o site não é servido de lá desde 22/09. Apagar a
-variável desliga esses passos.
-
-## Hospedagem, domínio e e-mail
-
-Tudo na Cloudflare, conta `88b931de85808fe2a341c083ccbad9ba`, desde 22/09/2026.
-
-| peça                 | onde                                                              |
-| -------------------- | ----------------------------------------------------------------- |
-| DNS                  | zona `casuerio.com.br`, servidores `apollo` e `aria`              |
-| site                 | Pages, projeto `casuerio`, domínio e `www` anexados               |
-| cabeçalhos           | `web/public/_headers`: segurança em `/*`, imutável em `_next/static` |
-| redirecionamentos    | `web/public/_redirects`: `/bairros` e bairro com maiúscula ou espaço |
-| `www` para o ápice   | Regra de Redirecionamento na zona, 301 com a query junto          |
-| caixa de e-mail      | Zoho (`mx.zoho.com`), das donas                                    |
-| e-mail do formulário | Resend, domínio `casuerio.com.br`, pelo subdomínio `send.`        |
-
-🔴 O `_redirects` do Pages **ignora regra com host** quando o domínio está no
-mesmo projeto. Por isso o `www` mora na zona, não no arquivo.
-
-🔴 O `_headers` **soma** as regras que casam. Cache-Control só na exceção
-(`_next/static`); o padrão do Pages para página já é `max-age=0, must-revalidate`.
+Gatilhos, variáveis, o que ainda escreve na AWS, hospedagem, domínio,
+e-mail e o caminho de volta: [DEPLOY.md](DEPLOY.md).
 
 ## Formulários
 Os três formulários do site (contato, "busque para mim" em Imóveis e "quer
