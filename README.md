@@ -112,7 +112,6 @@ e-mail se Lambda e SES juntos passarem de US$ 0,50 no mês.
 | `SITE_URL`                            | endereço canônico                                                   |
 | `SANITY_PROJECT_ID`, `SANITY_DATASET` | leitura do painel                                                   |
 | `GA_ID`                               | medição. Vazia: sem script, sem cookie e sem faixa de consentimento |
-| `FORM_URL`                            | Só para apontar o formulário para fora. Vazia: usa `/api/formulario`, a função do próprio Pages |
 | `TURNSTILE_KEY`                       | chave pública do Turnstile. Vazia: os formulários funcionam sem o verificador |
 
 ## Fotos de imóvel

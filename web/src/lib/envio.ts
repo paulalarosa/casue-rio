@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export const ENDERECO_DO_FORMULARIO =
-  process.env.NEXT_PUBLIC_FORM_URL || "/api/formulario";
+export const ENDERECO_DO_FORMULARIO = "/api/formulario";
 
 export type Nome = "contato" | "busca" | "avaliacao";
 export type Campos = Record<string, string | string[]>;
