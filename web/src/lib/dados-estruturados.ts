@@ -1,4 +1,13 @@
-import { SITE, NOME, DESCRICAO, SLOGAN, ENDERECO, SOCIAS } from "@/lib/site";
+import {
+  SITE,
+  NOME,
+  DESCRICAO,
+  SLOGAN,
+  ENDERECO,
+  SOCIAS,
+  TELEFONE,
+  soDigitos,
+} from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
 import type { Artigo } from "@/lib/revista";
 
@@ -35,6 +44,7 @@ export function empresa() {
     url: `${SITE}/`,
     slogan: SLOGAN,
     knowsLanguage: "pt-BR",
+    ...(TELEFONE ? { telephone: `+${soDigitos()}` } : {}),
     areaServed: REGIOES.map((r) => ({
       "@type": "Place",
       name: `${r}, Rio de Janeiro`,

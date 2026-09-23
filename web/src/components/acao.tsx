@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { TELEFONE, enderecoEmail } from "@/lib/site";
+import { TELEFONE, enderecoEmail, soDigitos } from "@/lib/site";
 import type { Imovel } from "@/lib/carteira";
 
 type Props = {
@@ -75,7 +75,7 @@ export function AcaoZap({
           ? `Olá! Vi o imóvel ${im.codigo}, ${im.titulo}, no site e queria saber mais.`
           : "Olá! Vim pelo site.";
         window.open(
-          `https://wa.me/${TELEFONE.replace(/\D/g, "")}?text=${encodeURIComponent(texto)}`,
+          `https://wa.me/${soDigitos()}?text=${encodeURIComponent(texto)}`,
           "_blank",
           "noopener",
         );

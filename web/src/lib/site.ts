@@ -9,7 +9,11 @@ export const DESCRICAO =
 
 export const SLOGAN = "Transformando planos em patrimônio.";
 
-export const TELEFONE: string = "";
+export const TELEFONE: string = "+55 21 96835-2746";
+
+export function soDigitos(telefone = TELEFONE) {
+  return telefone.replace(/\D/g, "");
+}
 
 export const BAIRROS_DE_ATENDIMENTO = [
   "Centro",

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Artigo } from "@/lib/revista";
+import { soDigitos } from "@/lib/site";
 import {
   artigo,
   empresa,
@@ -81,5 +82,19 @@ describe("trilha", () => {
     ]);
     expect(t.itemListElement.map((i) => i.position)).toEqual([1, 2]);
     expect(t.itemListElement[1].item).toMatch(/\/revista\/$/);
+  });
+});
+
+describe("telefone da casa", () => {
+  it("tem código do país, DDD e nove dígitos", () => {
+    expect(soDigitos()).toMatch(/^55\d{2}9\d{8}$/);
+  });
+
+  it("entra na ficha da empresa em formato internacional", () => {
+    expect(empresa().telephone).toBe(`+${soDigitos()}`);
+  });
+
+  it("é o mesmo número que vai para o wa.me", () => {
+    expect(empresa().telephone?.slice(1)).toBe(soDigitos());
   });
 });
