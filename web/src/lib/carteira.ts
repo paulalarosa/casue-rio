@@ -310,6 +310,7 @@ export const IMOVEIS: Imovel[] = [
     alt: "Sala em dois ambientes do apartamento na Rua Ribeiro de Almeida, em Laranjeiras",
     foto: "/fotos/cse-1009/01.webp",
     fotos: galeriaDe("CSE-1009", 15),
+    video: "/video/tour/cse-1009.mp4",
   },
   {
     codigo: "CSE-1010",
