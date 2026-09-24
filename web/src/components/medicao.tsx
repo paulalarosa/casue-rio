@@ -39,7 +39,7 @@ function Faixa({ responder }: { responder: (v: "sim" | "nao") => void }) {
           <button
             type="button"
             onClick={() => responder("nao")}
-            className="rounded-full border border-tinta-800/25 px-5 py-2.5 font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
+            className="rounded-full border border-tinta-800/55 px-5 py-2.5 font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
           >
             Recusar
           </button>
@@ -91,7 +91,7 @@ export function EscolhaDeCookies() {
           type="button"
           disabled={escolha === "indefinido"}
           onClick={() => responder("nao")}
-          className="rounded-full border border-tinta-800/25 px-5 py-2.5 font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6 disabled:opacity-50"
+          className="rounded-full border border-tinta-800/55 px-5 py-2.5 font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6 disabled:opacity-50"
         >
           Recusar
         </button>

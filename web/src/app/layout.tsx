@@ -66,8 +66,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                   `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}` +
                   `var a='denied';try{if(localStorage.getItem('${CHAVE}')==='sim')a='granted'}catch(e){}` +
                   `gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:a});` +
-                  `gtag('js',new Date());gtag('config','${GA}',{anonymize_ip:true});` +
-                  `if(a==='granted'){var s=document.createElement('script');s.id='${ID_DO_SCRIPT}';s.async=true;s.src='${ENDERECO_DO_SCRIPT}';document.head.appendChild(s)}`,
+                  `if(a==='granted'){gtag('js',new Date());gtag('config','${GA}');var s=document.createElement('script');s.id='${ID_DO_SCRIPT}';s.async=true;s.src='${ENDERECO_DO_SCRIPT}';document.head.appendChild(s)}`,
               }}
             />
           </>

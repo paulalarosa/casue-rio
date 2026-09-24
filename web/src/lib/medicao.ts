@@ -85,6 +85,8 @@ export function avisarConsentimento(aceitou: boolean) {
 
 export function carregarGoogle() {
   if (!temMedicao || document.getElementById(ID_DO_SCRIPT)) return;
+  window.gtag?.("js", new Date());
+  window.gtag?.("config", GA);
   const s = document.createElement("script");
   s.id = ID_DO_SCRIPT;
   s.async = true;
