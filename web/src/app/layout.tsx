@@ -6,7 +6,7 @@ import { Rodape } from "@/components/rodape";
 import { Dados } from "@/components/dados";
 import { Medicao } from "@/components/medicao";
 import { Audiencia } from "@/components/audiencia";
-import { CHAVE, GA, temMedicao } from "@/lib/medicao";
+import { CHAVE, ENDERECO_DO_SCRIPT, GA, ID_DO_SCRIPT, temMedicao } from "@/lib/medicao";
 import { empresa, grafo } from "@/lib/dados-estruturados";
 import { SITE, MARCA, NOME, DESCRICAO, SLOGAN } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
@@ -66,10 +66,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                   `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}` +
                   `var a='denied';try{if(localStorage.getItem('${CHAVE}')==='sim')a='granted'}catch(e){}` +
                   `gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:a});` +
-                  `gtag('js',new Date());gtag('config','${GA}',{anonymize_ip:true});`,
+                  `gtag('js',new Date());gtag('config','${GA}',{anonymize_ip:true});` +
+                  `if(a==='granted'){var s=document.createElement('script');s.id='${ID_DO_SCRIPT}';s.async=true;s.src='${ENDERECO_DO_SCRIPT}';document.head.appendChild(s)}`,
               }}
             />
-            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA}`} />
           </>
         )}
         <Dados>{grafo(empresa())}</Dados>

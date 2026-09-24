@@ -4,6 +4,10 @@ export const temMedicao = GA !== "";
 
 export const CHAVE = "casue-medicao";
 
+export const ID_DO_SCRIPT = "medicao-google";
+
+export const ENDERECO_DO_SCRIPT = `https://www.googletagmanager.com/gtag/js?id=${GA}`;
+
 export type Escolha = "sim" | "nao" | "nenhuma" | "indefinido";
 
 const ouvintes = new Set<() => void>();
@@ -79,8 +83,18 @@ export function avisarConsentimento(aceitou: boolean) {
   } catch {}
 }
 
+export function carregarGoogle() {
+  if (!temMedicao || document.getElementById(ID_DO_SCRIPT)) return;
+  const s = document.createElement("script");
+  s.id = ID_DO_SCRIPT;
+  s.async = true;
+  s.src = ENDERECO_DO_SCRIPT;
+  document.head.appendChild(s);
+}
+
 export function gravarEscolha(v: "sim" | "nao") {
   avisarConsentimento(v === "sim");
+  if (v === "sim") carregarGoogle();
   if (v === "nao") apagarCookiesDoGoogle();
   try {
     window.localStorage.setItem(CHAVE, v);

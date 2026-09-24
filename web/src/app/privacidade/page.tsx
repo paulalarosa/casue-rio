@@ -92,12 +92,11 @@ export default function PaginaPrivacidade() {
           {temMedicao ? (
             <>
               <li>
-                Usamos o Google Analytics para contar visitas. O script dele carrega em
-                toda visita, mas{" "}
+                Usamos o Google Analytics para contar visitas, mas o script dele{" "}
                 <b className="font-semibold text-tinta-800">
-                  só mede depois que você aceita
+                  só carrega depois que você aceita
                 </b>
-                : antes disso não cria cookie nenhum e não identifica você.
+                : antes disso nada vai para o Google e nenhum cookie é criado.
               </li>
               <li>Não há pixel de rede social nem ferramenta de publicidade.</li>
             </>
@@ -271,22 +270,20 @@ export default function PaginaPrivacidade() {
             <b className="font-semibold text-tinta-800">
               Nenhum cookie é criado antes de você aceitar.
             </b>{" "}
-            O script do Google carrega junto com a página, e enquanto você não responde
-            ele fica no modo negado: sem cookie, sem identificador e sem saber quem você
-            é. O que o Google recebe nesse estado é a existência de uma visita, sem nada
-            que ligue essa visita a você ou à sua próxima.
+            Enquanto você não responde, ou se recusar, o script do Google nem é baixado: o
+            seu navegador não fala com o Google por causa deste site, e o Google não fica
+            sabendo da visita.
           </p>
           <p>
             Aceitando, ele passa a criar cookies no seu navegador para não contar a mesma
-            pessoa duas vezes, e eles são dele, não nossos. Recusando, o modo negado
-            continua valendo e os cookies que existirem são apagados. O Google trata esses
+            pessoa duas vezes, e eles são dele, não nossos. Se depois você recusar, a
+            medição para e os cookies que existirem são apagados. O Google trata esses
             dados nos servidores dele, fora do Brasil.
           </p>
           <p>
-            Esse funcionamento tem nome: é o Modo de Consentimento do próprio Google,
-            feito para a LGPD e para a lei europeia equivalente. Ele existe para que
-            recusar não signifique carregar coisa nenhuma, e para que o site saiba que
-            você recusou.
+            Quem controla isso é o Modo de Consentimento do próprio Google, feito para a
+            LGPD e para a lei europeia equivalente: os cookies de publicidade ficam sempre
+            desligados, e o de medição só liga com o seu aceite.
           </p>
           <p>
             A base legal aqui é o seu consentimento, e consentimento se tira com a mesma
