@@ -7,7 +7,6 @@ export type Artigo = {
   titulo: string;
   linha: string;
   data: string;
-  autora: string;
   capa?: (Image & { alt?: string }) | null;
   corpo?: PortableTextBlock[];
 };
@@ -17,7 +16,6 @@ const CAMPOS = `
   titulo,
   linha,
   data,
-  autora,
   capa
 `;
 

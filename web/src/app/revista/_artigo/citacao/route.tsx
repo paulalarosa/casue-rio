@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { listarArtigos, lerArtigo } from "@/lib/revista";
 import { fontes, frasePara, Placa, TINTA, PAPEL, TERRACOTA } from "@/lib/cartao";
+import { MARCA } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -60,7 +61,7 @@ export async function GET(
         }}
       >
         <div style={{ display: "flex", fontSize: 28, fontWeight: 600, color: TINTA }}>
-          {a.autora}
+          {MARCA}
         </div>
         <div style={{ display: "flex", fontSize: 24, color: "#8A5A33" }}>
           casuerio.com.br/revista

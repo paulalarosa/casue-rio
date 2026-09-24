@@ -106,7 +106,7 @@ export default function PaginaContato() {
           <p className="mt-3 mb-10 text-lg text-tinta-500">
             {TELEFONE
               ? "O WhatsApp é mais rápido. O formulário é para quem não usa."
-              : "Enquanto o WhatsApp da empresa não entra no ar, é por aqui e pelo e-mail. Chega às duas, e a resposta sai no mesmo dia."}
+              : "Enquanto o WhatsApp da empresa não entra no ar, é por aqui e pelo e-mail, e a resposta sai no mesmo dia."}
           </p>
           <FormContato />
         </div>

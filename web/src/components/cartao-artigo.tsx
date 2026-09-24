@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { dataPorExtenso, type Artigo } from "@/lib/revista";
 import { imagem } from "@/lib/sanity";
+import { MARCA } from "@/lib/site";
 
 function Assinaturas({ materia }: { materia: Artigo }) {
   return (
@@ -13,7 +14,7 @@ function Assinaturas({ materia }: { materia: Artigo }) {
       <span aria-hidden className="text-tinta-300">
         ·
       </span>
-      <span>{materia.autora}</span>
+      <span>{MARCA}</span>
     </span>
   );
 }

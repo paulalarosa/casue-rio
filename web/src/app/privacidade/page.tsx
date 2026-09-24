@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { ENDERECO, NOME, SOCIAS, numerosDoCreci, metaDaPagina } from "@/lib/site";
+import { ENDERECO, NOME, RESPONSAVEIS, numerosDoCreci, metaDaPagina } from "@/lib/site";
 import { AcaoEmail } from "@/components/acao";
 import { EscolhaDeCookies } from "@/components/medicao";
 import { temMedicao } from "@/lib/medicao";
@@ -12,7 +12,7 @@ export const metadata = metaDaPagina({
   caminho: "/privacidade",
 });
 
-const ATUALIZADA = "18 de setembro de 2026";
+const ATUALIZADA = "24 de setembro de 2026";
 
 function Bloco({ titulo, children }: { titulo: string; children: React.ReactNode }) {
   return (
@@ -64,8 +64,8 @@ export default function PaginaPrivacidade() {
           {NOME}, com escritório na {ENDERECO.rua}, {ENDERECO.complemento},{" "}
           {ENDERECO.bairro}, {ENDERECO.cidade}, {ENDERECO.estado},{" "}
           <span className="num">{ENDERECO.cep}</span>. As responsáveis são{" "}
-          {SOCIAS.map((s) => s.nome).join(" e ")}, corretoras inscritas no CRECI/RJ sob os
-          números <span className="num">{numerosDoCreci(" e ")}</span>.
+          {RESPONSAVEIS.map((r) => r.nome).join(" e ")}, corretoras inscritas no CRECI/RJ
+          sob os números <span className="num">{numerosDoCreci(" e ")}</span>.
         </p>
         <p>
           Para qualquer assunto desta página, inclusive pedir os seus dados de volta ou
@@ -121,23 +121,24 @@ export default function PaginaPrivacidade() {
         </ul>
         <p>
           Duas coisas acontecem mesmo assim, e é justo que você saiba. O site é hospedado
-          na Amazon Web Services: para entregar a página ao seu navegador, a
-          infraestrutura deles processa o seu endereço de IP, como em qualquer site da
-          internet. E as fotos dos textos da{" "}
+          na Cloudflare: para entregar a página ao seu navegador, a infraestrutura dela
+          processa o seu endereço de IP, como em qualquer site da internet. E as fotos dos
+          textos da{" "}
           <Link href="/revista" className={elo}>
             Revista
           </Link>{" "}
           são entregues pela Sanity, empresa que hospeda o painel onde eles são escritos:
           ao abrir a Revista, o seu navegador pede as imagens a eles, que recebem o seu IP
-          e o seu navegador. Os servidores das duas ficam fora do Brasil.
+          e o seu navegador. As duas são empresas de fora do Brasil, e esses dados podem
+          ser processados fora do país.
         </p>
         <p>
-          Quando você envia um formulário, a Amazon Web Services também entra: é uma
-          função deles que recebe o que você escreveu e transforma em e-mail, e é o
-          serviço de e-mail deles que entrega. Nessa passagem ficam registrados, por pouco
-          tempo, o seu endereço de IP e o horário, para barrar disparo automático. O
-          conteúdo do formulário não é guardado em banco nenhum: ele vira e-mail e acaba
-          na caixa de entrada.
+          Quando você envia um formulário, a Cloudflare também entra: é uma função dela
+          que recebe o que você escreveu e transforma em e-mail, e quem entrega é o
+          Resend, serviço de envio de e-mail, também de fora do Brasil. Nessa passagem o
+          seu endereço de IP e o horário ficam guardados por pouco tempo, só na memória da
+          função, para barrar disparo automático. O conteúdo do formulário não é guardado
+          em banco nenhum: ele vira e-mail e acaba na caixa de entrada.
         </p>
         <p>
           Nos formulários há ainda um verificador da Cloudflare, o Turnstile, que separa

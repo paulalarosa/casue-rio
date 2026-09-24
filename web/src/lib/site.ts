@@ -9,7 +9,7 @@ export const DESCRICAO =
 
 export const SLOGAN = "Transformando planos em patrimônio.";
 
-export const QUEM_SOMOS_NO_AR = false;
+export const QUEM_SOMOS_NO_AR = true;
 
 export const TELEFONE: string = "+55 21 96835-2746";
 
@@ -34,7 +34,7 @@ export const BAIRROS_DE_ATENDIMENTO = [
 ] as const;
 
 export function numerosDoCreci(separador = " · ") {
-  return SOCIAS.map((s) => s.creci.replace("CRECI/RJ ", "")).join(separador);
+  return RESPONSAVEIS.map((r) => r.creci.replace("CRECI/RJ ", "")).join(separador);
 }
 
 const EMAIL_PARTES = ["rio.casue", "gmail.com"] as const;
@@ -64,35 +64,12 @@ export function metaDaPagina({
   };
 }
 
-export const SOCIAS = [
+export const RESPONSAVEIS = [
+  { nome: "Débora de Almeida Carvalho", creci: "CRECI/RJ 92.984", cnai: "CNAI 53.073" },
   {
-    inicial: "C",
-    sobrenome: "Carvalho",
-    nome: "Débora de Almeida Carvalho",
-    cargo: "Sócia-Diretora",
-    creci: "CRECI/RJ 92.984",
-    cnai: "CNAI 53.073",
-    citacao:
-      "Cada imóvel é uma oportunidade de construir valor. O nosso trabalho é conduzir a negociação com estratégia, segurança e atenção ao que importa para o cliente.",
-    bio: [
-      "Conduz as operações da Casuê Rio somando visão comercial, análise criteriosa e atenção ao lado técnico de cada negociação.",
-      "Cuida da escolha dos imóveis, entende o objetivo de quem compra e de quem vende, e acompanha as etapas que fazem um negócio sair claro, eficiente e seguro.",
-    ],
-  },
-  {
-    inicial: "S",
-    sobrenome: "Seixas",
     nome: "Alessandra Soverchi de Seixas",
-    cargo: "Sócia-Diretora",
     creci: "CRECI/RJ 92.989",
     cnai: "CNAI 53.072",
-    citacao:
-      "Um bom negócio começa entendendo o que o cliente precisa, e se fecha com transparência, confiança e uma negociação bem conduzida.",
-    bio: [
-      "Cuida do relacionamento com o cliente e da condução das negociações, atrás de oportunidades que batem com o objetivo de quem compra, de quem vende e de quem investe.",
-      "Soma sensibilidade comercial, conhecimento de mercado e atenção ao detalhe, para a negociação sair transparente e organizada.",
-      "Acredita que relação de confiança se constrói com presença e responsabilidade em cada etapa do negócio.",
-    ],
   },
 ] as const;
 

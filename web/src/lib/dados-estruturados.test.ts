@@ -1,22 +1,20 @@
 import { describe, expect, it } from "vitest";
 import type { Artigo } from "@/lib/revista";
-import { soDigitos } from "@/lib/site";
+import { RESPONSAVEIS, soDigitos } from "@/lib/site";
 import {
+  ID_EMPRESA,
   artigo,
   empresa,
   grafo,
-  pessoas,
   revista,
   trilha,
 } from "@/lib/dados-estruturados";
-import { SOCIAS } from "@/lib/site";
 
 const exemplo: Artigo = {
   slug: "um-texto",
   titulo: "Um título",
   linha: "Uma chamada que diz o que o texto entrega.",
   data: "2026-09-18T13:00:00.000Z",
-  autora: SOCIAS[0].nome,
 };
 
 describe("grafo", () => {
@@ -27,31 +25,19 @@ describe("grafo", () => {
   });
 });
 
-describe("empresa e pessoas", () => {
-  it("a empresa aponta para as duas pessoas pelo mesmo @id que elas declaram", () => {
-    const ids = pessoas().map((p) => p["@id"]);
-    const apontados = empresa().employee.map((e) => e["@id"]);
-    expect(apontados).toEqual(ids);
-  });
-
-  it("cada pessoa carrega CRECI e CNAI", () => {
-    for (const p of pessoas()) expect(p.identifier).toHaveLength(2);
-  });
-
-  it("o @id da pessoa não tem acento nem espaço", () => {
-    for (const p of pessoas()) expect(p["@id"]).toMatch(/^https?:\/\/[^#]+#[a-z0-9-]+$/);
-  });
-
-  it("não existem duas pessoas com o mesmo @id", () => {
-    const ids = pessoas().map((p) => p["@id"]);
-    expect(new Set(ids).size).toBe(ids.length);
+describe("a empresa fala por ela mesma", () => {
+  it("a ficha do Google não declara pessoa nenhuma", () => {
+    const texto = JSON.stringify(grafo(empresa(), artigo(exemplo), revista([exemplo])));
+    expect(texto).not.toContain('"Person"');
+    expect(texto).not.toContain("employee");
+    for (const r of RESPONSAVEIS) expect(texto).not.toContain(r.nome);
   });
 });
 
 describe("artigo", () => {
-  it("a autora aponta para uma pessoa declarada", () => {
-    const ids = pessoas().map((p) => p["@id"]);
-    expect(ids).toContain(artigo(exemplo).author["@id"]);
+  it("quem assina é a empresa", () => {
+    expect(artigo(exemplo).author["@id"]).toBe(ID_EMPRESA);
+    expect(revista([exemplo]).blogPost[0].author["@id"]).toBe(ID_EMPRESA);
   });
 
   it("publicação e modificação saem do mesmo instante, sem inventar revisão", () => {

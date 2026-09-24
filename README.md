@@ -157,27 +157,36 @@ A terceira forma é a que roda no CI: acha um comentário, a publicação para.
 
 Formatação por Prettier em `web/`, verificada no CI com `npm run format:check`.
 
-## Página guardada: Quem somos
+## A empresa fala por ela mesma
 
-Saiu do ar em 23/09 porque as donas vão reescrever o texto. **Não foi apagada**:
-mora em `web/src/app/_quem-somos/page.tsx`, pasta que o Next não publica, e
-continua passando pelo typecheck.
+Desde 24/09 o site não apresenta as sócias: sem nome, cargo, retrato ou
+biografia, a pedido delas (a questão da OAB) e para a Casuê Rio aparecer como
+empresa. O texto do Quem somos é o que elas mandaram, na voz da empresa.
 
-Uma chave só, `QUEM_SOMOS_NO_AR` em `web/src/lib/site.ts`, tira e devolve o que
-aponta para ela: menu, rodapé, o botão "Ver os registros" da avaliação, a frase
-do contato, o sitemap, o `llms.txt` e a `url` das sócias na ficha do Google.
+Os nomes sobram em dois lugares, e só porque a lei pede. A Casuê Rio não tem
+CNPJ nem CRECI de empresa, então:
 
-Para voltar, as duas coisas juntas:
+- o **rodapé** mostra os números do CRECI/RJ das duas (anúncio de imóvel exige
+  o registro de quem anuncia), sem nome;
+- a **privacidade** diz quem responde pelos dados (a LGPD exige identificar o
+  controlador).
 
-1. `git mv web/src/app/_quem-somos web/src/app/quem-somos`
-2. `QUEM_SOMOS_NO_AR = true`
+`RESPONSAVEIS` em `web/src/lib/site.ts` guarda só nome, CRECI e CNAI, para
+esses dois usos. Os artigos da revista saem assinados por "Casuê Rio", e o
+campo "Quem escreveu" saiu do painel. Na ficha do Google não há pessoa: a
+empresa é autora e editora. `dados-estruturados.test.ts` reprova se um nome
+voltar para lá.
 
-`sitemap.test.ts` reprova se uma for feita sem a outra.
+Se um dia houver CNPJ e CRECI de empresa, os dois lugares acima trocam os nomes
+pelos da empresa, e `RESPONSAVEIS` some.
+
+`QUEM_SOMOS_NO_AR` em `site.ts` ainda liga e desliga a página e tudo que aponta
+para ela; `sitemap.test.ts` reprova se a chave e a pasta `quem-somos` não
+concordarem.
 
 ## Pendente, do lado do cliente
 
-- O **texto novo do Quem somos**, que elas vão mandar.
 - A **segunda frase** da marca, ao lado de "Aqui seu sonho vira patrimônio".
-- As **fotos reais** dos imóveis e os **retratos** das duas, verticais 4:5.
+- As **fotos reais** dos imóveis.
 - Os **prazos de guarda** de dado pessoal, confirmados pelas duas, na página de
   privacidade.

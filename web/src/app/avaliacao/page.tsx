@@ -11,7 +11,7 @@ import { QUEM_SOMOS_NO_AR, metaDaPagina } from "@/lib/site";
 export const metadata = metaDaPagina({
   titulo: "Avaliação de imóvel",
   descricao:
-    "Parecer de valor assinado por avaliadora cadastrada no CNAI, no Rio de Janeiro. Para definir preço de venda, inventário, partilha e garantia bancária.",
+    "Parecer de valor assinado por avaliador cadastrado no CNAI, no Rio de Janeiro. Para definir preço de venda, inventário, partilha e garantia bancária.",
   caminho: "/avaliacao",
 });
 
@@ -61,7 +61,7 @@ const COMO = [
     Ic: ScrollText,
     titulo: "Parecer assinado",
     texto:
-      "Documento com metodologia, fotos e fundamentação, assinado por avaliadora com CNAI.",
+      "Documento com metodologia, fotos e fundamentação, assinado por avaliador com CNAI.",
   },
 ];
 
@@ -137,9 +137,9 @@ export default function PaginaAvaliacao() {
             <div data-revela>
               <h2 className="text-2xl">Quem assina o parecer</h2>
               <p className="mt-4 max-w-[58ch] text-lg text-tinta-500">
-                A Casuê Rio tem avaliadoras cadastradas no CNAI, e é esse cadastro que
-                permite emitir parecer de valor. Prazo e preço dependem do imóvel e da
-                finalidade, e são combinados na primeira conversa, antes de começar.
+                Avaliador cadastrado no CNAI, que é o cadastro que permite emitir parecer
+                de valor. Prazo e preço dependem do imóvel e da finalidade, e são
+                combinados na primeira conversa, antes de começar.
               </p>
             </div>
             {QUEM_SOMOS_NO_AR && (

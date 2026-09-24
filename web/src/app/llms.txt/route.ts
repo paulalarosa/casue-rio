@@ -1,12 +1,4 @@
-import {
-  SITE,
-  NOME,
-  DESCRICAO,
-  SLOGAN,
-  ENDERECO,
-  SOCIAS,
-  QUEM_SOMOS_NO_AR,
-} from "@/lib/site";
+import { SITE, NOME, DESCRICAO, SLOGAN, ENDERECO, QUEM_SOMOS_NO_AR } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
 import { listarArtigos, dataPorExtenso } from "@/lib/revista";
 
@@ -29,10 +21,6 @@ export async function GET() {
     `- Endereço: ${ENDERECO.linha}`,
     `- Contato: pela página ${SITE}/contato/`,
     "",
-    "## Quem assina",
-    "",
-    ...SOCIAS.map((s) => `- ${s.nome}, corretora de imóveis, ${s.creci}, ${s.cnai}.`),
-    "",
     "## Páginas",
     "",
     `- [Início](${SITE}/): a empresa e a busca de imóveis.`,
@@ -40,7 +28,7 @@ export async function GET() {
     `- [Avaliação](${SITE}/avaliacao/): como um parecer de avaliação chega a um número.`,
     ...(QUEM_SOMOS_NO_AR
       ? [
-          `- [Quem somos](${SITE}/quem-somos/): quem responde pela Casuê Rio e o que cada registro autoriza.`,
+          `- [Quem somos](${SITE}/quem-somos/): como a Casuê Rio trabalha e o que cada registro autoriza.`,
         ]
       : []),
     `- [Revista](${SITE}/revista/): textos sobre comprar, vender e alugar no Rio.`,
@@ -53,7 +41,7 @@ export async function GET() {
     linhas.push("## Revista", "");
     for (const a of artigos) {
       linhas.push(
-        `- [${a.titulo}](${SITE}/revista/${a.slug}/): ${a.linha} Por ${a.autora}, ${dataPorExtenso(a.data)}.`,
+        `- [${a.titulo}](${SITE}/revista/${a.slug}/): ${a.linha} ${dataPorExtenso(a.data)}.`,
       );
     }
     linhas.push("");

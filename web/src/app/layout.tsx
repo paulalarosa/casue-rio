@@ -7,7 +7,7 @@ import { Dados } from "@/components/dados";
 import { Medicao } from "@/components/medicao";
 import { Audiencia } from "@/components/audiencia";
 import { CHAVE, GA, temMedicao } from "@/lib/medicao";
-import { empresa, pessoas, grafo } from "@/lib/dados-estruturados";
+import { empresa, grafo } from "@/lib/dados-estruturados";
 import { SITE, MARCA, NOME, DESCRICAO, SLOGAN } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
 
@@ -72,7 +72,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA}`} />
           </>
         )}
-        <Dados>{grafo(empresa(), ...pessoas())}</Dados>
+        <Dados>{grafo(empresa())}</Dados>
         <Topo />
         <main id="conteudo" className="flex-1">
           {children}

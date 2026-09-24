@@ -1,40 +1,8 @@
-import {
-  SITE,
-  NOME,
-  DESCRICAO,
-  SLOGAN,
-  ENDERECO,
-  SOCIAS,
-  TELEFONE,
-  soDigitos,
-  QUEM_SOMOS_NO_AR,
-} from "@/lib/site";
+import { SITE, NOME, DESCRICAO, SLOGAN, ENDERECO, TELEFONE, soDigitos } from "@/lib/site";
 import { REGIOES } from "@/lib/imoveis";
 import type { Artigo } from "@/lib/revista";
 
-const ID_EMPRESA = `${SITE}/#empresa`;
-
-const semAcento = (t: string) =>
-  t
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-
-const idDaPessoa = (nome: string) => `${SITE}/quem-somos/#${semAcento(nome)}`;
-
-export function pessoas() {
-  return SOCIAS.map((s) => ({
-    "@type": "Person" as const,
-    "@id": idDaPessoa(s.nome),
-    name: s.nome,
-    jobTitle: "Corretora de imóveis",
-    identifier: [s.creci, s.cnai],
-    url: QUEM_SOMOS_NO_AR ? `${SITE}/quem-somos/` : `${SITE}/`,
-    worksFor: { "@id": ID_EMPRESA },
-  }));
-}
+export const ID_EMPRESA = `${SITE}/#empresa`;
 
 export function empresa() {
   return {
@@ -58,7 +26,6 @@ export function empresa() {
       postalCode: ENDERECO.cep,
       addressCountry: "BR",
     },
-    employee: pessoas().map((p) => ({ "@id": p["@id"] })),
   };
 }
 
@@ -84,7 +51,7 @@ export function artigo(a: Artigo, imagem?: string | null) {
     datePublished: a.data,
     dateModified: a.data,
     inLanguage: "pt-BR",
-    author: { "@id": idDaPessoa(a.autora) },
+    author: { "@id": ID_EMPRESA },
     publisher: { "@id": ID_EMPRESA },
     isPartOf: { "@id": `${SITE}/revista/#revista` },
     mainEntityOfPage: `${SITE}/revista/${a.slug}/`,
@@ -106,7 +73,7 @@ export function revista(artigos: Artigo[]) {
       headline: a.titulo,
       url: `${SITE}/revista/${a.slug}/`,
       datePublished: a.data,
-      author: { "@id": idDaPessoa(a.autora) },
+      author: { "@id": ID_EMPRESA },
     })),
   };
 }

@@ -5,12 +5,12 @@ import { Revela } from "@/components/entrada";
 import { Painel } from "@/components/painel";
 import { arquivo } from "@/lib/caminho";
 import posterPortaria from "../../../public/video/portaria.webp";
-import { SOCIAS, metaDaPagina } from "@/lib/site";
+import { SLOGAN, metaDaPagina } from "@/lib/site";
 
 export const metadata = metaDaPagina({
   titulo: "Quem somos",
   descricao:
-    "A Casuê Rio no Rio de Janeiro, com CRECI e CNAI. Quem mostra o imóvel é quem cuida da papelada e quem assina o contrato.",
+    "Na Casuê Rio, cada imóvel é uma oportunidade de construir valor. Atuação estratégica, próxima e criteriosa no mercado imobiliário do Rio de Janeiro, com CRECI e CNAI.",
   caminho: "/quem-somos",
 });
 
@@ -19,7 +19,7 @@ export default function PaginaQuemSomos() {
     <>
       <CabecaPagina
         titulo="Quem somos"
-        linha="Na Casuê Rio, quem mostra o imóvel é quem cuida da papelada e do contrato."
+        linha={SLOGAN}
         video={{ fonte: arquivo("/video/portaria.mp4"), poster: posterPortaria }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Quem somos" }]}
       />
@@ -33,57 +33,41 @@ export default function PaginaQuemSomos() {
             data-revela
             className="max-w-[16ch] text-[clamp(1.9rem,4vw,3.1rem)] leading-[1.08]"
           >
-            Você não é passado para outro setor.
+            Cada imóvel é uma oportunidade de construir valor.
           </h2>
           <div data-revela className="border-t border-terracota-600/30 pt-6">
             <p className="text-lg leading-relaxed text-tinta-500">
-              Quem abre a porta do imóvel é a mesma que levanta a papelada, conversa com o
-              síndico, corre atrás da certidão que faltou e senta na assinatura. Você não
-              repete a sua história para a próxima pessoa da fila, porque não existe fila.
+              Na Casuê Rio, acreditamos que cada imóvel representa uma oportunidade de
+              construir valor e que um bom negócio imobiliário começa pela compreensão das
+              necessidades de cada cliente.
             </p>
           </div>
         </div>
       </Revela>
 
       <Revela className="campo-luz trilho secao relative">
-        <h2 className="text-[clamp(1.8rem,3.4vw,2.75rem)]">Quem atende você</h2>
-        <p className="mt-3 text-lg text-tinta-500">
-          As sócias-diretoras, com CRECI para intermediar e CNAI para avaliar.
-        </p>
-
-        <div className="mt-12 grid gap-8 md:grid-cols-2">
-          {SOCIAS.map((s) => (
-            <div key={s.nome} data-revela className="flex flex-col gap-5">
-              <div className="relative isolate flex aspect-4/5 items-center justify-center overflow-hidden rounded-[0.875rem] bg-tinta-800 shadow-[var(--shadow-flutua-2)]">
-                <span
-                  aria-hidden
-                  className="font-display text-[9rem] font-bold leading-none text-papel/15"
-                >
-                  {s.inicial}
-                </span>
-                <span className="rotulo absolute inset-x-6 bottom-6 border-t border-white/20 pt-4 text-areia-300">
-                  Retrato entra aqui · foto vertical 4:5
-                </span>
-              </div>
-              <div>
-                <span className="rotulo block text-bronze-500">{s.cargo}</span>
-                <span className="mt-1 block font-display text-3xl font-bold leading-tight text-tinta-800">
-                  {s.nome}
-                </span>
-                <span className="num mt-3 block text-sm text-tinta-500">
-                  {s.creci} · {s.cnai}
-                </span>
-                <blockquote className="mt-6 border-l-2 border-terracota-600/50 pl-5 font-display text-lg leading-snug text-tinta-800">
-                  {s.citacao}
-                </blockquote>
-                {s.bio.map((paragrafo) => (
-                  <p key={paragrafo} className="mt-4 text-tinta-500">
-                    {paragrafo}
-                  </p>
-                ))}
-              </div>
-            </div>
-          ))}
+        <div className="max-w-[62ch]">
+          <p data-revela className="text-lg leading-relaxed text-tinta-500">
+            Atuamos no mercado imobiliário com uma abordagem estratégica, próxima e
+            criteriosa, unindo visão comercial, conhecimento de mercado e atenção aos
+            aspectos técnicos de cada negociação. Nosso trabalho envolve a curadoria de
+            imóveis, a identificação de oportunidades e a compreensão dos objetivos de
+            compradores, proprietários e investidores, buscando conectar pessoas e imóveis
+            de forma inteligente e alinhada a cada necessidade.
+          </p>
+          <p data-revela className="mt-6 text-lg leading-relaxed text-tinta-500">
+            Acompanhamos cada etapa do processo com organização, transparência e
+            responsabilidade, para que as negociações sejam conduzidas com clareza,
+            segurança e eficiência.
+          </p>
+          <blockquote
+            data-revela
+            className="mt-12 border-l-2 border-terracota-600/50 pl-6 font-display text-[clamp(1.25rem,2.2vw,1.6rem)] leading-snug text-tinta-800"
+          >
+            Mais do que intermediar negócios, buscamos construir relações de confiança e
+            oferecer um atendimento presente e personalizado, porque acreditamos que, por
+            trás de cada negociação, existe uma história, um objetivo e uma oportunidade.
+          </blockquote>
         </div>
       </Revela>
 

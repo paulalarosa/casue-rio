@@ -7,7 +7,7 @@ import { listarArtigos, lerArtigo, dataPorExtenso } from "@/lib/revista";
 import { imagem } from "@/lib/sanity";
 import { Dados } from "@/components/dados";
 import { artigo as dadosDoArtigo, trilha, grafo } from "@/lib/dados-estruturados";
-import { metaDaPagina } from "@/lib/site";
+import { MARCA, metaDaPagina } from "@/lib/site";
 
 export async function generateStaticParams() {
   const artigos = await listarArtigos();
@@ -74,7 +74,7 @@ export default async function PaginaArtigo({
         {artigo.linha}
       </p>
       <p className="rotulo mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-bronze-500">
-        <span>{artigo.autora}</span>
+        <span>{MARCA}</span>
         <span aria-hidden className="text-tinta-300">
           ·
         </span>

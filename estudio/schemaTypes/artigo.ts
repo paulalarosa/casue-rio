@@ -55,19 +55,6 @@ export const artigo = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
-      name: "autora",
-      title: "Quem escreveu",
-      type: "string",
-      description: "Quem assina. O nome aparece no artigo e na lista da revista.",
-      options: {
-        list: [
-          { title: "Débora de Almeida Carvalho", value: "Débora de Almeida Carvalho" },
-          { title: "Alessandra Soverchi de Seixas", value: "Alessandra Soverchi de Seixas" },
-        ],
-      },
-      validation: (r) => r.required(),
-    }),
-    defineField({
       name: "capa",
       title: "Capa",
       type: "image",
@@ -143,8 +130,8 @@ export const artigo = defineType({
     }),
   ],
   preview: {
-    select: { titulo: "titulo", data: "data", autora: "autora", media: "capa" },
-    prepare({ titulo, data, autora, media }) {
+    select: { titulo: "titulo", data: "data", media: "capa" },
+    prepare({ titulo, data, media }) {
       const quando = data
         ? new Date(data).toLocaleString("pt-BR", {
             timeZone: "America/Sao_Paulo",
@@ -159,8 +146,8 @@ export const artigo = defineType({
       return {
         title: titulo ?? "Sem título",
         subtitle: agendado
-          ? `Agendado para ${quando} · ${autora ?? "sem autora"}`
-          : `${quando} · ${autora ?? "sem autora"}`,
+          ? `Agendado para ${quando}`
+          : quando,
         media,
       };
     },

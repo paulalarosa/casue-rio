@@ -74,19 +74,8 @@ export async function GET(
 
       <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
         <div style={{ display: "flex", height: 1, background: "#3A322C" }} />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "baseline",
-          }}
-        >
-          <div style={{ display: "flex", fontSize: 28, fontWeight: 600, color: PAPEL }}>
-            {a.autora}
-          </div>
-          <div style={{ display: "flex", fontSize: 24, color: BRONZE }}>
-            {dataPorExtenso(a.data)}
-          </div>
+        <div style={{ display: "flex", fontSize: 28, fontWeight: 600, color: PAPEL }}>
+          {dataPorExtenso(a.data)}
         </div>
         <div style={{ display: "flex", fontSize: 24, color: BRONZE, letterSpacing: 2 }}>
           casuerio.com.br/revista
