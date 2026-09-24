@@ -30,6 +30,7 @@ export type Imovel = {
   porMes?: boolean;
   foto?: string;
   fotos?: string[];
+  video?: string;
   alt?: string;
 };
 
@@ -73,6 +74,7 @@ export const IMOVEIS: Imovel[] = [
     alt: "Sala comercial reformada na Av. Treze de Maio, no Centro do Rio",
     foto: "/fotos/cse-1001/05.webp",
     fotos: galeriaDe("CSE-1001", 15),
+    video: "/video/tour/cse-1001.mp4",
   },
   {
     codigo: "CSE-1002",

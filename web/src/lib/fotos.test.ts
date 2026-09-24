@@ -6,8 +6,13 @@ import { IMOVEIS } from "@/lib/carteira";
 const PUBLICO = path.join(process.cwd(), "public");
 
 const caminhos = IMOVEIS.flatMap(
-  (im) => [...(im.fotos ?? []), im.foto].filter(Boolean) as string[],
+  (im) =>
+    [...(im.fotos ?? []), im.foto, im.video?.replace(/\.mp4$/, ".webp")].filter(
+      Boolean,
+    ) as string[],
 );
+
+const videos = IMOVEIS.flatMap((im) => (im.video ? [im.video] : []));
 
 describe("as fotos dos imóveis", () => {
   it("existem em public", () => {
@@ -21,6 +26,11 @@ describe("as fotos dos imóveis", () => {
       rotas.some((r) => c.toLowerCase().startsWith(r)),
     );
     expect(invasoras).toEqual([]);
+  });
+
+  it("têm o vídeo em public", () => {
+    const sumidos = videos.filter((c) => !existsSync(path.join(PUBLICO, c)));
+    expect(sumidos).toEqual([]);
   });
 
   it("têm a miniatura ao lado", () => {

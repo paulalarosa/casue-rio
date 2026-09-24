@@ -1,16 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { type NomeCena } from "@/components/cenas";
 import { Midia } from "@/components/midia";
 import type { Imovel } from "@/lib/carteira";
+import { arquivo } from "@/lib/caminho";
 import { cn } from "@/lib/utils";
 
-type Quadro = { foto?: string; cena: NomeCena };
+type Quadro = { foto?: string; video?: string; cena: NomeCena };
 
 function roteiro(im: Imovel): Quadro[] {
-  if (im.fotos?.length) return im.fotos.map((f) => ({ foto: f, cena: im.cena }));
+  const tour: Quadro[] = im.video
+    ? [{ video: im.video, foto: im.video.replace(/\.mp4$/, ".webp"), cena: im.cena }]
+    : [];
+  if (im.fotos?.length)
+    return [...tour, ...im.fotos.map((f) => ({ foto: f, cena: im.cena }))];
   if (im.foto) return [{ foto: im.foto, cena: im.cena }];
   const lista: Quadro[] = [{ cena: im.cena }];
   if (im.cena !== "interior") lista.push({ cena: "interior" });
@@ -23,11 +28,83 @@ function miniatura(foto?: string) {
   return foto.replace(/\.webp$/, "-min.webp");
 }
 
+const QUIETO = "(prefers-reduced-motion: reduce)";
+
+function useMovimentoLiberado() {
+  return useSyncExternalStore<boolean | null>(
+    (avisar) => {
+      const m = window.matchMedia(QUIETO);
+      m.addEventListener("change", avisar);
+      return () => m.removeEventListener("change", avisar);
+    },
+    () => {
+      const poupando = (navigator as Navigator & { connection?: { saveData?: boolean } })
+        .connection?.saveData;
+      return !window.matchMedia(QUIETO).matches && !poupando;
+    },
+    () => null,
+  );
+}
+
+function Tour({
+  fonte,
+  poster,
+  alt,
+  filme,
+  aoMudar,
+}: {
+  fonte: string;
+  poster: string;
+  alt?: string;
+  filme: React.RefObject<HTMLVideoElement | null>;
+  aoMudar: (tocando: boolean) => void;
+}) {
+  const ligado = useMovimentoLiberado();
+
+  return (
+    <>
+      <Midia foto={poster} alt={alt} cena="interior" rotulo="" sizes="100vw" prioridade />
+      {ligado !== null && (
+        <video
+          ref={filme}
+          src={arquivo(fonte)}
+          poster={arquivo(poster)}
+          autoPlay={ligado}
+          muted
+          loop
+          playsInline
+          preload={ligado ? "auto" : "none"}
+          aria-label={alt ? `Vídeo: ${alt}` : "Vídeo do imóvel"}
+          onCanPlay={(e) => {
+            if (ligado) void e.currentTarget.play().catch(() => undefined);
+          }}
+          onPlay={() => aoMudar(true)}
+          onPause={() => aoMudar(false)}
+          className="absolute inset-0 size-full object-cover"
+        />
+      )}
+    </>
+  );
+}
+
 export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
   const quadros = roteiro(im);
   const [i, setI] = useState(0);
+  const filme = useRef<HTMLVideoElement>(null);
+  const [tocando, setTocando] = useState(false);
+  const noVideo = Boolean(quadros[i].video);
+
+  function alterna() {
+    const v = filme.current;
+    if (!v) return;
+    if (v.paused) void v.play().catch(() => undefined);
+    else v.pause();
+  }
   const toqueX = useRef<number | null>(null);
-  const anda = (d: number) => setI((v) => (v + d + quadros.length) % quadros.length);
+  const anda = (d: number) => {
+    setTocando(false);
+    setI((v) => (v + d + quadros.length) % quadros.length);
+  };
 
   useEffect(() => {
     function tecla(e: KeyboardEvent) {
@@ -61,15 +138,25 @@ export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
         onPointerUp={fim}
       >
         <div className="relative aspect-[16/9] w-full max-md:aspect-4/5">
-          <Midia
-            foto={quadros[i].foto}
-            alt={im.alt}
-            cena={quadros[i].cena}
-            semente={im.codigo}
-            rotulo={`Ilustração da marca: ${im.titulo}`}
-            sizes="100vw"
-            prioridade={i === 0}
-          />
+          {quadros[i].video ? (
+            <Tour
+              fonte={quadros[i].video!}
+              poster={quadros[i].foto!}
+              alt={im.alt}
+              filme={filme}
+              aoMudar={setTocando}
+            />
+          ) : (
+            <Midia
+              foto={quadros[i].foto}
+              alt={im.alt}
+              cena={quadros[i].cena}
+              semente={im.codigo}
+              rotulo={`Ilustração da marca: ${im.titulo}`}
+              sizes="100vw"
+              prioridade={i === 0}
+            />
+          )}
         </div>
 
         {capa && (
@@ -105,24 +192,45 @@ export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
           ))}
         </div>
 
-        <span
-          aria-live="polite"
-          className="tinta num absolute right-5 top-5 rounded-full px-4 py-2 text-sm"
-        >
-          {i + 1} / {quadros.length}
-        </span>
+        <div className="absolute right-5 top-5 flex items-center gap-2">
+          {noVideo && (
+            <>
+              <span className="tinta rotulo hidden rounded-full px-3 py-2 lg:inline">
+                Vídeo feito a partir das fotos
+              </span>
+              <button
+                type="button"
+                aria-label={tocando ? "Pausar o vídeo" : "Tocar o vídeo"}
+                onClick={alterna}
+                className="tinta grid size-10 place-items-center rounded-full transition-transform duration-300 hover:scale-105"
+              >
+                {tocando ? (
+                  <Pause className="size-4" aria-hidden />
+                ) : (
+                  <Play className="size-4" aria-hidden />
+                )}
+              </button>
+            </>
+          )}
+          <span aria-live="polite" className="tinta num rounded-full px-4 py-2 text-sm">
+            {i + 1} / {quadros.length}
+          </span>
+        </div>
       </div>
 
-      <div className="mt-4 flex gap-3">
+      <div className="-mx-1 mt-4 flex gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:thin]">
         {quadros.map((q, k) => (
           <button
             key={(q.foto ?? q.cena) + k}
             type="button"
-            aria-label={`Imagem ${k + 1}`}
+            aria-label={q.video ? "Vídeo do imóvel" : `Imagem ${k + 1}`}
             aria-current={k === i}
-            onClick={() => setI(k)}
+            onClick={() => {
+              if (k !== i) setTocando(false);
+              setI(k);
+            }}
             className={cn(
-              "relative aspect-4/3 w-24 overflow-hidden rounded-[0.75rem] border-2 transition-all duration-300",
+              "relative aspect-4/3 w-24 shrink-0 overflow-hidden rounded-[0.75rem] border-2 transition-all duration-300",
               k === i
                 ? "border-areia-500"
                 : "border-transparent opacity-70 hover:opacity-100",
@@ -135,6 +243,11 @@ export function Galeria({ im, capa }: { im: Imovel; capa?: React.ReactNode }) {
               rotulo=""
               sizes="6rem"
             />
+            {q.video && (
+              <span className="tinta absolute inset-0 m-auto grid size-8 place-items-center rounded-full">
+                <Play className="size-4" aria-hidden />
+              </span>
+            )}
           </button>
         ))}
       </div>
