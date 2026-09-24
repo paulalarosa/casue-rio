@@ -21,8 +21,8 @@ jobs:
   painel:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -40,7 +40,7 @@ jobs:
     outputs:
       precisa: ${{ steps.conferir.outputs.precisa }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - id: conferir
         env:
           PROJETO: ${{ vars.SANITY_PROJECT_ID }}
@@ -59,9 +59,9 @@ jobs:
     if: needs.decidir.outputs.precisa == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -94,7 +94,7 @@ jobs:
           NEXT_PUBLIC_CF_ANALYTICS: ${{ vars.CF_ANALYTICS }}
         run: npm run build
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: cards-instagram
           path: web/cards/
