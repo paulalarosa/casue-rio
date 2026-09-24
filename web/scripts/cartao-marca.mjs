@@ -70,10 +70,6 @@ const html = `<!doctype html><meta charset="utf-8">
       ${TINTA};
     font-family:"Archivo",sans-serif;color:${PAPEL};
     display:flex;flex-direction:column;justify-content:space-between;padding:72px 80px}
-  /* Mesmas proporcoes de assinatura.tsx: o descritivo e 0,3 do nome, com
-     0,2em de entreletra. Mudou la, muda aqui. */
-  /* Montagem 01: a placa e 2,22 vezes o corpo do nome e a folga entre as
-     duas e 0,689 desse corpo. Mudou em assinatura.tsx, muda aqui. */
   .marca{display:flex;align-items:center;gap:43px}
   .placa{display:block;flex:none}
   .nome{font-family:"Unbounded";font-weight:700;font-size:62px;line-height:.94;

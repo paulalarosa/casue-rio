@@ -252,11 +252,6 @@
     z-index: -1;
     pointer-events: none;
     background:
-      /* 🔴 O segundo foco virou TERRACOTA (terracota-300 a 26%). O campo de
-         luz e a maior superficie colorida do site depois do fundo, e era
-         areia contra areia: dava calor, nao dava marca. Com um foco de cada
-         familia a pagina inteira fica na cor nova sem nenhum bloco chapado,
-         e a areia continua sendo o par, que foi o pedido. */
       radial-gradient(38% 44% at 18% 24%, rgba(221, 203, 170, 0.5), transparent 70%),
       radial-gradient(42% 50% at 82% 30%, rgba(226, 161, 131, 0.26), transparent 72%),
       radial-gradient(50% 40% at 50% 100%, rgba(30, 77, 59, 0.08), transparent 70%);

@@ -20,7 +20,7 @@ const alvos = execSync("git ls-files --cached --others --exclude-standard", {
   .split("\n")
   .map((l) => l.trim())
   .filter(Boolean)
-  .filter((f) => /\.(ts|tsx|mjs|mts|js|css|ya?ml|sh)$/.test(f))
+  .filter((f) => /\.(ts|tsx|mjs|mts|js|css|ya?ml|sh|svg|html)$/.test(f))
   .filter((f) => !f.includes("node_modules"))
   .filter((f) => f !== "scripts/sem-comentarios.mjs");
 
@@ -115,6 +115,16 @@ function emCss(texto, caminho) {
     quantos += 1;
     no.remove();
   });
+  raiz.walkDecls((no) => {
+    if (no.raws.between?.includes("/*")) {
+      quantos += 1;
+      no.raws.between = no.raws.between.replace(/\/\*[\s\S]*?\*\/\s*/g, "");
+    }
+    if (no.raws.value?.raw.includes("/*")) {
+      quantos += 1;
+      delete no.raws.value;
+    }
+  });
   if (quantos === 0) return null;
 
   const limpo = raiz.toString().replace(/\n{3,}/g, "\n\n");
@@ -185,7 +195,20 @@ function emShell(texto, caminho) {
   return { quantos, limpo };
 }
 
+const MARCACAO = /[ \t]*<!--[\s\S]*?-->[ \t]*\r?\n?/g;
+
+function emMarcacao(texto, caminho) {
+  const quantos = (texto.match(MARCACAO) ?? []).length;
+  if (quantos === 0) return null;
+  const limpo = texto.replace(MARCACAO, "").replace(/\n{3,}/g, "\n\n");
+  if (limpo.includes("<!--") || limpo.includes("-->")) {
+    throw new Error(`${caminho}: sobrou comentario depois de limpar`);
+  }
+  return { quantos, limpo };
+}
+
 function varredorDe(caminho) {
+  if (/\.(svg|html)$/.test(caminho)) return emMarcacao;
   if (/\.css$/.test(caminho)) return emCss;
   if (/\.ya?ml$/.test(caminho)) return emYaml;
   if (/\.sh$/.test(caminho)) return emShell;
