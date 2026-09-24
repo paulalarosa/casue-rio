@@ -15,6 +15,10 @@ export function moeda(v: number | null | undefined) {
   return v === null || v === undefined ? "—" : BRL.format(v);
 }
 
+export function taxa(v: number | null | undefined) {
+  return v === 0 ? "Isento" : moeda(v);
+}
+
 export function apelidoDaRegiao(regiao: Regiao) {
   return BAIRROS.find((b) => b.chave === regiao)?.apelido ?? "";
 }

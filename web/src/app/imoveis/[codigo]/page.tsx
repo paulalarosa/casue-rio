@@ -19,8 +19,8 @@ import { Galeria } from "@/components/galeria";
 import { Compartilhar } from "@/components/compartilhar";
 import { CartaoImovel } from "@/components/cartao-imovel";
 import { Painel } from "@/components/painel";
-import { IMOVEIS, BAIRROS } from "@/lib/carteira";
-import { DISPONIVEIS, moeda } from "@/lib/imoveis";
+import { IMOVEIS, BAIRROS, localDaRegiao } from "@/lib/carteira";
+import { DISPONIVEIS, moeda, taxa } from "@/lib/imoveis";
 import { AcaoZap } from "@/components/acao";
 import { SITE, NOME, metaDaPagina } from "@/lib/site";
 
@@ -237,11 +237,11 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
             ) : null}
             <div className="flex items-baseline gap-2">
               <dt className="text-tinta-500">Condomínio</dt>
-              <dd className="num text-tinta-600">{moeda(im.condominio || null)}</dd>
+              <dd className="num text-tinta-600">{taxa(im.condominio)}</dd>
             </div>
             <div className="flex items-baseline gap-2">
               <dt className="text-tinta-500">IPTU</dt>
-              <dd className="num text-tinta-600">{moeda(im.iptu)}</dd>
+              <dd className="num text-tinta-600">{taxa(im.iptu)}</dd>
             </div>
           </dl>
 
@@ -279,7 +279,7 @@ export default async function PaginaImovel({ params }: PageProps<"/imoveis/[codi
       {parecidos.length > 0 && (
         <div className="trilho pb-8">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="text-3xl">Também em {im.regiao}</h2>
+            <h2 className="text-3xl">Também {localDaRegiao(im.regiao)}</h2>
             <Link
               href={`/imoveis?regiao=${encodeURIComponent(im.regiao)}`}
               className="inline-flex items-center gap-2 rounded-full border border-tinta-800/15 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"

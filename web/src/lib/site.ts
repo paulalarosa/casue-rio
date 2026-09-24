@@ -5,7 +5,7 @@ export const MARCA = "Casuê Rio";
 export const DESCRITIVO = "Negócios Imobiliários";
 export const NOME = `${MARCA} ${DESCRITIVO}`;
 export const DESCRICAO =
-  "Imobiliária no Rio de Janeiro, com CRECI e CNAI. Compra, venda, aluguel e avaliação no Centro, na Tijuca e na Zona Sul, com a documentação conferida antes da proposta.";
+  "Imobiliária no Rio de Janeiro, com CRECI e CNAI. Compra, venda, aluguel e avaliação no Centro, na Tijuca, na Zona Sul, na Zona Norte e na Barra, com a documentação conferida antes da proposta.";
 
 export const SLOGAN = "Transformando planos em patrimônio.";
 
@@ -23,14 +23,18 @@ export const BAIRROS_DE_ATENDIMENTO = [
   "Catete",
   "Flamengo",
   "Laranjeiras",
+  "Cosme Velho",
   "Botafogo",
   "Copacabana",
   "Ipanema",
   "Leblon",
+  "São Conrado",
   "Tijuca",
   "Vila Isabel",
   "Grajaú",
   "Maracanã",
+  "Irajá",
+  "Jardim Oceânico",
 ] as const;
 
 export function numerosDoCreci(separador = " · ") {

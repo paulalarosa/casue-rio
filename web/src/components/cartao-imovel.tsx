@@ -2,7 +2,7 @@ import Link from "next/link";
 import { BedDouble, Bath, Car, Maximize } from "lucide-react";
 import { Midia } from "@/components/midia";
 import type { Imovel } from "@/lib/carteira";
-import { moeda } from "@/lib/imoveis";
+import { moeda, taxa } from "@/lib/imoveis";
 import { cn } from "@/lib/utils";
 
 export function CartaoImovel({
@@ -87,12 +87,12 @@ export function CartaoImovel({
           <div className="flex items-baseline gap-1.5">
             <dt className="sr-only">Condomínio</dt>
             <span aria-hidden>Cond.</span>
-            <dd className="num text-tinta-600">{moeda(im.condominio || null)}</dd>
+            <dd className="num text-tinta-600">{taxa(im.condominio)}</dd>
           </div>
           <div className="flex items-baseline gap-1.5">
             <dt className="sr-only">IPTU</dt>
             <span aria-hidden>IPTU</span>
-            <dd className="num text-tinta-600">{moeda(im.iptu)}</dd>
+            <dd className="num text-tinta-600">{taxa(im.iptu)}</dd>
           </div>
         </dl>
 

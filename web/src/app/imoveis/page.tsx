@@ -16,7 +16,7 @@ import { metaDaPagina } from "@/lib/site";
 export const metadata = metaDaPagina({
   titulo: "Imóveis no Rio",
   descricao:
-    "Imóveis para comprar e alugar no Centro, na Tijuca e na Zona Sul do Rio, com documentação conferida antes da proposta.",
+    "Imóveis para comprar e alugar no Centro, na Tijuca, na Zona Sul, na Zona Norte e na Barra, com documentação conferida antes da proposta.",
   caminho: "/imoveis",
 });
 

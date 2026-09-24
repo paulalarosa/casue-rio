@@ -85,7 +85,7 @@ const html = `<!doctype html><meta charset="utf-8">
     letter-spacing:-.035em;max-width:18ch}
   .pe{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;
     border-top:1px solid rgba(246,242,233,.24);padding-top:28px}
-  .pe span{font-weight:600;font-size:22px;letter-spacing:.14em;text-transform:uppercase;
+  .pe span{font-weight:600;font-size:${REGIOES.length > 3 ? 18 : 22}px;letter-spacing:${REGIOES.length > 3 ? ".1em" : ".14em"};text-transform:uppercase;
     color:${CINZA_CLARO};white-space:nowrap}
   .pe span.slogan{font-family:"Unbounded";font-weight:400;font-size:26px;color:${AREIA_CLARA};
     text-transform:none;letter-spacing:-.02em}

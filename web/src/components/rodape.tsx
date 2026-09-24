@@ -36,7 +36,8 @@ export function Rodape() {
           />
           <p className="mt-8 font-display text-2xl font-semibold text-papel">{SLOGAN}</p>
           <p className="mt-4 max-w-[32ch] text-tinta-200">
-            Centro, Tijuca e Zona Sul. Das 9h às 19h, de segunda a sexta.
+            Centro, Tijuca, Zona Sul, Zona Norte e Barra. Das 9h às 19h, de segunda a
+            sexta.
           </p>
         </div>
 

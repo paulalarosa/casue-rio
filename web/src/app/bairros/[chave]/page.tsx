@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps<"/bairros/[chave]">
     ? `${retrato.quantos} ${retrato.quantos === 1 ? "imóvel anunciado" : "imóveis anunciados"}. `
     : "";
   return metaDaPagina({
-    titulo: `Imóveis em ${b.nome}`,
+    titulo: `Imóveis ${b.local}`,
     descricao: `${quantos}${b.linha} ${b.texto}`.slice(0, 300),
     caminho: `/bairros/${b.apelido}`,
   });
@@ -80,7 +80,7 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
 
       <div className="trilho secao">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-          <h2 className="text-3xl">Imóveis em {b.nome}</h2>
+          <h2 className="text-3xl">Imóveis {b.local}</h2>
           <Link
             href={`/imoveis?regiao=${encodeURIComponent(b.chave)}`}
             className="inline-flex items-center gap-2 rounded-full border border-tinta-800/15 px-5 py-2.5 text-sm font-semibold text-tinta-800 transition-colors hover:bg-tinta-800/6"
@@ -92,7 +92,7 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
           <GradeImoveis imoveis={lista} />
         ) : (
           <Painel className="p-10 text-center">
-            <h3 className="text-2xl">Ainda não temos imóvel anunciado em {b.nome}</h3>
+            <h3 className="text-2xl">Ainda não temos imóvel anunciado {b.local}</h3>
             <p className="mx-auto mt-4 max-w-[46ch] text-tinta-500">
               A gente atende a região e faz captação direcionada. Conte o que procura e
               vamos atrás.
