@@ -137,7 +137,8 @@ export default function Home() {
           O imóvel vazio é o que a gente entrega.
         </p>
         <p className="mt-5 max-w-[42ch] text-base text-tinta-200 sm:text-lg">
-          Sem móvel e sem montagem. O resto quem imagina é você.
+          Se a foto ainda mostra os móveis, é porque tem gente morando. Na entrega, o
+          imóvel chega vazio.
         </p>
       </FaixaVideo>
 
