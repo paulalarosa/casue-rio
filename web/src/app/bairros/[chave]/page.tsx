@@ -1,14 +1,24 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { type StaticImageData } from "next/image";
 import { ArrowRight } from "lucide-react";
 import { CabecaPagina } from "@/components/cabeca-pagina";
 import { arquivo } from "@/lib/caminho";
 import alameda from "../../../../public/video/alameda.webp";
+import centro from "../../../../public/video/bairro-centro.webp";
+import tijuca from "../../../../public/video/bairro-tijuca.webp";
+import horizonte from "../../../../public/video/horizonte.webp";
 import { GradeImoveis } from "@/components/grade-imoveis";
 import { Painel } from "@/components/painel";
 import { BAIRROS } from "@/lib/carteira";
 import { DISPONIVEIS, bairroPorApelido, moeda, retratoDaRegiao } from "@/lib/imoveis";
 import { metaDaPagina } from "@/lib/site";
+
+const VIDEOS: Record<string, { fonte: string; poster: StaticImageData }> = {
+  centro: { fonte: "/video/bairro-centro.mp4", poster: centro },
+  tijuca: { fonte: "/video/bairro-tijuca.mp4", poster: tijuca },
+  "zona-sul": { fonte: "/video/horizonte.mp4", poster: horizonte },
+};
 
 export function generateStaticParams() {
   return BAIRROS.map((b) => ({ chave: b.apelido }));
@@ -35,13 +45,14 @@ export default async function PaginaBairro({ params }: PageProps<"/bairros/[chav
   if (!b) notFound();
   const lista = DISPONIVEIS.filter((im) => im.regiao === b.chave);
   const retrato = retratoDaRegiao(b.chave);
+  const video = VIDEOS[b.apelido] ?? { fonte: "/video/alameda.mp4", poster: alameda };
 
   return (
     <>
       <CabecaPagina
         titulo={b.nome}
         linha={b.linha}
-        video={{ fonte: arquivo("/video/alameda.mp4"), poster: alameda }}
+        video={{ fonte: arquivo(video.fonte), poster: video.poster }}
         trilha={[
           { href: "/", texto: "Início" },
           { href: "/bairros", texto: "Bairros" },
