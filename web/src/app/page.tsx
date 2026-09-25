@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { Abertura } from "@/components/abertura";
 import { FaixaVideo } from "@/components/faixa-video";
-import posterSala from "../../public/video/sala.webp";
+import posterEntrega from "../../public/video/entrega.webp";
 import { Busca } from "@/components/busca";
 import { CartaoImovel } from "@/components/cartao-imovel";
 import { Painel } from "@/components/painel";
@@ -129,8 +129,8 @@ export default function Home() {
       </Revela>
 
       <FaixaVideo
-        fonte={arquivo("/video/sala.mp4")}
-        poster={posterSala}
+        fonte={arquivo("/video/entrega.mp4")}
+        poster={posterEntrega}
         altura="min-h-[24rem] sm:min-h-[32rem]"
       >
         <p className="max-w-[18ch] font-display text-[clamp(1.8rem,4.4vw,3.2rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-papel">
