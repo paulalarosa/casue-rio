@@ -4,7 +4,7 @@ import { CabecaPagina } from "@/components/cabeca-pagina";
 import { Expansivel } from "@/components/expansivel";
 import { FormAvaliacao } from "@/components/form-avaliacao";
 import { arquivo } from "@/lib/caminho";
-import avaliacao from "../../../public/video/avaliacao.webp";
+import avaliacao from "../../../public/video/avaliacao-vista.webp";
 import { Revela } from "@/components/entrada";
 import { QUEM_SOMOS_NO_AR, metaDaPagina } from "@/lib/site";
 
@@ -71,7 +71,7 @@ export default function PaginaAvaliacao() {
       <CabecaPagina
         titulo="Avaliação de imóvel"
         linha="Quanto vale, com parecer assinado por quem tem cadastro para assinar."
-        video={{ fonte: arquivo("/video/avaliacao.mp4"), poster: avaliacao }}
+        video={{ fonte: arquivo("/video/avaliacao-vista.mp4"), poster: avaliacao }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Avaliação" }]}
       />
       <p className="trilho mt-3 text-sm text-tinta-500">
