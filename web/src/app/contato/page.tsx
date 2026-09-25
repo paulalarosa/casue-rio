@@ -2,7 +2,7 @@ import { AtSign, Mail, MapPin, MessageCircle } from "lucide-react";
 import { AcaoEmail, AcaoZap } from "@/components/acao";
 import Link from "next/link";
 import { CabecaPagina } from "@/components/cabeca-pagina";
-import calcadao from "../../../public/video/calcadao.webp";
+import cafezinho from "../../../public/video/cafezinho.webp";
 import { Painel } from "@/components/painel";
 import { Midia } from "@/components/midia";
 import { FormContato } from "@/components/form-contato";
@@ -32,7 +32,7 @@ export default function PaginaContato() {
       <CabecaPagina
         titulo="Falar com a gente"
         linha="Você fala direto com quem cuida do seu imóvel. Sem atendente e sem fila."
-        video={{ fonte: arquivo("/video/calcadao.mp4"), poster: calcadao }}
+        video={{ fonte: arquivo("/video/cafezinho.mp4"), poster: cafezinho }}
         trilha={[{ href: "/", texto: "Início" }, { texto: "Contato" }]}
       />
 
