@@ -110,6 +110,7 @@ export const IMOVEIS: Imovel[] = [
     alt: "Sala de estar da casa histórica na Rua Ribeiro de Almeida, em Laranjeiras",
     foto: "/fotos/cse-1002/01.webp",
     fotos: galeriaDe("CSE-1002", 20),
+    video: "/video/tour/cse-1002.mp4",
   },
   {
     codigo: "CSE-1003",
@@ -179,6 +180,7 @@ export const IMOVEIS: Imovel[] = [
     alt: "Fachada e jardim da casa na Rua Marechal Pires Ferreira, no Cosme Velho",
     foto: "/fotos/cse-1004/01.webp",
     fotos: galeriaDe("CSE-1004", 28),
+    video: "/video/tour/cse-1004.mp4",
   },
   {
     codigo: "CSE-1005",
@@ -212,6 +214,7 @@ export const IMOVEIS: Imovel[] = [
     alt: "Piscina no quintal da casa na Rua Barroso Pereira, em Irajá",
     foto: "/fotos/cse-1005/01.webp",
     fotos: galeriaDe("CSE-1005", 20),
+    video: "/video/tour/cse-1005.mp4",
   },
   {
     codigo: "CSE-1006",
@@ -243,6 +246,7 @@ export const IMOVEIS: Imovel[] = [
     alt: "Sala do apartamento na Rua Riachuelo, no Centro do Rio",
     foto: "/fotos/cse-1006/01.webp",
     fotos: galeriaDe("CSE-1006", 9),
+    video: "/video/tour/cse-1006.mp4",
   },
   {
     codigo: "CSE-1007",
@@ -312,6 +316,7 @@ export const IMOVEIS: Imovel[] = [
     alt: "Sala em dois ambientes do apartamento na Rua Ribeiro de Almeida, em Laranjeiras",
     foto: "/fotos/cse-1009/01.webp",
     fotos: galeriaDe("CSE-1009", 15),
+    video: "/video/tour/cse-1009.mp4",
   },
   {
     codigo: "CSE-1010",
