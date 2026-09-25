@@ -145,6 +145,7 @@ export const IMOVEIS: Imovel[] = [
     alt: "Fachada da casa comercial na Rua das Laranjeiras",
     foto: "/fotos/cse-1003/01.webp",
     fotos: galeriaDe("CSE-1003", 25),
+    video: "/video/tour/cse-1003.mp4",
   },
   {
     codigo: "CSE-1004",
@@ -277,6 +278,7 @@ export const IMOVEIS: Imovel[] = [
     alt: "Vista para o mar a partir da casa na Rua São Leobaldo, em São Conrado",
     foto: "/fotos/cse-1007/01.webp",
     fotos: galeriaDe("CSE-1007", 23),
+    video: "/video/tour/cse-1007.mp4",
   },
   {
     codigo: "CSE-1009",
@@ -342,6 +344,7 @@ export const IMOVEIS: Imovel[] = [
     alt: "Apartamento reformado na Rua Senador Vergueiro, no Flamengo",
     foto: "/fotos/cse-1010/01.webp",
     fotos: galeriaDe("CSE-1010", 13),
+    video: "/video/tour/cse-1010.mp4",
   },
 ];
 
